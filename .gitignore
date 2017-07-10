@@ -1,0 +1,46 @@
+# Not Drupal related.
+.DS_Store
+app/*/.DS_Store
+app/*/*/.DS_Store
+app/*/*/*/.DS_Store
+app/*/*/*/*/.DS_Store
+__MACOSX/
+__MACOSX/*
+.sass-cache
+
+# Ignore Drupal txt files.
+app/CHANGELOG.txt
+app/COPYRIGHT.txt
+app/INSTALL.mysql.txt
+app/INSTALL.pgsql.txt
+app/INSTALL.sqlite.txt
+app/INSTALL.txt
+app/LICENSE.txt
+app/MAINTAINERS.txt
+app/README.txt
+app/UPGRADE.txt
+app/.gitignore
+app/*/README.txt
+app/*/*/README.txt
+app/*/*/*/README.txt
+app/*/*/*/*/README.txt
+app/*/INSTALL.txt
+app/*/*/INSTALL.txt
+app/*/*/*/INSTALL.txt
+app/*/*/*/*/INSTALL.txt
+
+# Ignore configuration files that may contain sensitive information.
+app/sites/*/settings.php
+app/sites/*/local.settings*.php
+app/sites/*/settings.php
+
+# Ignore paths that contain user-generated content.
+app/sites/*/files
+app/sites/*/private
+app/sites/all/themes/*/js/scripts.min.js
+app/sites/all/themes/*/css/styles.min.css
+
+# Ignore drush directory
+app/sites/all/drush
+
+app/sites/sites.php
