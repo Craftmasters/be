@@ -1,0 +1,26 @@
+{
+    "name": "archerjordan/bulls-eye",
+    "description": "Bulls Eye",
+    "authors": [
+        {
+            "name": "geraldvillorente",
+            "email": "geraldvillorente@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "drupal/coder": "~8.2",
+        "squizlabs/php_codesniffer": "~2.2"
+    },
+    "scripts": {
+        "post-install-cmd":[
+            "./vendor/bin/phpcs --config-set installed_paths `pwd`/vendor/drupal/coder/coder_sniffer"
+        ],
+        "phpcs" : [
+            "./vendor/bin/phpcs --standard=Drupal ./app/sites/all/modules/custom/ ./app/sites/all/themes/bullseye/"
+        ],
+        "check-syntax" : [
+            "find app/sites/all/modules/custom/ app/sites/all/themes/bullseye/ -iname \\*module -or -iname \\*php -or -iname \\*install|xargs -n 1 php -l"
+        ]
+    }
+}
