@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Get the current date.
+DATE=`date +%m-%d-%Y`
+
+# Run a remote backup.
+drush @arrow.prod sql-dump --gzip --result-file=~/drush-backups/arrow.prod-$DATE.sql
+
+# The generated backup db.
+SOURCE=/root/drush-backups/arrow.prod-$DATE.sql.gz
+# The local directory of the backup db.
+DESTINATION=/home/supremo/drush-backups/
+
+# Copy the generated backup db to local.
+scp root@arrow.archerjordan.com:$SOURCE $DESTINATION
