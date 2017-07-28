@@ -2,3 +2,22 @@
 /**
  * Bullseye Leads module file.
  */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_leads_menu() {
+  $items = array();
+
+  $items['leads/import'] = array(
+    'title' => 'Import Leads',
+    'description' => 'Import leads from CSV file.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_leads_import_leads'),
+    'access arguments' => array('import leads'),
+    'file' => 'import.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
