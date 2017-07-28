@@ -15,7 +15,7 @@ function bullseye_leads_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('bullseye_leads_import_leads'),
     'access arguments' => array('import leads'),
-    'file' => 'import.inc',
+    'file' => 'import.inc.php',
     'type' => MENU_NORMAL_ITEM,
   );
 
