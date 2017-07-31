@@ -21,3 +21,15 @@ function bullseye_leads_menu() {
 
   return $items;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_leads_permission() {
+  return array(
+    'import leads' => array(
+      'title' => t('Import Leads'),
+      'description' => t('Allow the role/s to import leads via CSV.'),
+    ),
+  );
+}
