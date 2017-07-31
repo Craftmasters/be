@@ -7,5 +7,7 @@
  * Import leads via CSV.
  */
 function bullseye_leads_import_leads() {
+  $form = array();
 
+  return $form;
 }
