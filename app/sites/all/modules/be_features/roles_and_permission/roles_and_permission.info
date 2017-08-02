@@ -1,0 +1,9 @@
+name = Roles and Permission
+description = ACL definition for each role.
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+dependencies[] = features
+features[features_api][] = api:2
+features[user_role][] = admin
+features[user_role][] = producer
