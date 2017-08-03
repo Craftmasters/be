@@ -30,9 +30,16 @@ class Bullseye {
   }
 
   /**
-   * Get user name.
+   * Get first name.
    */
-  function getAccountName() {
+  function getAccountFirstName() {
+    return $this->userData()->name;
+  }
+
+  /**
+   * Get last name.
+   */
+  function getAccountLastName() {
     return $this->userData()->name;
   }
 }
