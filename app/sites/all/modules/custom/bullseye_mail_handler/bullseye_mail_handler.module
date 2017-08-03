@@ -1,4 +1,7 @@
 <?php
 /**
  * BullsEye mail handler module.
+ *
+ * @author
+ *   Gerald Villorente
  */
