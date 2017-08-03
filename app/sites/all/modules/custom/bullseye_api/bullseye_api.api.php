@@ -49,4 +49,11 @@ class Bullseye {
   function getAccountEmail() {
     return $this->userData()->mail;
   }
+
+  /**
+   * Get role.
+   */
+  function getAccountRole() {
+    return $this->userData()->role;
+  }
 }
