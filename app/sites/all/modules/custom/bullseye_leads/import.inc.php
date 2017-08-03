@@ -70,7 +70,6 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
   if ($rows) {
     // Remove the header row from the array.
     array_shift($rows);
-    $aj->toffImportHours($rows, $options);
     bullseye_leads_import($rows);
     drupal_goto('/');
   }
