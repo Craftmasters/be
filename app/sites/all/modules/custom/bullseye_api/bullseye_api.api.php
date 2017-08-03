@@ -42,4 +42,11 @@ class Bullseye {
   function getAccountLastName() {
     return $this->userData()->name;
   }
+
+  /**
+   * Get email.
+   */
+  function getAccountEmail() {
+    return $this->userData()->mail;
+  }
 }
