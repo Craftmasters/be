@@ -33,3 +33,186 @@ function bullseye_leads_permission() {
     ),
   );
 }
+
+/**
+ * A helper function to import employee.
+ *
+ * @param array $rows
+ *   The data from the csv file.
+ *
+ * @param array $company
+ *   The company entity id.
+ */
+function bullseye_leads_import($rows, $company) {
+  // Initialize archerJordan class.
+  $aj = new ArcherJordan();
+
+  foreach ($rows as $row) {
+    try {
+      $employee_id    = trim($row[0]);
+      $lastname       = trim($row[1]);
+      $firstname      = trim($row[2]);
+      $middle_initial = trim($row[3]);
+      $date_of_hire   = trim($row[4]);
+      // Set the hire date.
+      // Replace - with / to avoid error.
+      $hire_date = new DateTime(str_replace('-', '/', $date_of_hire));
+      $hired_date = $hire_date->format('Y-m-d H:i:s');
+
+      $gender         = trim($row[5]);
+      if (strtolower($gender) == 'm' || strtolower($gender) == 'male') {
+        $gender = 'male';
+      }
+      if (strtolower($gender) == 'f' || strtolower($gender) == 'female') {
+        $gender = 'female';
+      }
+
+      $ssn            = trim($row[6]);
+      $street_address = trim($row[7]);
+      $city           = trim($row[8]);
+      $state          = trim($row[9]);
+      $zip            = trim($row[10]);
+      $mobile_phone   = trim($row[11]);
+      $email_address  = (!empty(trim($row[12]))) ? trim($row[12]) : $aj->randChars() . '@gmail.com';
+      $date_of_birth  = trim($row[13]);
+      // Set the birth date.
+      $bday = new DateTime(str_replace('-', '/', $date_of_birth));
+      $dob = $bday->format('Y-m-d H:i:s');
+
+      $marital_status = trim($row[14]);
+      // Determine the marital status.
+      if (strtolower($marital_status) == 'm' || strtolower($marital_status) == 'married') {
+        $marital_status = 'married';
+      }
+      if (strtolower($marital_status) == 's' || strtolower($marital_status) == 'single') {
+        $marital_status = 'single';
+      }
+
+      $office_loc     = trim($row[15]);
+      $position       = trim($row[16]);
+      // Determine the position.
+      if ($position == 'Role Player') {
+        $position = 'role_player';
+      }
+      elseif ($position == 'Supervisor') {
+        $position = 'supervisor';
+      }
+      else {
+        $position = 'manager';
+      }
+
+      // Extract the email.
+      $email = explode('@', $email_address);
+
+      if (empty($middle_initial)) {
+        $name = ucwords(strtolower($firstname)) . ' ' . ucwords(strtolower($lastname));
+      }
+      else {
+        $name = ucwords(strtolower($firstname)) . ' ' . ucfirst($middle_initial) . ' ' . ucwords(strtolower($lastname));
+      }
+
+      //$employee_uid = $aj->getEmployeeId($name);
+      $employee_uid = $this->getUidBySsn($ssn);
+
+      // Get the state id.
+      $state_tid = NULL;
+      if (!empty($state)) {
+        $state_tid = $aj->getTermIdFromName($state, 'us_states');
+      }
+      $euid = $employee_uid;
+      // Run if the user doesn't exist.
+      if (!$employee_uid) {
+        $new_user = array(
+          'name' => strtolower($firstname) . '.' . strtolower(str_replace(' ', '.', $lastname)),
+          'mail' => $email_address,
+          'pass' => 'ch@ng3m3:' . $email[0],
+          'status' => 1,
+          'field_full_name' => array(
+            'und' => array(
+              0 => array(
+                'value' => $name,
+              ),
+            ),
+          ),
+          'field_employee_company_name' => array(
+            'und' => array(
+              0 => array(
+                'target_id' => (int) $company['entity_id'],
+              ),
+            ),
+          ),
+          'access' => REQUEST_TIME,
+          'roles' => array(
+            DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+            5 => 'employee',
+          ),
+        );
+
+        $user = user_save(NULL, $new_user);
+
+        $profile = profile2_create(array('type' => 'employee', 'uid' => $user->uid));
+        // Add in the necessary custom fields and values.
+        $profile->field_employeer[LANGUAGE_NONE][0]['target_id'] = (int) $company['entity_id'];
+        $profile->field_company_id[LANGUAGE_NONE][0]['value'] = $employee_id;
+        $profile->field_ssn[LANGUAGE_NONE][0]['value'] = $ssn;
+        $profile->field_street_address[LANGUAGE_NONE][0]['value'] = $street_address;
+        $profile->field_city[LANGUAGE_NONE][0]['value'] = $city;
+        if (!is_null($state_tid)) {
+          $profile->field_state[LANGUAGE_NONE][0]['tid'] = (int) $state_tid;
+        }
+        $profile->field_zip[LANGUAGE_NONE][0]['value'] = $zip;
+        $profile->field_gender[LANGUAGE_NONE][0]['value'] = $gender;
+        $profile->field_work_phone[LANGUAGE_NONE][0]['value'] = $mobile_phone;
+        $profile->field_date_of_hire[LANGUAGE_NONE][0]['value'] = $hired_date;
+        $profile->field_date_of_birth[LANGUAGE_NONE][0]['value'] = $dob;
+        $profile->field_marital_status[LANGUAGE_NONE][0]['value'] = $marital_status;
+        // $profile->field_location[LANGUAGE_NONE][0]['value'] = strtolower($office_loc);
+        $profile->field_office_location[LANGUAGE_NONE][0]['value'] = strtoupper($office_loc);
+        $profile->field_role_title[LANGUAGE_NONE][0]['value'] = $position;
+        $profile->field_firstname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($firstname));
+        $profile->field_lastname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($lastname));
+        $profile->field_middle_initial[LANGUAGE_NONE][0]['value'] = ucfirst($middle_initial);
+
+        // Save the profile2 to the user account.
+        profile2_save($profile);
+      }
+      else {
+        // Load user object.
+        $user = user_load($employee_uid);
+
+        $edit = array();
+        // Update some user property.
+        $edit['pass'] = 'ch@ng3m3';
+        $edit['field_full_name'][LANGUAGE_NONE][0]['value'] = $name;
+        $edit['field_employee_company_name'][LANGUAGE_NONE][0]['target_id'] = (int) $company['entity_id'];
+
+        // Save existing user.
+        user_save($user, $edit);
+
+        $profile = profile2_load_by_user($user->uid, 'employee');
+        $profile->field_company_id[LANGUAGE_NONE][0]['value'] = $employee_id;
+        $profile->field_work_phone[LANGUAGE_NONE][0]['value'] = $mobile_phone;
+        $profile->field_street_address[LANGUAGE_NONE][0]['value'] = $street_address;
+        $profile->field_city[LANGUAGE_NONE][0]['value'] = $city;
+        $profile->field_ssn[LANGUAGE_NONE][0]['value'] = $ssn;
+        if (!is_null($state_tid)) {
+          $profile->field_state[LANGUAGE_NONE][0]['tid'] = (int) $state_tid;
+        }
+        $profile->field_gender[LANGUAGE_NONE][0]['value'] = $gender;
+        $profile->field_date_of_hire[LANGUAGE_NONE][0]['value'] = $hired_date;
+        $profile->field_date_of_birth[LANGUAGE_NONE][0]['value'] = $dob;
+        $profile->field_marital_status[LANGUAGE_NONE][0]['value'] = $marital_status;
+        // $profile->field_location[LANGUAGE_NONE][0]['value'] = strtolower($office_loc);
+        $profile->field_office_location[LANGUAGE_NONE][0]['value'] = strtoupper($office_loc);
+        $profile->field_role_title[LANGUAGE_NONE][0]['value'] = $position;
+        $profile->field_firstname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($firstname));
+        $profile->field_lastname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($lastname));
+        $profile->field_middle_initial[LANGUAGE_NONE][0]['value'] = ucfirst($middle_initial);
+        profile2_save($profile);
+      }
+    }
+    catch (Exception $e) {
+      drupal_set_message(t('Error processing row.') . ' Error is: ' . $e);
+    }
+  }
+}
