@@ -2,3 +2,71 @@
 /**
  * BullsEye deploy module install file.
  */
+
+/**
+ * Implements hook_update_N().
+ *
+ * Install US states in States taxonomy.
+ */
+function bullseye_deploy_update_7000() {
+  $states = array(
+    'AL',
+    'AK',
+    'AZ',
+    'AR',
+    'CA',
+    'CO',
+    'CT',
+    'DE',
+    'DC',
+    'FL',
+    'GA',
+    'HI',
+    'ID',
+    'IL',
+    'IN',
+    'IA',
+    'KS',
+    'KY',
+    'LA',
+    'ME',
+    'MD',
+    'MA',
+    'MI',
+    'MN',
+    'MS',
+    'MO',
+    'MT',
+    'NE',
+    'NV',
+    'NH',
+    'NJ',
+    'NM',
+    'NY',
+    'NC',
+    'ND',
+    'OH',
+    'OK',
+    'OR',
+    'PA',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UT',
+    'VT',
+    'VA',
+    'WA',
+    'WV',
+    'WI',
+    'WY',
+  );
+
+  foreach($states as $state) {
+    $term = new stdClass();
+    $term->name = $state;
+    $term->vid = 2;
+    taxonomy_term_save($term);
+  }
+}
