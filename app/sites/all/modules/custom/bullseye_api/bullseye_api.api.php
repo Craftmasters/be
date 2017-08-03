@@ -14,4 +14,13 @@ class Bullseye {
     $this->user = $user;
     $this->uid = $user->uid;
   }
+
+  /**
+   * Return the user id.
+   */
+  function getUserId() {
+    return $this->uid;
+  }
+
+
 }
