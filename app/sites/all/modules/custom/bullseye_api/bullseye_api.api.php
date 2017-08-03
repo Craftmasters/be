@@ -25,7 +25,14 @@ class Bullseye {
   /**
    * Access account info.
    */
-  function userData {
+  function userData() {
     return $this->user;
+  }
+
+  /**
+   * Get user name.
+   */
+  function getAccountName() {
+    return $this->userData()->name;
   }
 }
