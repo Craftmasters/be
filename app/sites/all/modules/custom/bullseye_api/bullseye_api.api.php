@@ -22,5 +22,10 @@ class Bullseye {
     return $this->uid;
   }
 
-
+  /**
+   * Access account info.
+   */
+  function userData {
+    return $this->user;
+  }
 }
