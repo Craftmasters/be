@@ -1,0 +1,215 @@
+<?php
+/**
+ * Bullseye Leads module file.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_prospects_menu() {
+  $items = array();
+
+  $items['admin/content/prospects/import'] = array(
+    'title' => 'Import Prospects',
+    'description' => 'Import Prospects from CSV file.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_prospects_import_prospects'),
+    'access arguments' => array('import prospects'),
+    'file' => 'import.inc.php',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_prospects_permission() {
+  return array(
+    'import prospects' => array(
+      'title' => t('Import Prospects'),
+      'description' => t('Allow the role/s to import prospects via CSV.'),
+    ),
+  );
+}
+
+/**
+ * A helper function to import employee.
+ *
+ * @param array $rows
+ *   The data from the csv file.
+ *
+ * @param array $company
+ *   The company entity id.
+ */
+function bullseye_prospects_import($rows) {
+  global $user;
+
+  $rows = array_reverse($rows);
+
+  foreach ($rows as $row) {
+    try {
+
+      // Employee id.
+      $employee_id = trim($row[0]);
+      // Employee name.
+      $employee_name = trim($row[1]);
+      // Hours first period.
+      $first_period = (!empty(trim($row[2]))) ? trim($row[2]) : 0;
+      // Hours second period.
+      $second_period = (!empty(trim($row[3]))) ? trim($row[3]) : 0;
+      // Project code. Set to empty string if no value.
+      $project_code = (!empty(trim($row[4]))) ? trim($row[4]) : '';
+
+      // Get uid by name.
+      $employee_uid = $this->getEmployeeUIdByCompanyId($employee_id, $options['company']['entity_id']);
+
+      // Generate a unique chars.
+      $rand_chars = $this->randChars(8);
+
+      // Only create if the employee exist.
+      if ($employee_uid) {
+        // Employee name.
+        $employee_name = strtoupper($employee_name);
+        $name_extract = explode(',', $employee_name);
+        // Employee firstname.
+        $firstname = ucwords(strtolower($name_extract[1]));
+        // Employee lastname.
+        $lastname = ucfirst(strtolower($name_extract[0]));
+        // Merge the firstname and lastname.
+        $name = trim($firstname) . ' ' . trim($lastname);
+
+        // For first period.
+        if ($row[2] >= 0) {
+          $node = new stdClass();
+
+          $node->title = $employee_name;
+
+          $node->type = "hours";
+          node_object_prepare($node);
+          $node->language = LANGUAGE_NONE;
+          $node->uid = $user->uid;
+          $node->status = 1;
+          $node->promote = 0;
+          $node->comment = 0;
+
+          if ($employee_uid) {
+            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
+          }
+          if ($options['company']['entity_id']) {
+            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
+          }
+          if ($employee_id) {
+            $node->field_company_id[$node->language][0]['value'] = $employee_id;
+          }
+
+          $node->field_date_period[$node->language][0] = array(
+            'value' => $this->formatDate($options['span']['first_start_period']),
+            'value2' => $this->formatDate($options['span']['first_end_period']),
+          );
+
+          // Set the project code.
+          $node->field_project_code[$node->language][0]['value'] = $project_code;
+
+          // Set the total hours.
+          $node->field_total_hours[$node->language][0]['value'] = $first_period;
+
+          // Category.
+          $node->field_category[$node->language][0]['tid'] = 102;
+
+          // Span value.
+          $node->field_span[$node->language][0]['value'] = $options['period']['first_period'];
+
+          // Expenses.
+          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
+          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
+
+          // Unique Identifier.
+          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
+
+          $node = node_submit($node);
+          node_save($node);
+
+          // Write the unique identifier to our custom table.
+          $data = new stdClass();
+          $data->unique_identifier = $rand_chars;
+          drupal_write_record('monthly_benefits', $data);
+        }
+
+        // For second period.
+        if ($row[3] >= 0) {
+          $node = new stdClass();
+
+          $node->title = $employee_name;
+
+          $node->type = "hours";
+          node_object_prepare($node);
+          $node->language = LANGUAGE_NONE;
+          $node->uid = $user->uid;
+          $node->status = 1;
+          $node->promote = 0;
+          $node->comment = 0;
+
+          if ($employee_uid) {
+            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
+          }
+          if ($options['company']['entity_id']) {
+            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
+          }
+          if ($employee_id) {
+            $node->field_company_id[$node->language][0]['value'] = $employee_id;
+          }
+
+          $node->field_date_period[$node->language][0] = array(
+            'value' => $this->formatDate($options['span']['second_start_period']),
+            'value2' => $this->formatDate($options['span']['second_end_period']),
+          );
+
+          // Set the project code.
+          $node->field_project_code[$node->language][0]['value'] = $project_code;
+
+          // Set the total hours.
+          $node->field_total_hours[$node->language][0]['value'] = $second_period;
+
+          // Category.
+          $node->field_category[$node->language][0]['tid'] = 103;
+
+          // Span value.
+          $node->field_span[$node->language][0]['value'] = $options['period']['second_period'];
+
+          // Expenses.
+          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
+          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
+
+          // Unique Identifier.
+          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
+
+          $node = node_submit($node);
+          node_save($node);
+
+          // Write the unique identifier to our custom table.
+          $data = new stdClass();
+          $data->unique_identifier = $rand_chars;
+          drupal_write_record('monthly_benefits', $data);
+        }
+      }
+      else {
+        // Employee name.
+        $employee_name = strtoupper($employee_name);
+        $name_extract = explode(',', $employee_name);
+        // Employee firstname.
+        $firstname = ucwords(strtolower($name_extract[1]));
+        // Employee lastname.
+        $lastname = ucfirst(strtolower($name_extract[0]));
+        // Merge the firstname and lastname.
+        $name = trim($firstname) . ' ' . trim($lastname);
+
+        drupal_set_message(t('Employee ' . $name . ' does not exist in our system.'));
+      }
+    }
+    catch (Exception $e) {
+      drupal_set_message(t('Error processing row.') . ' Error is: ' . $e);
+    }
+  }
+}
