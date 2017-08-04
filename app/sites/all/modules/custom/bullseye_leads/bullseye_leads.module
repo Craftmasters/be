@@ -43,172 +43,169 @@ function bullseye_leads_permission() {
  * @param array $company
  *   The company entity id.
  */
-function bullseye_leads_import($rows, $company) {
-  // Initialize archerJordan class.
-  $aj = new ArcherJordan();
+function bullseye_leads_import($rows) {
+  global $user;
+
+  $rows = array_reverse($rows);
 
   foreach ($rows as $row) {
     try {
-      $employee_id    = trim($row[0]);
-      $lastname       = trim($row[1]);
-      $firstname      = trim($row[2]);
-      $middle_initial = trim($row[3]);
-      $date_of_hire   = trim($row[4]);
-      // Set the hire date.
-      // Replace - with / to avoid error.
-      $hire_date = new DateTime(str_replace('-', '/', $date_of_hire));
-      $hired_date = $hire_date->format('Y-m-d H:i:s');
 
-      $gender         = trim($row[5]);
-      if (strtolower($gender) == 'm' || strtolower($gender) == 'male') {
-        $gender = 'male';
-      }
-      if (strtolower($gender) == 'f' || strtolower($gender) == 'female') {
-        $gender = 'female';
-      }
+      // Employee id.
+      $employee_id = trim($row[0]);
+      // Employee name.
+      $employee_name = trim($row[1]);
+      // Hours first period.
+      $first_period = (!empty(trim($row[2]))) ? trim($row[2]) : 0;
+      // Hours second period.
+      $second_period = (!empty(trim($row[3]))) ? trim($row[3]) : 0;
+      // Project code. Set to empty string if no value.
+      $project_code = (!empty(trim($row[4]))) ? trim($row[4]) : '';
 
-      $ssn            = trim($row[6]);
-      $street_address = trim($row[7]);
-      $city           = trim($row[8]);
-      $state          = trim($row[9]);
-      $zip            = trim($row[10]);
-      $mobile_phone   = trim($row[11]);
-      $email_address  = (!empty(trim($row[12]))) ? trim($row[12]) : $aj->randChars() . '@gmail.com';
-      $date_of_birth  = trim($row[13]);
-      // Set the birth date.
-      $bday = new DateTime(str_replace('-', '/', $date_of_birth));
-      $dob = $bday->format('Y-m-d H:i:s');
+      // Get uid by name.
+      $employee_uid = $this->getEmployeeUIdByCompanyId($employee_id, $options['company']['entity_id']);
 
-      $marital_status = trim($row[14]);
-      // Determine the marital status.
-      if (strtolower($marital_status) == 'm' || strtolower($marital_status) == 'married') {
-        $marital_status = 'married';
-      }
-      if (strtolower($marital_status) == 's' || strtolower($marital_status) == 'single') {
-        $marital_status = 'single';
-      }
+      // Generate a unique chars.
+      $rand_chars = $this->randChars(8);
 
-      $office_loc     = trim($row[15]);
-      $position       = trim($row[16]);
-      // Determine the position.
-      if ($position == 'Role Player') {
-        $position = 'role_player';
-      }
-      elseif ($position == 'Supervisor') {
-        $position = 'supervisor';
-      }
-      else {
-        $position = 'manager';
-      }
+      // Only create if the employee exist.
+      if ($employee_uid) {
+        // Employee name.
+        $employee_name = strtoupper($employee_name);
+        $name_extract = explode(',', $employee_name);
+        // Employee firstname.
+        $firstname = ucwords(strtolower($name_extract[1]));
+        // Employee lastname.
+        $lastname = ucfirst(strtolower($name_extract[0]));
+        // Merge the firstname and lastname.
+        $name = trim($firstname) . ' ' . trim($lastname);
 
-      // Extract the email.
-      $email = explode('@', $email_address);
+        // For first period.
+        if ($row[2] >= 0) {
+          $node = new stdClass();
 
-      if (empty($middle_initial)) {
-        $name = ucwords(strtolower($firstname)) . ' ' . ucwords(strtolower($lastname));
-      }
-      else {
-        $name = ucwords(strtolower($firstname)) . ' ' . ucfirst($middle_initial) . ' ' . ucwords(strtolower($lastname));
-      }
+          $node->title = $employee_name;
 
-      //$employee_uid = $aj->getEmployeeId($name);
-      $employee_uid = $this->getUidBySsn($ssn);
+          $node->type = "hours";
+          node_object_prepare($node);
+          $node->language = LANGUAGE_NONE;
+          $node->uid = $user->uid;
+          $node->status = 1;
+          $node->promote = 0;
+          $node->comment = 0;
 
-      // Get the state id.
-      $state_tid = NULL;
-      if (!empty($state)) {
-        $state_tid = $aj->getTermIdFromName($state, 'us_states');
-      }
-      $euid = $employee_uid;
-      // Run if the user doesn't exist.
-      if (!$employee_uid) {
-        $new_user = array(
-          'name' => strtolower($firstname) . '.' . strtolower(str_replace(' ', '.', $lastname)),
-          'mail' => $email_address,
-          'pass' => 'ch@ng3m3:' . $email[0],
-          'status' => 1,
-          'field_full_name' => array(
-            'und' => array(
-              0 => array(
-                'value' => $name,
-              ),
-            ),
-          ),
-          'field_employee_company_name' => array(
-            'und' => array(
-              0 => array(
-                'target_id' => (int) $company['entity_id'],
-              ),
-            ),
-          ),
-          'access' => REQUEST_TIME,
-          'roles' => array(
-            DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-            5 => 'employee',
-          ),
-        );
+          if ($employee_uid) {
+            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
+          }
+          if ($options['company']['entity_id']) {
+            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
+          }
+          if ($employee_id) {
+            $node->field_company_id[$node->language][0]['value'] = $employee_id;
+          }
 
-        $user = user_save(NULL, $new_user);
+          $node->field_date_period[$node->language][0] = array(
+            'value' => $this->formatDate($options['span']['first_start_period']),
+            'value2' => $this->formatDate($options['span']['first_end_period']),
+          );
 
-        $profile = profile2_create(array('type' => 'employee', 'uid' => $user->uid));
-        // Add in the necessary custom fields and values.
-        $profile->field_employeer[LANGUAGE_NONE][0]['target_id'] = (int) $company['entity_id'];
-        $profile->field_company_id[LANGUAGE_NONE][0]['value'] = $employee_id;
-        $profile->field_ssn[LANGUAGE_NONE][0]['value'] = $ssn;
-        $profile->field_street_address[LANGUAGE_NONE][0]['value'] = $street_address;
-        $profile->field_city[LANGUAGE_NONE][0]['value'] = $city;
-        if (!is_null($state_tid)) {
-          $profile->field_state[LANGUAGE_NONE][0]['tid'] = (int) $state_tid;
+          // Set the project code.
+          $node->field_project_code[$node->language][0]['value'] = $project_code;
+
+          // Set the total hours.
+          $node->field_total_hours[$node->language][0]['value'] = $first_period;
+
+          // Category.
+          $node->field_category[$node->language][0]['tid'] = 102;
+
+          // Span value.
+          $node->field_span[$node->language][0]['value'] = $options['period']['first_period'];
+
+          // Expenses.
+          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
+          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
+
+          // Unique Identifier.
+          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
+
+          $node = node_submit($node);
+          node_save($node);
+
+          // Write the unique identifier to our custom table.
+          $data = new stdClass();
+          $data->unique_identifier = $rand_chars;
+          drupal_write_record('monthly_benefits', $data);
         }
-        $profile->field_zip[LANGUAGE_NONE][0]['value'] = $zip;
-        $profile->field_gender[LANGUAGE_NONE][0]['value'] = $gender;
-        $profile->field_work_phone[LANGUAGE_NONE][0]['value'] = $mobile_phone;
-        $profile->field_date_of_hire[LANGUAGE_NONE][0]['value'] = $hired_date;
-        $profile->field_date_of_birth[LANGUAGE_NONE][0]['value'] = $dob;
-        $profile->field_marital_status[LANGUAGE_NONE][0]['value'] = $marital_status;
-        // $profile->field_location[LANGUAGE_NONE][0]['value'] = strtolower($office_loc);
-        $profile->field_office_location[LANGUAGE_NONE][0]['value'] = strtoupper($office_loc);
-        $profile->field_role_title[LANGUAGE_NONE][0]['value'] = $position;
-        $profile->field_firstname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($firstname));
-        $profile->field_lastname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($lastname));
-        $profile->field_middle_initial[LANGUAGE_NONE][0]['value'] = ucfirst($middle_initial);
 
-        // Save the profile2 to the user account.
-        profile2_save($profile);
+        // For second period.
+        if ($row[3] >= 0) {
+          $node = new stdClass();
+
+          $node->title = $employee_name;
+
+          $node->type = "hours";
+          node_object_prepare($node);
+          $node->language = LANGUAGE_NONE;
+          $node->uid = $user->uid;
+          $node->status = 1;
+          $node->promote = 0;
+          $node->comment = 0;
+
+          if ($employee_uid) {
+            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
+          }
+          if ($options['company']['entity_id']) {
+            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
+          }
+          if ($employee_id) {
+            $node->field_company_id[$node->language][0]['value'] = $employee_id;
+          }
+
+          $node->field_date_period[$node->language][0] = array(
+            'value' => $this->formatDate($options['span']['second_start_period']),
+            'value2' => $this->formatDate($options['span']['second_end_period']),
+          );
+
+          // Set the project code.
+          $node->field_project_code[$node->language][0]['value'] = $project_code;
+
+          // Set the total hours.
+          $node->field_total_hours[$node->language][0]['value'] = $second_period;
+
+          // Category.
+          $node->field_category[$node->language][0]['tid'] = 103;
+
+          // Span value.
+          $node->field_span[$node->language][0]['value'] = $options['period']['second_period'];
+
+          // Expenses.
+          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
+          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
+
+          // Unique Identifier.
+          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
+
+          $node = node_submit($node);
+          node_save($node);
+
+          // Write the unique identifier to our custom table.
+          $data = new stdClass();
+          $data->unique_identifier = $rand_chars;
+          drupal_write_record('monthly_benefits', $data);
+        }
       }
       else {
-        // Load user object.
-        $user = user_load($employee_uid);
+        // Employee name.
+        $employee_name = strtoupper($employee_name);
+        $name_extract = explode(',', $employee_name);
+        // Employee firstname.
+        $firstname = ucwords(strtolower($name_extract[1]));
+        // Employee lastname.
+        $lastname = ucfirst(strtolower($name_extract[0]));
+        // Merge the firstname and lastname.
+        $name = trim($firstname) . ' ' . trim($lastname);
 
-        $edit = array();
-        // Update some user property.
-        $edit['pass'] = 'ch@ng3m3';
-        $edit['field_full_name'][LANGUAGE_NONE][0]['value'] = $name;
-        $edit['field_employee_company_name'][LANGUAGE_NONE][0]['target_id'] = (int) $company['entity_id'];
-
-        // Save existing user.
-        user_save($user, $edit);
-
-        $profile = profile2_load_by_user($user->uid, 'employee');
-        $profile->field_company_id[LANGUAGE_NONE][0]['value'] = $employee_id;
-        $profile->field_work_phone[LANGUAGE_NONE][0]['value'] = $mobile_phone;
-        $profile->field_street_address[LANGUAGE_NONE][0]['value'] = $street_address;
-        $profile->field_city[LANGUAGE_NONE][0]['value'] = $city;
-        $profile->field_ssn[LANGUAGE_NONE][0]['value'] = $ssn;
-        if (!is_null($state_tid)) {
-          $profile->field_state[LANGUAGE_NONE][0]['tid'] = (int) $state_tid;
-        }
-        $profile->field_gender[LANGUAGE_NONE][0]['value'] = $gender;
-        $profile->field_date_of_hire[LANGUAGE_NONE][0]['value'] = $hired_date;
-        $profile->field_date_of_birth[LANGUAGE_NONE][0]['value'] = $dob;
-        $profile->field_marital_status[LANGUAGE_NONE][0]['value'] = $marital_status;
-        // $profile->field_location[LANGUAGE_NONE][0]['value'] = strtolower($office_loc);
-        $profile->field_office_location[LANGUAGE_NONE][0]['value'] = strtoupper($office_loc);
-        $profile->field_role_title[LANGUAGE_NONE][0]['value'] = $position;
-        $profile->field_firstname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($firstname));
-        $profile->field_lastname[LANGUAGE_NONE][0]['value'] = ucwords(strtolower($lastname));
-        $profile->field_middle_initial[LANGUAGE_NONE][0]['value'] = ucfirst($middle_initial);
-        profile2_save($profile);
+        drupal_set_message(t('Employee ' . $name . ' does not exist in our system.'));
       }
     }
     catch (Exception $e) {
