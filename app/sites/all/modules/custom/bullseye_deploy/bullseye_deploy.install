@@ -79,3 +79,17 @@ function bullseye_deploy_update_7001() {
     'adminimal_admin_menu',
   ), TRUE);
 }
+
+/**
+ * Enable Adminimal theme.
+ */
+function bullseye_deploy_update_7002() {
+  theme_enable(array('adminimal'));
+}
+
+/**
+ * Set Adminimal theme as admin theme.
+ */
+function bullseye_deploy_update_7003() {
+  variable_set('admin_theme', 'adminimal');
+}
