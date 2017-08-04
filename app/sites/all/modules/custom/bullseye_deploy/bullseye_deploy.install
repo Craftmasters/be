@@ -70,3 +70,12 @@ function bullseye_deploy_update_7000() {
     taxonomy_term_save($term);
   }
 }
+
+/**
+ * Enable Adminimal menu module.
+ */
+function bullseye_deploy_update_7001() {
+  module_enable(array(
+    'adminimal_admin_menu',
+  ), TRUE);
+}
