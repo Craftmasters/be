@@ -41,8 +41,8 @@ function site_configuration_strongarm() {
     'default_logo' => 0,
     'logo_path' => 'sites/all/themes/bullseye/logo.svg',
     'logo_upload' => '',
-    'default_favicon' => 1,
-    'favicon_path' => '',
+    'default_favicon' => 0,
+    'favicon_path' => 'sites/all/themes/bullseye/favicon.ico',
     'favicon_upload' => '',
     'bootstrap__active_tab' => 'edit-general',
     'bootstrap_fluid_container' => 0,
@@ -119,6 +119,7 @@ function site_configuration_strongarm() {
     'bootstrap_cdn_custom_js_min' => 'https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js',
     'bootstrap_cdn_jsdelivr_version' => '3.3.5',
     'bootstrap_cdn_jsdelivr_theme' => 'bootstrap',
+    'favicon_mimetype' => 'image/vnd.microsoft.icon',
   );
   $export['theme_bullseye_settings'] = $strongarm;
 
