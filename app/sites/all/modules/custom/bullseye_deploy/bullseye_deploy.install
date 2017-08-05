@@ -103,3 +103,54 @@ function bullseye_deploy_update_7004() {
     'site_configuration',
   ), TRUE);
 }
+
+/**
+ * Disable default drupal core blocks.
+ */
+function bullseye_deploy_update_7005() {
+
+// Disable search block.
+  db_update('block')
+    ->fields(array(
+      'status' => 0,
+      'weight' => 0,
+      'region' => 'disabled',
+    ))
+    ->condition('module', 'search')
+    ->condition('delta', 'form')
+    ->execute();
+
+  // Disable powered by Drupal block.
+  db_update('block')
+    ->fields(array(
+      'status' => 0,
+      'weight' => 0,
+      'region' => 'disabled',
+    ))
+    ->condition('module', 'system')
+    ->condition('delta', 'powered-by')
+    ->execute();
+
+  // Disable system help block.
+  db_update('block')
+    ->fields(array(
+      'status' => 0,
+      'weight' => 0,
+      'region' => 'disabled',
+    ))
+    ->condition('module', 'system')
+    ->condition('delta', 'help')
+    ->execute();
+
+  // Disable Drupal navigation block.
+  db_update('block')
+    ->fields(array(
+      'status' => 0,
+      'weight' => 0,
+      'region' => 'disabled',
+    ))
+    ->condition('module', 'system')
+    ->condition('delta', 'navigation')
+    ->execute();
+    
+}
