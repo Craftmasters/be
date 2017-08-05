@@ -1,0 +1,12 @@
+name = Site Configuration
+description = All site configuration variables to be put here
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = admin_theme
+features[variable][] = node_admin_theme
+features[variable][] = theme_bullseye_settings
