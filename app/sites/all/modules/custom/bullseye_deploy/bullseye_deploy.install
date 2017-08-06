@@ -154,3 +154,24 @@ function bullseye_deploy_update_7005() {
     ->execute();
     
 }
+
+/**
+ * Enable context modules.
+ */
+function bullseye_deploy_update_7006() {
+  module_enable(array(
+    'context',
+    'context_ui',
+    'context_layouts',
+    'context_layout',
+  ), TRUE);
+}
+
+/**
+ * Enable BullsEye Blocks modules.
+ */
+function bullseye_deploy_update_7007() {
+  module_enable(array(
+    'bullseye_blocks',
+  ), TRUE);
+}

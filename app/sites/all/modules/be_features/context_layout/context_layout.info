@@ -1,0 +1,10 @@
+name = Context Layout
+description = All context components to be put here.
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+dependencies[] = context
+dependencies[] = ctools
+features[context][] = sitewide_blocks
+features[ctools][] = context:context:3
+features[features_api][] = api:2

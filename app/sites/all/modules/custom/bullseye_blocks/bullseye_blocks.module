@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @file
+ * Author: Ruthie Hallarsis
+ * Description: Module for custom BullsEye blocks.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function bullseye_blocks_theme() {
+  // Init vars.
+  $template_path = drupal_get_path('module', 'bullseye_blocks') . '/templates';
+
+  // Return theme definitions.
+  return array(
+
+    // Top Header Block.
+    'be_top_header' => array(
+      'variables' => array(),
+      'template' => 'be-top-header',
+      'path' => $template_path,
+    ),
+
+    // Bottom Header Block.
+    'be_bottom_header' => array(
+      'variables' => array(),
+      'template' => 'be-bottom-header',
+      'path' => $template_path,
+    ),
+
+  );
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function bullseye_blocks_block_info() {
+  // Init vars.
+  $blocks = array();
+
+  // Top Header Block.
+  $blocks['be_top_header'] = array(
+    'info' => t('Top Header'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Bottom Header Block.
+  $blocks['be_top_header'] = array(
+    'info' => t('Top Header'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Return block definitions.
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function bullseye_blocks_block_view($delta = '') {
+
+  // Init vars.
+  $block = array();
+
+  // Get block helpers file.
+  module_load_include('inc', 'bullseye_blocks', 'bullseye_blocks.blocks');
+
+  // Based on the delta, get the approdiate render block.
+  $function = 'bullseye_blocks_render_' . $delta;
+
+  // Get block content.
+  $block = $function();
+  
+  return $block;
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function bullseye_blocks_preprocess_block(&$variables) {
+
+  // Define block column classes for bullseye_blocks.
+  if ($variables['block']->module == 'bullseye_blocks') {
+
+  }
+  
+}

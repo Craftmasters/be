@@ -1,0 +1,5 @@
+name = "BullsEye Custom Blocks"
+description = "Custom made blocks for BullsEye"
+core = 7.x
+package = BullsEye
+version = 7.x-1.0

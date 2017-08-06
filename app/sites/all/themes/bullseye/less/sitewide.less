@@ -1,6 +1,8 @@
 body {
   font-family: 'Proximanova-Medium';
   font-size: 16px;
+  background-color: @content_background_color;
+  color: @dark_gray;
 }
 
 a {
@@ -10,7 +12,6 @@ a {
 /*
  * Left Sidebar.
  */
-
   .left-sidebar {
     position: relative;
     height: 100vh;
@@ -42,4 +43,33 @@ a {
     img {
       width: 150px;
     }
+  }
+
+/*
+ * Right Content.
+ */
+	.right-content {
+   	padding: 0px;
+  }
+
+/*
+ * Main Content Region.
+ */
+	.content-region {
+   	padding: 20px;
+  }
+
+
+/*
+ * Top Header.
+ */
+	.top-header {
+   	background-color: @orange;
+   	min-height: 50px;
+  }
+
+  .bottom-header {
+   	background-color: @bottom_header_background;
+   	min-height: 50px;
+   	border-bottom: 1px solid @bottom_header_border_color;
   }
