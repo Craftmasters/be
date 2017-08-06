@@ -1,0 +1,26 @@
+body {
+  font-family: 'Proximanova-Medium';
+  font-size: 16px;
+  background-color: @content_background_color;
+  color: @dark_gray;
+}
+
+a {
+  display: inline-block;
+  &:focus,
+  &:active,
+  &:visited,
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+img[src*=".svg"] {
+  min-width: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 0px;
+  display: block;
+  margin: 0px;
+}

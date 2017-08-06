@@ -1,24 +1,26 @@
-body {
-  font-family: 'Proximanova-Medium';
-  font-size: 16px;
-  background-color: @content_background_color;
-  color: @dark_gray;
-}
+/*
+ * Pre-defined classes.
+ */
+	.horizontal-list {
+	  padding: 0px;
+	  margin: 0px;
+	  list-style-type: none;
+	  list-style: none;
+	  li {
+	    padding: 0px;
+	    margin: 0px;
+	    display: inline-block;
+	    list-style-type: none;
+	  	list-style: none;
+	  }
+	}
+	.be-hide {
+		display: none;
+	}
 
-a {
-  display: inline-block;
-  &:focus,
-  &:active,
-  &:visited {
-  	text-decoration: none;
-  }
-}
-
-h1, h2, h3, h4, h5, h6 {
-	padding: 0px;
-	display: block;
-	margin: 0px;
-}
+	.be-show {
+		display: block;
+	}
 
 /*
  * Left Sidebar.
@@ -70,7 +72,6 @@ h1, h2, h3, h4, h5, h6 {
    	padding: 20px;
   }
 
-
 /*
  * Top Header.
  */
@@ -78,7 +79,86 @@ h1, h2, h3, h4, h5, h6 {
    	background-color: @orange;
   }
 
-  
+  .top-header-inner {
+   	height: @top_header_height;
+  }
+
+  ul.top-header-icons {
+  	display: inline-block;
+  	height: @top_header_height;
+  	text-align: right;
+  	width: 100%;
+  	li {
+  		position: relative;
+  		float: right;
+  		border-left: 1px solid @top_header_border_color;
+  	}
+  	a {
+  		display: inline-block;
+  		width: 100%;
+  		height: @top_header_height;
+  		line-height: @top_header_height;
+  		padding: 0px 23px;
+  		&:hover {
+  			background-color: @orange + 30;
+  		}
+  	}
+  	img.be-icon {
+  		height: 24px;
+  	}
+  	img.user-pic {
+  		height: 41px;
+  		vertical-align: middle;
+  	}
+  	span.user-name {
+  		font-family: 'Lato-Bold';
+  		font-size: 20px;
+  		color: #fff;
+  		vertical-align: middle;
+  	}
+  	i {
+  		margin: 0px 9px 0px 13px;
+	    position: relative;
+	    top: -3px;
+	    font-size: 18px;
+  	}
+  }
+
+  ul.top-header-ul-children {
+  	background-color: @blue_gray;
+  	position: absolute;
+  	margin: 0px;
+    padding: 0px;
+    text-align: left;
+    width: 200px;
+    li {
+    	border-left: none;
+    	width: 100%;
+    }
+    a {
+    	height: auto;
+    	line-height: normal;
+    	display: block;
+    	padding: 0px;
+    	color: #fff;
+    	font-family: 'Proximanova-Semibold';
+    	font-size: 17px;
+    	padding: 12px 25px;
+    	&:hover {
+  			background-color: @orange + 30;
+  		}
+    }
+  }
+
+  ul.top-header-icons {
+  	li:first-child {
+  		ul.top-header-ul-children {
+  			right: 0px;
+  			width: 100%;
+  		}
+  	}
+  }
+
 /*
  * Bottom Header.
  */
