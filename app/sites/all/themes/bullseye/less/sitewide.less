@@ -7,6 +7,17 @@ body {
 
 a {
   display: inline-block;
+  &:focus,
+  &:active,
+  &:visited {
+  	text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+	padding: 0px;
+	display: block;
+	margin: 0px;
 }
 
 /*
@@ -65,11 +76,23 @@ a {
  */
 	.top-header {
    	background-color: @orange;
-   	min-height: 50px;
   }
 
-  .bottom-header {
+  
+/*
+ * Bottom Header.
+ */
+ 	.bottom-header {
    	background-color: @bottom_header_background;
-   	min-height: 50px;
-   	border-bottom: 1px solid @bottom_header_border_color;
+   	border-bottom: 2px solid @bottom_header_border_color;
+   	padding: 13px 25px;
   }
+
+	h1.be-page-title {
+		color: @orange;
+		text-transform: uppercase;
+		font-family: 'Proximanova-Regular';
+		font-size: 29px;
+		display: inline-block;
+		vertical-align: middle;
+	}

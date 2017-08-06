@@ -16,9 +16,9 @@ function bullseye_blocks_render_be_top_header() {
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
 
-  $variables = array();
+  $vars = array();
 
-  $output = theme('be_top_header', $variables);
+  $output = theme('be_top_header', $vars);
 
   return array(
     'subject' => '',
@@ -36,9 +36,9 @@ function bullseye_blocks_render_be_bottom_header() {
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
 
-  $variables = array();
+  $vars = array();
 
-  $output = theme('be_bottom_header', $variables);
+  $output = theme('be_bottom_header', $vars);
 
   return array(
     'subject' => '',
