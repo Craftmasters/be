@@ -102,15 +102,23 @@
     </div>
   </div>
   <div class="col-md-10 right-content">
-    <?php print render($page['top_header']); ?>
-    <?php print render($page['bottom_header']); ?>
-    <?php print $messages; ?>
-    <?php print render($page['column_one']); ?>
-    <?php print render($page['column_two']); ?>
-    <?php print render($page['column_three']); ?>
-    <?php print render($page['column_four']); ?>
-    <?php print render($page['content']); ?>
-    <?php print render($page['footer']); ?>
+    <div class="top-header">
+      <?php print render($page['top_header']); ?>
+    </div>
+    <div class="bottom-header">
+      <?php print render($page['bottom_header']); ?>
+    </div>
+    <div class="content-region">
+      <?php print $messages; ?>
+      <?php print render($page['column_one']); ?>
+      <?php print render($page['column_two']); ?>
+      <?php print render($page['column_three']); ?>
+      <?php print render($page['column_four']); ?>
+      <?php print render($page['content']); ?>
+    </div>
+    <div class="footer-wrapper">
+      <?php print render($page['footer']); ?>
+    </div>
   </div>
 </div>
 
