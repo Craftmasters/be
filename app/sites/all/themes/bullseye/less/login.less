@@ -1,0 +1,90 @@
+.login {
+  background: url(../images/login.png) no-repeat;
+  background-size: cover;
+  label {
+    display: none;
+  }
+}
+
+.login-wrapper {
+  display: table;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.login-inner {
+  display: table-cell;
+  vertical-align: middle;
+  .logo-container {
+    img {
+      width: 240px;
+    }
+  }
+}
+
+.login-container {
+  width: 480px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 22px auto 30px;
+  padding: 35px 37px;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 9px;
+  p {
+    color: #fff - 20;
+    font-size: 16px;
+    font-family: 'Proximanova-Medium';
+    margin: 0px;
+    padding: 0px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 5px;
+  }
+  img {
+    width: 133px;
+    opacity: 0.8;
+  }
+}
+
+
+#user-login {
+  input[type="text"],
+  input[type="password"] {
+    background: transparent;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    font-family: 'Proximanova-Regular';
+    font-size: 16px;
+    color: #fff - 50;
+    text-align: center;
+    border-bottom: 2px solid @orange;
+    border-radius: 0px;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  #edit-actions {
+    text-align: center;
+    margin-top: 28px;
+    button {
+      background-color: @green;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-family: 'Proximanova-Bold';
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 47px;
+      &:hover {
+        background-color: @green - 20;
+      }
+      span.icon {
+        display: none;
+      }
+    }
+  }
+}

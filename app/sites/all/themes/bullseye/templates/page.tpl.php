@@ -74,52 +74,81 @@
  */
 ?>
 
-<div class="bullseye-wrapper">
-  <div class="col-md-2 left-sidebar">
-    <?php if ($logo): ?>
+<!-- Login Page -->
+<?php if ($login) : ?>
+  <div class="login-wrapper">
+    <div class="login-inner">
       <div class="logo-container">
-        <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-        </a>
+        <?php if ($logo): ?>
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo">
+            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" />
+          </a>
+        <?php endif; ?>
       </div>
-    <?php endif; ?>
-    <?php if (!empty($primary_nav) || !empty($secondary_nav)): ?>
-      <div class="navbar-collapse collapse" id="navbar-collapse">
-        <nav role="navigation">
-          <?php if (!empty($primary_nav)): ?>
-            <?php print render($primary_nav); ?>
-          <?php endif; ?>
-          <?php if (!empty($secondary_nav)): ?>
-            <?php print render($secondary_nav); ?>
-          <?php endif; ?>
-        </nav>
+      <div class="login-container">
+        
+        <?php print $messages; ?>
+        <?php print render($page['content']); ?>
       </div>
-    <?php endif; ?>
-    <?php print render($page['left_sidebar']); ?>
-    <div class="left-sidebar-footer">
-      <p><?php print t('Precision-built by'); ?></p>
-      <img src="<?php print $archerjordan_logo; ?>">
+      <div class="login-footer">
+        <p><?php print t('Precision-built by'); ?></p>
+        <a target="_blank" href="https://www.archerjordan.com/"><img src="<?php print $archerjordan_logo; ?>"></a>
+      </div>
     </div>
   </div>
-  <div class="col-md-10 right-content">
-    <div class="top-header">
-      <?php print render($page['top_header']); ?>
+
+<?php else : ?>
+
+  <div class="bullseye-wrapper">
+    <div class="col-md-2 left-sidebar">
+      <?php if ($logo): ?>
+        <div class="logo-container">
+          <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+          </a>
+        </div>
+      <?php endif; ?>
+      <?php if (!empty($primary_nav) || !empty($secondary_nav)): ?>
+        <div class="navbar-collapse collapse" id="navbar-collapse">
+          <nav role="navigation">
+            <?php if (!empty($primary_nav)): ?>
+              <?php print render($primary_nav); ?>
+            <?php endif; ?>
+            <?php if (!empty($secondary_nav)): ?>
+              <?php print render($secondary_nav); ?>
+            <?php endif; ?>
+          </nav>
+        </div>
+      <?php endif; ?>
+      <?php print render($page['left_sidebar']); ?>
+      <div class="left-sidebar-footer">
+        <p><?php print t('Precision-built by'); ?></p>
+        <img src="<?php print $archerjordan_logo; ?>">
+      </div>
     </div>
-    <div class="bottom-header">
-      <?php print render($page['bottom_header']); ?>
-    </div>
-    <div class="content-region">
-      <?php print $messages; ?>
-      <?php print render($page['column_one']); ?>
-      <?php print render($page['column_two']); ?>
-      <?php print render($page['column_three']); ?>
-      <?php print render($page['column_four']); ?>
-      <?php print render($page['content']); ?>
-    </div>
-    <div class="footer-wrapper">
-      <?php print render($page['footer']); ?>
+    <div class="col-md-10 right-content">
+      <div class="top-header">
+        <?php print render($page['top_header']); ?>
+      </div>
+      <div class="bottom-header">
+        <?php print render($page['bottom_header']); ?>
+      </div>
+      <div class="content-region">
+        <?php print $messages; ?>
+        <?php print render($page['column_one']); ?>
+        <?php print render($page['column_two']); ?>
+        <?php print render($page['column_three']); ?>
+        <?php print render($page['column_four']); ?>
+        <?php print render($page['content']); ?>
+      </div>
+      <div class="footer-wrapper">
+        <?php print render($page['footer']); ?>
+      </div>
     </div>
   </div>
-</div>
+
+<?php endif; ?>
+
+  
 
 
