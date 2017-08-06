@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16365.651 5035.21 40.628 40.628">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #b7b7b7;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_254" data-name="Group 254" transform="translate(15970 4735)">
+    <circle id="orange_circle" data-name="orange circle" class="cls-1" cx="20.314" cy="20.314" r="20.314" transform="translate(395.651 300.21)"/>
+    <g id="success" transform="translate(395 299.614)">
+      <path id="Path_153" data-name="Path 153" class="cls-2" d="M32.894,15.267,20.662,29.028l-7.369-5.9a.8.8,0,0,0-.994,1.243l7.959,6.367a.8.8,0,0,0,1.093-.093L34.084,16.324a.8.8,0,0,0-1.191-1.057Z" transform="translate(-2.449 -3.062)"/>
+    </g>
+  </g>
+</svg>
