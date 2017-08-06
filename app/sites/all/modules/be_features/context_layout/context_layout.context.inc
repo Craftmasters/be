@@ -23,7 +23,24 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_top_header' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_top_header',
+          'region' => 'top_header',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_bottom_header' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_bottom_header',
+          'region' => 'bottom_header',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 0;
 
   // Translatables

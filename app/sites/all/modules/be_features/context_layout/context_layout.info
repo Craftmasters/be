@@ -3,6 +3,7 @@ description = All context components to be put here.
 core = 7.x
 package = BullsEye
 version = 7.x-1.0
+dependencies[] = bullseye_blocks
 dependencies[] = context
 dependencies[] = ctools
 features[context][] = sitewide_blocks

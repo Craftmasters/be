@@ -48,8 +48,8 @@ function bullseye_blocks_block_info() {
   );
 
   // Bottom Header Block.
-  $blocks['be_top_header'] = array(
-    'info' => t('Top Header'),
+  $blocks['be_bottom_header'] = array(
+    'info' => t('Bottom Header'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
