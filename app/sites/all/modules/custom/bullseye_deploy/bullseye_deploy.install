@@ -175,3 +175,12 @@ function bullseye_deploy_update_7007() {
     'bullseye_blocks',
   ), TRUE);
 }
+
+/**
+ * Enable Anonymous login module.
+ */
+function bullseye_deploy_update_7008() {
+  module_enable(array(
+    'anonymous_login',
+  ), TRUE);
+}
