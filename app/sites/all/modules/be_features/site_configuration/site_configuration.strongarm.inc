@@ -29,8 +29,13 @@ function site_configuration_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'anonymous_login_paths';
   $strongarm->value = '*
-~user
-~user/*';
+~user/password
+~user/reset
+~user/reset/*
+~user/reset/*
+~user/reset/*/*
+~user/reset/*/*/*
+~user/reset/*/*/*/*';
   $export['anonymous_login_paths'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -82,16 +87,15 @@ function site_configuration_strongarm() {
     'bootstrap_navbar_position' => '',
     'bootstrap_navbar_inverse' => 0,
     'bootstrap_pager_first_and_last' => 1,
-    'bootstrap_region_well-navigation' => '',
-    'bootstrap_region_well-header' => '',
-    'bootstrap_region_well-highlighted' => '',
-    'bootstrap_region_well-help' => '',
+    'bootstrap_region_well-top_header' => '',
+    'bootstrap_region_well-bottom_header' => '',
+    'bootstrap_region_well-left_sidebar' => '',
+    'bootstrap_region_well-column_one' => '',
+    'bootstrap_region_well-column_two' => '',
+    'bootstrap_region_well-column_three' => '',
+    'bootstrap_region_well-column_four' => '',
     'bootstrap_region_well-content' => '',
-    'bootstrap_region_well-sidebar_first' => 'well',
-    'bootstrap_region_well-sidebar_second' => '',
     'bootstrap_region_well-footer' => '',
-    'bootstrap_region_well-page_top' => '',
-    'bootstrap_region_well-page_bottom' => '',
     'bootstrap_region_well-dashboard_main' => '',
     'bootstrap_region_well-dashboard_sidebar' => '',
     'bootstrap_region_well-dashboard_inactive' => '',

@@ -86,7 +86,6 @@
         <?php endif; ?>
       </div>
       <div class="login-container">
-        
         <?php print $messages; ?>
         <?php print render($page['content']); ?>
       </div>
@@ -96,7 +95,6 @@
       </div>
     </div>
   </div>
-
 <?php else : ?>
 
   <div class="bullseye-wrapper">
@@ -148,7 +146,3 @@
   </div>
 
 <?php endif; ?>
-
-  
-
-

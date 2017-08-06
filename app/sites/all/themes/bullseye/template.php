@@ -24,7 +24,8 @@ function bullseye_preprocess_html(&$variables, $hook) {
   // Add class to login and forgot password page.
   $login_page = (arg(0) == 'user' && arg(1) == 'login' && !user_is_logged_in());
   $forgot_password = (arg(0) == 'user' && arg(1) == 'password' && !user_is_logged_in());
-  if ($login_page || $forgot_password) {
+  $pass_reset = (arg(0) == 'user' && arg(1) == 'reset' && !user_is_logged_in());
+  if ($login_page || $forgot_password || $pass_reset) {
     $variables['classes_array'][] = 'login';
   }
 
@@ -51,7 +52,8 @@ function bullseye_preprocess_page(&$vars, $hook) {
   $vars['login'] = FALSE;
   $login_page = (arg(0) == 'user' && arg(1) == 'login'  && !user_is_logged_in());
   $forgot_password = (arg(0) == 'user' && arg(1) == 'password' && !user_is_logged_in());
-  if ($login_page || $forgot_password) {
+  $pass_reset = (arg(0) == 'user' && arg(1) == 'reset' && !user_is_logged_in());
+  if ($login_page || $forgot_password || $pass_reset) {
     $vars['login'] = TRUE;
   }
 }
@@ -74,6 +76,13 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       $form['pass']['#description'] = '';
       $form['pass']['#title'] = '';
       $form['pass']['#attributes']['placeholder'] = t('Password');
+      $form['forgot'] = array(
+        '#markup' => '<a href="/user/password">' . t('Forgot Password?') . '</a>',
+        '#weight' => 1000,
+      );
+      break;
+    case 'user_pass':
+      $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
       break;
     default:
       break;
