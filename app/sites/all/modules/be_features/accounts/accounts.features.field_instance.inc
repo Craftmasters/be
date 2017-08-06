@@ -47,6 +47,47 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_action_status'.
+  $field_instances['node-accounts-field_action_status'] = array(
+    'bundle' => 'accounts',
+    'default_value' => array(
+      0 => array(
+        'value' => 'send_email',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_action_status',
+    'label' => 'Action Status',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 14,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_company'.
   $field_instances['node-accounts-field_company'] = array(
     'bundle' => 'accounts',
@@ -367,6 +408,45 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_referral_partners'.
+  $field_instances['node-accounts-field_referral_partners'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_referral_partners',
+    'label' => 'Referral Partners',
+    'required' => FALSE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 16,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_type'.
   $field_instances['node-accounts-field_type'] = array(
     'bundle' => 'accounts',
@@ -490,9 +570,51 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_workflow_status'.
+  $field_instances['node-accounts-field_workflow_status'] = array(
+    'bundle' => 'accounts',
+    'default_value' => array(
+      0 => array(
+        'value' => 'engagement',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_workflow_status',
+    'label' => 'Workflow Status',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 15,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Account Status');
+  t('Action Status');
   t('Company');
   t('Details');
   t('Email');
@@ -501,9 +623,11 @@ function accounts_field_default_field_instances() {
   t('Middle Name');
   t('Mobile Phone');
   t('Position');
+  t('Referral Partners');
   t('Type');
   t('Value');
   t('Work Phone');
+  t('Workflow Status');
 
   return $field_instances;
 }
