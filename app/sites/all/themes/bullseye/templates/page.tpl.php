@@ -77,9 +77,11 @@
 <div class="bullseye-wrapper">
   <div class="col-md-2 left-sidebar">
     <?php if ($logo): ?>
-      <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
-        <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-      </a>
+      <div class="logo-container">
+        <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+        </a>
+      </div>
     <?php endif; ?>
     <?php if (!empty($primary_nav) || !empty($secondary_nav)): ?>
       <div class="navbar-collapse collapse" id="navbar-collapse">
@@ -94,6 +96,10 @@
       </div>
     <?php endif; ?>
     <?php print render($page['left_sidebar']); ?>
+    <div class="left-sidebar-footer">
+      <p><?php print t('Precision-built by'); ?></p>
+      <img src="<?php print $archerjordan_logo; ?>">
+    </div>
   </div>
   <div class="col-md-10 right-content">
     <?php print render($page['top_header']); ?>
