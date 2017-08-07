@@ -76,10 +76,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       $form['pass']['#description'] = '';
       $form['pass']['#title'] = '';
       $form['pass']['#attributes']['placeholder'] = t('Password');
-      $form['forgot'] = array(
-        '#markup' => '<a href="/user/password">' . t('Forgot Password?') . '</a>',
-        '#weight' => 1000,
-      );
       break;
     case 'user_pass':
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
