@@ -88,7 +88,6 @@
       <div class="login-container">
         <?php print $messages; ?>
         <?php print render($page['content']); ?>
-        <a href="/user/password" class="forgot-pass"><?php print t('Forgot Password?'); ?></a>
       </div>
       <div class="login-footer">
         <p><?php print t('Precision-built by'); ?></p>
