@@ -184,3 +184,13 @@ function bullseye_deploy_update_7008() {
     'anonymous_login',
   ), TRUE);
 }
+
+/**
+ * Enable Superfish and menu_import module.
+ */
+function bullseye_deploy_update_7009() {
+  module_enable(array(
+    'superfish',
+    'menu_import',
+  ), TRUE);
+}

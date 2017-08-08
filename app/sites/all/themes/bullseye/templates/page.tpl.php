@@ -106,19 +106,9 @@
           </a>
         </div>
       <?php endif; ?>
-      <?php if (!empty($primary_nav) || !empty($secondary_nav)): ?>
-        <div class="navbar-collapse collapse" id="navbar-collapse">
-          <nav role="navigation">
-            <?php if (!empty($primary_nav)): ?>
-              <?php print render($primary_nav); ?>
-            <?php endif; ?>
-            <?php if (!empty($secondary_nav)): ?>
-              <?php print render($secondary_nav); ?>
-            <?php endif; ?>
-          </nav>
-        </div>
-      <?php endif; ?>
-      <?php print render($page['left_sidebar']); ?>
+      <div class="sidebar-menu-container">
+        <?php print render($page['left_sidebar']); ?>
+      </div>
       <div class="left-sidebar-footer">
         <p><?php print t('Precision-built by'); ?></p>
         <img src="<?php print $archerjordan_logo; ?>">

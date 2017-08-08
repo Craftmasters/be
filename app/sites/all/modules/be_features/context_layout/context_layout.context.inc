@@ -38,6 +38,12 @@ function context_layout_context_default_contexts() {
           'region' => 'bottom_header',
           'weight' => '-10',
         ),
+        'superfish-1' => array(
+          'module' => 'superfish',
+          'delta' => '1',
+          'region' => 'left_sidebar',
+          'weight' => '-10',
+        ),
       ),
     ),
   );
