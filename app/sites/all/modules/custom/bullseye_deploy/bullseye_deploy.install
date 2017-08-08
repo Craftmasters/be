@@ -210,5 +210,5 @@ function bullseye_deploy_update_7011() {
  * Install date module.
  */
 function bullseye_deploy_update_7012() {
-  module_enable(array('date_api', 'date'), TRUE);
+  module_enable(array('date_api', 'date', 'date_popup'), TRUE);
 }
