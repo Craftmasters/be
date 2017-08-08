@@ -26,8 +26,8 @@ function accounts_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'leads' => 'Leads',
-        'prospects' => 'Prospects',
+        'lead' => 'Lead',
+        'prospect' => 'Prospect',
         'opportunity' => 'Opportunity',
         'deal_in_progress' => 'Deal in Progress',
         'closed_deal' => 'Closed Deal',
@@ -55,6 +55,7 @@ function accounts_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         'send_email' => 'Send email campaign',
+        'verify_sca_dbra' => 'Verify SCA/DBRA',
       ),
       'allowed_values_function' => '',
     ),
@@ -121,6 +122,31 @@ function accounts_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
+  );
+
+  // Exported field_base: 'field_mandate_category'.
+  $field_bases['field_mandate_category'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mandate_category',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'sca' => 'SCA',
+        'dbra' => 'DBRA',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_middle_name'.
@@ -396,7 +422,7 @@ function accounts_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'account' => 'Account',
+        'accounts' => 'Account',
         'referral' => 'Referral Partner',
         'producers' => 'Producers',
       ),
@@ -482,6 +508,7 @@ function accounts_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         'engagement' => 'Engagement',
+        'verification' => 'Verification',
       ),
       'allowed_values_function' => '',
     ),
