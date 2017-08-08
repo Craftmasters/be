@@ -1,0 +1,13 @@
+Dashboard {"url":"<front>","options":{"attributes":{"class":["icon","be-meter"]},"item_attributes":{"id":"","class":"icon be-meter","style":""}},"weight":"-50"}
+Accounts {"url":"<front>","options":{"attributes":{"class":["icon","be-building"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-49"}
+-Leads {"url":"<front>","options":{"attributes":{"title":""}},"weight":"-50"}
+-Prospects {"url":"<front>","options":{"attributes":{"title":""}},"weight":"-49"}
+-Opportunities {"url":"<front>","options":{"attributes":{"title":""}},"weight":"-48"}
+-Deals in Progress {"url":"<front>","options":{"attributes":{"title":""}},"weight":"-47"}
+-Closed Deals {"url":"<front>","options":{"attributes":{"title":""}},"weight":"-46"}
+Calendar {"url":"<front>","options":{"attributes":{"class":["icon","be-calendar"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-48"}
+RFPs {"url":"<front>","options":{"attributes":{"class":["icon","be-checklist"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-47"}
+Proposals {"url":"<front>","options":{"attributes":{"class":["icon","be-document"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-46"}
+Producers {"url":"<front>","options":{"attributes":{"class":["icon","be-users"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-45"}
+Carriers {"url":"<front>","options":{"attributes":{"class":["icon","be-bag"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}
+Files {"url":"<front>","options":{"attributes":{"class":["icon","be-folder"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}

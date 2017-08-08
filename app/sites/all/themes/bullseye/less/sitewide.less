@@ -29,6 +29,8 @@
     position: relative;
     height: 100vh;
     background-color: @gray_sidebar_fill;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
   .logo-container {
@@ -58,12 +60,16 @@
     }
   }
 
-  .block-superfish {
+/*
+ * For the sidebar menu.
+ */
+	.block-superfish {
+		.block-title,
+		li.sf-clone-parent {
+			display: none;
+		}
   	li {
   		position: relative;
-  	}
-  	li.sf-clone-parent {
-  		display: none;
   	}
   	a.main-link {
   		background-color: #000;
