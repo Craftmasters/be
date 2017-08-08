@@ -52,14 +52,20 @@ function bullseye_leads_import($rows) {
     try {
 
       // Initialize the class.
-      $be = new Bullseye;
+      $be = new Bullseye($user);
 
       // Only create if the leads doesn't exist.
       if (!$be->accountExist(trim($row[22]))) {
 
         $node = new stdClass();
 
-        $node->title = trim($row[1]) . ' ' . trim($row[2]) . ' ' . trim($row[3]);
+        $prefix = ucfirst(trim($row[4]));
+        $first = ucfirst(trim($row[1]));
+        $middle = ucfirst(trim($row[2]));
+        $last = ucfirst(trim($row[3]));
+        $suffix = ucfirst(trim($row[5]));
+
+        $node->title = $prefix . ' ' . $first . ' ' . $middle . ' ' . $last . ' ' . $suffix;
         $node->type = "accounts";
         node_object_prepare($node);
         $node->language = LANGUAGE_NONE;
@@ -69,13 +75,15 @@ function bullseye_leads_import($rows) {
         $node->comment = 0;
 
         // Set the type field.
-        $node->accounts[$node->language][0]['value'] = trim($row[0]);
+        $account_type = trim($row[0]);
+        $account_type = strtolower($account_type);
+        $node->field_type[$node->language][0]['value'] = $account_type;
 
         // Set the firstname.
         $node->field_firstname[$node->language][0]['value'] = trim($row[1]);
 
         // Set the middlename.
-        $node->field_middle_name[$node->language][0]['value'] = trim($row[2]);
+        $node->field_middle_name[$node->language][0]['value'] = ucfirst(trim($row[2]));
 
         // Set the lastname.
         $node->field_lastname[$node->language][0]['value'] = trim($row[3]);
@@ -97,7 +105,7 @@ function bullseye_leads_import($rows) {
         $node->field_value[$node->language][0]['value'] = trim($row[8]);
 
         // Set the mandate category.
-        $node->field_mandate_category[$node->language][0]['value'] = trim($row[9]);
+        $node->field_mandate_category[$node->language][0]['value'] = strtolower(trim($row[9]));
 
         // Set the company.
         $node->field_company[$node->language][0]['value'] = trim($row[10]);
@@ -152,21 +160,23 @@ function bullseye_leads_import($rows) {
         $node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
 
         // Set the tags.
-        $tags = explode(' ', trim($row[27]));
-        foreach ($tags as $tag) {
-          $tid = $be->getTermId('tags', $tag);
-          if ($tid) {
-            $node->field_tags[$node->language][]['tid'] = $tid;
-          }
-          else {
-            // Create the term if it doesn't exist.
-            $term = new stdClass();
-            $term->name = $tag;
-            $term->vid = 1;
-            taxonomy_term_save($term);
-
+        if (!empty(trim($row[27]))) {
+          $tags = explode(' ', trim($row[27]));
+          foreach ($tags as $tag) {
             $tid = $be->getTermId('tags', $tag);
-            $node->field_tags[$node->language][]['tid'] = $tid;
+            if ($tid) {
+              $node->field_tags[$node->language][]['tid'] = (int) $tid;
+            }
+            else {
+              // Create the term if it doesn't exist.
+              $term = new stdClass();
+              $term->name = $tag;
+              $term->vid = 1;
+              taxonomy_term_save($term);
+
+              $tid = $be->getTermId('tags', $tag);
+              $node->field_tags[$node->language][]['tid'] = (int) $tid;
+            }
           }
         }
 
