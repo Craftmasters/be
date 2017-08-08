@@ -198,3 +198,10 @@ function bullseye_deploy_update_7009() {
 function bullseye_deploy_update_7010() {
   module_enable(array('bullseye_leads_view', 'bullseye_prospects_view'), TRUE);
 }
+
+/**
+ * Install User References module.
+ */
+function bullseye_deploy_update_7011() {
+  module_enable(array('user_reference'), TRUE);
+}
