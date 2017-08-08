@@ -90,7 +90,7 @@ class Bullseye {
    *   The email address of the account.
    */
   function accountExist($email) {
-    $query = db_select('node', 'n')
+    $query = db_select('node', 'n');
     $query->join('field_data_field_email', 'email', 'email.entity_id = n.nid');
     $email = $query
       ->fields('email', array('field_email_value'))
