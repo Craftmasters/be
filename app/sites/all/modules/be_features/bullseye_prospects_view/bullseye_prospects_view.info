@@ -1,0 +1,9 @@
+name = BullsEye Prospects View
+description = BullsEye prospects view page.
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = prospects
+features_exclude[dependencies][views] = views
