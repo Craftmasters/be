@@ -51,161 +51,150 @@ function bullseye_leads_import($rows) {
   foreach ($rows as $row) {
     try {
 
-      // Employee id.
-      $employee_id = trim($row[0]);
-      // Employee name.
-      $employee_name = trim($row[1]);
-      // Hours first period.
-      $first_period = (!empty(trim($row[2]))) ? trim($row[2]) : 0;
-      // Hours second period.
-      $second_period = (!empty(trim($row[3]))) ? trim($row[3]) : 0;
-      // Project code. Set to empty string if no value.
-      $project_code = (!empty(trim($row[4]))) ? trim($row[4]) : '';
+      $be = new Bullseye;
 
-      // Get uid by name.
-      $employee_uid = $this->getEmployeeUIdByCompanyId($employee_id, $options['company']['entity_id']);
+      // Only create if the leads doesn't exist.
+      if (!$leads_exist) {
 
-      // Generate a unique chars.
-      $rand_chars = $this->randChars(8);
+        $node = new stdClass();
 
-      // Only create if the employee exist.
-      if ($employee_uid) {
-        // Employee name.
-        $employee_name = strtoupper($employee_name);
-        $name_extract = explode(',', $employee_name);
-        // Employee firstname.
-        $firstname = ucwords(strtolower($name_extract[1]));
-        // Employee lastname.
-        $lastname = ucfirst(strtolower($name_extract[0]));
-        // Merge the firstname and lastname.
-        $name = trim($firstname) . ' ' . trim($lastname);
+        $node->title = $employee_name;
+        $node->type = "accounts";
+        node_object_prepare($node);
+        $node->language = LANGUAGE_NONE;
+        $node->uid = $user->uid;
+        $node->status = 1;
+        $node->promote = 0;
+        $node->comment = 0;
 
-        // For first period.
-        if ($row[2] >= 0) {
-          $node = new stdClass();
+        // Set the type field.
+        $node->accounts[$node->language][0]['value'] = trim($row[0]);
 
-          $node->title = $employee_name;
+        // Set the firstname.
+        $node->field_firstname[$node->language][0]['value'] = trim($row[1]);
 
-          $node->type = "hours";
-          node_object_prepare($node);
-          $node->language = LANGUAGE_NONE;
-          $node->uid = $user->uid;
-          $node->status = 1;
-          $node->promote = 0;
-          $node->comment = 0;
+        // Set the middlename.
+        $node->field_middle_name[$node->language][0]['value'] = trim($row[2]);
 
-          if ($employee_uid) {
-            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
+        // Set the lastname.
+        $node->field_lastname[$node->language][0]['value'] = trim($row[3]);
+
+        // Set the prefix.
+        $node->field_prefix[$node->language][0]['value'] = trim($row[4]);
+
+        // Set the suffix.
+        $node->field_suffix[$node->language][0]['value'] = trim($row[5]);
+
+        // Set the title.
+        $node->field_title[$node->language][0]['value'] = trim($row[6]);
+
+        // Set the details.
+        $node->field_details[$node->language][0]['value'] = trim($row[7]);
+        $node->field_details[$node->language][0]['#format'] = 'filtered_html';
+
+        // Set the value.
+        $node->field_value[$node->language][0]['value'] = trim($row[8]);
+
+        // Set the mandate category.
+        $node->field_mandate_category[$node->language][0]['value'] = trim($row[9]);
+
+        // Set the company.
+        $node->field_company[$node->language][0]['value'] = trim($row[10]);
+
+        // Set the business type.
+        $node->field_type_of_business[$node->language][0]['value'] = trim($row[11]);
+
+        // Set the owned by.
+        $node->field_owned_by[$node->language][0]['value'] = trim($row[12]);
+
+        // Set the source.
+        $node->field_source[$node->language][0]['value'] = trim($row[13]);
+
+        // Set the street.
+        $node->field_street[$node->language][0]['value'] = trim($row[14]);
+
+        // Set the city.
+        $node->field_city[$node->language][0]['value'] = trim($row[15]);
+
+        // Set the states term reference.
+        $tid = $be->getTermId('states', trim($row[17]));
+        $node->field_states[$node->language][0]['tid'] = (int) $tid;
+
+        // Set the state code.
+        $node->field_state_code[$node->language][0]['value'] = trim($row[17]);
+
+        // Set the state name.
+        $node->field_state[$node->language][0]['value'] = trim($row[18]);
+
+        // Set the postal code.
+        $node->field_postal_code[$node->language][0]['value'] = trim($row[19]);
+
+        // Set the work phone.
+        $node->field_work_phone[$node->language][0]['value'] = trim($row[20]);
+
+        // Set the mobile phone.
+        $node->field_mobile_phone[$node->language][0]['value'] = trim($row[21]);
+
+        // Set the email.
+        $node->field_email[$node->language][0]['value'] = trim($row[22]);
+
+        // Set the work website.
+        $node->field_work_website[$node->language][0]['value'] = trim($row[23]);
+
+        // Set the personal website.
+        $node->field_personal_website[$node->language][0]['value'] = trim($row[24]);
+
+        // Set the linkedin personal.
+        $node->field_linkedin_personal[$node->language][0]['value'] = trim($row[25]);
+
+        // Set the facebook personal.
+        $node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
+
+        // Set the tags.
+        $tags = explode(' ', trim($row[27]));
+        foreach ($tags as $tag) {
+          $tid = $be->getTermId('tags', $tag);
+          if ($tid) {
+            $node->field_tags[$node->language][]['tid'] = $tid;
           }
-          if ($options['company']['entity_id']) {
-            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
+          else {
+            // Create the term if it doesn't exist.
+            $term = new stdClass();
+            $term->name = $tag;
+            $term->vid = 1;
+            taxonomy_term_save($term);
+
+            $tid = $be->getTermId('tags', $tag);
+            $node->field_tags[$node->language][]['tid'] = $tid;
           }
-          if ($employee_id) {
-            $node->field_company_id[$node->language][0]['value'] = $employee_id;
-          }
-
-          $node->field_date_period[$node->language][0] = array(
-            'value' => $this->formatDate($options['span']['first_start_period']),
-            'value2' => $this->formatDate($options['span']['first_end_period']),
-          );
-
-          // Set the project code.
-          $node->field_project_code[$node->language][0]['value'] = $project_code;
-
-          // Set the total hours.
-          $node->field_total_hours[$node->language][0]['value'] = $first_period;
-
-          // Category.
-          $node->field_category[$node->language][0]['tid'] = 102;
-
-          // Span value.
-          $node->field_span[$node->language][0]['value'] = $options['period']['first_period'];
-
-          // Expenses.
-          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
-          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
-
-          // Unique Identifier.
-          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
-
-          $node = node_submit($node);
-          node_save($node);
-
-          // Write the unique identifier to our custom table.
-          $data = new stdClass();
-          $data->unique_identifier = $rand_chars;
-          drupal_write_record('monthly_benefits', $data);
         }
 
-        // For second period.
-        if ($row[3] >= 0) {
-          $node = new stdClass();
+        // Set the producers.
+        $node->field_producers[$node->language][0]['value'] = trim($row[28]);
 
-          $node->title = $employee_name;
+        // Set the referral partners.
+        $node->field_referral_partners[$node->language][0]['value'] = trim($row[29]);
 
-          $node->type = "hours";
-          node_object_prepare($node);
-          $node->language = LANGUAGE_NONE;
-          $node->uid = $user->uid;
-          $node->status = 1;
-          $node->promote = 0;
-          $node->comment = 0;
+        // Set the account status.
+        $account_status = trim($row[30]);
+        $account_status = strtolower($account_status);
+        $node->field_account_status[$node->language][0]['value'] = $account_status;
 
-          if ($employee_uid) {
-            $node->field_employee_name[$node->language][0]['target_id'] = $employee_uid;
-          }
-          if ($options['company']['entity_id']) {
-            $node->field_employee_company_name[$node->language][0]['target_id'] = $options['company']['entity_id'];
-          }
-          if ($employee_id) {
-            $node->field_company_id[$node->language][0]['value'] = $employee_id;
-          }
-
-          $node->field_date_period[$node->language][0] = array(
-            'value' => $this->formatDate($options['span']['second_start_period']),
-            'value2' => $this->formatDate($options['span']['second_end_period']),
-          );
-
-          // Set the project code.
-          $node->field_project_code[$node->language][0]['value'] = $project_code;
-
-          // Set the total hours.
-          $node->field_total_hours[$node->language][0]['value'] = $second_period;
-
-          // Category.
-          $node->field_category[$node->language][0]['tid'] = 103;
-
-          // Span value.
-          $node->field_span[$node->language][0]['value'] = $options['period']['second_period'];
-
-          // Expenses.
-          $node->field_expenses[$node->language][0]['value'] = $options['expenses'];
-          $node->field_expenses_description[$node->language][0]['value'] = $options['expenses_desc'];
-
-          // Unique Identifier.
-          $node->field_unique_identifier[$node->language][0]['value'] = $rand_chars;
-
-          $node = node_submit($node);
-          node_save($node);
-
-          // Write the unique identifier to our custom table.
-          $data = new stdClass();
-          $data->unique_identifier = $rand_chars;
-          drupal_write_record('monthly_benefits', $data);
+        // Set the workflow status and action status.
+        if ($account_status == 'lead') {
+          $node->field_workflow_status[$node->language][0]['value'] = 'verification';
+          $node->field_action_status[$node->language][0]['value'] = 'verify_sca_dbra';
         }
+        else {
+          $node->field_workflow_status[$node->language][0]['value'] = 'engagement';
+          $node->field_action_status[$node->language][0]['value'] = 'send_email';
+        }
+
+        $node = node_submit($node);
+        node_save($node);
       }
       else {
-        // Employee name.
-        $employee_name = strtoupper($employee_name);
-        $name_extract = explode(',', $employee_name);
-        // Employee firstname.
-        $firstname = ucwords(strtolower($name_extract[1]));
-        // Employee lastname.
-        $lastname = ucfirst(strtolower($name_extract[0]));
-        // Merge the firstname and lastname.
-        $name = trim($firstname) . ' ' . trim($lastname);
-
-        drupal_set_message(t('Employee ' . $name . ' does not exist in our system.'));
+        drupal_set_message(t('Account is already in our system.'));
       }
     }
     catch (Exception $e) {
