@@ -18,6 +18,20 @@ function bullseye_leads_import_leads($form, &$form_state) {
     '#markup' => '<h2>' . t('Import Leads') . '</h2>',
   );
 
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'leads' => t('Leads'),
+      'prospects' => t('Prospect'),
+    ),
+  );
+  $form['type'] = array(
+    '#title' => t('Account Type'),
+    '#type' => 'select',
+    '#description' => "Select the account type.",
+    '#options' => $form['type_options']['#value'],
+  );
+
   $form['csv_file'] = array(
     '#title' => t('Select File (CSV)'),
     '#type' => 'managed_file',
