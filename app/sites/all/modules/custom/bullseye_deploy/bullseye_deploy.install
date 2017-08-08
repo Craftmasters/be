@@ -152,7 +152,7 @@ function bullseye_deploy_update_7005() {
     ->condition('module', 'system')
     ->condition('delta', 'navigation')
     ->execute();
-    
+
 }
 
 /**
@@ -183,4 +183,11 @@ function bullseye_deploy_update_7008() {
   module_enable(array(
     'anonymous_login',
   ), TRUE);
+}
+
+/**
+ * Enable Views Bulk Operation module.
+ */
+function bullseye_deploy_update_7009() {
+  module_enable(array('views_bulk_operations'), TRUE);
 }
