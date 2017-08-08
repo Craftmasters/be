@@ -51,14 +51,15 @@ function bullseye_leads_import($rows) {
   foreach ($rows as $row) {
     try {
 
+      // Initialize the class.
       $be = new Bullseye;
 
       // Only create if the leads doesn't exist.
-      if (!$leads_exist) {
+      if (!$be->accountExist(trim($row[22]))) {
 
         $node = new stdClass();
 
-        $node->title = $employee_name;
+        $node->title = trim($row[1]) . ' ' . trim($row[2]) . ' ' . trim($row[3]);
         $node->type = "accounts";
         node_object_prepare($node);
         $node->language = LANGUAGE_NONE;
