@@ -205,3 +205,10 @@ function bullseye_deploy_update_7010() {
 function bullseye_deploy_update_7011() {
   module_enable(array('user_reference'), TRUE);
 }
+
+/**
+ * Install date module.
+ */
+function bullseye_deploy_update_7012() {
+  module_enable(array('date_api', 'date'), TRUE);
+}
