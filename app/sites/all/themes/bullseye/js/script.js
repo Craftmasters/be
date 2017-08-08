@@ -41,9 +41,12 @@
           $(this).parent().prepend(link);
           $(this).append('<i class="fa fa-sort-desc" aria-hidden="true"></i>');
           $(this).click(function() {
-            $('i.fa-sort-desc').removeClass('fa-sort-asc');
             $(this).find('i').toggleClass('fa-sort-asc');
           });
+        });
+
+        $('.block-superfish li.active-trail').each(function() {
+          $(this).addClass('sf-expanded');          
         });
 
       }

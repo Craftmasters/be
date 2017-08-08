@@ -27,10 +27,11 @@
  */
   .left-sidebar {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     background-color: @gray_sidebar_fill;
     padding-left: 0px;
     padding-right: 0px;
+    padding-bottom: 147px;
   }
 
   .logo-container {
@@ -71,21 +72,100 @@
   	li {
   		position: relative;
   	}
+  	a {
+  		color: @sidebar_menu_font_color;
+  		font-size: 17px;
+  		font-family: 'Proximanova-Regular';
+  		padding: 18px 20px 18px 60px;
+  		border-left: 4px solid @gray_sidebar_fill;
+  		&.active {
+  			border-left: 4px solid @orange;
+  			color: @sidebar_menu_font_color_active;
+  		}
+  	}
   	a.main-link {
-  		background-color: #000;
   		position: absolute;
   		z-index: 100;
   		width: 75%;
-  		&:hover {
-  			background-color: #000 !important;
-  		}
+  		border-left: 4px solid transparent;
   	}
   	a.menuparent {
   		position: relative;
   		i {
   			position: absolute;
-  			right: 0px;
-  			top: 0px;
+  			right: 21px;
+    		top: 19px;
+  		}
+  	}
+  	.be-meter {
+  		background: url(../images/icons/d_meter.svg);
+  		&.active {
+  			background: url(../images/icons/d_meter_white.svg);
+  		}
+  	}
+  	.be-building {
+  		background: url(../images/icons/d_building.svg);
+  		&.active {
+  			background: url(../images/icons/d_building_white.svg);
+  		}
+  	}
+  	.be-calendar {
+  		background: url(../images/icons/d_calendar.svg);
+  		&.active {
+  			background: url(../images/icons/d_calendar_white.svg);
+  		}
+  	}
+  	.be-checklist {
+  		background: url(../images/icons/d_checklist.svg);
+  		&.active {
+  			background: url(../images/icons/d_checklist_white.svg);
+  		}
+  	}
+  	.be-document {
+  		background: url(../images/icons/d_document.svg);
+  		&.active {
+  			background: url(../images/icons/d_document_white.svg);
+  		}
+  	}
+  	.be-users {
+  		background: url(../images/icons/d_users.svg);
+  		&.active {
+  			background: url(../images/icons/d_users_white.svg);
+  		}
+  	}
+  	.be-bag {
+  		background: url(../images/icons/d_bag.svg);
+  		&.active {
+  			background: url(../images/icons/d_bag_white.svg);
+  		}
+  	}
+  	.be-folder {
+  		background: url(../images/icons/d_folder.svg);
+  		&.active {
+  			background: url(../images/icons/d_folder_white.svg);
+  		}
+  	}
+  	.icon {
+  		background-repeat: no-repeat;
+  		background-position: 15px center;
+  		background-size: auto 26px;
+  		&.active {
+  			background-repeat: no-repeat;
+  			background-position: 15px center;
+  			background-size: auto 26px;
+  			background-color: @gray_active_menu_tab_header;
+  		}
+  	}
+  	li {
+  		ul {
+  			background-color: @gray_active_menu_tab;
+  			a {
+  				border-left: 4px solid transparent;
+  				&.active {
+  					border-left: 4px solid @orange;
+  					background-color: @gray_active_menu_tab_header;
+  				}
+  			}
   		}
   	}
   }

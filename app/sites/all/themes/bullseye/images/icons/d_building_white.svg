@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16007 4455 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_513" data-name="Group 513" transform="translate(16007 4455)">
+    <g id="Group_154" data-name="Group 154" transform="translate(0 0)">
+      <path id="Path_121" data-name="Path 121" class="cls-1" d="M28.5,26H27V-.5a.472.472,0,0,0-.5-.5H1.5A.472.472,0,0,0,1-.5V26H-.5a.472.472,0,0,0-.5.5v2a.472.472,0,0,0,.5.5h29a.472.472,0,0,0,.5-.5v-2A.472.472,0,0,0,28.5,26ZM2,0H26V26H18.5V20.5A.472.472,0,0,0,18,20H10a.472.472,0,0,0-.5.5V26H2Zm8.5,26V21h3v5Zm4-5h3v5h-3ZM28,28H0V27H28v1Z" transform="translate(1 1)"/>
+      <path id="Path_122" data-name="Path 122" class="cls-1" d="M87.435,40.967h-4a.472.472,0,0,0-.5.5v3a.472.472,0,0,0,.5.5h4a.472.472,0,0,0,.5-.5v-3A.472.472,0,0,0,87.435,40.967Zm-.5,3h-3v-2h3Z" transform="translate(-77.935 -38.467)"/>
+      <path id="Path_123" data-name="Path 123" class="cls-1" d="M87.435,133.295h-4a.472.472,0,0,0-.5.5v3a.472.472,0,0,0,.5.5h4a.472.472,0,0,0,.5-.5v-3A.472.472,0,0,0,87.435,133.295Zm-.5,3h-3v-2h3Z" transform="translate(-77.935 -125.295)"/>
+      <path id="Path_124" data-name="Path 124" class="cls-1" d="M209.336,137.3h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,209.336,137.3Zm.5-3h3v2h-3Z" transform="translate(-196.336 -125.296)"/>
+      <path id="Path_125" data-name="Path 125" class="cls-1" d="M335.238,137.3h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,335.238,137.3Zm.5-3h3v2h-3Z" transform="translate(-314.738 -125.296)"/>
+      <path id="Path_126" data-name="Path 126" class="cls-1" d="M209.336,229.624h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,209.336,229.624Zm.5-3h3v2h-3Z" transform="translate(-196.336 -212.124)"/>
+      <path id="Path_127" data-name="Path 127" class="cls-1" d="M335.238,229.624h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,335.238,229.624Zm.5-3h3v2h-3Z" transform="translate(-314.738 -212.124)"/>
+      <path id="Path_128" data-name="Path 128" class="cls-1" d="M87.435,225.623h-4a.472.472,0,0,0-.5.5v3a.472.472,0,0,0,.5.5h4a.472.472,0,0,0,.5-.5v-3A.472.472,0,0,0,87.435,225.623Zm-.5,3h-3v-2h3Z" transform="translate(-77.935 -212.123)"/>
+      <path id="Path_129" data-name="Path 129" class="cls-1" d="M209.336,44.968h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,209.336,44.968Zm.5-3h3v2h-3Z" transform="translate(-196.336 -38.468)"/>
+      <path id="Path_130" data-name="Path 130" class="cls-1" d="M335.238,44.968h4a.472.472,0,0,0,.5-.5v-3a.472.472,0,0,0-.5-.5h-4a.472.472,0,0,0-.5.5v3A.472.472,0,0,0,335.238,44.968Zm.5-3h3v2h-3Z" transform="translate(-314.738 -38.468)"/>
+      <path id="Path_131" data-name="Path 131" class="cls-1" d="M192.55,318.952h6a.5.5,0,0,0,0-1h-6a.5.5,0,1,0,0,1Z" transform="translate(-180.55 -298.952)"/>
+    </g>
+  </g>
+</svg>
