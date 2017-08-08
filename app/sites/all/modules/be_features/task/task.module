@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Task feature.
+ */
+
+include_once 'task.features.inc';

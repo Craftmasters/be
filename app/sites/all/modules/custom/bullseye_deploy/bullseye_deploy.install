@@ -152,7 +152,7 @@ function bullseye_deploy_update_7005() {
     ->condition('module', 'system')
     ->condition('delta', 'navigation')
     ->execute();
-    
+
 }
 
 /**
@@ -186,9 +186,44 @@ function bullseye_deploy_update_7008() {
 }
 
 /**
- * Enable Superfish and menu related modules.
+ * Enable Views Bulk Operation module.
  */
 function bullseye_deploy_update_7009() {
+  module_enable(array('views_bulk_operations'), TRUE);
+}
+
+/**
+ * Install Leads and Prospects feature module.
+ */
+function bullseye_deploy_update_7010() {
+  module_enable(array('bullseye_leads_view', 'bullseye_prospects_view'), TRUE);
+}
+
+/**
+ * Install User References module.
+ */
+function bullseye_deploy_update_7011() {
+  module_enable(array('user_reference'), TRUE);
+}
+
+/**
+ * Install date module.
+ */
+function bullseye_deploy_update_7012() {
+  module_enable(array('date_api', 'date', 'date_popup'), TRUE);
+}
+
+/**
+ * Install Task feature.
+ */
+function bullseye_deploy_update_7013() {
+  module_enable(array('task'), TRUE);
+}
+
+/**
+ * Enable Superfish and menu related modules.
+ */
+function bullseye_deploy_update_7014() {
   module_enable(array(
     'superfish',
     'menu_import',

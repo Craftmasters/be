@@ -160,7 +160,7 @@ function bullseye_leads_import($rows) {
         $node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
 
         // Set the tags.
-        if (!empty(trim($row[27]))) {
+        if (strlen(trim($row[27])) >=2) {
           $tags = explode(' ', trim($row[27]));
           foreach ($tags as $tag) {
             $tid = $be->getTermId('tags', $tag);

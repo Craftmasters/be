@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BullsEye Prospects View feature.
+ */
+
+include_once 'bullseye_prospects_view.features.inc';
