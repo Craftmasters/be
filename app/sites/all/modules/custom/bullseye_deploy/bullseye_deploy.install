@@ -191,3 +191,10 @@ function bullseye_deploy_update_7008() {
 function bullseye_deploy_update_7009() {
   module_enable(array('views_bulk_operations'), TRUE);
 }
+
+/**
+ * Install Leads and Prospects feature module.
+ */
+function bullseye_deploy_update_7010() {
+  module_enable(array('bullseye_leads_view', 'bullseye_prospects_view'), TRUE);
+}
