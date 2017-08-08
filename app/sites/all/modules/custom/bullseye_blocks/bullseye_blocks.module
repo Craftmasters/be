@@ -7,6 +7,156 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function bullseye_blocks_menu() {
+  $items = array();
+
+  $items['accounts'] = array(
+    'title' => 'Accounts',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['accounts/leads'] = array(
+    'title' => 'Leads',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts leads page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['accounts/prospects'] = array(
+    'title' => 'Prospects',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts prospects page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['accounts/opportunities'] = array(
+    'title' => 'Opportunities',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts opportunities page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['accounts/deals-in-progress'] = array(
+    'title' => 'Deals in Progress',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts deals progress page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['accounts/closed-deals'] = array(
+    'title' => 'Closed Deals',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access accounts closed deals page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['calendar'] = array(
+    'title' => 'Calendar',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access calendar page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['rfps'] = array(
+    'title' => 'RFPs',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access rfps page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['proposals'] = array(
+    'title' => 'Proposals',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access proposals page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['producers'] = array(
+    'title' => 'Producers',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access producers page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['carriers'] = array(
+    'title' => 'Carriers',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access carriers page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['files'] = array(
+    'title' => 'Files',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access files page'),
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_blocks_permission() {
+  return array(
+    'access accounts page' => array(
+      'title' => t('Accounts Page'),
+      'description' => t('Access the accounts page.'),
+    ),
+    'access accounts leads page' => array(
+      'title' => t('Accounts/Leads Page'),
+      'description' => t('Access the accounts/leads page.'),
+    ),
+    'access accounts prospects page' => array(
+      'title' => t('Accounts/Prospects Page'),
+      'description' => t('Access the accounts/prospects page.'),
+    ),
+    'access accounts opportunities page' => array(
+      'title' => t('Accounts/Opportunities Page'),
+      'description' => t('Access the accounts/opportunities page.'),
+    ),
+    'access accounts deals progress page' => array(
+      'title' => t('Accounts/Deals in Progress Page'),
+      'description' => t('Access the accounts/deals-in-progress page.'),
+    ),
+    'access accounts closed deals page' => array(
+      'title' => t('Accounts/Closed Deals Page'),
+      'description' => t('Access the accounts/closed-deals page.'),
+    ),
+    'access calendar page' => array(
+      'title' => t('Calendar Page'),
+      'description' => t('Access the calendar page.'),
+    ),
+    'access rfps page' => array(
+      'title' => t('RFPs Page'),
+      'description' => t('Access the rfps page.'),
+    ),
+    'access producers page' => array(
+      'title' => t('Producers Page'),
+      'description' => t('Access the producers page.'),
+    ),
+    'access proposals page' => array(
+      'title' => t('Proposals Page'),
+      'description' => t('Access the proposals page.'),
+    ),
+    'access carriers page' => array(
+      'title' => t('Carriers Page'),
+      'description' => t('Access the carriers page.'),
+    ),
+    'access files page' => array(
+      'title' => t('Files Page'),
+      'description' => t('Access the files page.'),
+    ),
+  );
+}
+
+
+/**
  * Implements hook_theme().
  */
 function bullseye_blocks_theme() {
@@ -88,4 +238,12 @@ function bullseye_blocks_preprocess_block(&$variables) {
 
   }
   
+}
+
+/**
+ * Empty Callback for empty page.
+ */
+function _empty_page() {
+  $empty = ' ';
+  return $empty;
 }
