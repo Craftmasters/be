@@ -212,3 +212,10 @@ function bullseye_deploy_update_7011() {
 function bullseye_deploy_update_7012() {
   module_enable(array('date_api', 'date', 'date_popup'), TRUE);
 }
+
+/**
+ * Install Task feature.
+ */
+function bullseye_deploy_update_7013() {
+  module_enable(array('task'), TRUE);
+}
