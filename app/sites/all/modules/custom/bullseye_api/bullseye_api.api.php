@@ -64,21 +64,13 @@ class Bullseye {
    *   The state name.
    */
   function getTermId($voc, $term) {
-    // Check the cache table if the cache do exist.
-    if ($cache = cache_get($voc . '_' . strtolower($term))) {
-      $tid = $cache->data;
-    }
-    else {
-      $tid = db_select('taxonomy_term_data', 'td');
-      $tid->join('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
-      $tid = $tid->fields('td',array('tid'))
-       ->condition('tv.machine_name', $voc, '=')
-       ->condition('td.name', $term, '=')
-       ->execute()
-       ->fetchField();
-
-      cache_set($voc . '_' . strtolower($term), $tid, 'cache');
-    }
+    $tid = db_select('taxonomy_term_data', 'td');
+    $tid->join('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
+    $tid = $tid->fields('td',array('tid'))
+     ->condition('tv.machine_name', $voc, '=')
+     ->condition('td.name', $term, '=')
+     ->execute()
+     ->fetchField();
 
     return $tid;
   }
