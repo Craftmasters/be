@@ -56,4 +56,48 @@ class Bullseye {
   function getAccountRole() {
     return $this->userData()->role;
   }
+
+  /**
+   * Get the state tid by name.
+   *
+   * @param string $state
+   *   The state name.
+   */
+  function getTermId($voc, $term) {
+    // Check the cache table if the cache do exist.
+    if ($cache = cache_get($voc . '_' . strtolower($term))) {
+      $tid = $cache->data;
+    }
+    else {
+      $tid = db_select('taxonomy_term_data', 'td');
+      $tid->join('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
+      $tid = $tid->fields('td',array('tid'))
+       ->condition('tv.machine_name', $voc, '=')
+       ->condition('td.name', $term, '=')
+       ->execute()
+       ->fetchField();
+
+      cache_set($voc . '_' . strtolower($term), $tid, 'cache');
+    }
+
+    return $tid;
+  }
+
+  /**
+   * Check if the account already exist.
+   *
+   * @param string $email
+   *   The email address of the account.
+   */
+  function accountExist($email) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_email', 'email', 'email.entity_id = n.nid');
+    $email = $query
+      ->fields('email', array('field_email_value'))
+      ->condition('email.field_email_value', $email, '=')
+      ->execute()
+      ->fetchField();
+
+    return $email;
+  }
 }

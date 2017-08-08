@@ -56,7 +56,7 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
       while (($data = fgetcsv($handle, NULL, ",")) !== FALSE) {
         // Validate the columns of the csv to make sure that the file
         // adhere to the template.
-        if (count($data) != 31) {
+        if (count($data) != 32) {
           array_push($rows, $data);
         }
         else {
