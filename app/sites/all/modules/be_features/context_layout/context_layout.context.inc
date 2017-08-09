@@ -13,6 +13,490 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'accounts_closed_deals_blocks';
+  $context->description = 'All blocks from accounts/closed-deals to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_closed_deals_page' => 'accounts_closed_deals_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from accounts/closed-deals to be put here.');
+  t('Blocks');
+  $export['accounts_closed_deals_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_closed_deals_page';
+  $context->description = 'accounts/closed-deals page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts/closed-deals' => 'accounts/closed-deals',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts/closed-deals page.');
+  $export['accounts_closed_deals_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_deals_in_progress_blocks';
+  $context->description = 'All blocks from accounts/deals-in-progress page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_deals_in_progress_page' => 'accounts_deals_in_progress_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from accounts/deals-in-progress page to be put here.');
+  t('Blocks');
+  $export['accounts_deals_in_progress_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_deals_in_progress_page';
+  $context->description = 'accounts/deals-in-progress page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts/deals-in-progress' => 'accounts/deals-in-progress',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts/deals-in-progress page.');
+  $export['accounts_deals_in_progress_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_leads_blocks';
+  $context->description = 'All blocks from accounts/leads page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_leads_page' => 'accounts_leads_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from accounts/leads page to be put here.');
+  t('Blocks');
+  $export['accounts_leads_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_leads_page';
+  $context->description = 'accounts/leads page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts/leads' => 'accounts/leads',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts/leads page.');
+  $export['accounts_leads_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_opportunities_blocks';
+  $context->description = 'All blocks from accounts/opportunities page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_opportunities_page' => 'accounts_opportunities_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from accounts/opportunities page to be put here.');
+  t('Blocks');
+  $export['accounts_opportunities_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_opportunities_page';
+  $context->description = 'accounts/opportunities page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts/opportunities' => 'accounts/opportunities',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts/opportunities page.');
+  $export['accounts_opportunities_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_prospects_blocks';
+  $context->description = 'All blocks from accounts/prospects page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_prospects_page' => 'accounts_prospects_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from accounts/prospects page to be put here.');
+  t('Blocks');
+  $export['accounts_prospects_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_prospects_page';
+  $context->description = 'accounts/prospects page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts/prospects' => 'accounts/prospects',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts/prospects page.');
+  $export['accounts_prospects_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'calendar_blocks';
+  $context->description = 'All blocks from the calendar page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'calendar_page' => 'calendar_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the calendar page to be put here.');
+  t('Blocks');
+  $export['calendar_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'calendar_page';
+  $context->description = 'Calendar page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'calendar' => 'calendar',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Calendar page.');
+  t('Location');
+  $export['calendar_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'carriers_blocks';
+  $context->description = 'All blocks from the carriers page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'carriers_page' => 'carriers_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the carriers page to be put here.');
+  t('Blocks');
+  $export['carriers_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'carriers_page';
+  $context->description = 'carriers page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'carriers' => 'carriers',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('carriers page.');
+  $export['carriers_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'files_blocks';
+  $context->description = 'All blocks from the files page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'files_page' => 'files_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the files page to be put here.');
+  t('Blocks');
+  $export['files_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'files_page';
+  $context->description = 'Files page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'files' => 'files',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Files page.');
+  t('Location');
+  $export['files_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'producers_blocks';
+  $context->description = 'All blocks from the producers page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'producers_page' => 'producers_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the producers page to be put here.');
+  t('Blocks');
+  $export['producers_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'producers_page';
+  $context->description = 'producers page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'producers' => 'producers',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('producers page.');
+  $export['producers_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'proposals_blocks';
+  $context->description = 'All blocks from the proposals page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'proposals_page' => 'proposals_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the proposals page to be put here.');
+  t('Blocks');
+  $export['proposals_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'proposals_page';
+  $context->description = 'proposals page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'proposals' => 'proposals',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('proposals page.');
+  $export['proposals_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'rfps_blocks';
+  $context->description = 'All blocks from the rfps page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'rfps_page' => 'rfps_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the rfps page to be put here.');
+  t('Blocks');
+  $export['rfps_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'rfps_page';
+  $context->description = 'rfps page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'rfps' => 'rfps',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('rfps page.');
+  $export['rfps_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'sitewide_blocks';
   $context->description = 'Blocks that are seen on all pages.';
   $context->tag = 'Blocks';
