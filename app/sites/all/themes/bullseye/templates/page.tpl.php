@@ -123,7 +123,6 @@
       </div>
       <div class="content-region">
         <?php print $messages; ?>
-        <a href="/node/add/page" rel="lightmodal">Search</a>
         <?php print render($page['column_one']); ?>
         <?php print render($page['column_two']); ?>
         <?php print render($page['column_three']); ?>
