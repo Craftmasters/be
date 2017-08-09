@@ -155,6 +155,30 @@ function bullseye_blocks_permission() {
   );
 }
 
+/**
+ * Implements hook_form_alter().
+ */
+function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
+  // Custom forms.
+  $close_lightbox_forms = array(
+    'bullseye_leads_import_leads',
+  );
+
+  if (in_array($form_id, $close_lightbox_forms)) {
+    $form['#submit'][] = '_close_lightbox';
+    //$form['actions']['submit']['#submit'][] = '_close_lightbox';
+  }
+
+}
+
+/**
+ * Closing the lightbox.
+ */
+function _close_lightbox($form, &$form_state) {
+  print '<script>parent.location.reload();</script>';
+  print '<script>parent.Lightbox.end();</script>';
+  die();
+}
 
 /**
  * Implements hook_theme().
