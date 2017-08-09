@@ -376,6 +376,33 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'pages_with_bullseye_theme';
+  $context->description = 'All pages that needs to have the BullsEye theme to be put here.';
+  $context->tag = 'Theme';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'node/add/accounts' => 'node/add/accounts',
+        'admin/content/leads/import' => 'admin/content/leads/import',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'active_theme' => array(
+      'theme' => 'bullseye',
+    ),
+  );
+  $context->condition_mode = 0;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All pages that needs to have the BullsEye theme to be put here.');
+  t('Theme');
+  $export['pages_with_bullseye_theme'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'producers_blocks';
   $context->description = 'All blocks from the producers page to be put here.';
   $context->tag = 'Blocks';

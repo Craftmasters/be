@@ -45,7 +45,7 @@ function bullseye_leads_import_leads($form, &$form_state) {
   );
 
   $form['submit_container']['cancel'] = array(
-    '#markup' => '<a href="/" class="overlay-close cancel">Cancel</a>',
+    '#markup' => '<a href="/" onClick="parent.Lightbox.end();">Cancel</a>',
   );
 
   $form['submit_container']['submit'] = array(

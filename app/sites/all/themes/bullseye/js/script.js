@@ -50,6 +50,14 @@
         });
 
       }
+
+      // For lightbox iframes.
+      $(document).ready(function() {
+        var parent_iframe = $(window.frameElement).parent().find('iframe#lightboxFrame');
+        parent_iframe.contents().find('body').addClass('be-lightbox');;
+      });
+
+        
     }
   };
 

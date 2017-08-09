@@ -233,10 +233,11 @@ function bullseye_deploy_update_7014() {
 }
 
 /**
- * Enable lightbox2 module.
+ * Enable lightbox2 and Context Reaction:Theme module.
  */
 function bullseye_deploy_update_7015() {
   module_enable(array(
     'lightbox2',
+    'context_reaction_theme',
   ), TRUE);
 }
