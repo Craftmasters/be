@@ -53,3 +53,18 @@ function bullseye_blocks_render_be_bottom_header() {
     'content' => $output,
   );
 }
+
+/**
+ * Leads Block (Table).
+ */
+function bullseye_blocks_render_be_leads() {
+
+  $vars = array();
+
+  $output = theme('be_leads', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
