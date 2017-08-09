@@ -231,3 +231,12 @@ function bullseye_deploy_update_7014() {
     'menu_attributes',
   ), TRUE);
 }
+
+/**
+ * Enable lightbox2 module.
+ */
+function bullseye_deploy_update_7015() {
+  module_enable(array(
+    'lightbox2',
+  ), TRUE);
+}
