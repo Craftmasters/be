@@ -226,6 +226,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Prospects Table Block.
+    'be_prospects' => array(
+      'variables' => array(),
+      'template' => 'be-prospects',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -260,6 +267,13 @@ function bullseye_blocks_block_info() {
   // Accounts Table Block.
   $blocks['be_accounts'] = array(
     'info' => t('Accounts Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Prospects Table Block.
+  $blocks['be_prospects'] = array(
+    'info' => t('Prospects Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
