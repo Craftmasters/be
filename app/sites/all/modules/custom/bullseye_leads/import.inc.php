@@ -12,6 +12,8 @@ function bullseye_leads_import_leads($form, &$form_state) {
 
   $form = array();
 
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
@@ -28,7 +30,6 @@ function bullseye_leads_import_leads($form, &$form_state) {
   $form['type'] = array(
     '#title' => t('Account Type'),
     '#type' => 'select',
-    '#description' => "Select the account type.",
     '#options' => $form['type_options']['#value'],
   );
 
@@ -45,11 +46,14 @@ function bullseye_leads_import_leads($form, &$form_state) {
   );
 
   $form['submit_container']['cancel'] = array(
-    '#markup' => '<a href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
   );
 
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
     '#value' => t('Import'),
   );
   return $form;

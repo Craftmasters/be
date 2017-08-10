@@ -300,6 +300,7 @@
  * Lightbox Modal.
  */
  	body.be-lightbox {
+ 		background-color: #fff;
  		.slicknav_menu,
  		.left-sidebar,
  		.top-header,
@@ -307,6 +308,9 @@
  		.footer-wrapper,
  		#admin-menu {
  			display: none;
+ 		}
+ 		.content-region {
+ 			padding: 35px;
  		}
  	}
  	#lightbox {
@@ -332,4 +336,89 @@
     #imageDataContainer {
     	display: none !important;
     }
+ 	}
+
+/*
+ * BE Forms.
+ */
+ 	.be-forms {
+ 		.glyphicon {
+ 			display: none;
+ 		}
+ 		.form-title {
+ 			margin-bottom: 30px;
+ 			h2 {
+ 				text-transform: uppercase;
+ 				color: @form_title_color;
+ 				font-family: 'Proximanova-Semibold';
+ 				font-size: 20px;
+ 			}
+ 		}
+ 		label {
+ 			color: @label_color;
+	    font-family: 'Proximanova-Regular';
+	    font-size: 15px;
+ 		}
+ 		input[type="text"],
+ 		select {
+ 			border: none;
+ 			-webkit-box-shadow: none;
+	    -moz-box-shadow: none;
+	    box-shadow: none;
+	    color: @textfield_placeholder_color;
+	    font-family: 'Proximanova-Regular';
+	    font-size: 15px;
+	    border-radius: 0px;
+	    border-bottom: 2px solid @textfield_bottom_border_color;
+	    padding: 0px;
+ 			&:focus {
+ 				border: none;
+		    outline: 0;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+		    box-shadow: none;
+		    border-radius: 0px;
+	    	border-bottom: 2px solid @orange;
+ 			}
+ 		}
+ 		select {
+ 			color: @select_color;
+ 		}
+ 		#edit-submit-container {
+ 			text-align: right;
+ 			margin-top: 30px;
+ 			a, button, input {
+ 				display: inline-block;
+ 				color: #fff;
+ 				font-family: 'Proximanova-Bold';
+ 				text-transform: uppercase;
+ 				font-size: 14px;
+ 				border-radius: 15px;
+ 				padding: 10px 27px;
+ 				border: none;
+ 				margin-left: 5px;
+ 				&.gray-btn {
+ 					background-color: @form_back_button_background;
+ 					&:hover {
+ 						background-color: @form_back_button_background + 10;
+ 					}
+ 				}
+ 				&.orange-btn {
+ 					background-color: @orange;
+ 					&:hover {
+ 						background-color: @orange + 10;
+ 					}
+ 				}
+ 				&.green-btn {
+ 					background-color: @green;
+ 					&:hover {
+ 						background-color: @green + 10;
+ 					}
+ 				}
+ 			}
+ 		}
+ 		.form-type-select,
+ 		.form-type-managed-file {
+ 			margin-bottom: 15px;
+ 		}
  	}
