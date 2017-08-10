@@ -13,6 +13,39 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'accounts_blocks';
+  $context->description = 'All blocks from the accounts page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'accounts_page' => 'accounts_page',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_accounts' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_accounts',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the accounts page to be put here.');
+  t('Blocks');
+  $export['accounts_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'accounts_closed_deals_blocks';
   $context->description = 'All blocks from accounts/closed-deals to be put here.';
   $context->tag = 'Blocks';
@@ -196,6 +229,28 @@ function context_layout_context_default_contexts() {
   t('Location');
   t('accounts/opportunities page.');
   $export['accounts_opportunities_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'accounts_page';
+  $context->description = 'accounts page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'accounts' => 'accounts',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('accounts page.');
+  $export['accounts_page'] = $context;
 
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */

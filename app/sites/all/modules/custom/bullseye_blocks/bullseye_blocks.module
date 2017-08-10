@@ -212,10 +212,17 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
-    // Bottom Header Block.
+    // Leads Table Block.
     'be_leads' => array(
       'variables' => array(),
       'template' => 'be-leads',
+      'path' => $template_path,
+    ),
+
+    // Accounts Table Block.
+    'be_accounts' => array(
+      'variables' => array(),
+      'template' => 'be-accounts',
       'path' => $template_path,
     ),
 
@@ -243,9 +250,16 @@ function bullseye_blocks_block_info() {
     'status' => 0,
   );
 
-  // Bottom Header Block.
+  // Leads Table Block.
   $blocks['be_leads'] = array(
     'info' => t('Leads Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Accounts Table Block.
+  $blocks['be_accounts'] = array(
+    'info' => t('Accounts Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );

@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Leads (50)'); ?></span>
+        <span class="account-count"><?php print t('All Accounts (150)'); ?></span>
         <a class="be-table-header-button" href="#"><?php print t('Add New'); ?></a>
         <a class="be-table-header-button" href="/admin/content/leads/import" rel="lightframe"><?php print t('Import'); ?></a>
       </div>

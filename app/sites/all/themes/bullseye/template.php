@@ -81,21 +81,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 1000,
       );
       break;
-    case 'accounts_node_form':
-      $form['#attributes']['class'][] = 'be-forms be-forms-default';
-      $form_title = t('Add Account');
-      if (isset($_GET['account_status'])) {
-        if ($_GET['account_status'] == 'lead') {
-          $form_title = t('Add New Lead');
-        }
-      }
-      $form['form_title'] = array(
-        '#prefix' => '<div class="form-title">',
-        '#suffix' => '</div>',
-        '#markup' => '<h2>' . $form_title . '</h2>',
-        '#weight' => -100,
-      );
-      break;
     case 'user_pass':
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
       break;
