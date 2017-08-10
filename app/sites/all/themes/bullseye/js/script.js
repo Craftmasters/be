@@ -18,6 +18,9 @@
   Drupal.behaviors.bullseye = {
     attach: function (context, settings) {
 
+      // For sidebar.
+      $('.left-sidebar').css('min-height', $(document).height() + 'px');
+
       // For top header.
       if ($('.top-header-li').length) {
         $('.top-header-li').each(function() {
