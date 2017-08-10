@@ -42,7 +42,7 @@ function site_configuration_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'lightbox2_default_frame_height';
-  $strongarm->value = '400';
+  $strongarm->value = '200';
   $export['lightbox2_default_frame_height'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -93,7 +93,7 @@ function site_configuration_strongarm() {
     'default_favicon' => 0,
     'favicon_path' => 'sites/all/themes/bullseye/favicon.ico',
     'favicon_upload' => '',
-    'bootstrap__active_tab' => 'edit-general',
+    'bootstrap__active_tab' => 'edit-javascript',
     'bootstrap_fluid_container' => 0,
     'bootstrap_button_size' => '',
     'bootstrap_button_colorize' => 1,
@@ -146,7 +146,7 @@ function site_configuration_strongarm() {
     'bootstrap_popover_content' => '',
     'bootstrap_popover_delay' => '0',
     'bootstrap_popover_container' => 'body',
-    'bootstrap_tooltip_enabled' => 1,
+    'bootstrap_tooltip_enabled' => 0,
     'bootstrap_tooltip_animation' => 1,
     'bootstrap_tooltip_html' => 0,
     'bootstrap_tooltip_placement' => 'auto left',
