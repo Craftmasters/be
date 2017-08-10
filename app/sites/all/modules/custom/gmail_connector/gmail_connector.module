@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Gmail connector .module file.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function gmail_connector_menu() {
+
+  $items['gmail-connector'] = array(
+    'title' => 'Google Connector',
+    'description' => 'Gmail Preview',
+    'page callback' => 'gmail_connector_inbox',
+    'file' => 'includes/inbox.page.inc',
+    'access arguments' => array('view gmail inbox'),
+  );
+  $items['gmail-connector/default'] = array(
+    'title' => 'Inbox',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  $items['gmail-connector/other'] = array(
+    'title' => 'Drafts',
+    'description' => 'Gmail Drafts Page',
+    'page callback' => 'gmail_connector_inbox',
+    'access arguments' => array('access content'),
+    'weight' => 2,
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'includes/inbox.page.inc',
+  );
+
+  $items['admin/config/gmail-connector'] = array(
+    'title' => 'Gmail Connector Settings Form',
+    'description' => 'Configuration for Gmail connector module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('gmail_connector_configure_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/settings.page.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_help().
+ */
+function gmail_connector_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#gmail_connector':
+      $filepath = dirname(__FILE__) . '/README.txt';
+      if (file_exists($filepath)) {
+        $readme = file_get_contents($filepath);
+        $output = '<pre>' . $readme . '</pre>';
+        return $output;
+      }
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function gmail_connector_permission() {
+  return array(
+    'view gmail inbox' => array(
+      'title' => t('View Gmail Inbox.'),
+    ),
+  );
+}
