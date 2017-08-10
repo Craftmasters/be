@@ -96,43 +96,43 @@
     </div>
   </div>
 <?php else : ?>
-
-  <div class="bullseye-wrapper">
-    <div class="col-md-2 left-sidebar">
-      <?php if ($logo): ?>
-        <div class="logo-container">
-          <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
-            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-          </a>
+  <div class="container">
+    <div class="bullseye-wrapper row">
+      <div class="col-md-2 left-sidebar">
+        <?php if ($logo): ?>
+          <div class="logo-container">
+            <a class="logo navbar-btn" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+              <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+            </a>
+          </div>
+        <?php endif; ?>
+        <div class="sidebar-menu-container">
+          <?php print render($page['left_sidebar']); ?>
         </div>
-      <?php endif; ?>
-      <div class="sidebar-menu-container">
-        <?php print render($page['left_sidebar']); ?>
+        <div class="left-sidebar-footer">
+          <p><?php print t('Precision-built by'); ?></p>
+          <img src="<?php print $archerjordan_logo; ?>">
+        </div>
       </div>
-      <div class="left-sidebar-footer">
-        <p><?php print t('Precision-built by'); ?></p>
-        <img src="<?php print $archerjordan_logo; ?>">
-      </div>
-    </div>
-    <div class="col-md-10 right-content">
-      <div class="top-header">
-        <?php print render($page['top_header']); ?>
-      </div>
-      <div class="bottom-header">
-        <?php print render($page['bottom_header']); ?>
-      </div>
-      <div class="content-region">
-        <?php print $messages; ?>
-        <?php print render($page['column_one']); ?>
-        <?php print render($page['column_two']); ?>
-        <?php print render($page['column_three']); ?>
-        <?php print render($page['column_four']); ?>
-        <?php print render($page['content']); ?>
-      </div>
-      <div class="footer-wrapper">
-        <?php print render($page['footer']); ?>
+      <div class="col-md-10 right-content">
+        <div class="top-header">
+          <?php print render($page['top_header']); ?>
+        </div>
+        <div class="bottom-header">
+          <?php print render($page['bottom_header']); ?>
+        </div>
+        <div class="content-region">
+          <?php print $messages; ?>
+          <?php print render($page['column_one']); ?>
+          <?php print render($page['column_two']); ?>
+          <?php print render($page['column_three']); ?>
+          <?php print render($page['column_four']); ?>
+          <?php print render($page['content']); ?>
+        </div>
+        <div class="footer-wrapper">
+          <?php print render($page['footer']); ?>
+        </div>
       </div>
     </div>
   </div>
-
 <?php endif; ?>
