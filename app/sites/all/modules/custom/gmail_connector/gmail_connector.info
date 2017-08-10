@@ -1,5 +1,5 @@
 name = Gmail Connector
 description = Gmail Connecter using javascript API
 core = 7.x
-package = Connectors
-configure = admin/config/gmail-connector
+package = BullsEye
+configure = admin/config/development/gmail-connector
