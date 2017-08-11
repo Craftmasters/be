@@ -100,7 +100,18 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_deals_in_progress' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_deals_in_progress',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
@@ -199,7 +210,18 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_opportunities' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_opportunities',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables

@@ -145,3 +145,26 @@ function bullseye_blocks_render_be_opportunities() {
     'content' => $output,
   );
 }
+
+/**
+ * Deals in Progress Block (Table).
+ */
+function bullseye_blocks_render_be_deals_in_progress() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_deals_in_progress', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}

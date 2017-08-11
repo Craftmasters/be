@@ -240,6 +240,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Deals-in-Progress Table Block.
+    'be_deals_in_progress' => array(
+      'variables' => array(),
+      'template' => 'be-deals-in-progress',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -288,6 +295,13 @@ function bullseye_blocks_block_info() {
   // Opportunities Table Block.
   $blocks['be_opportunities'] = array(
     'info' => t('Opportunities Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Deals-in-Progress Table Block.
+  $blocks['be_deals_in_progress'] = array(
+    'info' => t('Deals-in-Progress Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
