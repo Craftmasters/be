@@ -51,7 +51,7 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/icons/default_user.svg">
+              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
               <span class="gray-font">Greg Holloway</span>
             </td>
             <td><span class="light-gray-font">VP of Human Resources</span></td>
