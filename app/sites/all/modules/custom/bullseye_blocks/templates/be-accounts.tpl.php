@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Accounts (150)'); ?></span>
         <a class="be-table-header-button" href="#"><?php print t('Add New'); ?></a>
-        <a class="be-table-header-button" href="/admin/content/leads/import" rel="lightframe"><?php print t('Import'); ?></a>
+        <a class="be-table-header-button" href="#"><?php print t('Import'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">

@@ -233,6 +233,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Opportunities Table Block.
+    'be_opportunities' => array(
+      'variables' => array(),
+      'template' => 'be-opportunities',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -274,6 +281,13 @@ function bullseye_blocks_block_info() {
   // Prospects Table Block.
   $blocks['be_prospects'] = array(
     'info' => t('Prospects Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Opportunities Table Block.
+  $blocks['be_opportunities'] = array(
+    'info' => t('Opportunities Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
