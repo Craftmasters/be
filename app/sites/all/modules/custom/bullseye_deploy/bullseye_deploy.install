@@ -241,3 +241,12 @@ function bullseye_deploy_update_7015() {
     'context_reaction_theme',
   ), TRUE);
 }
+
+/**
+ * Install Gmail connector API key and Client ID.
+ */
+function bullseye_deploy_update_7016() {
+  variable_set('gmail_connector_api_key', 'AIzaSyBSHiirDRZVq0ulEVMJKXYnssBiK1Eo1bw');
+  variable_set('gmail_connector_client_id', '220099348316-otj7648taf6qh263tsrpgtdvtfpt7ms9.apps.googleusercontent.com');
+  variable_set('gmail_connector_display_email', 10);
+}
