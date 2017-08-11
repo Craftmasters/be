@@ -2,9 +2,9 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Opportunities (6)'); ?></span>
-        <a class="be-table-header-button" href="#"><?php print t('Add New Opportunity'); ?></a>
-        <a class="be-table-header-button" href="#"><?php print t('Import Opportunities'); ?></a>
+        <span class="account-count"><?php print t('All Deals in Progress (6)'); ?></span>
+        <a class="be-table-header-button" href="#"><?php print t('Add New Deal in Progress'); ?></a>
+        <a class="be-table-header-button" href="#"><?php print t('Import Deals in Progress'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
@@ -24,12 +24,10 @@
           <th><?php print t('Priority'); ?></th>
           <th><?php print t('Account'); ?></th>
           <th><?php print t('Contact Person'); ?></th>
-          <th><?php print t('Build Rapport'); ?></th>
-          <th><?php print t('RFP'); ?></th>
-          <th><?php print t('Plan Presentation'); ?></th>
-          <th><?php print t('Convert to Deals in Progress'); ?></th>
-          <th><?php print t('RFP'); ?></th>
-          <th><?php print t('Proposal'); ?></th>
+          <th><?php print t('Generate Trust Agreement'); ?></th>
+          <th><?php print t('Proof of Agreement'); ?></th>
+          <th><?php print t('Convert to Closed Deals'); ?></th>
+          <th><?php print t('Trust Docs'); ?></th>
         </tr> 
       </thead>
       <tbody>
@@ -42,9 +40,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td><span class="light-gray-font">RFP389910</span></td>
-            <td><span class="light-gray-font">389910</span></td>
+            <td><span class="light-gray-font"><a href="#" class="light-gray-font">Pitbull.pdf</a></span></td>
           </tr>
         <?php endfor; ?>
       </tbody>
