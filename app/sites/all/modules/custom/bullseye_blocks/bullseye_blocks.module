@@ -261,6 +261,27 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Proposals Table Block.
+    'be_proposals' => array(
+      'variables' => array(),
+      'template' => 'be-proposals',
+      'path' => $template_path,
+    ),
+
+    // Producers Table Block.
+    'be_producers' => array(
+      'variables' => array(),
+      'template' => 'be-producers',
+      'path' => $template_path,
+    ),
+
+    // Carriers Table Block.
+    'be_carriers' => array(
+      'variables' => array(),
+      'template' => 'be-carriers',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -323,6 +344,27 @@ function bullseye_blocks_block_info() {
   // Closed Deals Table Block.
   $blocks['be_closed_deals'] = array(
     'info' => t('Closed Deals Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Proposals Table Block.
+  $blocks['be_proposals'] = array(
+    'info' => t('Proposals Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Producers Table Block.
+  $blocks['be_producers'] = array(
+    'info' => t('Producers Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Carriers Table Block.
+  $blocks['be_carriers'] = array(
+    'info' => t('Carriers Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );

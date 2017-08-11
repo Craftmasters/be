@@ -199,3 +199,72 @@ function bullseye_blocks_render_be_closed_deals() {
     'content' => $output,
   );
 }
+
+/**
+ * Proposals Block (Table).
+ */
+function bullseye_blocks_render_be_proposals() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_proposals', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Producers Block (Table).
+ */
+function bullseye_blocks_render_be_producers() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_producers', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Carriers Block (Table).
+ */
+function bullseye_blocks_render_be_carriers() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_carriers', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}

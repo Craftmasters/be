@@ -40,7 +40,7 @@
               <span class="gray-font">Chris Devon</span>
             </td>
             <td><span class="light-gray-font">Chief Operations Officer</span></td>
-            <td><span class="orange-font">ABC Company</span></td>
+            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">ABC Company</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>
