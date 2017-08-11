@@ -69,3 +69,16 @@ function gmail_connector_permission() {
     ),
   );
 }
+
+/**
+ * Implements hook_theme().
+ */
+function gmail_connector_theme(&$existing, $type, $theme, $path) {
+  return array(
+    'gmail_connector_gmail_inbox_theme' => array(
+      'arguments' => array(),
+      'template' => 'templates/google_inbox_preview',
+    ),
+  );
+}
+
