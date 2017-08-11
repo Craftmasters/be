@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-9">
         <span class="account-count"><?php print t('All Deals in Progress (6)'); ?></span>
-        <a class="be-table-header-button" href="#"><?php print t('Add New Deal in Progress'); ?></a>
-        <a class="be-table-header-button" href="#"><?php print t('Import Deals in Progress'); ?></a>
+        <a class="be-table-button" href="#"><?php print t('Add New Deal in Progress'); ?></a>
+        <a class="be-table-button" href="#"><?php print t('Import Deals in Progress'); ?></a>
       </div>
       <div class="col-md-3">
         <div class="be-table-right-icons">

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Prospects (6)'); ?></span>
-        <a class="be-table-header-button" href="#"><?php print t('Add New'); ?></a>
+        <a class="be-table-button" href="#"><?php print t('Add New'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">

@@ -432,24 +432,36 @@
 
  	.be-table-top-header {
  		padding: 15px 25px;
- 		.account-count {
- 			font-family: 'Proximanova-Medium';
- 			font-size: 16px;
- 			color: #555454;
- 			border-right: 1px solid #555454;
- 			padding-right: 15px;
-    	margin-right: 15px;
- 		}
- 		.be-table-header-button {
- 			color: #fff;
- 			text-transform: uppercase;
- 			font-size: 13px;
- 			background-color: @orange;
- 			font-family: 'Proximanova-Bold';
- 			display: inline-block;
- 			border-radius: 6px;
-    	padding: 4px 22px;
- 		}
+ 	}
+
+ 	.account-count {
+		font-family: 'Proximanova-Medium';
+		font-size: 16px;
+		color: #555454;
+		border-right: 1px solid #555454;
+		padding-right: 15px;
+  	margin-right: 15px;
+	}
+
+ 	.be-table-button {
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 13px;
+		background-color: @orange;
+		font-family: 'Proximanova-Bold';
+		display: inline-block;
+		border-radius: 6px;
+  	padding: 4px 22px;
+  	&:hover {
+  		color: #fff;
+  		background-color: @orange + 10;
+  	}
+  	&.green {
+  		background-color: @green;
+  		&:hover {
+	  		background-color: @green + 10;
+	  	}
+  	}
  	}
 
  	.be-table-right-icons {

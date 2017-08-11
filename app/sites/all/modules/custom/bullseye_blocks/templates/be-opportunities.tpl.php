@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-8">
         <span class="account-count"><?php print t('All Opportunities (6)'); ?></span>
-        <a class="be-table-header-button" href="#"><?php print t('Add New Opportunity'); ?></a>
-        <a class="be-table-header-button" href="#"><?php print t('Import Opportunities'); ?></a>
+        <a class="be-table-button" href="#"><?php print t('Add New Opportunity'); ?></a>
+        <a class="be-table-button" href="#"><?php print t('Import Opportunities'); ?></a>
       </div>
       <div class="col-md-4">
         <div class="be-table-right-icons">
