@@ -247,6 +247,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Closed Deals Table Block.
+    'be_closed_deals' => array(
+      'variables' => array(),
+      'template' => 'be-closed-deals',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -302,6 +309,13 @@ function bullseye_blocks_block_info() {
   // Deals-in-Progress Table Block.
   $blocks['be_deals_in_progress'] = array(
     'info' => t('Deals-in-Progress Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Closed Deals Table Block.
+  $blocks['be_closed_deals'] = array(
+    'info' => t('Closed Deals Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
