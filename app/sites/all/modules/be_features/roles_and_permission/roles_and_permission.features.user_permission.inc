@@ -14,6 +14,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts closed deals page'] = array(
     'name' => 'access accounts closed deals page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -23,6 +24,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts deals progress page'] = array(
     'name' => 'access accounts deals progress page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -32,6 +34,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts leads page'] = array(
     'name' => 'access accounts leads page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -41,6 +44,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts opportunities page'] = array(
     'name' => 'access accounts opportunities page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -50,6 +54,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts page'] = array(
     'name' => 'access accounts page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -59,6 +64,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access accounts prospects page'] = array(
     'name' => 'access accounts prospects page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -68,6 +74,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access calendar page'] = array(
     'name' => 'access calendar page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -77,6 +84,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access carriers page'] = array(
     'name' => 'access carriers page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -86,6 +94,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access files page'] = array(
     'name' => 'access files page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -95,6 +104,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access producers page'] = array(
     'name' => 'access producers page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -104,6 +114,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access proposals page'] = array(
     'name' => 'access proposals page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
@@ -113,6 +124,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['access rfps page'] = array(
     'name' => 'access rfps page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
     ),
     'module' => 'bullseye_blocks',
