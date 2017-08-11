@@ -96,6 +96,13 @@ function bullseye_blocks_menu() {
     'type' => MENU_CALLBACK
   );
 
+  $items['company'] = array(
+    'title' => 'Company',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access files page'),
+    'type' => MENU_CALLBACK
+  );
+
   return $items;
 }
 

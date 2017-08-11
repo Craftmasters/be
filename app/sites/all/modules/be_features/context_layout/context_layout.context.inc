@@ -431,6 +431,52 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'company_blocks';
+  $context->description = 'All blocks from the company landing page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'company_page' => 'company_page',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All blocks from the company landing page to be put here.');
+  t('Blocks');
+  $export['company_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'company_page';
+  $context->description = 'Company landing page.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'company' => 'company',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'template_suggestions' => 'three_column',
+  );
+  $context->condition_mode = 0;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Company landing page.');
+  t('Location');
+  $export['company_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'files_blocks';
   $context->description = 'All blocks from the files page to be put here.';
   $context->tag = 'Blocks';

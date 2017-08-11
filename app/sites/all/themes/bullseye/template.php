@@ -56,6 +56,34 @@ function bullseye_preprocess_page(&$vars, $hook) {
   if ($login_page || $forgot_password || $pass_reset) {
     $vars['login'] = TRUE;
   }
+
+  $theme_suggestion_last = 'page';
+  $vars['column'] = 'one-col';
+
+  foreach ($vars['theme_hook_suggestions'] as $key => $value) {
+    $theme_suggestion_last = $value;
+  }
+
+  if ($theme_suggestion_last == 'two_column') {
+    $vars['column'] = 'two-col';
+  }
+
+  if ($theme_suggestion_last == 'three_column') {
+    $vars['column'] = 'three-col';
+  }
+
+  if ($theme_suggestion_last == 'four_column') {
+    $vars['column'] = 'four-col';
+  }
+
+  if ($theme_suggestion_last == 'five_five_two_column') {
+    $vars['column'] = 'five-five-two-col';
+  }
+
+  if ($theme_suggestion_last == 'four_eight_column') {
+    $vars['column'] = 'four-eight-col';
+  }
+
 }
 
 /**

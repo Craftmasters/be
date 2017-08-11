@@ -123,11 +123,96 @@
         </div>
         <div class="content-region">
           <?php print $messages; ?>
-          <?php print render($page['column_one']); ?>
-          <?php print render($page['column_two']); ?>
-          <?php print render($page['column_three']); ?>
-          <?php print render($page['column_four']); ?>
-          <?php print render($page['content']); ?>
+          <?php if ($column == 'one-col') : ?>
+            <div class="row one-col">
+              <div class="col-md-12">
+                <?php print render($page['column_one']); ?>
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php elseif ($column == 'two-col') : ?>
+            <div class="row two-col">
+              <div class="col-md-6">
+                <?php print render($page['column_one']); ?>
+              </div>
+              <div class="col-md-6">
+                <?php print render($page['column_two']); ?>
+              </div>
+              <div class="col-md-12">
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php elseif ($column == 'three-col') : ?>
+            <div class="row three-col">
+              <div class="col-md-4">
+                <?php print render($page['column_one']); ?>
+              </div>
+              <div class="col-md-4">
+                <?php print render($page['column_two']); ?>
+              </div>
+              <div class="col-md-4">
+                <?php print render($page['column_three']); ?>
+              </div>
+              <div class="col-md-12">
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php elseif ($column == 'four-col') : ?>
+            <div class="row four-col">
+              <div class="col-md-3">
+                <?php print render($page['column_one']); ?>
+              </div>
+              <div class="col-md-3">
+                <?php print render($page['column_two']); ?>
+              </div>
+              <div class="col-md-3">
+                <?php print render($page['column_three']); ?>
+              </div>
+              <div class="col-md-3">
+                <?php print render($page['column_four']); ?>
+              </div>
+              <div class="col-md-12">
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php elseif ($column == 'five-five-two-col') : ?>
+            <div class="row five-five-two-col">
+              <div class="col-md-5">
+                <?php print render($page['column_one']); ?>
+              </div>
+              <div class="col-md-5">
+                <?php print render($page['column_two']); ?>
+              </div>
+              <div class="col-md-2">
+                <?php print render($page['column_three']); ?>
+              </div>
+              <div class="col-md-12">
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php elseif ($column == 'four-eight-col') : ?>
+            <div class="row four-eight-col">
+              <div class="col-md-4">
+                <?php print render($page['column_one']); ?>
+              </div>
+              <div class="col-md-8">
+                <?php print render($page['column_two']); ?>
+              </div>
+              <div class="col-md-12">
+                <?php print render($page['content']); ?>
+              </div>
+            </div>
+          <?php else: ?>
+            <div class="row no-defined-columns">
+              <div class="col-md-12">
+                <?php print render($page['column_one']); ?>
+                <?php print render($page['column_two']); ?>
+                <?php print render($page['column_three']); ?>
+                <?php print render($page['column_four']); ?>
+                <?php print render($page['column_content']); ?>
+              </div>
+            </div>
+          <?php endif; ?>           
         </div>
         <div class="footer-wrapper">
           <?php print render($page['footer']); ?>
