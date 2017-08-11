@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="17025.031 7261 160.182 39.369">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #59cd90;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_906" data-name="Group 906" transform="translate(16114 6770)">
+    <path id="progress_bar_2" data-name="progress bar 2" class="cls-1" d="M140.59,39.364H.316L17.1,19.782.312.194,0,.559V0H140.6V.194l19.587,19.587L140.6,39.369Z" transform="translate(911.031 491)"/>
+    <g id="check-mark" transform="translate(1378.012 -2171.199)">
+      <g id="Group_18" data-name="Group 18" transform="translate(-397 2417.022)">
+        <path id="Path_7" data-name="Path 7" class="cls-2" d="M12.143,275.56a3.116,3.116,0,0,1-4.405,0L.912,268.734a3.115,3.115,0,0,1,4.405-4.4L9.384,268.4a.789.789,0,0,0,1.113,0l11.011-11.011a3.115,3.115,0,1,1,4.405,4.4Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

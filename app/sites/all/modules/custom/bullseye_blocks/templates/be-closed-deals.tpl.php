@@ -23,16 +23,14 @@
           <th><?php print t('Account'); ?></th>
           <th><?php print t('Contact Person'); ?></th>
           <th><?php print t('Benefit Guides'); ?></th>
-
-          <th><?php print t('Major Medical'); ?></th>
-          <th><?php print t('Limited Medical'); ?></th>
-          <th><?php print t('Teledoc'); ?></th>
-          <th><?php print t('MEC'); ?></th>
-          <th><?php print t('Dental'); ?></th>
-          <th><?php print t('Vision'); ?></th>
-          <th><?php print t('Life & AD&D'); ?></th>
-          <th><?php print t('Short Term Dissability'); ?></th>
-
+          <th class="be-dot-td"><?php print t('Major Medical'); ?></th>
+          <th class="be-dot-td"><?php print t('Limited Medical'); ?></th>
+          <th class="be-dot-td"><?php print t('Teledoc'); ?></th>
+          <th class="be-dot-td"><?php print t('MEC'); ?></th>
+          <th class="be-dot-td"><?php print t('Dental'); ?></th>
+          <th class="be-dot-td"><?php print t('Vision'); ?></th>
+          <th class="be-dot-td"><?php print t('Life & AD&D'); ?></th>
+          <th class="be-dot-td"><?php print t('Short Term Dissability'); ?></th>
           <th></th>
         </tr> 
       </thead>
@@ -43,14 +41,14 @@
             <td><span class="orange-font">ABC Company</span></td>
             <td><span class="gray-font">Chris Devon</span></td>
             <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
-            <td><span class="dot-priority green"></td>
-            <td><span class="dot-priority gray"></td>
-            <td><span class="dot-priority green"></td>
-            <td><span class="dot-priority gray"></td>
-            <td><span class="dot-priority gray"></td>
-            <td><span class="dot-priority green"></td>
-            <td><span class="dot-priority green"></td>
-            <td><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></span></td>
           </tr>
         <?php endfor; ?>
