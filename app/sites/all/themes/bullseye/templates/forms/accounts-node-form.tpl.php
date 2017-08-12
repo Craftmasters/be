@@ -28,7 +28,6 @@
   <div class="be-form-single"><?php print render($form['field_linkedin_personal']); ?></div>
   <div class="be-form-single"><?php print render($form['field_facebook_personal']); ?></div>
   <div class="be-form-single"><?php print render($form['field_tags']); ?></div>
-  <div class="be-form-single"><?php //print render($form['field_work_phone']); ?></div>
 </div>
 
 <div class="hidden-container">
