@@ -14,7 +14,8 @@
 	  	list-style: none;
 	  }
 	}
-	.be-hide {
+	.be-hide,
+	.hidden-container {
 		display: none;
 	}
 
@@ -343,7 +344,8 @@
  * BE Forms.
  */
  	.be-forms {
- 		.glyphicon {
+ 		.glyphicon,
+ 		.input-group-addon {
  			display: none;
  		}
  		.form-title {
@@ -359,6 +361,10 @@
  			color: @label_color;
 	    font-family: 'Proximanova-Regular';
 	    font-size: 15px;
+	    margin-bottom: 0px;
+ 		}
+ 		.input-group {
+ 			width: 100%;
  		}
  		input[type="text"],
  		select {
@@ -366,7 +372,7 @@
  			-webkit-box-shadow: none;
 	    -moz-box-shadow: none;
 	    box-shadow: none;
-	    color: @textfield_placeholder_color;
+	    color: @textfield_color;
 	    font-family: 'Proximanova-Regular';
 	    font-size: 15px;
 	    border-radius: 0px;
@@ -382,10 +388,39 @@
 	    	border-bottom: 2px solid @orange;
  			}
  		}
+ 		input[type="text"] {
+ 			&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+			  color: @textfield_placeholder_color;
+			}
+			&::-moz-placeholder { /* Firefox 19+ */
+			  color: @textfield_placeholder_color;
+			}
+			&:-ms-input-placeholder { /* IE 10+ */
+			  color: @textfield_placeholder_color;
+			}
+			&:-moz-placeholder { /* Firefox 18- */
+			  color: @textfield_placeholder_color;
+			}
+ 		}
  		select {
  			color: @select_color;
  		}
- 		#edit-submit-container {
+ 		.be-form-section {
+ 			margin-bottom: 15px;
+ 			.row {
+ 				margin-left: -5px;
+ 				margin-right: -5px;
+ 			}
+ 			div[class*="col-"] {
+ 				padding-left: 5px;
+ 				padding-right: 5px;
+ 			}
+ 		}
+ 		.be-form-single {
+ 			margin-bottom: 15px;
+ 		}
+ 		#edit-submit-container,
+ 		#edit-actions {
  			text-align: right;
  			margin-top: 30px;
  			a, button, input {

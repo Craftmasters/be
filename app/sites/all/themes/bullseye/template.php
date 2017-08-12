@@ -112,7 +112,50 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
     case 'user_pass':
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
       break;
+    case 'accounts_node_form':
+      $form['#attributes']['class'][] = 'be-forms be-forms-default';
+      $form_title = t('Add Account');
+      if (isset($_GET['account_status'])) {
+        if ($_GET['account_status'] == 'lead') {
+          $form_title = t('Add New Lead');
+        }
+      }
+      $form['form_title'] = array(
+        '#prefix' => '<div class="form-title">',
+        '#suffix' => '</div>',
+        '#markup' => '<h2>' . $form_title . '</h2>',
+        '#weight' => -100,
+      );
+      hide($form['additional_settings']);
+      hide($form['actions']['preview']);
+      $form['field_firstname'][LANGUAGE_NONE][0]['value']['#title'] = '';
+      $form['field_firstname'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('First Name');
+      $form['field_middle_name'][LANGUAGE_NONE][0]['value']['#title'] = '';
+      $form['field_middle_name'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Middle Name');
+      $form['field_lastname'][LANGUAGE_NONE][0]['value']['#title'] = '';
+      $form['field_lastname'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Last Name');
+      $form['field_company'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Company');
+      $form['field_title'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Title');
+      $form['field_owned_by'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Owner');
+      $form['field_email'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Email');
+      $form['field_work_phone'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Phone');
+      $form['field_personal_website'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Website');
+      $form['field_linkedin_personal'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Social');
+      $form['field_facebook_personal'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Social');
+      break;
     default:
       break;
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bullseye_theme($existing, $type, $theme, $path) {
+  $items['accounts_node_form'] = array(
+    'render element' => 'form',
+    'template' => 'accounts-node-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
+  return $items;
 }
