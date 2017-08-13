@@ -1,0 +1,120 @@
+#block-bullseye-blocks-be-header-progress {
+  position: relative;
+}
+
+.be-header-progress {
+  position: absolute;
+  width: 100%;
+  text-align: right;
+}
+
+.be-progress {
+  text-align: center;
+  display: inline-block;
+  color: #fff;
+  height: 32px;
+  line-height: 32px;
+  font-family: 'Proximanova-Bold';
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+  min-width: 100px;
+  margin-left: 15px;
+  &.be-start {
+    padding: 0px 20px 0px 18px;
+    &::before {
+      content: ' ';
+      height: 32px;
+      width: 32px;
+      border-radius: 100%;
+      position: absolute;
+      left: -16px;
+      z-index: -1;
+    }
+    &::after {
+      content: ' ';
+      width: 0px;
+      height: 0px;
+      border-top: 16px solid transparent;
+      border-left: 20px solid transparent;
+      border-bottom: 16px solid transparent;
+      position: absolute;
+      right: -19px;
+      top: 0px;
+    }
+  }
+  &.be-end {
+    padding: 0px 24px 0px 48px;
+    &::before {
+      content: ' ';
+      width: 0px;
+      height: 0px;
+      border-top: 16px solid transparent;
+      border-left: 20px solid #fff;
+      border-bottom: 16px solid transparent;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+    &::after {
+      content: ' ';
+      width: 0px;
+      height: 0px;
+      border-top: 16px solid transparent;
+      border-left: 20px solid transparent;
+      border-bottom: 16px solid transparent;
+      position: absolute;
+      right: -19px;
+      top: 0px;
+    }
+  }
+  &.be-green {
+    background-color: @green;
+    &.be-start {
+      &::before {
+        background-color: @green;
+      }
+      &::after {
+        border-left: 20px solid @green;
+      }
+    }
+    &.be-end {
+      &::after {
+        border-left: 20px solid @green;
+      }
+    }
+  }
+  &.be-blue {
+    background-color: @blue_gray;
+    &.be-start {
+      &::before {
+        background-color: @blue_gray;
+      }
+      &::after {
+        border-left: 20px solid @blue_gray;
+      }
+    }
+    &.be-end {
+      &::after {
+        border-left: 20px solid @blue_gray;
+      }
+    }
+  }
+  &.be-gray {
+    background-color: @gray;
+    color: @dark_gray_font;
+    &.be-start {
+      &::before {
+        background-color: @gray;
+      }
+      &::after {
+        border-left: 20px solid @gray;
+      }
+    }
+    &.be-end {
+      &::after {
+        border-left: 20px solid @gray;
+      }
+    }
+  }
+}

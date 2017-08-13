@@ -324,6 +324,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Header Progress Block.
+    'be_header_progress' => array(
+      'variables' => array(),
+      'template' => 'be-header-progress',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -453,6 +460,13 @@ function bullseye_blocks_block_info() {
     'status' => 0,
   );
 
+  // Header Progress Block.
+  $blocks['be_header_progress'] = array(
+    'info' => t('Header Progress Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+  
   // Return block definitions.
   return $blocks;
 }

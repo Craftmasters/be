@@ -376,3 +376,21 @@ function bullseye_blocks_render_be_files() {
     'content' => $output,
   );
 }
+
+/**
+ * Header Progress Block.
+ */
+function bullseye_blocks_render_be_header_progress() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_header_progress', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
