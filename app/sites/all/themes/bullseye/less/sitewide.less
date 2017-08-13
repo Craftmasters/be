@@ -14,7 +14,8 @@
 	  	list-style: none;
 	  }
 	}
-	.be-hide {
+	.be-hide,
+	.hidden-container {
 		display: none;
 	}
 
@@ -191,6 +192,15 @@
    	padding: 30px;
   }
 
+  .column-wrapper {
+  	margin-left: -10px;
+  	margin-right: -10px;
+  	div[class*="col-"] {
+  		padding-left: 10px;
+  		padding-right: 10px;
+  	}
+  }
+
 /*
  * Top Header.
  */
@@ -333,6 +343,7 @@
     #frameContainer {
     	display: table-cell;
     	vertical-align: middle;
+    	padding: 60px 0px !important;
     }
     #imageDataContainer {
     	display: none !important;
@@ -343,7 +354,8 @@
  * BE Forms.
  */
  	.be-forms {
- 		.glyphicon {
+ 		.glyphicon,
+ 		.input-group-addon {
  			display: none;
  		}
  		.form-title {
@@ -359,6 +371,10 @@
  			color: @label_color;
 	    font-family: 'Proximanova-Regular';
 	    font-size: 15px;
+	    margin-bottom: 0px;
+ 		}
+ 		.input-group {
+ 			width: 100%;
  		}
  		input[type="text"],
  		select {
@@ -366,7 +382,7 @@
  			-webkit-box-shadow: none;
 	    -moz-box-shadow: none;
 	    box-shadow: none;
-	    color: @textfield_placeholder_color;
+	    color: @textfield_color;
 	    font-family: 'Proximanova-Regular';
 	    font-size: 15px;
 	    border-radius: 0px;
@@ -382,10 +398,39 @@
 	    	border-bottom: 2px solid @orange;
  			}
  		}
+ 		input[type="text"] {
+ 			&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+			  color: @textfield_placeholder_color;
+			}
+			&::-moz-placeholder { /* Firefox 19+ */
+			  color: @textfield_placeholder_color;
+			}
+			&:-ms-input-placeholder { /* IE 10+ */
+			  color: @textfield_placeholder_color;
+			}
+			&:-moz-placeholder { /* Firefox 18- */
+			  color: @textfield_placeholder_color;
+			}
+ 		}
  		select {
  			color: @select_color;
  		}
- 		#edit-submit-container {
+ 		.be-form-section {
+ 			margin-bottom: 15px;
+ 			.row {
+ 				margin-left: -5px;
+ 				margin-right: -5px;
+ 			}
+ 			div[class*="col-"] {
+ 				padding-left: 5px;
+ 				padding-right: 5px;
+ 			}
+ 		}
+ 		.be-form-single {
+ 			margin-bottom: 15px;
+ 		}
+ 		#edit-submit-container,
+ 		#edit-actions {
  			text-align: right;
  			margin-top: 30px;
  			a, button, input {
@@ -550,4 +595,20 @@
  			vertical-align: middle;
  			margin-right: 10px;
  		}
+ 	}
+
+/*
+ * BE Regular Blocks.
+ */
+ 	.be-regular-block {
+ 		background-color: #fff;
+ 		padding: 10px 15px;
+ 		margin-bottom: 20px;
+ 	}
+
+ 	h2.be-regular-h2 {
+ 		color: @content_block_title_color;
+ 		font-family: 'Proximanova-Semibold';
+ 		font-size: 18px;
+ 		text-transform: uppercase;
  	}

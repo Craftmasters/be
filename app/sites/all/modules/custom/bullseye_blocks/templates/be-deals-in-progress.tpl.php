@@ -31,11 +31,11 @@
         </tr> 
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
+        <?php for ($i = 0; $i < 3; $i++) : ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="dot-priority red"></span></td>
-            <td><span class="orange-font">ABC Company</span></td>
+            <td><span class="orange-font"><a href="/company?from=deals-in-progress" class="orange-font">ABC Company</a></span></td>
             <td><span class="gray-font">Chris Devon</span></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_gray; ?>"></td>

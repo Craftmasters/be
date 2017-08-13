@@ -56,7 +56,7 @@
               <span class="gray-font">Greg Holloway</span>
             </td>
             <td><span class="light-gray-font">VP of Human Resources</span></td>
-            <td><span class="orange-font">Sharklame Ent.</span></td>
+            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">Sharklame Ent.</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>
@@ -72,7 +72,7 @@
               <span class="gray-font">Jake Leithold</span>
             </td>
             <td><span class="light-gray-font">Benefits Manager</span></td>
-            <td><span class="orange-font">Pitbull Inc.</span></td>
+            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">Pitbull Inc.</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>

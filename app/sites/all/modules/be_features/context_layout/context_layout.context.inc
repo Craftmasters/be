@@ -397,7 +397,18 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_carriers' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_carriers',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
@@ -441,7 +452,54 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_header_progress' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_header_progress',
+          'region' => 'bottom_header',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_current_progress' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_current_progress',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_create_event' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_create_event',
+          'region' => 'column_two',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_recent_activities' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_recent_activities',
+          'region' => 'column_two',
+          'weight' => '-9',
+        ),
+        'bullseye_blocks-be_account_details' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_account_details',
+          'region' => 'column_three',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_people' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_people',
+          'region' => 'column_three',
+          'weight' => '-9',
+        ),
+        'bullseye_blocks-be_files' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_files',
+          'region' => 'column_three',
+          'weight' => '-8',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
@@ -558,7 +616,18 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_producers' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_producers',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
@@ -602,7 +671,18 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_proposals' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_proposals',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
