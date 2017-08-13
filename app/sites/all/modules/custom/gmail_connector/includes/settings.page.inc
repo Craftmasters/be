@@ -9,7 +9,6 @@
  * Gmail connector configuration form.
  */
 function gmail_connector_configure_form() {
-
   $form = array();
 
   $form['gmail_connector_api_key'] = array(

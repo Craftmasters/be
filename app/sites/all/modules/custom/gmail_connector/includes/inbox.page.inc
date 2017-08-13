@@ -23,6 +23,13 @@ function gmail_connector_inbox() {
   $settings['google_api_key'] = variable_get('gmail_connector_api_key');
   $settings['google_client_id'] = variable_get('gmail_connector_client_id');
   $settings['google_email_display'] = variable_get('gmail_connector_display_email');
-  drupal_add_js(array('gmail_connector' => array('config' => $settings)), array('type' => 'setting'));
+
+  // Add the configuration in the Javascript scope.
+  drupal_add_js(array(
+    'gmail_connector' => array(
+      'config' => $settings,
+    ),
+  ), array('type' => 'setting'));
+
   return theme('gmail_connector_gmail_inbox_theme', array('page' => $page));
 }
