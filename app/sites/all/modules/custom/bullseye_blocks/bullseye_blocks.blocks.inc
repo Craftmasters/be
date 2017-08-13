@@ -268,3 +268,111 @@ function bullseye_blocks_render_be_carriers() {
     'content' => $output,
   );
 }
+
+/**
+ * Current Progress Block.
+ */
+function bullseye_blocks_render_be_current_progress() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_current_progress', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Create Event Block.
+ */
+function bullseye_blocks_render_be_create_event() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_create_event', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Recent Activities Block.
+ */
+function bullseye_blocks_render_be_recent_activities() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_recent_activities', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Account Details Block.
+ */
+function bullseye_blocks_render_be_account_details() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_account_details', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * People Block.
+ */
+function bullseye_blocks_render_be_people() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_people', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Files Block.
+ */
+function bullseye_blocks_render_be_files() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_files', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}

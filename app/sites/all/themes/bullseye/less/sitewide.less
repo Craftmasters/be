@@ -192,6 +192,15 @@
    	padding: 30px;
   }
 
+  .column-wrapper {
+  	margin-left: -10px;
+  	margin-right: -10px;
+  	div[class*="col-"] {
+  		padding-left: 10px;
+  		padding-right: 10px;
+  	}
+  }
+
 /*
  * Top Header.
  */
@@ -586,4 +595,20 @@
  			vertical-align: middle;
  			margin-right: 10px;
  		}
+ 	}
+
+/*
+ * BE Regular Blocks.
+ */
+ 	.be-regular-block {
+ 		background-color: #fff;
+ 		padding: 10px 15px;
+ 		margin-bottom: 20px;
+ 	}
+
+ 	h2.be-regular-h2 {
+ 		color: @content_block_title_color;
+ 		font-family: 'Proximanova-Semibold';
+ 		font-size: 18px;
+ 		text-transform: uppercase;
  	}

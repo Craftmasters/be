@@ -124,14 +124,14 @@
         <div class="content-region">
           <?php print $messages; ?>
           <?php if ($column == 'one-col') : ?>
-            <div class="row one-col">
+            <div class="row column-wrapper one-col">
               <div class="col-md-12">
                 <?php print render($page['column_one']); ?>
                 <?php print render($page['content']); ?>
               </div>
             </div>
           <?php elseif ($column == 'two-col') : ?>
-            <div class="row two-col">
+            <div class="row column-wrapper two-col">
               <div class="col-md-6">
                 <?php print render($page['column_one']); ?>
               </div>
@@ -143,7 +143,7 @@
               </div>
             </div>
           <?php elseif ($column == 'three-col') : ?>
-            <div class="row three-col">
+            <div class="row column-wrapper three-col">
               <div class="col-md-4">
                 <?php print render($page['column_one']); ?>
               </div>
@@ -158,7 +158,7 @@
               </div>
             </div>
           <?php elseif ($column == 'four-col') : ?>
-            <div class="row four-col">
+            <div class="row column-wrapper four-col">
               <div class="col-md-3">
                 <?php print render($page['column_one']); ?>
               </div>
@@ -176,7 +176,7 @@
               </div>
             </div>
           <?php elseif ($column == 'five-five-two-col') : ?>
-            <div class="row five-five-two-col">
+            <div class="row column-wrapper five-five-two-col">
               <div class="col-md-5">
                 <?php print render($page['column_one']); ?>
               </div>
@@ -191,7 +191,7 @@
               </div>
             </div>
           <?php elseif ($column == 'four-eight-col') : ?>
-            <div class="row four-eight-col">
+            <div class="row column-wrapper four-eight-col">
               <div class="col-md-4">
                 <?php print render($page['column_one']); ?>
               </div>
@@ -203,7 +203,7 @@
               </div>
             </div>
           <?php else: ?>
-            <div class="row no-defined-columns">
+            <div class="row column-wrapper no-defined-columns">
               <div class="col-md-12">
                 <?php print render($page['column_one']); ?>
                 <?php print render($page['column_two']); ?>
