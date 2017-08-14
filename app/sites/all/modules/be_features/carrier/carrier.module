@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Carrier feature.
+ */
+
+include_once 'carrier.features.inc';
