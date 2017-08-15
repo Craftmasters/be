@@ -271,3 +271,10 @@ function bullseye_deploy_update_7018() {
 function bullseye_deploy_update_7019() {
   module_enable(array('registration_role', 'autoassignrole'), TRUE);
 }
+
+/**
+ * Install profiles_types module.
+ */
+function bullseye_deploy_update_7020() {
+  module_enable(array('profiles_types'), TRUE);
+}
