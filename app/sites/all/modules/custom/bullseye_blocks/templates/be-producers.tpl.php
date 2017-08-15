@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Producers (6)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Add New Producer'); ?></a>
+        <a class="be-table-button" href="/admin/people/create"><?php print t('Add New Producer'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
@@ -27,7 +27,7 @@
           <th><?php print t('Opportunities Covered'); ?></th>
           <th><?php print t('Deals Closed'); ?></th>
           <th><?php print t('Win Ratio'); ?></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 2; $i++) : ?>
