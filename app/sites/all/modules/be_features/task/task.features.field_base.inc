@@ -90,8 +90,9 @@ function task_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'normal' => 'Normal',
         'high' => 'High',
+        'normal' => 'Normal',
+        'low' => 'Low',
       ),
       'allowed_values_function' => '',
     ),
