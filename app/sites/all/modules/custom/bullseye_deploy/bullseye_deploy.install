@@ -257,3 +257,10 @@ function bullseye_deploy_update_7016() {
 function bullseye_deploy_update_7017() {
   module_enable(array('carrier'), TRUE);
 }
+
+/**
+ * Install profile module.
+ */
+function bullseye_deploy_update_7018() {
+  module_enable(array('profile2'), TRUE);
+}
