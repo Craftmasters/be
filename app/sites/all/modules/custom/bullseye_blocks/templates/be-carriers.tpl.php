@@ -41,6 +41,7 @@
         <?php for ($i = 0; $i < 2; $i++) : ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
+            <td><span class="light-gray-font">0001</span></td>
             <td><span class="orange-font">Leading Edge Admin</span></td>
             <td><span class="light-gray-font">Kathryn Pappas</span></td>
             <td><span class="light-gray-font">kpappas@leadingedgeadmin.com</span></td>
@@ -54,12 +55,12 @@
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
           </tr>
         <?php endfor; ?>
         <?php for ($i = 0; $i < 2; $i++) : ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
+            <td><span class="light-gray-font">0002</span></td>
             <td><span class="orange-font">Coverdell</span></td>
             <td><span class="light-gray-font">Chrissy Galizia</span></td>
             <td><span class="light-gray-font">cgalizia@coverdell.com</span></td>
@@ -72,7 +73,6 @@
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
           </tr>
         <?php endfor; ?>
