@@ -1,0 +1,14 @@
+name = Profiles Types
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = profile2
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_primary_contact
+features[field_base][] = field_producer_name
+features[field_instance][] = profile2-producer-field_primary_contact
+features[field_instance][] = profile2-producer-field_producer_name
+features[profile2_type][] = producer

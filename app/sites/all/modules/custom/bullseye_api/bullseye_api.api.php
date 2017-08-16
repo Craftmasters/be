@@ -11,8 +11,10 @@ class Bullseye {
    *   An object containing the data of the current logged in user.
    */
   function __construct($user) {
-    $this->user = $user;
-    $this->uid = $user->uid;
+    if ($user) {
+      $this->user = $user;
+      $this->uid = $user->uid;
+    }
   }
 
   /**
@@ -91,5 +93,34 @@ class Bullseye {
       ->fetchField();
 
     return $email;
+  }
+
+  /**
+   * Get producers account.
+   */
+  function getProducers() {
+    if ($cache = cache_get('producers_listing')) {
+      $producers = $cache->data;
+    }
+    else {
+      $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $query->join('profile', 'p', 'p.uid = u.uid');
+      $query->join('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
+      $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
+      $producers = $query
+        ->fields('u', array('mail'))
+        ->fields('producer', array('field_producer_name_value'))
+        ->fields('contact', array('field_primary_contact_value'))
+        ->condition('r.name', 'producer', '=')
+        ->condition('u.status', 1, '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('producers_listing', $producers, 'cache');
+    }
+
+    return $producers;
   }
 }

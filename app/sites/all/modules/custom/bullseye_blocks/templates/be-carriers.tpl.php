@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Carriers (6)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Add New Carrier'); ?></a>
-        <a class="be-table-button" href="#"><?php print t('Import Carriers'); ?></a>
+        <a class="be-table-button" href="/node/add/carrier"><?php print t('Add New Carrier'); ?></a>
+        <!--<a class="be-table-button" href="#"><?php print t('Import Carriers'); ?></a>-->
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
