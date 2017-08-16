@@ -1,0 +1,107 @@
+<?php
+/**
+ * Bullseye producer module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_producer_menu() {
+  $items = array();
+
+  $items['producer/add'] = array(
+    'title' => 'Add New Producer',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_form'),
+    'access arguments' => array('add producer'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_producer_permission() {
+  return array(
+    'add producer' => array(
+      'title' => t('Add Producer Account'),
+      'description' => t('Allow user to add new producer account.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Add producer form.
+ */
+function bullseye_producer_form($form, &$form_state) {
+  $form = array();
+
+  $form['producer_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Producer Name'),
+  );
+
+  $form['primary_contact_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Primary Contact'),
+  );
+
+  $form['primary_contact_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email Address'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+/**
+ * Form submit for producer form.
+ */
+function bullseye_producer_form_submit($form, &$form_state) {
+  global $user;
+  $be = new Bullseye($user);
+
+  // Set the producer name.
+  $producer_name = $form_state['values']['producer_name'];
+  $contact_name = $form_state['values']['primary_contact_name'];
+  $contact_email = trim($form_state['values']['primary_contact_email']);
+
+  // Check if the account already exist.
+  if (!$be->accountExist($contact_email)) {
+    // Build the username.
+    $username = str_replace(' ', '.', strtolower(trim($contact_name)));
+
+    $new_user = array(
+      'name' => $username,
+      'mail' => $contact_email,
+      'pass' => 'be@' . $username,
+      'status' => 1,
+      'access' => REQUEST_TIME,
+      'roles' => array(
+        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+        4 => 'producer',
+      ),
+    );
+
+    // Create new user.
+    $create_user = user_save(NULL, $new_user);
+
+    $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
+    $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
+    $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+
+    // Save the profile2 to the user account.
+    profile2_save($profile);
+
+    drupal_set_message(t('Successfully added new producer account.'));
+  }
+}
