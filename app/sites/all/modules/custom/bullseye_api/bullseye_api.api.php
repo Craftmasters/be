@@ -11,8 +11,10 @@ class Bullseye {
    *   An object containing the data of the current logged in user.
    */
   function __construct($user) {
-    $this->user = $user;
-    $this->uid = $user->uid;
+    if ($user) {
+      $this->user = $user;
+      $this->uid = $user->uid;
+    }
   }
 
   /**
