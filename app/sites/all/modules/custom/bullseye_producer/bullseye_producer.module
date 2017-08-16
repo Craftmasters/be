@@ -106,5 +106,6 @@ function bullseye_producer_form_submit($form, &$form_state) {
 
     cache_clear_all();
     drupal_flush_all_caches();
+    drupal_goto('/producers');
   }
 }
