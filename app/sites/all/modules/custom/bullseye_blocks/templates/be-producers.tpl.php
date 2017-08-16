@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Producers (6)'); ?></span>
-        <a class="be-table-button" href="/admin/people/create"><?php print t('Add New Producer'); ?></a>
+        <a class="be-table-button" href="/producer/add"><?php print t('Add New Producer'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
@@ -30,30 +30,18 @@
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
+        <?php foreach ($producers as $producer): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font">Szerlip & Co.</span></td>
-            <td><span class="light-gray-font">Chris Robichaud</span></td>
-            <td><span class="light-gray-font">crobichaud@szerlip.com</span></td>
+            <td><span class="orange-font"><?php print $producer->field_producer_name_value; ?></span></td>
+            <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
+            <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
             <td><span class="gray-font">850</span></td>
             <td><span class="gray-font">300</span></td>
             <td><span class="gray-font">100</span></td>
             <td><span class="gray-font">30%</span></td>
           </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font">Atlas Insurance & Brokers LLC</span></td>
-            <td><span class="light-gray-font">Eric Ferrer</span></td>
-            <td><span class="light-gray-font">eric@atlasllc.com</span></td>
-            <td><span class="gray-font">1000</span></td>
-            <td><span class="gray-font">500</span></td>
-            <td><span class="gray-font">250</span></td>
-            <td><span class="gray-font">50%</span></td>
-          </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
