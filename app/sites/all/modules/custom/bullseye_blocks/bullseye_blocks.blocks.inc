@@ -227,11 +227,15 @@ function bullseye_blocks_render_be_proposals() {
  * Producers Block (Table).
  */
 function bullseye_blocks_render_be_producers() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
+  // Get the producers.
+  $vars['producers'] = $be->getProducers();
 
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
