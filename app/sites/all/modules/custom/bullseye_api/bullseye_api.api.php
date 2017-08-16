@@ -123,4 +123,64 @@ class Bullseye {
 
     return $producers;
   }
+
+  /**
+   * Calculate win ratio.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function winRatio($producer) {
+    return $win_ratio;
+  }
+
+  /**
+   * Get producer primary contact.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function producerContactName($producer) {
+    return $contact;
+  }
+
+  /**
+   * Get producer primary contact email.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function producerEmailAddress($producer) {
+    return $email;
+  }
+
+  /**
+   * Total number of producer leads assigned.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function producerLeadsAssigned($producer) {
+    return $leads_assigned;
+  }
+
+  /**
+   * Total number of producer opportunities covered.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function producerOpportunitiesCovered($producer) {
+    return $opportunities_covered;
+  }
+
+  /**
+   * Total number of producer deals closed.
+   *
+   * @param string $producer
+   *   The producer name.
+   */
+  function producerDealsClosed($producer) {
+    return $deals_closed;
+  }
 }
