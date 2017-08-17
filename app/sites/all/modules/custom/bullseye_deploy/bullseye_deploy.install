@@ -290,5 +290,5 @@ function bullseye_deploy_update_7021() {
  * Install bullseye_carrier module.
  */
 function bullseye_deploy_update_7022() {
-  module_enable(array('bullseye_producer'), TRUE);
+  module_enable(array('bullseye_carriers'), TRUE);
 }
