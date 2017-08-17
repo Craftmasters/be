@@ -1,0 +1,146 @@
+<?php
+/**
+ * Bullseye carriers module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_carriers_menu() {
+  $items = array();
+
+  $items['carriers/add'] = array(
+    'title' => 'Add New Carrier',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_carriers_form'),
+    'access arguments' => array('add carrier'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_carriers_permission() {
+  return array(
+    'add carrier' => array(
+      'title' => t('Add Carrier'),
+      'description' => t('Allow user to add new carrier.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Add producer form.
+ */
+function bullseye_producer_form($form, &$form_state) {
+  $form = array();
+
+  $form['carrier_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Carier Name'),
+  );
+
+  $form['primary_contact_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Primary Contact'),
+  );
+
+  $form['primary_contact_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email Address'),
+  );
+
+  $form['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Teledoc'),
+  );
+
+  $form['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['life_ad_d'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Dissability'),
+  );
+
+  $form['specialty_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Specialty Benefits'),
+  );
+
+  $form['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  // The values for the dropdown box.
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+  );
+
+  $form['type'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#description' => "Select the priority level.",
+    '#options' => $form['type_options']['#value'],
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'date_popup',
+    '#timepicker' => 'timepicker',
+    '#timepicker_options' => array(
+      'rows' => 6,
+      'minutes' => array(
+        'starts' => 0,
+        'ends' => 56,
+        'interval' => 4,
+      ),
+      'showCloseButton' => TRUE,
+      'closeButtonText' => t('Close'),
+    ),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}

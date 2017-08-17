@@ -1,0 +1,5 @@
+name = Carriers
+description = BullsEye module that handle carrier enrollment.
+package = BullsEye
+core = 7.x
+version = 7.x-1.0
