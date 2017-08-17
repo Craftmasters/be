@@ -183,4 +183,22 @@ class Bullseye {
   function producerDealsClosed($producer) {
     return $deals_closed;
   }
+
+  /**
+   * Check if Carrier already exist.
+   *
+   * @param string $name
+   *   Carrier name.
+   */
+  function carrierExist($name) {
+    $query = db_select('node', 'n');
+    $carrier = $query
+      ->fields('n', array('title'))
+      ->condition('n.title', $name, '=')
+      ->condition('n.type', 'carrier', '=')
+      ->execute()
+      ->fetchField();
+
+    return $carrier;
+  }
 }
