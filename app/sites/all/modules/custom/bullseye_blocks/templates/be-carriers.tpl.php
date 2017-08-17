@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Carriers (6)'); ?></span>
+        <span class="account-count"><?php print t("All Carriers ($total_carriers->total)"); ?></span>
         <a class="be-table-button" href="/carriers/add"><?php print t('Add New Carrier'); ?></a>
         <!--<a class="be-table-button" href="#"><?php print t('Import Carriers'); ?></a>-->
       </div>
@@ -38,13 +38,31 @@
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
+        <?php foreach ($carriers as $carrier): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="light-gray-font">0001</span></td>
-            <td><span class="orange-font">Leading Edge Admin</span></td>
-            <td><span class="light-gray-font">Kathryn Pappas</span></td>
-            <td><span class="light-gray-font">kpappas@leadingedgeadmin.com</span></td>
+            <td>
+              <span class="light-gray-font">
+                <a href="<?php print drupal_get_path_alias('node/' . $carrier->nid); ?>">
+                  <?php print $carrier->nid; ?>
+                </a>
+              </span>
+            </td>
+            <td>
+              <span class="orange-font">
+                <?php print $carrier->title; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $carrier->field_primary_contact_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $carrier->field_email_value; ?>
+              </span>
+            </td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
@@ -56,26 +74,7 @@
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
           </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="light-gray-font">0002</span></td>
-            <td><span class="orange-font">Coverdell</span></td>
-            <td><span class="light-gray-font">Chrissy Galizia</span></td>
-            <td><span class="light-gray-font">cgalizia@coverdell.com</span></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-          </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
