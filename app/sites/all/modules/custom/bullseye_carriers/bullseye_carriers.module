@@ -35,9 +35,9 @@ function bullseye_carriers_permission() {
 /**
  * Implements hook_form().
  *
- * Add producer form.
+ * Add carrier form.
  */
-function bullseye_producer_form($form, &$form_state) {
+function bullseye_carriers_form($form, &$form_state) {
   $form = array();
 
   $form['carrier_name'] = array(
@@ -115,7 +115,7 @@ function bullseye_producer_form($form, &$form_state) {
     ),
   );
 
-  $form['type'] = array(
+  $form['priority'] = array(
     '#title' => t('Priority'),
     '#type' => 'select',
     '#description' => "Select the priority level.",
@@ -124,17 +124,11 @@ function bullseye_producer_form($form, &$form_state) {
 
   $form['due_date'] = array(
     '#type' => 'date_popup',
-    '#timepicker' => 'timepicker',
-    '#timepicker_options' => array(
-      'rows' => 6,
-      'minutes' => array(
-        'starts' => 0,
-        'ends' => 56,
-        'interval' => 4,
-      ),
-      'showCloseButton' => TRUE,
-      'closeButtonText' => t('Close'),
-    ),
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#date_year_range' => '0:+3',
+    '#size' => 12,
+    '#required' => true,
   );
 
   $form['submit'] = array(
@@ -143,4 +137,66 @@ function bullseye_producer_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+
+/**
+ * Form submit for carrier form.
+ */
+function bullseye_carriers_form_submit($form, &$form_state) {
+  global $user;
+  $be = new Bullseye($user);
+
+  // Set the producer name.
+  $carrier_name = $form_state['values']['carrier_name'];
+  $contact_name = $form_state['values']['primary_contact_name'];
+  $contact_email = $form_state['values']['primary_contact_email'];
+  $major_medical = $form_state['values']['major_medical'];
+  $limited_medical = $form_state['values']['limited_medical'];
+  $teledoc = $form_state['values']['teledoc'];
+  $mec = $form_state['values']['mec'];
+  $dental = $form_state['values']['dental'];
+  $vision = $form_state['values']['vision'];
+  $life_add = $form_state['values']['life_ad_d'];
+  $short_term_disability = $form_state['values']['short_term_disability'];
+  $specialty_benefits = $form_state['values']['specialty_benefits'];
+  $retirement = $form_state['values']['retirement'];
+  $priority = $form_state['values']['priority'];
+  $due_date = $form_state['values']['due_date'];
+
+  // Check if the account already exist.
+  if (!$be->carrierExist($name)) {
+    // Build the username.
+    $username = str_replace(' ', '.', strtolower(trim($contact_name)));
+
+    $new_user = array(
+      'name' => $username,
+      'mail' => $contact_email,
+      'pass' => 'be@' . $username,
+      'status' => 1,
+      'access' => REQUEST_TIME,
+      'roles' => array(
+        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+        4 => 'producer',
+      ),
+    );
+
+    // Create new user.
+    $create_user = user_save(NULL, $new_user);
+
+    $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
+    $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
+    $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+
+    // Save the profile2 to the user account.
+    profile2_save($profile);
+
+    drupal_set_message(t('Successfully added new producer account.'));
+
+    // Invalidate the existing cache to make sure that
+    // the newly added one will get indexed too.
+    cache_clear_all('producers_listing', 'cache');
+    // Reroute the page to the listing page.
+    drupal_goto('/carriers');
+  }
 }
