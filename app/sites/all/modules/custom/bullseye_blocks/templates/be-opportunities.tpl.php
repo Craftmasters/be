@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-8">
         <span class="account-count"><?php print t('All Opportunities (6)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Add New Opportunity'); ?></a>
-        <a class="be-table-button" href="#"><?php print t('Import Opportunities'); ?></a>
+        <a class="be-table-button" href="/node/add/accounts?account_status=opportunity" rel="lightframe"><?php print t('Add New Opportunity'); ?></a>
+        <!--<a class="be-table-button" href="#"><?php print t('Import Opportunities'); ?></a>-->
       </div>
       <div class="col-md-4">
         <div class="be-table-right-icons">
@@ -30,7 +30,7 @@
           <th class="be-table-arrow-td"><?php print t('Convert to Deals in Progress'); ?></th>
           <th><?php print t('RFP'); ?></th>
           <th><?php print t('Proposal'); ?></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 2; $i++) : ?>
