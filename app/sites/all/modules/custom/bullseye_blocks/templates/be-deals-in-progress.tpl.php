@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-9">
         <span class="account-count"><?php print t('All Deals in Progress (6)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Add New Deal in Progress'); ?></a>
-        <a class="be-table-button" href="#"><?php print t('Import Deals in Progress'); ?></a>
+        <a class="be-table-button" href="/node/add/accounts?account_status=deal_in_progress" rel="lightframe"><?php print t('Add New Deal in Progress'); ?></a>
+        <!--<a class="be-table-button" href="#"><?php print t('Import Deals in Progress'); ?></a>-->
       </div>
       <div class="col-md-3">
         <div class="be-table-right-icons">
@@ -28,7 +28,7 @@
           <th class="be-table-arrow-td"><?php print t('Proof of Agreement'); ?></th>
           <th class="be-table-arrow-td"><?php print t('Convert to Closed Deals'); ?></th>
           <th><?php print t('Trust Docs'); ?></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 3; $i++) : ?>
