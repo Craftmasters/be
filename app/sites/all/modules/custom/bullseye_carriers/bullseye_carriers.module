@@ -145,6 +145,7 @@ function bullseye_carriers_form($form, &$form_state) {
  */
 function bullseye_carriers_form_submit($form, &$form_state) {
   global $user;
+
   $be = new Bullseye($user);
 
   // Set the producer name.
@@ -165,37 +166,40 @@ function bullseye_carriers_form_submit($form, &$form_state) {
   $due_date = $form_state['values']['due_date'];
 
   // Check if the account already exist.
-  if (!$be->carrierExist($name)) {
-    // Build the username.
-    $username = str_replace(' ', '.', strtolower(trim($contact_name)));
+  if (!$be->carrierExist($carrier_name)) {
 
-    $new_user = array(
-      'name' => $username,
-      'mail' => $contact_email,
-      'pass' => 'be@' . $username,
-      'status' => 1,
-      'access' => REQUEST_TIME,
-      'roles' => array(
-        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-        4 => 'producer',
-      ),
-    );
+    $node = new stdClass();
 
-    // Create new user.
-    $create_user = user_save(NULL, $new_user);
+    $node->title = $carrier_name;
 
-    $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
-    $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
-    $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+    $node->type = "carrier";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
 
-    // Save the profile2 to the user account.
-    profile2_save($profile);
+    if ($contact_name) {
+      $node->field_primary_contact[$node->language][0]['value'] = $contact_name;
+    }
 
-    drupal_set_message(t('Successfully added new producer account.'));
+    if ($contact_email) {
+      $node->field_email[$node->language][0]['value'] = $contact_email;
+    }
+
+    if ($contact_email) {
+      $node->field_email[$node->language][0]['value'] = $contact_email;
+    }
+
+    $node = node_submit($node);
+    node_save($node);
+
+    drupal_set_message(t('Successfully added carrier.'));
 
     // Invalidate the existing cache to make sure that
     // the newly added one will get indexed too.
-    cache_clear_all('producers_listing', 'cache');
+    // cache_clear_all('producers_listing', 'cache');
     // Reroute the page to the listing page.
     drupal_goto('/carriers');
   }
