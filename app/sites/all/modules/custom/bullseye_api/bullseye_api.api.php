@@ -201,4 +201,45 @@ class Bullseye {
 
     return $carrier;
   }
+
+  /**
+   * Get carriers.
+   */
+  function getCarriers() {
+    if ($cache = cache_get('carriers_listing')) {
+      $carriers = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
+      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
+      $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+      $query->join('field_data_field_due_date', 'date', 'n.nid = date.entity_id');
+      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $carriers = $query
+        ->distinct()
+        ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_primary_contact_value'))
+        ->fields('email', array('field_email_value'))
+        ->fields('benefits', array('field_benefits_value'))
+        ->fields('date', array('field_due_date_value'))
+        ->fields('priority', array('field_priority_value'))
+        ->condition('n.type', 'carrier', '=')
+        ->condition('n.status', 1, '=')
+        ->groupBy('n.nid')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('carriers_listing', $carriers, 'cache');
+    }
+
+    return $carriers;
+  }
+
+  /**
+   * Count carriers.
+   */
+  function countCarriers() {
+    return db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
+  }
 }
