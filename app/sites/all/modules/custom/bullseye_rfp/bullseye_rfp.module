@@ -21,3 +21,15 @@ function bullseye_rfp_menu() {
 
   return $items;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_rfp_permission() {
+  return array(
+    'add rfp' => array(
+      'title' => t('Create new RFP'),
+      'description' => t('Allow user to add new rfp.'),
+    ),
+  );
+}
