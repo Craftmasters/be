@@ -145,3 +145,114 @@ function bullseye_rfp_form($form, &$form_state) {
 
   return $form;
 }
+
+/**
+ * Form submit for carrier form.
+ */
+function bullseye_rfp_form_submit($form, &$form_state) {
+  global $user;
+
+  $be = new Bullseye($user);
+
+  // Set the producer name.
+  $carrier_name = $form_state['values']['carrier_name'];
+  $contact_name = $form_state['values']['primary_contact_name'];
+  $contact_email = $form_state['values']['primary_contact_email'];
+  $major_medical = $form_state['values']['major_medical'];
+  $limited_medical = $form_state['values']['limited_medical'];
+  $teledoc = $form_state['values']['teledoc'];
+  $mec = $form_state['values']['mec'];
+  $dental = $form_state['values']['dental'];
+  $vision = $form_state['values']['vision'];
+  $life = $form_state['values']['life'];
+  $short_term_disability = $form_state['values']['short_term_disability'];
+  $special_benefits = $form_state['values']['special_benefits'];
+  $retirement = $form_state['values']['retirement'];
+  $priority = $form_state['values']['priority'];
+  $due_date = $form_state['values']['due_date'];
+
+  // Check if the account already exist.
+  if (!$be->carrierExist($carrier_name)) {
+
+    $node = new stdClass();
+
+    $node->title = $carrier_name;
+
+    $node->type = "carrier";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+
+    // For contact name.
+    if ($contact_name) {
+      $node->field_primary_contact[$node->language][0]['value'] = $contact_name;
+    }
+
+    // For contact email.
+    if ($contact_email) {
+      $node->field_email[$node->language][0]['value'] = $contact_email;
+    }
+
+    // For major medical.
+    if ($major_medical == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'major_medical';
+    }
+    if ($limited_medical == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'limited_medical';
+    }
+    if ($teledoc == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'teledoc';
+    }
+    if ($mec == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'mec';
+    }
+    if ($dental == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'dental';
+    }
+    if ($vision == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'vision';
+    }
+    if ($life == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'life';
+    }
+    if ($short_term_disability == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'short_term_disability';
+    }
+    if ($special_benefits == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'special_benefits';
+    }
+    if ($retirement == 1) {
+      $node->field_benefits[$node->language][]['value'] = 'retirement';
+    }
+
+    if ($priority) {
+      $node->field_priority[$node->language][0]['value'] = $priority;
+    }
+
+    if ($due_date) {
+      $node->field_due_date[$node->language][0]['value'] = $due_date;
+    }
+
+    if ($priority) {
+      $node->field_priority[$node->language][0]['value'] = $priority;
+    }
+
+    // Save the carrier in the storage.
+    $node = node_submit($node);
+    node_save($node);
+
+    drupal_set_message(t('Successfully added carrier.'));
+
+    // Invalidate the existing cache to make sure that
+    // the newly added one will get indexed too.
+    cache_clear_all('carriers_listing', 'cache');
+    // Reroute the page to the listing page.
+    drupal_goto('/carriers');
+  }
+  else {
+    drupal_set_message(t('Carrier already exist.'));
+  }
+}
