@@ -33,3 +33,115 @@ function bullseye_rfp_permission() {
     ),
   );
 }
+
+/**
+ * Implements hook_form().
+ *
+ * Add RFP form.
+ */
+function bullseye_rfp_form($form, &$form_state) {
+  $form = array();
+
+  $form['carrier_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Carier Name'),
+  );
+
+  $form['primary_contact_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Primary Contact'),
+  );
+
+  $form['primary_contact_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email Address'),
+  );
+
+  $form['benefits'] = array(
+    '#type' => 'markup',
+    '#markup' => '<label>Benefits</label>',
+  );
+
+  $form['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Teledoc'),
+  );
+
+  $form['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Dissability'),
+  );
+
+  $form['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  // The values for the dropdown box.
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+  );
+
+  $form['priority'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#description' => "Select the priority level.",
+    '#options' => $form['type_options']['#value'],
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#date_year_range' => '0:+3',
+    '#size' => 12,
+    '#required' => true,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
