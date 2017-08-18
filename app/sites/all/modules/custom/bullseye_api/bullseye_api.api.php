@@ -252,19 +252,24 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
-      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
-      $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
-      $query->join('field_data_field_due_date', 'date', 'n.nid = date.entity_id');
-      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->join('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
+      $query->join('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
+      $query->join('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
+      $query->join('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
+      $query->join('field_data_field_title', 'pos', 'n.nid = pos.entity_id');
+      $query->join('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
+      $query->join('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
+      $query->join('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->join('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $accounts = $query
         ->distinct()
-        ->fields('n', array('nid', 'title'))
-        ->fields('contact', array('field_primary_contact_value'))
-        ->fields('email', array('field_email_value'))
-        ->fields('benefits', array('field_benefits_value'))
-        ->fields('date', array('field_due_date_value'))
-        ->fields('priority', array('field_priority_value'))
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('mname', array('field_middle_name_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('comp', array('field_company_value'))
+        ->fields('mail', array('field_email_value'))
+        ->fields('source', array('field_source_value'))
+        ->fields('btype', array('field_type_of_business'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->groupBy('n.nid')
