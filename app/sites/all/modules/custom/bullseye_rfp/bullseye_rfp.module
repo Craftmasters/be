@@ -1,0 +1,23 @@
+<?php
+/**
+ * RFP module file.
+ *
+ * @author
+ *  Gerald Villorente
+ */
+/**
+ * Implements hook_menu().
+ */
+function bullseye_rfp_menu() {
+  $items = array();
+
+  $items['rfp/add'] = array(
+    'title' => 'Create NewRFP',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_rfp_form'),
+    'access arguments' => array('add rfp'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
