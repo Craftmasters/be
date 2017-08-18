@@ -297,5 +297,5 @@ function bullseye_deploy_update_7022() {
  * Install RFP module.
  */
 function bullseye_deploy_update_7023() {
-  module_enable(array('bullseye_rfp'), TRUE);
+  module_enable(array('bullseye_rfp', 'rfp'), TRUE);
 }
