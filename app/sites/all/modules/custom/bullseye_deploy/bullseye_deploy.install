@@ -292,3 +292,10 @@ function bullseye_deploy_update_7021() {
 function bullseye_deploy_update_7022() {
   module_enable(array('bullseye_carriers'), TRUE);
 }
+
+/**
+ * Install RFP module.
+ */
+function bullseye_deploy_update_7023() {
+  module_enable(array('bullseye_rfp'), TRUE);
+}
