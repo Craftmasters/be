@@ -226,7 +226,7 @@ class Bullseye {
         ->fields('priority', array('field_priority_value'))
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
-        ->groupBy('n.nid')
+        ->groupBy('benefits.field_benefits_value')
         ->execute()
         ->fetchAll();
 
