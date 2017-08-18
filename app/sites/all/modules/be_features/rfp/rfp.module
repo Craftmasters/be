@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the RFP feature.
+ */
+
+include_once 'rfp.features.inc';
