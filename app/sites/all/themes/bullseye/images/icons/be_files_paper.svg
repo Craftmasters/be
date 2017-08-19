@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="13526.782 5301 24 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #5d576b;
+      }
+    </style>
+  </defs>
+  <g id="paper" transform="translate(13475.782 5301)">
+    <g id="drive-file" transform="translate(51)">
+      <path id="Path_32" data-name="Path 32" class="cls-1" d="M54,0a3.009,3.009,0,0,0-3,3V27a3.009,3.009,0,0,0,3,3H72a3.009,3.009,0,0,0,3-3V9L66,0ZM64.5,10.5V2.25l8.25,8.25Z" transform="translate(-51)"/>
+    </g>
+  </g>
+</svg>
