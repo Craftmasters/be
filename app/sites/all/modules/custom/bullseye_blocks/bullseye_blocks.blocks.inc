@@ -382,6 +382,9 @@ function bullseye_blocks_render_be_files() {
 
   $vars = array();
 
+  $vars['file_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_files_paper.svg';
+  $vars['file_download'] = $base_url . '/' . $theme_directory . '/images/icons/be_files_download.svg';
+
   $output = theme('be_files', $vars);
 
   return array(
