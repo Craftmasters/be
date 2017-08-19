@@ -342,6 +342,8 @@ function bullseye_blocks_render_be_account_details() {
 
   $vars = array();
 
+  $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+
   $output = theme('be_account_details', $vars);
 
   return array(
