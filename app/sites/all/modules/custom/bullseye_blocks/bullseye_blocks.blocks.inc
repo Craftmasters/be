@@ -362,6 +362,8 @@ function bullseye_blocks_render_be_people() {
 
   $vars = array();
 
+  $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+
   $output = theme('be_people', $vars);
 
   return array(
