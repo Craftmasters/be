@@ -1,0 +1,43 @@
+.be-view-field {
+	margin-top: 10px;
+	&:first-child {
+		margin-top: 0px;
+	}
+}
+
+.be-view-label {
+	font-family: 'Proximanova-Regular';
+	font-size: 16px;
+	color: @field_label_color;
+}
+
+.be-view-value {
+	font-family: 'Proximanova-Regular';
+	font-size: 16px;
+	color: @field_value_color;
+	a {
+		color: @field_value_color;
+	}
+	.orange-font {
+    color: @orange;
+  }
+  &.font-bold {
+		font-family: 'Proximanova-Bold';
+	}
+}
+
+.be-view-field-row.row {
+	margin-right: -5px;
+	margin-left: -5px;
+
+	.col-xs-4 {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+
+	.be-view-field {
+		&:first-child {
+			margin-top: 10px;
+		}
+	}
+}

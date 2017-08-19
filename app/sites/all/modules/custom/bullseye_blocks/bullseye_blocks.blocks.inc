@@ -342,6 +342,8 @@ function bullseye_blocks_render_be_account_details() {
 
   $vars = array();
 
+  $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+
   $output = theme('be_account_details', $vars);
 
   return array(
@@ -359,6 +361,8 @@ function bullseye_blocks_render_be_people() {
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
+
+  $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
 
   $output = theme('be_people', $vars);
 
@@ -397,6 +401,29 @@ function bullseye_blocks_render_be_header_progress() {
   $vars = array();
 
   $output = theme('be_header_progress', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * RFPs Block (Table).
+ */
+function bullseye_blocks_render_be_rfps() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_rfps', $vars);
 
   return array(
     'subject' => '',
