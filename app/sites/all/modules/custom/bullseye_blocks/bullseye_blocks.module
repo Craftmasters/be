@@ -331,6 +331,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // RFPs Table Block.
+    'be_rfps' => array(
+      'variables' => array(),
+      'template' => 'be-rfps',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -463,6 +470,13 @@ function bullseye_blocks_block_info() {
   // Header Progress Block.
   $blocks['be_header_progress'] = array(
     'info' => t('Header Progress Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // RFPs Table Block.
+  $blocks['be_rfps'] = array(
+    'info' => t('RFPs Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
