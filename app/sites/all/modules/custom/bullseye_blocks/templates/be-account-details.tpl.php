@@ -5,12 +5,14 @@
 
   	<div class="be-view-field">
   		<div class="be-view-label"><?php print t('Company Name'); ?></div>
-	  	<div class="be-view-value">ABC Company</div>
+	  	<div class="be-view-value font-bold">ABC Company</div>
   	</div>
 	  
 	  <div class="be-view-field">
   		<div class="be-view-label"><?php print t('Primary Email Address'); ?></div>
-	  	<div class="be-view-value"><a href="mailto:info@abccompany.com">info@abccompany.com</a></div>
+	  	<div class="be-view-value">
+	  		<a href="mailto:info@abccompany.com" class="orange-font">info@abccompany.com</a>
+	  	</div>
   	</div>
 
   	<div class="be-view-field">
@@ -20,7 +22,9 @@
 
   	<div class="be-view-field">
   		<div class="be-view-label"><?php print t('Website'); ?></div>
-	  	<div class="be-view-value"><a href="#">https://abccompany.com</a></div>
+	  	<div class="be-view-value">
+	  		<a href="#" class="orange-font">https://abccompany.com</a>
+	  		</div>
   	</div>
 
   	<div class="be-view-field">
