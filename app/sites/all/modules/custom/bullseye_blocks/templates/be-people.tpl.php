@@ -7,10 +7,10 @@
   		<div class="be-user-img">
   			<img src="/sites/all/themes/bullseye/images/default-user.png">
   		</div>
-  		<div class="be-user-name">Chris Martin</div>
+  		<div class="be-user-name orange-font">Chris Martin</div>
   		<div class="be-user-position">Chief Executive Officer</div>
   		<div class="be-user-contact">
-  			<span class="phone">(880) 827-3959</span> | <a href="mailto:chris@abccompany.com" class="be-user-email">chris@abccompany.com</a>
+  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">chris@abccompany.com</a>
   		</div>
   	</div>
 
@@ -18,10 +18,10 @@
   		<div class="be-user-img">
   			<img src="/sites/all/themes/bullseye/images/default-user.png">
   		</div>
-  		<div class="be-user-name">Jack James</div>
+  		<div class="be-user-name orange-font">Jack James</div>
   		<div class="be-user-position">Chief Financial Officer</div>
   		<div class="be-user-contact">
-  			<span class="phone">(880) 827-3959</span> | <a href="mailto:chris@abccompany.com" class="be-user-email">jack@abccompany.com</a>
+  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">jack@abccompany.com</a>
   		</div>
   	</div>
 
@@ -29,10 +29,10 @@
   		<div class="be-user-img">
   			<img src="/sites/all/themes/bullseye/images/default-user.png">
   		</div>
-  		<div class="be-user-name">Jon Lee</div>
+  		<div class="be-user-name orange-font">Jon Lee</div>
   		<div class="be-user-position">HR Director</div>
   		<div class="be-user-contact">
-  			<span class="phone">(880) 827-3959</span> | <a href="mailto:chris@abccompany.com" class="be-user-email">jon@abccompany.com</a>
+  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">jon@abccompany.com</a>
   		</div>
   	</div>
 
