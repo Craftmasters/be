@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18737.344 4973 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #87aeb6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="_016-paper-plane" data-name="016-paper-plane" transform="translate(18744.147 4982)">
+    <rect id="Rectangle_560" data-name="Rectangle 560" class="cls-1" width="36" height="36" rx="5" transform="translate(-6.803 -9)"/>
+    <path id="Path_641" data-name="Path 641" class="cls-2" d="M21.789,61.012.343,68.762a.517.517,0,0,0-.118.913l3.206,2.188,14.55-7.673-12.317,9.2v3.726a.321.321,0,0,0,.5.267l2.713-1.8L11.548,77.4a.522.522,0,0,0,.737-.158l9.7-15.993A.163.163,0,0,0,21.789,61.012Z" transform="translate(1 -60.001)"/>
+  </g>
+</svg>

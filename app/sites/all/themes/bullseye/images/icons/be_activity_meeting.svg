@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18738.342 5154 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #87aeb6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="meeting_icon" data-name="meeting icon" transform="translate(18745.179 5160)">
+    <rect id="Rectangle_563" data-name="Rectangle 563" class="cls-1" width="36" height="36" rx="5" transform="translate(-6.836 -6)"/>
+    <g id="forum" transform="translate(0)">
+      <path id="Path_466" data-name="Path 466" class="cls-2" d="M20.908,4.4h-2.2v9.9H4.4v2.2a1.04,1.04,0,0,0,1.1,1.1h12.1l4.4,4.4V5.5A1.04,1.04,0,0,0,20.908,4.4Zm-4.4,6.6V1.1a1.04,1.04,0,0,0-1.1-1.1H1.1A1.04,1.04,0,0,0,0,1.1V16.506l4.4-4.4h11A1.04,1.04,0,0,0,16.506,11Z"/>
+    </g>
+  </g>
+</svg>
