@@ -10,10 +10,122 @@
       </div>
       <div class="body-tabs">
         <div id="tab-0" class="tab-content">
-          log activity
+          <div class="be-event-field">
+          	<div class="be-event-label">
+          		<?php print t('Activity Name'); ?>
+          	</div>
+          	<div class="be-event-input">
+          		<input type="text">
+          	</div>
+          </div>
+          <div class="be-event-field-row row">
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Type'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<select>
+		          			<option value="1"><?php print t('Phone Call'); ?></option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Date'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<!-- To be changed to datetimepicker -->
+		          		<select>
+		          			<option value="1">07/06/2017</option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Assigned To'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<select>
+		          			<option value="1">James J.</option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+          </div>
         </div>
         <div id="tab-1" class="tab-content">
-          new task
+          <div class="be-event-field">
+          	<div class="be-event-label">
+          		<?php print t('Task Name'); ?>
+          	</div>
+          	<div class="be-event-input">
+          		<input type="text">
+          	</div>
+          </div>
+          <div class="be-event-field-row row">
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Type'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<select>
+		          			<option value="1"><?php print t('Phone Call'); ?></option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Priority'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<select>
+		          			<option value="1">Normal</option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Assigned To'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<select>
+		          			<option value="1">James Jordan</option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          	<div class="col-xs-4">
+          		<div class="be-event-field">
+		          	<div class="be-event-label">
+		          		<?php print t('Due Date'); ?>
+		          	</div>
+		          	<div class="be-event-input">
+		          		<!-- To be changed to datetimepicker -->
+		          		<select>
+		          			<option value="1">07/06/2017</option>
+		          		</select>
+		          	</div>
+		          </div>
+          	</div>
+
+          </div>
         </div>
       </div>
     </div>
