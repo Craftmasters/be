@@ -60,6 +60,9 @@
 		          </div>
           	</div>
           </div>
+          <div class="be-custom-actions">
+          	<a href="#" class="submit green-btn"><?php print t('Save'); ?></a>
+          </div>
         </div>
         <div id="tab-1" class="tab-content">
           <div class="be-event-field">
@@ -124,7 +127,9 @@
 		          	</div>
 		          </div>
           	</div>
-
+          </div>
+          <div class="be-custom-actions">
+          	<a href="#" class="submit green-btn"><?php print t('Save'); ?></a>
           </div>
         </div>
       </div>

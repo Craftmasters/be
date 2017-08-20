@@ -324,6 +324,11 @@ function bullseye_blocks_render_be_recent_activities() {
 
   $vars = array();
 
+  $vars['call_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_call.svg';
+  $vars['send_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_send.svg';
+  $vars['receive_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_receive.svg';
+  $vars['meeting_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_meeting.svg';
+
   $output = theme('be_recent_activities', $vars);
 
   return array(

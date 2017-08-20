@@ -58,6 +58,40 @@
     }
   }
 
+  .be-custom-actions {
+    text-align: right;
+    margin-top: 20px;
+    a, button, input[type="submit"] {
+      display: inline-block;
+      color: #fff;
+      font-family: 'Proximanova-Bold';
+      text-transform: uppercase;
+      font-size: 14px;
+      border-radius: 15px;
+      padding: 10px 27px;
+      border: none;
+      margin-left: 5px;
+      &.gray-btn {
+        background-color: @form_back_button_background;
+        &:hover {
+          background-color: @form_back_button_background + 10;
+        }
+      }
+      &.orange-btn {
+        background-color: @orange;
+        &:hover {
+          background-color: @orange + 10;
+        }
+      }
+      &.green-btn {
+        background-color: @green;
+        &:hover {
+          background-color: @green + 10;
+        }
+      }
+    }
+  }
+
 
 /*
  * Left Sidebar.
@@ -639,13 +673,27 @@
     position: relative;
  	}
 
-  .edit-link {
+  .edit-link,
+  .select-link {
     position: absolute;
     top: 20px;
     right: 25px;
     display: inline-block;
     img {
       width: 15px;
+    }
+  }
+
+  .select-link {
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
+    font-family: 'Lato-Bold';
+      font-size: 13px;
+      text-transform: uppercase;
+      color: @field_label_color;
+    option {
+
     }
   }
 
