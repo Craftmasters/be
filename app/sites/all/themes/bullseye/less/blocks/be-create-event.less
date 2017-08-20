@@ -1,30 +1,76 @@
-.tabbed-block {
+.be-create-event .tabbed-block {
   ul.tabs-menu {
-    margin: 0px;
-    padding: 0px;
+    border-bottom: 1px solid #A2A2A2;
+    margin-top: 10px;
     li {
-      display: inline-block;
-      margin-right: -4px;
-      vertical-align: top;
       a {
-        display: inline-block;
-        text-align: center;
-        width: 100%;
+        text-transform: uppercase;
+        font-family: 'Proximanova-Bold';
+        font-size: 15px;
+        color: @green;
+        border-bottom: 3px solid #FFF;
+        padding: 2px 10px;
       }
-      &.current {
-        
-        a {
-        }
+    }
+    li.current {
+      a {
+        border-bottom: 3px solid @green;
       }
     }
   }
-  .body-tabs {
+}
+
+.be-event-field {
+  &:first-child {
+    margin-top: 20px;
+  }
+}
+
+.be-event-field-row.row {
+  margin-left: -5px;
+  margin-right: -5px;
+  .col-xs-4 {
+    padding-left: 5px;
+    padding-right: -5px;
+  }
+}
+
+.be-event-label {
+  font-family: 'Proximanova-Semibold';
+  font-size: 13px;
+  color: @form_title_color;
+}
+
+.be-event-input {
+  input[type="text"],
+  select {
+    border: none;
+    font-family: 'Proximanova-Regular';
+    font-size: 15px;
+    border-radius: 0px;
+    border-bottom: 2px solid @textfield_bottom_border_color;
     width: 100%;
-    .tab-content {
-      display: none;
+    &:focus,
+    &:active {
+      outline: none;
+      border: none;
+      border-bottom: 2px solid @orange;
     }
-    #tab-0 {
-      display: block;
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: @textfield_placeholder_color;
     }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: @textfield_placeholder_color;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: @textfield_placeholder_color;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: @textfield_placeholder_color;
+    }
+  }
+  select {
+    background-color: transparent;
+    border-radius: 0px;
   }
 }

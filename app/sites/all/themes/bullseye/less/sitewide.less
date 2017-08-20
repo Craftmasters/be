@@ -27,6 +27,37 @@
 		width: 100%;
 	}
 
+  .tabbed-block {
+    ul.tabs-menu {
+      margin: 0px;
+      padding: 0px;
+      li {
+        display: inline-block;
+        margin-right: -4px;
+        vertical-align: top;
+        a {
+          display: inline-block;
+          text-align: center;
+          width: 100%;
+        }
+        &.current {
+          
+          a {
+          }
+        }
+      }
+    }
+    .body-tabs {
+      width: 100%;
+      .tab-content {
+        display: none;
+      }
+      #tab-0 {
+        display: block;
+      }
+    }
+  }
+
 
 /*
  * Left Sidebar.

@@ -1,4 +1,4 @@
-<div class="be-regular-block">
+<div class="be-regular-block be-create-event">
   <h2 class="be-regular-h2"><?php print t('Create Event'); ?></h2>
   <div class="be-block-main">
   	<div class="tabbed-block">
@@ -15,7 +15,7 @@
           		<?php print t('Activity Name'); ?>
           	</div>
           	<div class="be-event-input">
-          		<input type="text">
+          		<input type="text" placeholder="Add Activity">
           	</div>
           </div>
           <div class="be-event-field-row row">
@@ -67,7 +67,7 @@
           		<?php print t('Task Name'); ?>
           	</div>
           	<div class="be-event-input">
-          		<input type="text">
+          		<input type="text" placeholder="<?php print t('Add Task'); ?>">
           	</div>
           </div>
           <div class="be-event-field-row row">
