@@ -11,10 +11,18 @@
 function bullseye_rfp_menu() {
   $items = array();
 
-  $items['rfp/add'] = array(
-    'title' => 'Create NewRFP',
+  $items['rfps/add'] = array(
+    'title' => 'Create New RFP',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('bullseye_rfp_form'),
+    'access arguments' => array('add rfp'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['rfps/initial-add'] = array(
+    'title' => 'Create New RFP',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_rfp_initial_add_form'),
     'access arguments' => array('add rfp'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -32,6 +40,106 @@ function bullseye_rfp_permission() {
       'description' => t('Allow user to add new rfp.'),
     ),
   );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Add RFP form (initial form popup).
+ */
+function bullseye_rfp_initial_add_form($form, &$form_state) {
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Create New RFP') . '</h2>',
+  );
+
+  $form['account'] = array(
+    '#type' => 'select',
+    '#title' => t('Select Account'),
+    '#options' => array(
+      0 => t('ABC Company'),
+      1 => t('XYZ Company'),
+    ),
+   );
+
+  $form['select_benefits_label'] = array(
+    '#type' => 'markup',
+    '#markup' => '<label>' . t('Select Benefits') . '</label>',
+  );
+
+  $form['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+  );
+
+  $form['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Dissability'),
+  );
+
+  $form['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  $form['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Next'),
+  );
+
+  return $form;
 }
 
 /**
