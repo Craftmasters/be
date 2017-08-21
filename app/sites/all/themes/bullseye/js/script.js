@@ -71,11 +71,7 @@
         var parent_iframe = $(window.frameElement).parent().find('iframe#lightboxFrame');
         parent_iframe.contents().find('body').addClass('be-lightbox');
         parent_iframe.contents().find('html').addClass('be-lightbox-html');
-
-        //parent_iframe.load(function() {
-        //  var height = parent_iframe.contents().find('.bullseye-wrapper').outerHeight(true);
-        //  parent_iframe.attr('height', height);
-        //});
+        $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
       });
 

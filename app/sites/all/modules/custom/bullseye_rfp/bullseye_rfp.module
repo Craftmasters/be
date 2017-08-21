@@ -68,57 +68,57 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
     ),
    );
 
-  $form['select_benefits_label'] = array(
-    '#type' => 'markup',
-    '#markup' => '<label>' . t('Select Benefits') . '</label>',
+  $form['benefits_container'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
   );
 
-  $form['major_medical'] = array(
+  $form['benefits_container']['benefits']['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
   );
 
-  $form['limited_medical'] = array(
+  $form['benefits_container']['benefits']['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
   );
 
-  $form['teledoc'] = array(
+  $form['benefits_container']['benefits']['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
   );
 
-  $form['mec'] = array(
+  $form['benefits_container']['benefits']['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
   );
 
-  $form['life'] = array(
+  $form['benefits_container']['benefits']['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
   );
 
-  $form['short_term_disability'] = array(
+  $form['benefits_container']['benefits']['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Dissability'),
   );
 
-  $form['dental'] = array(
+  $form['benefits_container']['benefits']['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
   );
 
-  $form['vision'] = array(
+  $form['benefits_container']['benefits']['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
   );
 
-  $form['retirement'] = array(
+  $form['benefits_container']['benefits']['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
   );
 
-  $form['special_benefits'] = array(
+  $form['benefits_container']['benefits']['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
   );

@@ -128,6 +128,10 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       );
       hide($form['additional_settings']);
       hide($form['actions']['preview']);
+      $form['actions']['cancel'] = array(
+        '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+      );
+
       $form['title']['#required'] = FALSE;
       $form['field_firstname'][LANGUAGE_NONE][0]['value']['#title'] = '';
       $form['field_firstname'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('First Name');
@@ -145,6 +149,8 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       $form['field_facebook_personal'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Social');
       $form['#validate'][] = '_make_title_from_person_name';
       break;
+    case 'bullseye_rfp_initial_add_form':
+      break;
     default:
       break;
   }
@@ -157,6 +163,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
   $items['accounts_node_form'] = array(
     'render element' => 'form',
     'template' => 'accounts-node-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
+  $items['bullseye_rfp_initial_add_form'] = array(
+    'render element' => 'form',
+    'template' => 'rfp-initial-add-form',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
   return $items;
