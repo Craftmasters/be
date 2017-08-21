@@ -203,7 +203,7 @@ class Bullseye {
   }
 
   /**
-   * Get carriers.
+   * Get all the carriers.
    */
   function getCarriers() {
     if ($cache = cache_get('carriers_listing')) {
