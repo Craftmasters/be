@@ -228,6 +228,57 @@ function bullseye_rfp_form($form, &$form_state) {
     '#title' => t('Renewal Date'),
   );
 
+  // Census checkboxes
+  $form['census_container'] = array(
+    '#type' => 'container',
+    'census' => array(),
+  );
+
+  $form['census_container']['census']['check_identifier'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identifier (Name or Employee Number)'),
+  );
+
+  $form['census_container']['census']['check_ssn'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Social Security Number'),
+  );
+
+  $form['census_container']['census']['check_date_birth_age'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Date of Birth or Age'),
+  );
+
+  $form['census_container']['census']['check_gender'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Gender'),
+  );
+
+  $form['census_container']['census']['check_home_zip_codes'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Home Zip Codes for each employee'),
+  );
+
+  $form['census_container']['census']['check_plan_selection'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Plan Selection (HMO, PPO, HSA, etc.)'),
+  );
+
+  $form['census_container']['census']['check_tier_levels'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Tier Levels (EE, ES, EC(H), EF) or 3 Tiers (if applicable)'),
+  );
+
+  $form['census_container']['census']['check_identification_of_retirees'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identification of Retirees or COBRA members with COBRA Termination Date'),
+  );
+
+  $form['census_container']['census']['check_identification_of_covered'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identification of covered and not covered employees with explanation for those not (i.e. spousal, medicare, medicaid, etc.)'),
+  );
+
   $form['carrier_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Carier Name'),

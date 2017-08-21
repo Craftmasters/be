@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-4">
-		<div class="be-regular-block">
+		<div class="be-regular-block group-information">
 		  <h2 class="be-regular-h2"><?php print t('Group Information'); ?></h2>
 		  <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
 		  <div class="be-block-main">
@@ -62,10 +62,10 @@
 		  </div>
 		</div>
 
-		<div class="be-regular-block">
+		<div class="be-regular-block plan-specification">
 			<h2 class="be-regular-h2"><?php print t('Plan Specifications'); ?></h2>
 			<a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
-			<div class="be-block-main plan-specification">
+			<div class="be-block-main plan-specification-inner">
 				<div class="be-form-section">
 			    <div class="row">
 			      <div class="col-xs-6"><?php print render($form['fringe_rates']); ?></div>
@@ -95,19 +95,26 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<div class="be-regular-block">
+		<div class="be-regular-block benefits">
 			<h2 class="be-regular-h2"><?php print t('Benefits'); ?></h2>
 			<a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
 		</div>
 
 	</div>
 	<div class="col-md-4">
-		<div class="be-regular-block">
+		<div class="be-regular-block attachments">
 			<h2 class="be-regular-h2"><?php print t('Attachments'); ?></h2>
 		</div>
 
-		<div class="be-regular-block">
+		<div class="be-regular-block census">
 			<h2 class="be-regular-h2"><?php print t('Census Must Include The Following:'); ?></h2>
+			<div class="be-block-main">
+				<?php foreach ($form['census_container']['census'] as $key => $value) : ?>
+			    <?php if ($key[0] != '#') : ?>
+			      <?php print render($form['census_container']['census'][$key]); ?>
+			    <?php endif; ?>
+			  <?php endforeach; ?>
+			</div>
 		</div>
 	</div>
 </div>
