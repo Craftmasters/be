@@ -166,6 +166,68 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
 function bullseye_rfp_form($form, &$form_state) {
   $form = array();
 
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  // Fringe Rate/s.
+  $form['fringe_rates'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Fringe Rate/s'),
+  );
+
+  // Proposed Effective Date.
+  $form['proposed_effective_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD',
+    '#date_year_range' => '0:+3',
+    '#title' => t('Proposed Effective Date'),
+  );
+
+  // Other Work Locations and Zip Codes.
+  $form['other_work_locations'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Other Work Locations and Zip Codes'),
+  );
+
+  // Number of Employees.
+  $form['number_of_employees'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Employees'),
+  );
+
+  // Number of Dependents.
+  $form['number_of_dependents'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Dependents'),
+  );
+
+  // Nature of Business/SIC.
+  $form['nature_of_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nature of Business/SIC'),
+  );
+
+  // Years in Business.
+  $form['years_in_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Years in Business'),
+  );
+
+  // Tax ID.
+  $form['tax_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tax ID'),
+  );
+
+  // Renewal Date.
+  $form['renewal_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD',
+    '#date_year_range' => '0:+3',
+    '#title' => t('Renewal Date'),
+  );
+
   $form['carrier_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Carier Name'),

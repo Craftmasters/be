@@ -83,7 +83,6 @@ function bullseye_preprocess_page(&$vars, $hook) {
   if ($theme_suggestion_last == 'four_eight_column') {
     $vars['column'] = 'four-eight-col';
   }
-
 }
 
 /**
@@ -151,6 +150,8 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'bullseye_rfp_initial_add_form':
       break;
+    case 'bullseye_rfp_form':
+      break;
     default:
       break;
   }
@@ -168,6 +169,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
   $items['bullseye_rfp_initial_add_form'] = array(
     'render element' => 'form',
     'template' => 'rfp-initial-add-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
+  $items['bullseye_rfp_form'] = array(
+    'render element' => 'form',
+    'template' => 'rfp-add-form',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
   return $items;
@@ -193,3 +199,11 @@ function _make_title_from_person_name($form, &$form_state) {
   }
 }
 
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_preprocess_bullseye_rfp_form(&$vars) {
+  global $base_url;
+  $theme_directory = path_to_theme('theme', 'bullseye');
+  $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+}

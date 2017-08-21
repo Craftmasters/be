@@ -46,6 +46,14 @@ function bullseye_blocks_render_be_bottom_header() {
 
   $vars = array();
 
+  $vars['be_page_title'] = drupal_get_title();
+
+  if (arg(0) == 'rfps' && arg(1) == 'add') {
+    if (isset($_GET['account_name'])) {
+      $vars['be_page_title'] = t('Create New RFP') . ' - ' . $_GET['account_name'];
+    }
+  }
+
   $output = theme('be_bottom_header', $vars);
 
   return array(

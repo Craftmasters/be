@@ -1,1 +1,1 @@
-<h1 class="be-page-title"><?php print drupal_get_title(); ?></h1>
+<h1 class="be-page-title"><?php print $be_page_title; ?></h1>
