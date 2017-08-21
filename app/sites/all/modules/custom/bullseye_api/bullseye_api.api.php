@@ -237,14 +237,14 @@ class Bullseye {
   }
 
   /**
-   * Count carriers.
+   * Count all the carriers.
    */
   function countCarriers() {
     return db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
   }
 
   /**
-   * Get carriers.
+   * Get all the accounts.
    */
   function getAllAccounts() {
     if ($cache = cache_get('accounts_listing')) {
