@@ -203,7 +203,7 @@ class Bullseye {
   }
 
   /**
-   * Get carriers.
+   * Get all the carriers.
    */
   function getCarriers() {
     if ($cache = cache_get('carriers_listing')) {
@@ -226,7 +226,7 @@ class Bullseye {
         ->fields('priority', array('field_priority_value'))
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
-        ->groupBy('n.nid')
+        ->groupBy('benefits.field_benefits_value')
         ->execute()
         ->fetchAll();
 
@@ -237,14 +237,14 @@ class Bullseye {
   }
 
   /**
-   * Count carriers.
+   * Count all the carriers.
    */
   function countCarriers() {
     return db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
   }
 
   /**
-   * Get carriers.
+   * Get all the accounts.
    */
   function getAllAccounts() {
     if ($cache = cache_get('accounts_listing')) {

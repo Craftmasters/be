@@ -299,3 +299,10 @@ function bullseye_deploy_update_7022() {
 function bullseye_deploy_update_7023() {
   module_enable(array('bullseye_rfp', 'rfp'), TRUE);
 }
+
+/**
+ * Install Proposal feature module.
+ */
+function bullseye_deploy_update_7024() {
+  module_enable(array('proposal', TRUE);
+}
