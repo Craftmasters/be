@@ -63,8 +63,8 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Select Account'),
     '#options' => array(
-      0 => t('ABC Company'),
-      1 => t('XYZ Company'),
+      'ABC Company' => t('ABC Company'),
+      'XYZ Company' => t('XYZ Company'),
     ),
    );
 
@@ -140,6 +140,22 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Form submit for initial create RFP Form.
+ */
+function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
+  $query = '/rfps/add?';
+  $query .= 'account_name=' . $form_state['values']['account'];
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if ($key[0] != '#') {
+      $query .= '&' . $key . '=' . $value['#value'];
+    }
+  }
+  print '<script>parent.location = "' . $query . '";</script>';
+  print '<script>parent.Lightbox.end();</script>';
+  die();
 }
 
 /**

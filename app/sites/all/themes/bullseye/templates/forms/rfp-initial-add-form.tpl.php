@@ -1,7 +1,7 @@
 <?php print render($form['form_title']); ?>
 <?php print render($form['account']); ?>
 
-<label><?php print t('Select Benefits'); ?></label>
+<label class="select-benefit-label"><?php print t('Select Benefits'); ?></label>
 <div class="row">
   <?php foreach ($form['benefits_container']['benefits'] as $key => $value) : ?>
     <?php if ($key[0] != '#') : ?>
