@@ -98,6 +98,48 @@
 		<div class="be-regular-block benefits">
 			<h2 class="be-regular-h2"><?php print t('Benefits'); ?></h2>
 			<a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
+			<div class="be-block-main">
+				<div class="accordion-benefits-wrapper">
+					<div class="accordion-benefits">
+
+						<div class="accordion_in">
+							<div class="acc_head">Limited Medical</div>
+							<div class="acc_content">
+								<p>Your Content Goes Here.</p>
+							</div>
+						</div>
+
+						<div class="accordion_in">
+							<div class="acc_head">Telemedicine</div>
+							<div class="acc_content">
+								<p>Your Content Goes Here.</p>
+							</div>
+						</div>
+						 
+						<div class="accordion_in">
+							<div class="acc_head">Life</div>
+							<div class="acc_content">
+								<p>Your Content Goes Here.</p>
+							</div>
+						</div>
+
+						<div class="accordion_in">
+							<div class="acc_head">MEC</div>
+							<div class="acc_content">
+								<p>Your Content Goes Here.</p>
+							</div>
+						</div>
+
+						<div class="accordion_in">
+							<div class="acc_head">Life & AD&D</div>
+							<div class="acc_content">
+								<p>Your Content Goes Here.</p>
+							</div>
+						</div>
+	 
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>

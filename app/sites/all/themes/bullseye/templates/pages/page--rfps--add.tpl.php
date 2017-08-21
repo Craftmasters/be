@@ -98,6 +98,9 @@
       </div>
       <div class="bottom-header">
         <?php print render($page['bottom_header']); ?>
+        <div class="be-custom-actions">
+          <a href="#" class="green-btn"><?php print t('Next: Summary'); ?></a>
+        </div>
       </div>
       <div class="content-region">
         <?php print $messages; ?>

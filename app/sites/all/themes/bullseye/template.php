@@ -83,6 +83,11 @@ function bullseye_preprocess_page(&$vars, $hook) {
   if ($theme_suggestion_last == 'four_eight_column') {
     $vars['column'] = 'four-eight-col';
   }
+
+  if (arg(0) == 'rfps' && arg(1) == 'add') {
+    drupal_add_js($theme_directory . '/js/smk-accordion.min.js');
+  }
+
 }
 
 /**

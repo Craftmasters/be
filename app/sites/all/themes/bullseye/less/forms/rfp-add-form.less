@@ -19,6 +19,18 @@ body.page-rfps-initial-add.be-lightbox {
   }
 }
 
+.page-rfps-add {
+  .bottom-header {
+    position: relative;
+    .be-custom-actions {
+      position: absolute;
+      margin-top: 0px;
+      right: 25px;
+      top: 9px;
+    }
+  }
+}
+
 #bullseye-rfp-form {
   label {
     white-space: nowrap;
@@ -52,4 +64,38 @@ body.page-rfps-initial-add.be-lightbox {
     }
   }
 }
+
+.be-regular-block.benefits {
+  padding-bottom: 0px;
+}
+
+.accordion-benefits-wrapper {
+  margin-left: -25px;
+  margin-right: -25px;
+
+  .smk_accordion {
+    .acc_section,
+    .acc_section .acc_head {
+      border-radius: 0px;
+      border: none;
+    }
+
+    .acc_section .acc_head,
+    .acc_section.acc_active .acc_head {
+      font-family: 'Proximanova-Regular';
+      font-size: 17px;
+      color: #fff;
+      padding: 13px 25px;
+      background-color: @blue_gray;
+      border-bottom: 2px solid #fff;
+    }
+
+    .acc_section .acc_content {
+      padding: 10px 25px;
+    }
+
+  }
+}
+
+
 

@@ -73,6 +73,13 @@
         parent_iframe.contents().find('html').addClass('be-lightbox-html');
         $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
+        $(".accordion-benefits").smk_Accordion({
+          showIcon: true, // Show the expand/collapse icons.
+          animation: true, // Expand/collapse sections with slide aniamtion.
+          closeAble: false, // Closeable section.
+          slideSpeed: 200 // the speed of slide animation.
+        });
+
       });
 
         
