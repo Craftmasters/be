@@ -182,6 +182,10 @@
             $('.attachment-summary').hide();
           });
 
+          $('.generate-rfp').click(function() {
+            $('button#edit-submit').click();
+          });
+
         }
 
 

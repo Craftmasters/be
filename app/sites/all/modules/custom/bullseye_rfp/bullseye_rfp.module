@@ -1066,7 +1066,6 @@ function bullseye_rfp_form($form, &$form_state) {
     '#default_value' => 'YYYY-MM-DD 00:00:00',
     '#date_year_range' => '0:+3',
     '#size' => 12,
-    '#required' => true,
   );
 
   $form['submit'] = array(
