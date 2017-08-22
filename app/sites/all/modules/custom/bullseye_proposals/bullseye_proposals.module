@@ -48,6 +48,22 @@ function bullseye_proposals_form($form, &$form_state) {
     '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
   );
 
+  $form['account'] = array(
+    '#required' => FALSE,
+    '#type' => 'entityreference',
+    '#title' => t('Select Account'),
+    '#era_entity_type' => 'node',
+    '#era_bundles' => array('accounts'),
+    '#era_cardinality' => 1,
+    '#era_query_settings' => array(
+      'limit' => 15, // Default is 50.
+      'property_conditions' => array(
+        array('status', 1, '='),
+      ),
+      'field_conditions' => array(),
+    ),
+  );
+
   $form['benefits'] = array(
     '#type' => 'markup',
     '#markup' => '<label>Benefits</label>',
