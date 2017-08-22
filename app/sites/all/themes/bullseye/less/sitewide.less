@@ -92,7 +92,6 @@
     }
   }
 
-
 /*
  * Left Sidebar.
  */
@@ -327,6 +326,7 @@
     padding: 0px;
     text-align: left;
     width: 200px;
+    z-index: 1;
     li {
     	border-left: none;
     	width: 100%;
@@ -364,7 +364,8 @@
    	padding: 13px 30px;
   }
 
-	h1.be-page-title {
+	h1.be-page-title,
+  h1.be-summary-title {
 		color: @orange;
 		text-transform: uppercase;
 		font-family: 'Proximanova-Regular';
@@ -373,11 +374,23 @@
 		vertical-align: middle;
 	}
 
+  h1.be-summary-title {
+    display: none;
+  }
+
 /*
  * Lightbox Modal.
  */
+  html.be-lightbox-html {
+    height: 100vh;
+    width: 100%;
+    display: table;
+  }
  	body.be-lightbox {
- 		background-color: #fff;
+ 		background-color: transparent;
+    height: 100vh;
+    display: table-cell;
+    vertical-align: middle;
  		.slicknav_menu,
  		.left-sidebar,
  		.top-header,
@@ -388,19 +401,27 @@
  		}
  		.content-region {
  			padding: 35px;
+      background-color: #fff;
+      width: 600px;
+      margin: 30px auto;
  		}
+    .right-content {
+      width: 100%;
+    }
  	}
+  
  	#lightbox {
  		position: fixed;
  		height: 100vh !important;
  		min-height: 100vh !important;
     top: 0px !important;
-    overflow: auto;
+    overflow: hidden;
     display: block;
     width: 100%;
     #outerImageContainer {
     	height: 100vh !important;
     	min-height: 100vh;
+      width: 100% !important;
     	background-color: transparent !important;
     	display: table;
     	vertical-align: middle;
@@ -409,7 +430,14 @@
     #frameContainer {
     	display: table-cell;
     	vertical-align: middle;
-    	padding: 60px 0px !important;
+    	padding: 0px !important;
+      width: 100%;
+      height: 100vh;
+      iframe {
+        visibility: hidden;
+        width: 100% !important;
+        height: 100vh !important;
+      }
     }
     #imageDataContainer {
     	display: none !important;
@@ -478,6 +506,15 @@
 			  color: @textfield_placeholder_color;
 			}
  		}
+
+    .container-inline-date {
+      input[type="text"] {
+        background: url(../images/icons/be_datepicker_calendar.svg);
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 17px;
+      }
+    }
  		select {
  			color: @select_color;
  		}
@@ -499,6 +536,7 @@
  		#edit-actions {
  			text-align: right;
  			margin-top: 30px;
+      margin-bottom: 0px;
  			a, button, input {
  				display: inline-block;
  				color: #fff;

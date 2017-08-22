@@ -11,10 +11,18 @@
 function bullseye_rfp_menu() {
   $items = array();
 
-  $items['rfp/add'] = array(
-    'title' => 'Create NewRFP',
+  $items['rfps/add'] = array(
+    'title' => 'Create New RFP',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('bullseye_rfp_form'),
+    'access arguments' => array('add rfp'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['rfps/initial-add'] = array(
+    'title' => 'Create New RFP',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_rfp_initial_add_form'),
     'access arguments' => array('add rfp'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -37,10 +45,318 @@ function bullseye_rfp_permission() {
 /**
  * Implements hook_form().
  *
+ * Add RFP form (initial form popup).
+ */
+function bullseye_rfp_initial_add_form($form, &$form_state) {
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Create New RFP') . '</h2>',
+  );
+
+  $form['account'] = array(
+    '#type' => 'select',
+    '#title' => t('Select Account'),
+    '#options' => array(
+      'ABC Company' => t('ABC Company'),
+      'XYZ Company' => t('XYZ Company'),
+    ),
+  );
+
+  $form['benefits_container'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['benefits_container']['benefits']['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['benefits_container']['benefits']['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['benefits_container']['benefits']['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+  );
+
+  $form['benefits_container']['benefits']['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['benefits_container']['benefits']['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['benefits_container']['benefits']['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Dissability'),
+  );
+
+  $form['benefits_container']['benefits']['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['benefits_container']['benefits']['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['benefits_container']['benefits']['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  $form['benefits_container']['benefits']['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Next'),
+  );
+
+  return $form;
+}
+
+/**
+ * Form submit for initial create RFP Form.
+ */
+function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
+  $query = '/rfps/add?';
+  $query .= 'account_name=' . $form_state['values']['account'];
+
+  $benefits = array();
+
+  // Prepare benefits data before passing to url parameter.
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if ($key[0] != '#') {
+      $benefits[$key] = $value['#value'];
+    }
+  }
+
+  // Build the parameter query for benefits array.
+  $benefits_query = http_build_query(array('benefits' => $benefits));
+  $query .= '&' . $benefits_query;
+
+  // Close the lightbox and redirect to the next create new RFP page.
+  print '<script>parent.location = "' . $query . '";</script>';
+  print '<script>parent.Lightbox.end();</script>';
+  die();
+}
+
+/**
+ * Implements hook_form().
+ *
  * Add RFP form.
  */
 function bullseye_rfp_form($form, &$form_state) {
   $form = array();
+
+  
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  // Fringe Rate/s.
+  $form['fringe_rates'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Fringe Rate/s'),
+    '#attributes' => array(
+      'placeholder' => '500',
+    ),
+  );
+
+  // Proposed Effective Date.
+  $form['proposed_effective_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD',
+    '#date_year_range' => '0:+3',
+    '#title' => t('Proposed Effective Date'),
+  );
+
+  // Other Work Locations and Zip Codes.
+  $form['other_work_locations'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Other Work Locations and Zip Codes'),
+    '#attributes' => array(
+      'placeholder' => 'Dallas 88829, New Jersey 81920',
+    ),
+  );
+
+  // Number of Employees.
+  $form['number_of_employees'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Employees'),
+    '#attributes' => array(
+      'placeholder' => '100',
+    ),
+  );
+
+  // Number of Dependents.
+  $form['number_of_dependents'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Dependents'),
+    '#attributes' => array(
+      'placeholder' => '200',
+    ),
+  );
+
+  // Nature of Business/SIC.
+  $form['nature_of_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nature of Business/SIC'),
+    '#attributes' => array(
+      'placeholder' => 'xxxx',
+    ),
+  );
+
+  // Years in Business.
+  $form['years_in_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Years in Business'),
+    '#attributes' => array(
+      'placeholder' => '5',
+    ),
+  );
+
+  // Tax ID.
+  $form['tax_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tax ID'),
+    '#attributes' => array(
+      'placeholder' => 'xxxxxxxxx',
+    ),
+  );
+
+  // Renewal Date.
+  $form['renewal_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD',
+    '#date_year_range' => '0:+3',
+    '#title' => t('Renewal Date'),
+  );
+
+  // Attachments.
+  $form['attachments_container'] = array(
+    '#type' => 'container',
+    'attachment' => array(),
+  );
+
+  $form['attachments_container']['attachment']['employee_census'] = array(
+    '#title' => t('Employee Census'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['current_summary_of_benefit'] = array(
+    '#title' => t('Current Summary of Benefit'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['current_bill'] = array(
+    '#title' => t('Current Bill'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['last_renewal_letter'] = array(
+    '#title' => t('Last Renewal Letter & Rates'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['summary_of_monthly_claims_experience'] = array(
+    '#title' => t('Summary of Monthly Claims Experience'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['broker_of_record'] = array(
+    '#title' => t('Broker of Record'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['letter_of_authorization'] = array(
+    '#title' => t('Letter of Authorization'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['large_claims_report'] = array(
+    '#title' => t('Large Claims Report'),
+    '#type' => 'managed_file',
+  );
+
+  // Census checkboxes.
+  $form['census_container'] = array(
+    '#type' => 'container',
+    'census' => array(),
+  );
+
+  $form['census_container']['census']['check_identifier'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identifier (Name or Employee Number)'),
+  );
+
+  $form['census_container']['census']['check_ssn'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Social Security Number'),
+  );
+
+  $form['census_container']['census']['check_date_birth_age'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Date of Birth or Age'),
+  );
+
+  $form['census_container']['census']['check_gender'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Gender'),
+  );
+
+  $form['census_container']['census']['check_home_zip_codes'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Home Zip Codes for each employee'),
+  );
+
+  $form['census_container']['census']['check_plan_selection'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Plan Selection (HMO, PPO, HSA, etc.)'),
+  );
+
+  $form['census_container']['census']['check_tier_levels'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Tier Levels (EE, ES, EC(H), EF) or 3 Tiers (if applicable)'),
+  );
+
+  $form['census_container']['census']['check_identification_of_retirees'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identification of Retirees or COBRA members with COBRA Termination Date'),
+  );
+
+  $form['census_container']['census']['check_identification_of_covered'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Identification of covered and not covered employees with explanation for those not (i.e. spousal, medicare, medicaid, etc.)'),
+  );
 
   $form['carrier_name'] = array(
     '#type' => 'textfield',
@@ -57,59 +373,674 @@ function bullseye_rfp_form($form, &$form_state) {
     '#title' => t('Email Address'),
   );
 
-  $form['benefits'] = array(
-    '#type' => 'markup',
-    '#markup' => '<label>Benefits</label>',
-  );
-
   $form['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $_GET['benefits']['major_medical'],
   );
 
   $form['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $_GET['benefits']['limited_medical'],
   );
 
   $form['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Teledoc'),
+    '#default_value' => $_GET['benefits']['teledoc'],
   );
 
   $form['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $_GET['benefits']['mec'],
   );
 
   $form['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $_GET['benefits']['dental'],
   );
 
   $form['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $_GET['benefits']['vision'],
   );
 
   $form['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $_GET['benefits']['life'],
   );
 
   $form['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Dissability'),
+    '#default_value' => $_GET['benefits']['short_term_disability'],
   );
 
   $form['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $_GET['benefits']['special_benefits'],
   );
 
   $form['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $_GET['benefits']['retirement'],
+  );
+
+  // Major Medical.
+  $form['major_medical_fields'] = array(
+    '#type' => 'container',
+    'mm_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'mm_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'mm_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'mm_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'mm_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'mm_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'mm_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'mm_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Limited Medical.
+  $form['limited_medical_fields'] = array(
+    '#type' => 'container',
+    'lm_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'lm_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'lm_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'lm_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'lm_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'lm_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'lm_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'lm_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Telemedicine.
+  $form['telemedicine_fields'] = array(
+    '#type' => 'container',
+    'tel_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'tel_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'tel_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'tel_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'tel_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'tel_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'tel_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'tel_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // MEC.
+  $form['mec_fields'] = array(
+    '#type' => 'container',
+    'mec_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'mec_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'mec_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'mec_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'mec_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'mec_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'mec_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'mec_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Dental.
+  $form['dental_fields'] = array(
+    '#type' => 'container',
+    'den_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'den_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'den_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'den_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'den_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'den_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'den_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'den_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Vision.
+  $form['vision_fields'] = array(
+    '#type' => 'container',
+    'vs_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'vs_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'vs_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'vs_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'vs_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'vs_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'vs_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'vs_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Life.
+  $form['life_fields'] = array(
+    '#type' => 'container',
+    'lf_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'lf_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'lf_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'lf_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'lf_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'lf_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'lf_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'lf_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Short Term Disability.
+  $form['short_term_disability_fields'] = array(
+    '#type' => 'container',
+    'std_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'std_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'std_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'std_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'std_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'std_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'std_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'std_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Retirement.
+  $form['retirement_fields'] = array(
+    '#type' => 'container',
+    'ret_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'ret_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'ret_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'ret_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'ret_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'ret_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'ret_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'ret_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
+  );
+
+  // Special Benefits.
+  $form['special_benefits_fields'] = array(
+    '#type' => 'container',
+    'sb_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Carrier Name'),
+      ),
+    ),
+    'sb_years_with_current_carrier' => array(
+      '#type' => 'textfield',
+      '#title' => t('Years with Current Carrier'),
+      '#attributes' => array(
+        'placeholder' => t('Type Number of Years'),
+      ),
+    ),
+    'sb_plan_year_to_quote_start' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'sb_plan_year_to_quote_end' => array(
+      '#type' => 'date_popup',
+      '#date_format' => 'm/d/Y',
+      '#default_value' => 'YYYY-MM-DD 00:00:00',
+      '#date_year_range' => '0:+3',
+    ),
+    'sb_renewal_of_current_plan' => array(
+      '#type' => 'radios',
+      '#title' => t('Is this a renewal of a current plan in BullsEye?'),
+      '#options' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      '#default_value' => 1,
+    ),
+    'sb_percentage_single' => array(
+      '#type' => 'textfield',
+      '#title' => t('Single'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'sb_percentage_family' => array(
+      '#type' => 'textfield',
+      '#title' => t('Family'),
+      '#attributes' => array(
+        'placeholder' => t('50%'),
+      ),
+    ),
+    'sb_waiting_period' => array(
+      '#type' => 'textfield',
+      '#title' => t('Wating Period for New Employees?'),
+      '#attributes' => array(
+        'placeholder' => t('15 Days'),
+      ),
+    ),
   );
 
   // The values for the dropdown box.
@@ -135,7 +1066,6 @@ function bullseye_rfp_form($form, &$form_state) {
     '#default_value' => 'YYYY-MM-DD 00:00:00',
     '#date_year_range' => '0:+3',
     '#size' => 12,
-    '#required' => true,
   );
 
   $form['submit'] = array(

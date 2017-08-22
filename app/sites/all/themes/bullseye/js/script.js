@@ -70,11 +70,124 @@
         // Adding class to body element of the lightbox iframe
         var parent_iframe = $(window.frameElement).parent().find('iframe#lightboxFrame');
         parent_iframe.contents().find('body').addClass('be-lightbox');
+        parent_iframe.contents().find('html').addClass('be-lightbox-html');
+        $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
-        parent_iframe.load(function() {
-          var height = parent_iframe.contents().find('.bullseye-wrapper').outerHeight(true);
-          parent_iframe.attr('height', height);
-        });
+        // For Create RFP page.
+        if ($('.page-rfps-add').length) {
+
+          // Benefits Accordion.
+          $(".accordion-benefits").smk_Accordion({
+            showIcon: true, // Show the expand/collapse icons.
+            animation: true, // Expand/collapse sections with slide aniamtion.
+            closeAble: false, // Closeable section.
+            slideSpeed: 200 // the speed of slide animation.
+          });
+
+          $('.rfp-next-summary').click(function() {
+            $(this).hide();
+            $('.be-page-title').hide();
+            $('.create-rfp-back').show();
+            $('.generate-rfp').show();
+            $('.be-summary-title').show();
+            $('.group-information').addClass('summary-mode');
+            $('.plan-specification').addClass('summary-mode');
+            $('.benefits').addClass('summary-mode');
+            $('.attachments').addClass('summary-mode');
+            $('.census').addClass('summary-mode');
+            $('.plan-specification input').prop('disabled', true);
+            $('.benefits input').prop('disabled', true);
+            $('.attachments input').prop('disabled', true);
+            $('.census input').prop('disabled', true);
+            $('.accordion-benefits').hide();
+            $('.benefits-summary').show();
+            $('.benefits-summary').html('');
+            $('.attachment-main').hide();
+            $('.attachment-summary').show();
+            $('.attachment-summary').html('');
+
+            $('.accordion_in').each(function() {
+
+              // Benefit Name.
+              var benefit_name = $(this).find('.acc_head').html();
+              var benefit_name = '<h1 class="benefit-name">' + benefit_name + '</h1>';
+
+              // Carrier.
+              var current_carrier = $(this).find('.current-carrier').find('input[type="text"]').val();
+              var current_carrier_year = $(this).find('.years-with-current-carrier').find('input[type="text"]').val();
+              var carrier = current_carrier + ', ' + current_carrier_year;
+              var carrier = '<span class="label">Current Carrier:</span><span class="value">' + carrier + '</span>';
+              var carrier = '<div class="ben-detail-row">' + carrier + '</div>';
+
+              // Plan Year to quote.
+              var quote_start = $(this).find('.quote-start').find('input[type="text"]').val();
+              var quote_end = $(this).find('.quote-end').find('input[type="text"]').val();
+              var quote = quote_start + ' - ' + quote_end;
+              var quote = '<span class="label">Plan Year to Quote:</span><span class="value">' + quote + '</span>';
+              var quote = '<div class="ben-detail-row">' + quote + '</div>';
+
+              // Renewal.
+              var renewal = $(this).find('.renewal-plan').find('input:checked').val();
+              var renewal_value = 'No';
+              if (renewal == 1) {
+                renewal_value = 'Yes';
+              }
+              var renewal = '<span class="label">Renewal:</span><span class="value">' + renewal_value + '</span>';
+              var renewal = '<div class="ben-detail-row">' + renewal + '</div>';
+
+              // Waiting Period.
+              var waiting = $(this).find('.waiting-period').find('input[type="text"]').val();
+              var waiting = '<span class="label">Waiting Period:</span><span class="value">' + waiting + '</span>';
+              var waiting = '<div class="ben-detail-row">' + waiting + '</div>';
+
+              var div = '<div class="benefit-summary-row">' + benefit_name + carrier + quote + renewal + waiting + '</div>';
+              $('.benefits-summary').append(div);
+            });
+
+            $('.attachment-row').each(function() {
+              var attach_label = $(this).find('label').html();
+              var attach_label = '<span class="attach-label">' + attach_label + '</span>';
+
+              var attach_file = $(this).find('input[type="file"]').val();
+              var attach_file = attach_file.replace(/.*[\/\\]/, '');
+              if (attach_file == '') {
+                attach_file = 'No Attachment';
+              }
+              var attach_file = '<span class="attach-file">' + attach_file + '</span>';
+
+              var attach_div = '<div class="attachment-summary-row">' + attach_label + attach_file + '</div>';
+              $('.attachment-summary').append(attach_div);
+            });
+
+          });
+
+          $('.create-rfp-back').click(function() {
+            $(this).hide();
+            $('.be-summary-title').hide();
+            $('.generate-rfp').hide();
+            $('.be-page-title').show();
+            $('.rfp-next-summary').show();
+            $('.group-information').removeClass('summary-mode');
+            $('.plan-specification').removeClass('summary-mode');
+            $('.benefits').removeClass('summary-mode');
+            $('.attachments').removeClass('summary-mode');
+            $('.census').removeClass('summary-mode');
+            $('.plan-specification input').prop('disabled', false);
+            $('.benefits input').prop('disabled', false);
+            $('.attachments input').prop('disabled', false);
+            $('.census input').prop('disabled', false);
+            $('.accordion-benefits').show();
+            $('.benefits-summary').hide();
+            $('.attachment-main').show();
+            $('.attachment-summary').hide();
+          });
+
+          $('.generate-rfp').click(function() {
+            $('button#edit-submit').click();
+          });
+
+        }
+
 
       });
 
