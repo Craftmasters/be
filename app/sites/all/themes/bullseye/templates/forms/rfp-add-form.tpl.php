@@ -146,6 +146,13 @@
 	<div class="col-md-4">
 		<div class="be-regular-block attachments">
 			<h2 class="be-regular-h2"><?php print t('Attachments'); ?></h2>
+			<div class="be-block-main">
+				<?php foreach ($form['attachments_container']['attachment'] as $key => $value) : ?>
+			    <?php if ($key[0] != '#') : ?>
+			      <?php print render($form['attachments_container']['attachment'][$key]); ?>
+			    <?php endif; ?>
+			  <?php endforeach; ?>
+			</div>
 		</div>
 
 		<div class="be-regular-block census">
@@ -161,7 +168,9 @@
 	</div>
 </div>
 
+
+<?php print drupal_render_children($form); ?>
 <div class="hidden-container">
-  <?php print drupal_render_children($form); ?>
+  
 </div>
 

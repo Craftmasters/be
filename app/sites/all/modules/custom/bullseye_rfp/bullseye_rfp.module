@@ -66,7 +66,7 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
       'ABC Company' => t('ABC Company'),
       'XYZ Company' => t('XYZ Company'),
     ),
-   );
+  );
 
   $form['benefits_container'] = array(
     '#type' => 'container',
@@ -148,11 +148,21 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
 function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
   $query = '/rfps/add?';
   $query .= 'account_name=' . $form_state['values']['account'];
+
+  $benefits = array();
+
+  // Prepare benefits data before passing to url parameter.
   foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
     if ($key[0] != '#') {
-      $query .= '&' . $key . '=' . $value['#value'];
+      $benefits[$key] = $value['#value'];
     }
   }
+
+  // Build the parameter query for benefits array.
+  $benefits_query = http_build_query(array('benefits' => $benefits));
+  $query .= '&' . $benefits_query;
+
+  // Close the lightbox and redirect to the next create new RFP page.
   print '<script>parent.location = "' . $query . '";</script>';
   print '<script>parent.Lightbox.end();</script>';
   die();
@@ -166,12 +176,17 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
 function bullseye_rfp_form($form, &$form_state) {
   $form = array();
 
+  
+
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
   // Fringe Rate/s.
   $form['fringe_rates'] = array(
     '#type' => 'textfield',
     '#title' => t('Fringe Rate/s'),
+    '#attributes' => array(
+      'placeholder' => '500',
+    ),
   );
 
   // Proposed Effective Date.
@@ -187,36 +202,54 @@ function bullseye_rfp_form($form, &$form_state) {
   $form['other_work_locations'] = array(
     '#type' => 'textfield',
     '#title' => t('Other Work Locations and Zip Codes'),
+    '#attributes' => array(
+      'placeholder' => 'Dallas 88829, New Jersey 81920',
+    ),
   );
 
   // Number of Employees.
   $form['number_of_employees'] = array(
     '#type' => 'textfield',
     '#title' => t('Number of Employees'),
+    '#attributes' => array(
+      'placeholder' => '100',
+    ),
   );
 
   // Number of Dependents.
   $form['number_of_dependents'] = array(
     '#type' => 'textfield',
     '#title' => t('Number of Dependents'),
+    '#attributes' => array(
+      'placeholder' => '200',
+    ),
   );
 
   // Nature of Business/SIC.
   $form['nature_of_business'] = array(
     '#type' => 'textfield',
     '#title' => t('Nature of Business/SIC'),
+    '#attributes' => array(
+      'placeholder' => 'xxxx',
+    ),
   );
 
   // Years in Business.
   $form['years_in_business'] = array(
     '#type' => 'textfield',
     '#title' => t('Years in Business'),
+    '#attributes' => array(
+      'placeholder' => '5',
+    ),
   );
 
   // Tax ID.
   $form['tax_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Tax ID'),
+    '#attributes' => array(
+      'placeholder' => 'xxxxxxxxx',
+    ),
   );
 
   // Renewal Date.
@@ -228,7 +261,53 @@ function bullseye_rfp_form($form, &$form_state) {
     '#title' => t('Renewal Date'),
   );
 
-  // Census checkboxes
+  // Attachments.
+  $form['attachments_container'] = array(
+    '#type' => 'container',
+    'attachment' => array(),
+  );
+
+  $form['attachments_container']['attachment']['employee_census'] = array(
+    '#title' => t('Employee Census'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['current_summary_of_benefit'] = array(
+    '#title' => t('Current Summary of Benefit'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['current_bill'] = array(
+    '#title' => t('Current Bill'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['last_renewal_letter'] = array(
+    '#title' => t('Last Renewal Letter & Rates'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['summary_of_monthly_claims_experience'] = array(
+    '#title' => t('Summary of Monthly Claims Experience'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['broker_of_record'] = array(
+    '#title' => t('Broker of Record'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['letter_of_authorization'] = array(
+    '#title' => t('Letter of Authorization'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['large_claims_report'] = array(
+    '#title' => t('Large Claims Report'),
+    '#type' => 'managed_file',
+  );
+
+  // Census checkboxes.
   $form['census_container'] = array(
     '#type' => 'container',
     'census' => array(),
@@ -294,59 +373,64 @@ function bullseye_rfp_form($form, &$form_state) {
     '#title' => t('Email Address'),
   );
 
-  $form['benefits'] = array(
-    '#type' => 'markup',
-    '#markup' => '<label>Benefits</label>',
-  );
-
   $form['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $_GET['benefits']['major_medical'],
   );
 
   $form['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $_GET['benefits']['limited_medical'],
   );
 
   $form['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Teledoc'),
+    '#default_value' => $_GET['benefits']['teledoc'],
   );
 
   $form['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $_GET['benefits']['mec'],
   );
 
   $form['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $_GET['benefits']['dental'],
   );
 
   $form['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $_GET['benefits']['vision'],
   );
 
   $form['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $_GET['benefits']['life'],
   );
 
   $form['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Dissability'),
+    '#default_value' => $_GET['benefits']['short_term_disability'],
   );
 
   $form['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $_GET['benefits']['special_benefits'],
   );
 
   $form['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $_GET['benefits']['retirement'],
   );
 
   // The values for the dropdown box.
