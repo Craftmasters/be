@@ -313,3 +313,10 @@ function bullseye_deploy_update_7024() {
 function bullseye_deploy_update_7025() {
   module_enable(array('entityreference_autocomplete'), TRUE);
 }
+
+/**
+ * Install proposals module.
+ */
+function bullseye_deploy_update_7026() {
+  module_enable(array('bullseye_proposals'), TRUE);
+}

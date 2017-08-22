@@ -1,0 +1,150 @@
+<?php
+/**
+ * Bullseye proposals module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_proposals_menu() {
+  $items = array();
+
+  $items['proposals/add'] = array(
+    'title' => 'Add New Proposal',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_proposals_form'),
+    'access arguments' => array('add proposal'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_proposals_permission() {
+  return array(
+    'add proposal' => array(
+      'title' => t('Add Proposal'),
+      'description' => t('Allow user to add new proposals.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Add proposal form.
+ */
+function bullseye_proposals_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
+  );
+
+  $form['benefits'] = array(
+    '#type' => 'markup',
+    '#markup' => '<label>Benefits</label>',
+  );
+
+  $form['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Teledoc'),
+  );
+
+  $form['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Dissability'),
+  );
+
+  $form['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  // The values for the dropdown box.
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+  );
+
+  $form['priority'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#description' => "Select the priority level.",
+    '#options' => $form['type_options']['#value'],
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#date_year_range' => '0:+3',
+    '#size' => 12,
+    '#required' => true,
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+

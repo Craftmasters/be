@@ -1,0 +1,5 @@
+name = Proposals
+description = BullsEye module that handle adding of proposals.
+package = BullsEye
+core = 7.x
+version = 7.x-1.0

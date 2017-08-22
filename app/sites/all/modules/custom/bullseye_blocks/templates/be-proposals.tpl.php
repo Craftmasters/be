@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Open Proposals (6)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Create New Proposal'); ?></a>
+        <a class="be-table-button" href="/proposals/add" rel="lightframe"><?php print t('Send New Proposal'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">

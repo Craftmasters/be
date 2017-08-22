@@ -130,5 +130,16 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_blocks',
   );
 
+  // Exported permission: 'add proposal'.
+  $permissions['add proposal'] = array(
+    'name' => 'add proposal',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+      'producer' => 'producer',
+    ),
+    'module' => 'bullseye_proposals',
+  );
+
   return $permissions;
 }
