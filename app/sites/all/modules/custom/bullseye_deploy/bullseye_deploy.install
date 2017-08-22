@@ -306,3 +306,10 @@ function bullseye_deploy_update_7023() {
 function bullseye_deploy_update_7024() {
   module_enable(array('proposal'), TRUE);
 }
+
+/**
+ * Install entityreference_autocomplete module.
+ */
+function bullseye_deploy_update_7025() {
+  module_enable(array('entityreference_autocomplete'), TRUE);
+}
