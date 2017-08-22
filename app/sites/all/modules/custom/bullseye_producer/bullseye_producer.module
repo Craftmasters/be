@@ -40,23 +40,51 @@ function bullseye_producer_permission() {
 function bullseye_producer_form($form, &$form_state) {
   $form = array();
 
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Add New Producer') . '</h2>',
+  );
+
   $form['producer_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Producer Name'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Producer Name'),
+    ),
   );
 
   $form['primary_contact_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Primary Contact'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Primary Contact'),
+    ),
   );
 
   $form['primary_contact_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email Address'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Email Address'),
+    ),
   );
 
-  $form['submit'] = array(
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
     '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
     '#value' => t('Save'),
   );
 
@@ -108,6 +136,6 @@ function bullseye_producer_form_submit($form, &$form_state) {
     // the newly added one will get indexed too.
     cache_clear_all('producers_listing', 'cache');
     // Reroute the page to the listing page.
-    drupal_goto('/producers');
+    //drupal_goto('/producers');
   }
 }
