@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Producers (6)'); ?></span>
-        <a class="be-table-button" href="/producer/add"><?php print t('Add New Producer'); ?></a>
+        <a class="be-table-button" href="/producer/add" rel="lightframe"><?php print t('Add New Producer'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
