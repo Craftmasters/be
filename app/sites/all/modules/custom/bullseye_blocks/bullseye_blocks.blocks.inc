@@ -46,11 +46,15 @@ function bullseye_blocks_render_be_bottom_header() {
 
   $vars = array();
 
+  $vars['create_rfp_page'] = FALSE;
+
   $vars['be_page_title'] = drupal_get_title();
 
   if (arg(0) == 'rfps' && arg(1) == 'add') {
-    if (isset($_GET['account_name'])) {
+    if (isset($_GET['benefits'])) {
+      $vars['create_rfp_page'] = TRUE;
       $vars['be_page_title'] = t('Create New RFP') . ' - ' . $_GET['account_name'];
+      $vars['be_summary_title'] = t('RFP Summary') . ' - ' . $_GET['account_name'];
     }
   }
 

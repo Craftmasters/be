@@ -29,6 +29,11 @@ body.page-rfps-initial-add.be-lightbox {
       top: 9px;
     }
   }
+
+  .create-rfp-back,
+  .generate-rfp {
+    display: none;
+  }
 }
 
 #bullseye-rfp-form {
@@ -83,6 +88,13 @@ body.page-rfps-initial-add.be-lightbox {
       padding: 7px 12px;
     }
   }
+
+  div[id*="-renewal-of-current-plan"] {
+    .form-type-radio {
+      display: inline-block;
+      width: 100px;
+    }
+  }
 }
 
 .be-regular-block.benefits {
@@ -98,6 +110,10 @@ body.page-rfps-initial-add.be-lightbox {
     .acc_section .acc_head {
       border-radius: 0px;
       border: none;
+    }
+
+    .acc_head_copy {
+      display: none;
     }
 
     .acc_section .acc_head,

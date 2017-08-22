@@ -364,7 +364,8 @@
    	padding: 13px 30px;
   }
 
-	h1.be-page-title {
+	h1.be-page-title,
+  h1.be-summary-title {
 		color: @orange;
 		text-transform: uppercase;
 		font-family: 'Proximanova-Regular';
@@ -372,6 +373,10 @@
 		display: inline-block;
 		vertical-align: middle;
 	}
+
+  h1.be-summary-title {
+    display: none;
+  }
 
 /*
  * Lightbox Modal.
@@ -501,6 +506,15 @@
 			  color: @textfield_placeholder_color;
 			}
  		}
+
+    .container-inline-date {
+      input[type="text"] {
+        background: url(../images/icons/be_datepicker_calendar.svg);
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 17px;
+      }
+    }
  		select {
  			color: @select_color;
  		}

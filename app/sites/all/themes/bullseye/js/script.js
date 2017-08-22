@@ -73,12 +73,62 @@
         parent_iframe.contents().find('html').addClass('be-lightbox-html');
         $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
-        $(".accordion-benefits").smk_Accordion({
-          showIcon: true, // Show the expand/collapse icons.
-          animation: true, // Expand/collapse sections with slide aniamtion.
-          closeAble: false, // Closeable section.
-          slideSpeed: 200 // the speed of slide animation.
-        });
+        // For Create RFP page.
+        if ($('.page-rfps-add').length) {
+
+          // Benefits Accordion.
+          $(".accordion-benefits").smk_Accordion({
+            showIcon: true, // Show the expand/collapse icons.
+            animation: true, // Expand/collapse sections with slide aniamtion.
+            closeAble: false, // Closeable section.
+            slideSpeed: 200 // the speed of slide animation.
+          });
+
+          $('.rfp-next-summary').click(function() {
+            $(this).hide();
+            $('.be-page-title').hide();
+            $('.create-rfp-back').show();
+            $('.generate-rfp').show();
+            $('.be-summary-title').show();
+            $('.group-information').addClass('summary-mode');
+            $('.plan-specification').addClass('summary-mode');
+            $('.benefits').addClass('summary-mode');
+            $('.attachments').addClass('summary-mode');
+            $('.census').addClass('summary-mode');
+            $('.plan-specification input').prop('disabled', true);
+            $('.benefits input').prop('disabled', true);
+            $('.attachments input').prop('disabled', true);
+            $('.census input').prop('disabled', true);
+            $('.accordion_in').removeClass('acc_active');
+            $('.acc_content').show();
+            $('.acc_head').hide();
+            $('.acc_head_copy').show();
+          });
+
+          $('.create-rfp-back').click(function() {
+            $(this).hide();
+            $('.be-summary-title').hide();
+            $('.generate-rfp').hide();
+            $('.be-page-title').show();
+            $('.rfp-next-summary').show();
+            $('.group-information').removeClass('summary-mode');
+            $('.plan-specification').removeClass('summary-mode');
+            $('.benefits').removeClass('summary-mode');
+            $('.attachments').removeClass('summary-mode');
+            $('.census').removeClass('summary-mode');
+            $('.plan-specification input').prop('disabled', false);
+            $('.benefits input').prop('disabled', false);
+            $('.attachments input').prop('disabled', false);
+            $('.census input').prop('disabled', false);
+            $('.accordion_in .acc_content').hide();
+            $('.accordion_in:first-child .acc_content').show();
+            $('.accordion_in:first-child').addClass('acc_active');
+            $('.acc_head').show();
+            $('.acc_head_copy').hide();
+          });
+
+        }
+
 
       });
 

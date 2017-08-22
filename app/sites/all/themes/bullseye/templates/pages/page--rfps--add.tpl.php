@@ -99,7 +99,9 @@
       <div class="bottom-header">
         <?php print render($page['bottom_header']); ?>
         <div class="be-custom-actions">
-          <a href="#" class="green-btn"><?php print t('Next: Summary'); ?></a>
+          <a href="#" class="green-btn rfp-next-summary"><?php print t('Next: Summary'); ?></a>
+          <a href="#" class="gray-btn create-rfp-back"><?php print t('Back'); ?></a>
+          <a href="#" class="green-btn generate-rfp"><?php print t('Next: Generate RFP'); ?></a>
         </div>
       </div>
       <div class="content-region">

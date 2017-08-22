@@ -102,41 +102,377 @@
 				<div class="accordion-benefits-wrapper">
 					<div class="accordion-benefits">
 
-						<div class="accordion_in">
-							<div class="acc_head">Limited Medical</div>
-							<div class="acc_content">
-								<p>Your Content Goes Here.</p>
-							</div>
-						</div>
+						<?php if (isset($_GET['benefits']['major_medical']) && $_GET['benefits']['major_medical'] == 1) : ?>
+							<div class="accordion_in">
 
-						<div class="accordion_in">
-							<div class="acc_head">Telemedicine</div>
-							<div class="acc_content">
-								<p>Your Content Goes Here.</p>
-							</div>
-						</div>
-						 
-						<div class="accordion_in">
-							<div class="acc_head">Life</div>
-							<div class="acc_content">
-								<p>Your Content Goes Here.</p>
-							</div>
-						</div>
+								<div class="acc_head">Major Medical</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Major Medical</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['major_medical_fields']['mm_renewal_of_current_plan']); ?></div>
 
-						<div class="accordion_in">
-							<div class="acc_head">MEC</div>
-							<div class="acc_content">
-								<p>Your Content Goes Here.</p>
-							</div>
-						</div>
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_percentage_family']); ?></div>
+								    </div>
+								  </div>
 
-						<div class="accordion_in">
-							<div class="acc_head">Life & AD&D</div>
-							<div class="acc_content">
-								<p>Your Content Goes Here.</p>
+								  <div class="be-form-single"><?php print render($form['major_medical_fields']['mm_waiting_period']); ?></div>	
+								</div>
 							</div>
-						</div>
-	 
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['limited_medical']) && $_GET['benefits']['limited_medical'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Limited Medical</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Limited Medical</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['limited_medical_fields']['lm_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['limited_medical_fields']['lm_waiting_period']); ?></div>
+									
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['teledoc']) && $_GET['benefits']['teledoc'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Telemedicine</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Telemedicine</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['telemedicine_fields']['tel_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['telemedicine_fields']['tel_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['mec']) && $_GET['benefits']['mec'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">MEC</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">MEC</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['mec_fields']['mec_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['mec_fields']['mec_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['mec_fields']['mec_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['dental']) && $_GET['benefits']['dental'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Dental</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Dental</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['dental_fields']['den_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['dental_fields']['den_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['dental_fields']['den_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['vision']) && $_GET['benefits']['vision'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Vision</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Vision</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['vision_fields']['vs_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['vision_fields']['vs_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['life']) && $_GET['benefits']['life'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Life & AD&D</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Life & AD&D</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['life_fields']['lf_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['life_fields']['lf_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['life_fields']['lf_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['short_term_disability']) && $_GET['benefits']['short_term_disability'] == 1) : ?>
+							<div class="accordion_in">
+								
+								<div class="acc_head">Short Term Disability</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Short Term Disability</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['short_term_disability_fields']['std_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['short_term_disability_fields']['std_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['retirement']) && $_GET['benefits']['retirement'] == 1) : ?>
+							<div class="accordion_in">
+							
+								<div class="acc_head">Retirement</div>
+								
+								<div class="acc_content">
+									<div class="acc_head_copy">Retirement</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['retirement_fields']['ret_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['retirement_fields']['ret_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>
+
+						<?php if (isset($_GET['benefits']['special_benefits']) && $_GET['benefits']['special_benefits'] == 1) : ?>
+							<div class="accordion_in">
+							
+								<div class="acc_head">Special Benefits</div>
+
+								<div class="acc_content">
+									<div class="acc_head_copy">Special Benefits</div>
+									<div class="be-form-section">
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_current_carrier']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_years_with_current_carrier']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-section">
+										<label><?php print t('Plan Year to Quote'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_start']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_end']); ?></div>
+								    </div>
+								  </div>
+									
+									<div class="be-form-single"><?php print render($form['special_benefits_fields']['sb_renewal_of_current_plan']); ?></div>
+
+									<div class="be-form-section">
+										<label><?php print t('Percentage of Employer Contribution'); ?></label>
+								    <div class="row">
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_percentage_single']); ?></div>
+								      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_percentage_family']); ?></div>
+								    </div>
+								  </div>
+
+								  <div class="be-form-single"><?php print render($form['special_benefits_fields']['sb_waiting_period']); ?></div>	
+								</div>
+							</div>
+						<?php endif; ?>				
+
 					</div>
 				</div>
 			</div>
@@ -168,9 +504,7 @@
 	</div>
 </div>
 
-
-<?php print drupal_render_children($form); ?>
 <div class="hidden-container">
-  
+  <?php print drupal_render_children($form); ?>
 </div>
 
