@@ -60,7 +60,7 @@ function bullseye_carriers_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Primary Contact'),
     '#attributes' => array(
-      'placeholder' => t('Enter Primary Contact'),
+      'placeholder' => t('Enter Primary contact'),
     ),
   );
 
