@@ -171,6 +171,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
   $custom_close_lightbox_forms = array(
     'bullseye_leads_import_leads',
     'bullseye_producer_form',
+    'bullseye_carriers_form',
   );
 
   // Default drupal forms.

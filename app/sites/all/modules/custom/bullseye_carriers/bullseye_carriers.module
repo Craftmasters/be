@@ -40,14 +40,28 @@ function bullseye_carriers_permission() {
 function bullseye_carriers_form($form, &$form_state) {
   $form = array();
 
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Add New Carrier') . '</h2>',
+  );
+
   $form['carrier_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Carier Name'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Carrier Name'),
+    ),
   );
 
   $form['primary_contact_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Primary Contact'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Primary Contact'),
+    ),
   );
 
   $form['primary_contact_email'] = array(
@@ -136,8 +150,19 @@ function bullseye_carriers_form($form, &$form_state) {
     '#required' => true,
   );
 
-  $form['submit'] = array(
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
     '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
     '#value' => t('Save'),
   );
 
@@ -249,7 +274,7 @@ function bullseye_carriers_form_submit($form, &$form_state) {
     // the newly added one will get indexed too.
     cache_clear_all('carriers_listing', 'cache');
     // Reroute the page to the listing page.
-    drupal_goto('/carriers');
+    //drupal_goto('/carriers');
   }
   else {
     drupal_set_message(t('Carrier already exist.'));
