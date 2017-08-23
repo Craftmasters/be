@@ -17,3 +17,59 @@ body.page-proposals-add.be-lightbox {
   	margin-bottom: 10px;
   }
 }
+
+#bullseye-proposals-email-form {
+
+  .form-group {
+    margin-bottom: 0px;
+  }
+
+  input[type="text"] {
+    border-bottom: none;
+  }
+  .form-type-textfield {
+    border-bottom: 1px solid @textfield_bottom_border_color;
+    input, label {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: -4px;
+      width: 20%;
+      font-size: 12px;
+    }
+    input {
+      width: 80%;
+    }
+  }
+  .form-item-subject {
+    input[type="text"] {
+      color: @orange;
+    }
+  }
+
+  .show-attachment {
+    border-bottom: 1px solid @textfield_bottom_border_color;
+    padding: 7px 0px;
+    margin-bottom: 15px;
+    span, a {
+      color: @label_color;
+      font-family: 'Proximanova-Regular';
+      font-size: 12px;
+      padding: 0px;
+      width: 20%;
+      display: inline-block;
+      margin-right: -4px;
+      vertical-align: middle;
+      text-align: left;
+    }
+    a.orange-font {
+      color: @orange;
+      font-family: 'Proximanova-Semibold';
+      background: url(../../images/icons/be_paperclip.svg);
+      background-position: right center;
+      background-repeat: no-repeat;
+      background-size: 15px;
+      width: auto;
+      padding-right: 21px;
+    }
+  }
+}
