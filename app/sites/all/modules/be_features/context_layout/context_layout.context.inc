@@ -368,11 +368,17 @@ function context_layout_context_default_contexts() {
           'region' => 'column_one',
           'weight' => '-9',
         ),
+        'bullseye_blocks-be_create_event' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_create_event',
+          'region' => 'column_two',
+          'weight' => '-10',
+        ),
         'bullseye_blocks-be_tasks' => array(
           'module' => 'bullseye_blocks',
           'delta' => 'be_tasks',
           'region' => 'column_two',
-          'weight' => '-10',
+          'weight' => '-9',
         ),
       ),
     ),
