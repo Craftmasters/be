@@ -186,6 +186,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'carrier-add-form',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
+  $items['bullseye_proposals_form'] = array(
+    'render element' => 'form',
+    'template' => 'proposals-add-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
   return $items;
 }
 

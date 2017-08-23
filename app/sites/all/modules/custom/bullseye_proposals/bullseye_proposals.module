@@ -10,9 +10,17 @@ function bullseye_proposals_menu() {
   $items = array();
 
   $items['proposals/add'] = array(
-    'title' => 'Add New Proposal',
+    'title' => 'Send New Proposal',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('bullseye_proposals_form'),
+    'access arguments' => array('add proposal'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['proposals/send-email'] = array(
+    'title' => 'Send Proposal',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_proposals_email_form'),
     'access arguments' => array('add proposal'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -64,61 +72,6 @@ function bullseye_proposals_form($form, &$form_state) {
     ),
   );
 
-  $form['benefits'] = array(
-    '#type' => 'markup',
-    '#markup' => '<label>Benefits</label>',
-  );
-
-  $form['major_medical'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Major Medical'),
-  );
-
-  $form['limited_medical'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Limited Medical'),
-  );
-
-  $form['teledoc'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Teledoc'),
-  );
-
-  $form['mec'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('MEC'),
-  );
-
-  $form['dental'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Dental'),
-  );
-
-  $form['vision'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Vision'),
-  );
-
-  $form['life'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Life & AD&D'),
-  );
-
-  $form['short_term_disability'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Short Term Dissability'),
-  );
-
-  $form['special_benefits'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Special Benefits'),
-  );
-
-  $form['retirement'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Retirement'),
-  );
-
   // The values for the dropdown box.
   $form['type_options'] = array(
     '#type' => 'value',
@@ -141,8 +94,75 @@ function bullseye_proposals_form($form, &$form_state) {
     '#date_format' => 'm/d/Y',
     '#default_value' => 'YYYY-MM-DD 00:00:00',
     '#date_year_range' => '0:+3',
-    '#size' => 12,
     '#required' => true,
+    '#title' => t('Due Date'),
+  );
+
+  $form['benefits_container'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['benefits_container']['benefits']['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['benefits_container']['benefits']['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['benefits_container']['benefits']['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+  );
+
+  $form['benefits_container']['benefits']['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['benefits_container']['benefits']['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['benefits_container']['benefits']['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Disability'),
+  );
+
+  $form['benefits_container']['benefits']['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['benefits_container']['benefits']['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['benefits_container']['benefits']['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  $form['benefits_container']['benefits']['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['special_benefits_text'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
+  );
+
+  $form['attach_proposal'] = array(
+    '#title' => t('Attach Proposal'),
+    '#type' => 'managed_file',
   );
 
   $form['submit_container'] = array(
@@ -158,9 +178,98 @@ function bullseye_proposals_form($form, &$form_state) {
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
-    '#value' => t('Save'),
+    '#value' => t('Next'),
   );
 
   return $form;
 }
 
+/**
+ * Implements hook_form_submit().
+ *
+ * Submit handler for add proposal form.
+ */
+function bullseye_proposals_form_submit($form, &$form_state) {
+  drupal_goto('proposals/send-email');
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Send proposal form (email).
+ */
+function bullseye_proposals_email_form($form, &$form_state) {
+  $form = array();
+
+  // Company name.
+  $company_name = 'ABC Company';
+
+  $attachment_filename = 'Proposal.pdf';
+  $attachment_download_path = '/path/to/Proposal.pdf';
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
+  );
+
+  $form['subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject:'),
+    '#default_value' => 'Plan Proposal for ' . $company_name,
+  );
+
+  $form['to'] = array(
+    '#type' => 'textfield',
+    '#title' => t('To:'),
+  );
+
+  $form['show_attachment'] = array(
+    '#prefix' => '<div class="show-attachment">',
+    '#suffix' => '</div>',
+    '#markup' => '<span class="label">Attachment:</span> <a href="' . $attachment_download_path . '" class="orange-font">' . $attachment_filename . '</a>',
+  );
+
+  $form['message'] = array(
+    '#type' => 'textarea',
+    '#attributes' => array(
+      'placeholder' => t('Enter message here ..'),
+    ),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['save_draft'] = array(
+    '#type' => 'button',
+    '#attributes' => array(
+      'class' => array('blue-gray-btn'),
+    ),
+    '#value' => t('Save as Draft'),
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Send'),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_submit().
+ *
+ * Submit handler for add proposal form (email).
+ */
+function bullseye_proposals_email_form_submit($form, &$form_state) {
+}

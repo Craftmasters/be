@@ -471,7 +471,8 @@
  			width: 100%;
  		}
  		input[type="text"],
- 		select {
+ 		select,
+    textarea {
  			border: none;
  			-webkit-box-shadow: none;
 	    -moz-box-shadow: none;
@@ -492,7 +493,8 @@
 	    	border-bottom: 2px solid @orange;
  			}
  		}
- 		input[type="text"] {
+ 		input[type="text"],
+    textarea {
  			&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 			  color: @textfield_placeholder_color;
 			}
@@ -513,6 +515,26 @@
         background-position: right center;
         background-repeat: no-repeat;
         background-size: 17px;
+      }
+
+      .form-type-date-popup {
+        width: 100%;
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .form-type-textfield label {
+          display: none;
+        }
+        .date-padding {
+          float: none;
+        }
+        .form-item {
+          float: none;
+        }
+        input {
+          width: 100%;
+        }
       }
     }
  		select {
@@ -553,6 +575,12 @@
  						background-color: @form_back_button_background + 10;
  					}
  				}
+        &.blue-gray-btn {
+          background-color: @blue_gray;
+          &:hover {
+            background-color: @blue_gray + 10;
+          }
+        }
  				&.orange-btn {
  					background-color: @orange;
  					&:hover {
@@ -571,6 +599,25 @@
  		.form-type-managed-file {
  			margin-bottom: 15px;
  		}
+
+    .form-autocomplete {
+      input {
+        width: 100%;
+      }
+    }
+
+    .select-benefits-container {
+      .select-benefit-label {
+        margin-bottom: 10px;
+      }
+
+      .form-type-checkbox {
+        label {
+          color: @textfield_color;
+        }
+      }
+    }
+    
  	}
 
 /*

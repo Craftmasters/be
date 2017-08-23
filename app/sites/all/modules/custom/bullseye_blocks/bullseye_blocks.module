@@ -172,6 +172,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
     'bullseye_leads_import_leads',
     'bullseye_producer_form',
     'bullseye_carriers_form',
+    'bullseye_proposals_email_form',
   );
 
   // Default drupal forms.
