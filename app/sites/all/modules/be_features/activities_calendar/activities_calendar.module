@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Activities Calendar feature.
+ */
+
+include_once 'activities_calendar.features.inc';
