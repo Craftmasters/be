@@ -60,68 +60,94 @@ function bullseye_carriers_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Primary Contact'),
     '#attributes' => array(
-      'placeholder' => t('Enter Primary contact'),
+      'placeholder' => t('Enter Primary Contact Name'),
     ),
   );
 
   $form['primary_contact_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email Address'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Contact Number'),
+    ),
   );
 
-  $form['benefits'] = array(
-    '#type' => 'markup',
-    '#markup' => '<label>Benefits</label>',
+  $form['contact_number'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Contact Number'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Contact Number'),
+    ),
   );
 
-  $form['major_medical'] = array(
+  $form['address'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Address'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Address'),
+    ),
+  );
+
+  $form['benefits_container'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['benefits_container']['benefits']['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
   );
 
-  $form['limited_medical'] = array(
+  $form['benefits_container']['benefits']['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
   );
 
-  $form['teledoc'] = array(
+  $form['benefits_container']['benefits']['teledoc'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Teledoc'),
+    '#title' => t('Telemedicine'),
   );
 
-  $form['mec'] = array(
+  $form['benefits_container']['benefits']['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
   );
 
-  $form['dental'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Dental'),
-  );
-
-  $form['vision'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Vision'),
-  );
-
-  $form['life'] = array(
+  $form['benefits_container']['benefits']['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
   );
 
-  $form['short_term_disability'] = array(
+  $form['benefits_container']['benefits']['short_term_disability'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Short Term Dissability'),
+    '#title' => t('Short Term Disability'),
   );
 
-  $form['special_benefits'] = array(
+  $form['benefits_container']['benefits']['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['benefits_container']['benefits']['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['benefits_container']['benefits']['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  $form['benefits_container']['benefits']['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
   );
 
-  $form['retirement'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Retirement'),
+  $form['special_benefits_text'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
   );
 
   // The values for the dropdown box.
@@ -147,7 +173,7 @@ function bullseye_carriers_form($form, &$form_state) {
     '#default_value' => 'YYYY-MM-DD 00:00:00',
     '#date_year_range' => '0:+3',
     '#size' => 12,
-    '#required' => true,
+    '#title' => t('Due Date'),
   );
 
   $form['submit_container'] = array(

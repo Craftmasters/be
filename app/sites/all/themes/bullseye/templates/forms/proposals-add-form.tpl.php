@@ -9,7 +9,7 @@
 	</div>
 </div>
 
-<div class="be-form-section">
+<div class="be-form-section select-benefits-container">
 	<label class="select-benefit-label"><?php print t('Select Benefits'); ?></label>
 	<div class="row">
 	  <?php foreach ($form['benefits_container']['benefits'] as $key => $value) : ?>
