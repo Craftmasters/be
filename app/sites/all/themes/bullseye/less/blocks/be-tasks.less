@@ -1,0 +1,70 @@
+.be-task-row.row {
+	margin-left: -5px;
+	margin-right: -5px;
+
+	div[class*="col-xs-"] {
+		padding-left: 5px;
+		padding-right: 5px;
+		line-height: 40px;
+		vertical-align: middle;
+		white-space: nowrap;
+		span {
+			font-family: 'Proximanova-Regular';
+			font-size: 13px;
+			white-space: nowrap;
+			&.gray-font {
+				color: @tb_gray_font;
+			}
+			&.blue-gray-font {
+				color: @blue_gray;
+			}
+			&.green-font {
+				color: @green;
+			}
+		}
+	}
+
+	.task-date {
+		text-align: right;
+	}
+
+	.task-desc {
+		//padding-left: 10px;
+	}
+
+	.red-dot {
+		&::before {
+			content: ' ';
+			position: absolute;
+			width: 7px;
+	    height: 7px;
+	    background-color: red;
+	    border-radius: 100%;
+	    top: 42%;
+	    left: -10px;
+		}
+	}
+
+	&.faded-row {
+		div[class*="col-xs-"] {
+			span {
+				&.gray-font {
+					color: #fff - 60;
+				}
+				&.blue-gray-font {
+					color: #fff - 60;
+				}
+				&.green-font {
+					color: #fff - 60;
+				}
+			}
+		}
+
+		.red-dot {
+			&::before {
+		    background-color: #fff - 60;
+			}
+		}
+	}
+}
+

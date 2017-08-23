@@ -1,6 +1,6 @@
 <div class="be-regular-block">
   <h2 class="be-regular-h2"><?php print t('Recent Activities'); ?></h2>
-  <select class="select-link recent-activities-select">
+  <select class="select-link">
   	<option><?php print t('All Activity'); ?></option>
   </select>
   <div class="be-block-main">

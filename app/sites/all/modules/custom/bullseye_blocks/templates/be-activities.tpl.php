@@ -7,7 +7,7 @@
 
   	<?php for ($i = 0; $i < 2; $i++) : ?>
   		<div class="be-calendar-act-row row">
-	  		<div class="col-xs-1"><div class="circle"></div></div>
+	  		<div class="col-xs-1 center"><div class="circle"></div></div>
 	  		<div class="col-xs-5">
 	  			<span class="orange-font">Meeting with Sarah Jones</span>
 	  		</div>
@@ -22,7 +22,7 @@
 
   	<?php for ($i = 0; $i < 5; $i++) : ?>
   		<div class="be-calendar-act-row row">
-	  		<div class="col-xs-1"><div class="circle"></div></div>
+	  		<div class="col-xs-1 center"><div class="circle"></div></div>
 	  		<div class="col-xs-5">
 	  			<span class="orange-font">Call with Albert Adams</span>
 	  		</div>
