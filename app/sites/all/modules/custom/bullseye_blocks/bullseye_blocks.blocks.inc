@@ -57,6 +57,10 @@ function bullseye_blocks_render_be_bottom_header() {
       $vars['be_summary_title'] = t('RFP Summary') . ' - ' . $_GET['account_name'];
     }
   }
+  elseif (arg(0) == 'calendar') {
+    drupal_set_title(t('Activities'));
+    $vars['be_page_title'] = t('Activities');
+  }
 
   $output = theme('be_bottom_header', $vars);
 
@@ -456,6 +460,60 @@ function bullseye_blocks_render_be_rfps() {
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
 
   $output = theme('be_rfps', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Calendar Block.
+ */
+function bullseye_blocks_render_be_calendar_activities() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_calendar_activities', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Activities Block.
+ */
+function bullseye_blocks_render_be_activities() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_activities', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Tasks Block.
+ */
+function bullseye_blocks_render_be_tasks() {
+  global $base_url;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_tasks', $vars);
 
   return array(
     'subject' => '',
