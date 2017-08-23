@@ -41,7 +41,7 @@ function bullseye_preprocess_html(&$variables, $hook) {
  */
 function bullseye_preprocess_page(&$vars, $hook) {
   global $base_url;
-  
+
   // Theme directory.
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -219,6 +219,15 @@ function _make_title_from_person_name($form, &$form_state) {
  */
 function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   global $base_url;
+
+  if (isset($_SESSION['rfp'])) {
+    $data = $_SESSION['rfp'];
+    $account = node_load($data['account_id']);
+  }
+
+  krumo($account);
+  $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
+  $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
 }
