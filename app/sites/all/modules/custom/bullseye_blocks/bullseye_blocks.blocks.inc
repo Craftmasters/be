@@ -277,6 +277,20 @@ function bullseye_blocks_render_be_carriers() {
   $vars['carriers'] = $be->getCarriers();
   $vars['total_carriers'] = $be->countCarriers();
 
+  // Shortened variables.
+  $vars['mm'] = 'major_medical';
+  $vars['lm'] = 'limited_medical';
+  $vars['td'] = 'teledoc';
+  $vars['mc'] = 'mec';
+  $vars['dt'] = 'dental';
+  $vars['vs'] = 'vision';
+  $vars['lf'] = 'life';
+  $vars['sd'] = 'short_term_disability';
+  $vars['sb'] = 'special_benefits';
+  $vars['rm'] = 'retirement';
+
+  krumo($vars['carriers']);
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';

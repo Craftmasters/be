@@ -226,14 +226,43 @@ class Bullseye {
         ->fields('priority', array('field_priority_value'))
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
-        ->groupBy('benefits.field_benefits_value')
         ->execute()
         ->fetchAll();
 
       cache_set('carriers_listing', $carriers, 'cache');
     }
 
-    return $carriers;
+    // We need to restructure the data to avoid duplicate items.
+    $structured_carrier = array_map(function($item) {
+      $data = array();
+
+      return array(
+        'nid' => $item->nid,
+        'carrier_name' => $item->title,
+        'contact_name' => $item->field_primary_contact_value,
+        'contact_email' => $item->field_email_value,
+        'benefits' => array(),
+        'due_date' => $item->field_due_date_value,
+        'priority' => $item->field_priority_value,
+      );
+
+    }, $carriers);
+
+    // Filter the duplicate items.
+    $new_items = $this->getUnique($structured_carrier);
+
+    foreach($new_items as $key => $value) {
+      $raw = array_values(array_filter($carriers, function($item) use ($value){
+        return $item->nid == $value['nid'];
+      }));
+
+      $value['benefits'] = array_map(function($item) {
+        return $item->field_benefits_value;
+      }, $raw);
+      $new_items[$key] = $value;
+    }
+
+    return $new_items;
   }
 
   /**
@@ -314,5 +343,33 @@ class Bullseye {
     }
 
     return $rfps;
+  }
+
+  /**
+   * Implement getUnique value.
+   */
+  function getUnique($array, $preserveKeys = false) {
+    // Unique Array for return
+    $arrayRewrite = array();
+    // Array with the md5 hashes
+    $arrayHashes = array();
+    foreach($array as $key => $item) {
+      // Serialize the current element and create a md5 hash
+      $hash = md5(serialize($item));
+      // If the md5 didn't come up yet, add the element to
+      // to arrayRewrite, otherwise drop it
+      if (!isset($arrayHashes[$hash])) {
+        // Save the current element hash
+        $arrayHashes[$hash] = $hash;
+        // Add element to the unique Array
+        if ($preserveKeys) {
+          $arrayRewrite[$key] = $item;
+        }
+        else {
+          $arrayRewrite[] = $item;
+        }
+      }
+    }
+    return $arrayRewrite;
   }
 }
