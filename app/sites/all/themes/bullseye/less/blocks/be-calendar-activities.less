@@ -1,0 +1,79 @@
+.view-activities-calendar {
+	.fullcalendar {
+		.fc-view {
+			border: 1px solid #ececec;
+		}
+		.fc-header-right {
+			display: none;
+		}
+		.fc-header-center {
+			text-align: right;
+			h2 {
+				font-size: 22px;
+				font-family: 'Proximanova-Regular';
+				color: @orange;
+				text-transform: uppercase;
+			}
+		}
+		.fc-button {
+			background-color: transparent;
+			font-family: 'Proximanova-Regular';
+			font-size: 13px;
+		}
+		.fc-border-separate {
+			font-size: 14px;
+		}
+		tr.fc-last {
+			th {
+				border-bottom-width: 0px;
+				border-width: 0px;
+				border: none;
+				font-family: 'Proximanova-Semibold';
+				font-size: 15px;
+				color: @blue_gray;
+				text-transform: uppercase;
+				width: auto !important;
+				background: transparent;
+				padding: 6px 0px;
+			}
+		}
+		tbody {
+			tr {
+				td {
+					padding: 4px 0px;
+					border-bottom-width: 0px;
+					border-width: 0px;
+					div {
+						min-height: initial !important;
+						width: 100%;
+						text-align: center;
+					}
+
+					.fc-day-number {
+						span {
+							color: @textfield_color;
+							padding: 7px;
+						  font-size: 12px;
+						  border-radius: 100%;
+						  background: transparent;
+						}
+					}
+					.fc-day-content {
+						text-align: left;
+					}
+					&.ui-state-highlight {
+    				border: none;
+    				background: transparent;
+    				.fc-day-number {
+    					span {
+						    background: @orange;
+						    color: #fff;
+    					}
+    				}
+					}
+				}
+			}
+		}
+	}
+		
+}
