@@ -328,3 +328,12 @@ function bullseye_deploy_update_7027() {
   module_disable(array('leads_node_type'));
   drupal_uninstall_modules(array('leads_node_type'));
 }
+
+/**
+ * Install accounts, carrier, proposal, and  module.
+ */
+function bullseye_deploy_update_7028() {
+  module_enable(array('accounts', 'carrier', 'proposal', 'rfp'), TRUE);
+}
+
+
