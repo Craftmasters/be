@@ -7,6 +7,9 @@
     <?php if ($key[0] != '#') : ?>
       <div class="col-xs-6">
         <?php print render($form['benefits_container']['benefits'][$key]); ?>
+        <?php if ($key == 'special_benefits') : ?>
+        	<?php print render($form['special_benefits_text']); ?>
+        <?php endif; ?>
       </div>
     <?php endif; ?>
   <?php endforeach; ?>

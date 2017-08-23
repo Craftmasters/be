@@ -514,6 +514,25 @@
         background-repeat: no-repeat;
         background-size: 17px;
       }
+
+      .form-type-date-popup {
+        width: 100%;
+        label {
+          display: block;
+        }
+        .form-type-textfield label {
+          display: none;
+        }
+        .date-padding {
+          float: none;
+        }
+        .form-item {
+          float: none;
+        }
+        input {
+          width: 100%;
+        }
+      }
     }
  		select {
  			color: @select_color;
@@ -571,6 +590,13 @@
  		.form-type-managed-file {
  			margin-bottom: 15px;
  		}
+
+    .form-autocomplete {
+      input {
+        width: 100%;
+      }
+    }
+    
  	}
 
 /*
