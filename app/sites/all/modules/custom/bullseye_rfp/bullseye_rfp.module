@@ -154,7 +154,7 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
  */
 function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
   $query = '/rfps/add?';
-  $query .= 'account_name=' . $form_state['values']['account'];
+  $query .= 'account_name=' . $form_state['values']['account']['entity_label'];
 
   $benefits = array();
 
