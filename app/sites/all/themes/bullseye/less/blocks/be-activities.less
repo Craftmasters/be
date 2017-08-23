@@ -1,0 +1,72 @@
+.be-calendar-act-row.row {
+	margin-left: -5px;
+	margin-right: -5px;
+
+	div[class*="col-xs-"] {
+		padding-left: 5px;
+		padding-right: 5px;
+		line-height: 40px;
+		vertical-align: middle;
+		white-space: nowrap;
+		span {
+			font-family: 'Proximanova-Regular';
+			font-size: 13px;
+			white-space: nowrap;
+			&.gray-font {
+				color: @tb_gray_font;
+			}
+			&.blue-gray-font {
+				color: @blue_gray;
+			}
+			&.orange-font {
+				color: @orange;
+			}
+		}
+	}
+
+	.act-date {
+		text-align: right;
+	}
+
+	.circle {
+		width: 15px;
+		height: 15px;
+		border-radius: 100%;
+		background-color: @blue_gray;
+		display: inline-block;
+		position: relative;
+		&::before, &::after {
+			content: ' ';
+			position: absolute;
+			width: 2px;
+			left: 49%;
+			height: 15px;
+			background-color: @blue_gray;
+			top: -12px;
+		}
+		&::after {
+			position: absolute;
+			width: 2px;
+			left: 49%;
+			height: 40px;
+			background-color: @blue_gray;
+			top: 0px;
+		}
+	}
+
+	&:first-child {
+		.circle {
+			&::before {
+				display: none;
+			}
+		}
+	}
+	&:last-child {
+		.circle {
+			&::after {
+				display: none;
+			}
+		}
+	}
+}
+
