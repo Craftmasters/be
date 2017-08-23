@@ -5,7 +5,6 @@ package = BullsEye
 version = 7.x-1.0
 dependencies[] = ctools
 dependencies[] = features
-dependencies[] = leads_node_type
 dependencies[] = list
 dependencies[] = number
 dependencies[] = options
