@@ -228,6 +228,8 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   krumo($account);
   $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
   $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
+  $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
+
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
 }
