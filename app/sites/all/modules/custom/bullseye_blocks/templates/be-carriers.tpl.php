@@ -43,36 +43,36 @@
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <span class="light-gray-font">
-                <a href="<?php print drupal_get_path_alias('node/' . $carrier->nid); ?>">
-                  <?php print $carrier->nid; ?>
+                <a href="<?php print drupal_get_path_alias('node/' . $carrier['nid']); ?>">
+                  <?php print $carrier['nid']; ?>
                 </a>
               </span>
             </td>
             <td>
               <span class="orange-font">
-                <?php print $carrier->title; ?>
+                <?php print $carrier['carrier_name']; ?>
               </span>
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print $carrier->field_primary_contact_value; ?>
+                <?php print $carrier['contact_name']; ?>
               </span>
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print $carrier->field_email_value; ?>
+                <?php print $carrier['contact_email']; ?>
               </span>
             </td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($mm, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($lm, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($td, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($mc, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($dt, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($vs, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($lf, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($sd, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($sb, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
+            <td class="be-dot-td"><span class="dot-priority <?php (in_array($rm, $carrier['benefits'])) ? print 'green' : print 'gray'; ?>"></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
