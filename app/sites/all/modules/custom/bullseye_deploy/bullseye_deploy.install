@@ -320,3 +320,11 @@ function bullseye_deploy_update_7025() {
 function bullseye_deploy_update_7026() {
   module_enable(array('bullseye_proposals'), TRUE);
 }
+
+/**
+ * Uninstall Leads entity storage.
+ */
+function bullseye_deploy_update_7027() {
+  module_disable(array('leads_node_type'));
+  drupal_uninstall_modules(array('leads_node_type'));
+}
