@@ -25,13 +25,13 @@
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Website'); ?></div>
           <div class="be-view-value">
-            <a href="#" class="orange-font">https://abccompany.com</a>
+            <a href="#" class="orange-font"><?php print $website; ?></a>
             </div>
         </div>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Street Address'); ?></div>
-          <div class="be-view-value">888 19th Street</div>
+          <div class="be-view-value"><?php print $street; ?></div>
         </div>
 
         <div class="be-view-field-row row">
@@ -39,14 +39,14 @@
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('City'); ?></div>
-              <div class="be-view-value">San Antonio</div>
+              <div class="be-view-value"><?php print $city; ?></div>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('State'); ?></div>
-              <div class="be-view-value">TX</div>
+              <div class="be-view-value"><?php print $state; ?></div>
             </div>
           </div>
 
