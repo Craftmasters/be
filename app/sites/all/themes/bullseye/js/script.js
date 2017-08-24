@@ -88,7 +88,7 @@
             $(this).hide();
             $('.be-page-title').hide();
             $('.create-rfp-back').show();
-            $('.generate-rfp').show();
+            $('.save-exit').show();
             $('.be-summary-title').show();
             $('.group-information').addClass('summary-mode');
             $('.plan-specification').addClass('summary-mode');
@@ -164,7 +164,7 @@
           $('.create-rfp-back').click(function() {
             $(this).hide();
             $('.be-summary-title').hide();
-            $('.generate-rfp').hide();
+            $('.save-exit').hide();
             $('.be-page-title').show();
             $('.rfp-next-summary').show();
             $('.group-information').removeClass('summary-mode');
@@ -182,7 +182,7 @@
             $('.attachment-summary').hide();
           });
 
-          $('.generate-rfp').click(function() {
+          $('.save-exit').click(function() {
             $('button#edit-submit').click();
           });
         }
