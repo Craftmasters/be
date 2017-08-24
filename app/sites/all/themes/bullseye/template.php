@@ -220,22 +220,34 @@ function _make_title_from_person_name($form, &$form_state) {
 function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   global $base_url;
 
+  // Initialize variables placeholder.
+  $vars['company'] = '';
+  $vars['email'] = '';
+  $vars['phone'] = '';
+  $vars['website'] = '';
+
+  // Address
+  $vars['street'] = '';
+  $vars['city'] = '';
+  $vars['state'] = '';
+  $vars['code'] = '';
+
   if (isset($_SESSION['rfp'])) {
     $data = $_SESSION['rfp'];
     $account = node_load($data['account_id']);
+
+    krumo($account);
+    $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
+    $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
+    $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
+    $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
+
+    // Address
+    $vars['street'] = $account->field_street[LANGUAGE_NONE][0]['value'];
+    $vars['city'] = $account->field_city[LANGUAGE_NONE][0]['value'];
+    $vars['state'] = $account->field_state_code[LANGUAGE_NONE][0]['value'];
+    $vars['code'] = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
   }
-
-  krumo($account);
-  $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
-  $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
-  $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
-  $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
-
-  // Address
-  $vars['street'] = $account->field_street[LANGUAGE_NONE][0]['value'];
-  $vars['city'] = $account->field_city[LANGUAGE_NONE][0]['value'];
-  $vars['state'] = $account->field_state_code[LANGUAGE_NONE][0]['value'];
-  $vars['code'] = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
 
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';

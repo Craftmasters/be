@@ -53,7 +53,7 @@
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('Zip Code'); ?></div>
-              <div class="be-view-value">88888</div>
+              <div class="be-view-value"><?php print $code; ?></div>
             </div>
           </div>
 
