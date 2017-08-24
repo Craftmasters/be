@@ -18,9 +18,6 @@
   Drupal.behaviors.bullseye = {
     attach: function (context, settings) {
 
-      // For sidebar.
-      $('.left-sidebar').css('min-height', $(document).height() + 'px');
-
       // For top header.
       if ($('.top-header-li').length) {
         $('.top-header-li').each(function() {
@@ -99,6 +96,7 @@
             $('.benefits input').attr('readonly', true);
             $('.attachments input').attr('readonly', true);
             $('.census input').attr('readonly', true);
+            $('.summary-cover').show();
             $('.accordion-benefits').hide();
             $('.benefits-summary').show();
             $('.benefits-summary').html('');
@@ -176,6 +174,7 @@
             $('.benefits input').attr('readonly', false);
             $('.attachments input').attr('readonly', false);
             $('.census input').attr('readonly', false);
+            $('.summary-cover').hide();
             $('.accordion-benefits').show();
             $('.benefits-summary').hide();
             $('.attachment-main').show();
@@ -195,6 +194,11 @@
           });
         }
 
+      });
+
+      $(window).load(function() {
+        // For sidebar.
+        $('.left-sidebar').css('min-height', $(document).height() + 'px');
       });
 
         

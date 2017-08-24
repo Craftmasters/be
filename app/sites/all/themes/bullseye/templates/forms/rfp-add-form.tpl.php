@@ -22,12 +22,14 @@
           <div class="be-view-value"><a href="<?php print $phone; ?>"><?php print $phone; ?></a></div>
         </div>
 
-        <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Website'); ?></div>
-          <div class="be-view-value">
-            <a href="#" class="orange-font"><?php print $website; ?></a>
+        <?php if ($website) : ?>
+          <div class="be-view-field">
+            <div class="be-view-label"><?php print t('Website'); ?></div>
+            <div class="be-view-value">
+              <a href="#" class="orange-font"><?php print $website; ?></a>
             </div>
-        </div>
+          </div>
+        <?php endif; ?>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Street Address'); ?></div>
@@ -92,6 +94,7 @@
           </div>
         </div>
       </div>
+      <div class="summary-cover"></div>
     </div>
   </div>
   <div class="col-md-4">
@@ -505,6 +508,7 @@
           <?php endif; ?>
         <?php endforeach; ?>
       </div>
+      <div class="summary-cover"></div>
     </div>
   </div>
 </div>
