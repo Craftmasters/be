@@ -1151,6 +1151,16 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $tax_id = $form_state['values']['tax_id'];
   $renewal_date = $form_state['values']['renewal_date'];
 
+  // Attachments.
+  $employee_census = $form_state['values']['employee_census'];
+  $current_summary_of_benefit = $form_state['values']['current_summary_of_benefit'];
+  $current_bill = $form_state['values']['current_bill'];
+  $last_renewal_letter = $form_state['values']['last_renewal_letter'];
+  $summary_of_monthly_claims_experience = $form_state['values']['summary_of_monthly_claims_experience'];
+  $broker_of_record = $form_state['values']['broker_of_record'];
+  $letter_of_authorization = $form_state['values']['letter_of_authorization'];
+  $large_claims_report = $form_state['values']['large_claims_report'];
+
   $node = new stdClass();
 
   $node->title = $carrier_name;
