@@ -1217,6 +1217,15 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $den_percentage_single = $form_state['values']['den_percentage_single'];
   $den_percentage_family = $form_state['values']['den_percentage_family'];
   $den_waiting_period = $form_state['values']['den_waiting_period'];
+  // Vision.
+  $vs_current_carrier = $form_state['values']['vs_current_carrier'];
+  $vs_years_with_current_carrier = $form_state['values']['vs_years_with_current_carrier'];
+  $vs_plan_year_to_quote_start = $form_state['values']['vs_plan_year_to_quote_start'];
+  $vs_plan_year_to_quote_end = $form_state['values']['vs_plan_year_to_quote_end'];
+  $vs_renewal_of_current_plan = $form_state['values']['vs_renewal_of_current_plan'];
+  $vs_percentage_single = $form_state['values']['vs_percentage_single'];
+  $vs_percentage_family = $form_state['values']['vs_percentage_family'];
+  $vs_waiting_period = $form_state['values']['_waiting_period'];
 
   $node = new stdClass();
 
