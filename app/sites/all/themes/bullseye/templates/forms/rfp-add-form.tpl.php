@@ -13,13 +13,13 @@
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Primary Email Address'); ?></div>
           <div class="be-view-value">
-            <a href="mailto:info@abccompany.com" class="orange-font"><?php print $email; ?></a>
+            <a href="mailto:<?php print $email; ?>" class="orange-font"><?php print $email; ?></a>
           </div>
         </div>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Phone Number'); ?></div>
-          <div class="be-view-value"><a href="tel:4513554776"><?php print $phone; ?></a></div>
+          <div class="be-view-value"><a href="<?php print $phone; ?>"><?php print $phone; ?></a></div>
         </div>
 
         <div class="be-view-field">
