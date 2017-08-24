@@ -106,7 +106,7 @@
           <div class="accordion-benefits">
 
             <?php if (isset($_GET['benefits']['major_medical']) && $_GET['benefits']['major_medical'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="major_medical">
 
                 <div class="acc_head">Major Medical</div>
 
@@ -143,7 +143,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['limited_medical']) && $_GET['benefits']['limited_medical'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="limited_medical">
 
                 <div class="acc_head">Limited Medical</div>
 
@@ -181,7 +181,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['teledoc']) && $_GET['benefits']['teledoc'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="teledoc">
 
                 <div class="acc_head">Telemedicine</div>
 
@@ -218,7 +218,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['mec']) && $_GET['benefits']['mec'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="mec">
 
                 <div class="acc_head">MEC</div>
 
@@ -255,7 +255,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['dental']) && $_GET['benefits']['dental'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="dental">
 
                 <div class="acc_head">Dental</div>
 
@@ -292,7 +292,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['vision']) && $_GET['benefits']['vision'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="vision">
 
                 <div class="acc_head">Vision</div>
 
@@ -329,7 +329,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['life']) && $_GET['benefits']['life'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="life">
 
                 <div class="acc_head">Life & AD&D</div>
 
@@ -366,7 +366,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['short_term_disability']) && $_GET['benefits']['short_term_disability'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="short_term_disability">
 
                 <div class="acc_head">Short Term Disability</div>
 
@@ -403,7 +403,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['retirement']) && $_GET['benefits']['retirement'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="retirement">
 
                 <div class="acc_head">Retirement</div>
 
@@ -440,7 +440,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['special_benefits']) && $_GET['benefits']['special_benefits'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="special_benefits">
 
                 <div class="acc_head">Special Benefits</div>
 
@@ -475,6 +475,33 @@
               </div>
             <?php endif; ?>
           </div>
+
+          <?php foreach ($_GET['benefits'] as $key => $value) : ?>
+            <?php if ($key[0] != '#') : ?>
+              <!-- Modal -->
+              <div id="modal_<?php print $key; ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><?php print $key; ?></h4>
+                    </div>
+                    <div class="modal-body">
+                      <?php print render($form['generate_rfp_' . $key]); ?>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+
+              
 
           <div class="benefits-summary"></div>
         </div>

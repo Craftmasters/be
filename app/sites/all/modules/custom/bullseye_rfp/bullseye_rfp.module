@@ -208,6 +208,7 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
  * Add RFP form.
  */
 function bullseye_rfp_form($form, &$form_state) {
+
   $form = array();
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
@@ -1075,6 +1076,77 @@ function bullseye_rfp_form($form, &$form_state) {
     ),
   );
 
+  // Submit buttons for Benefit Generate RFPs.
+  $form['generate_rfp_major_medical'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_major_medical'),
+    '#name' => 'generate_rfp_major_medical',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_limited_medical'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_limited_medical'),
+    '#name' => 'generate_rfp_limited_medical',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_teledoc'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_teledoc'),
+    '#name' => 'generate_rfp_teledoc',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_mec'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_mec'),
+    '#name' => 'generate_rfp_mec',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_dental'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_dental'),
+    '#name' => 'generate_rfp_dental',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_vision'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_vision'),
+    '#name' => 'generate_rfp_vision',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_life'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_life'),
+    '#name' => 'generate_rfp_life',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_short_term_disability'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_short_term_disability'),
+    '#name' => 'generate_rfp_short_term_disability',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_retirement'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_retirement'),
+    '#name' => 'generate_rfp_retirement',
+    '#value' => t('Generate RFP'),
+  );
+
+  $form['generate_rfp_special_benefits'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_special_benefits'),
+    '#name' => 'generate_rfp_special_benefits',
+    '#value' => t('Generate RFP'),
+  );
+
   // The values for the dropdown box.
   $form['type_options'] = array(
     '#type' => 'value',
@@ -1117,9 +1189,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   $data = $_SESSION['add_rfp'];
   $account = node_load($data['account_id']);
-
-  kpr($form_state['values']);
-  die();
 
   $be = new Bullseye($user);
 
@@ -1250,3 +1319,74 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Reroute the page to the listing page.
   drupal_goto('/rfps');
 }
+
+/**
+ * Submit handler for generate_rfp_major_medical.
+ */
+function generate_rfp_major_medical($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_limited_medical.
+ */
+function generate_rfp_limited_medical($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_teledoc.
+ */
+function generate_rfp_teledoc($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_mec.
+ */
+function generate_rfp_mec($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_dental.
+ */
+function generate_rfp_dental($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_vision.
+ */
+function generate_rfp_vision($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_life.
+ */
+function generate_rfp_life($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_short_term_disability.
+ */
+function generate_rfp_short_term_disability($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_retirement.
+ */
+function generate_rfp_retirement($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Submit handler for generate_rfp_special_benefits.
+ */
+function generate_rfp_special_benefits($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+

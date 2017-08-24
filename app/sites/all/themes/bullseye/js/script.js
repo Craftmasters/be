@@ -104,11 +104,16 @@
             $('.attachment-summary').show();
             $('.attachment-summary').html('');
 
+            // Build the summary block for Benefits block.
             $('.accordion_in').each(function() {
 
               // Benefit Name.
               var benefit_name = $(this).find('.acc_head').html();
               var benefit_name = '<h1 class="benefit-name">' + benefit_name + '</h1>';
+
+              // Generate RFP button.
+              var generate_rfp = '<a href="#" data-toggle="modal" data-target="#modal_' + $(this).attr('data-benefit') + '" class="btn-generate-rfp" id="generate_' + $(this).attr('data-benefit') + '">Generate RFP</a>';
+              //data-toggle="modal" data-target="#myModal"
 
               // Carrier.
               var current_carrier = $(this).find('.current-carrier').find('input[type="text"]').val();
@@ -138,10 +143,11 @@
               var waiting = '<span class="label">Waiting Period:</span><span class="value">' + waiting + '</span>';
               var waiting = '<div class="ben-detail-row">' + waiting + '</div>';
 
-              var div = '<div class="benefit-summary-row">' + benefit_name + carrier + quote + renewal + waiting + '</div>';
+              var div = '<div class="benefit-summary-row">' + benefit_name + generate_rfp + carrier + quote + renewal + waiting + '</div>';
               $('.benefits-summary').append(div);
             });
 
+            // Build the summary block for Attachments block.
             $('.attachment-row').each(function() {
               var attach_label = $(this).find('label').html();
               var attach_label = '<span class="attach-label">' + attach_label + '</span>';
