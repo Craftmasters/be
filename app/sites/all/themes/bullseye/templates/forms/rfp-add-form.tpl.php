@@ -489,6 +489,103 @@
                       <h4 class="modal-title"><?php print $key; ?></h4>
                     </div>
                     <div class="modal-body">
+                      <div class="pdf-dummy-preview">
+                        <div class="pdf-header">
+                          <img src="<?php print $pdf_logo; ?>">
+                        </div>
+                        <div class="pdf-body">
+                          <div class="pdf-body-header">
+                            <h1><span><?php print t('Request for Proposal'); ?></span></h1>
+                            <h2>ABC Company</h2>
+                          </div>
+                            
+                          <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                              <h3><?php print t('Group Information'); ?></h3>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Company Name'); ?></div>
+                                <div class="col-md-6 col-xs-6">ABC Company</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Primary Email Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">abc@abc.com</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Phone Number'); ?></div>
+                                <div class="col-md-6 col-xs-6">8888888</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Corporate Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">888 10th Street, San Antonio, TX, 8888</div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                              <h3><?php print t('Plan Specification'); ?></h3>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Quote Request For'); ?></div>
+                                <div class="col-md-6 col-xs-6">Limited Medical</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Fringe Rate\'s'); ?></div>
+                                <div class="col-md-6 col-xs-6">5000</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Proposed Effective Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Other Work Locations and Zip Codes'); ?></div>
+                                <div class="col-md-6 col-xs-6">777 Dallas, TX 900</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Number of Employees'); ?></div>
+                                <div class="col-md-6 col-xs-6">80</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Number of Dependents'); ?></div>
+                                <div class="col-md-6 col-xs-6">100</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Nature of Business/SIC'); ?></div>
+                                <div class="col-md-6 col-xs-6">4892</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Years in Business'); ?></div>
+                                <div class="col-md-6 col-xs-6">5</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Tax ID'); ?></div>
+                                <div class="col-md-6 col-xs-6">90999999</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Renewal Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Current Carrier'); ?></div>
+                                <div class="col-md-6 col-xs-6">Coverdell, 5 years</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Plan Year to Quote'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018 - 10/10/2019</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Renewal'); ?></div>
+                                <div class="col-md-6 col-xs-6">No</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Waiting Period'); ?></div>
+                                <div class="col-md-6 col-xs-6">15 Days</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="pdf-footer">
+                          <p>100 Commons Rd, Ste 7377, Dripping Springs, TX 78620</p>
+                          <p>(888) 745-0754 | support@archerjordan.com</p>
+                        </div>
+                      </div>
+
                       <?php print render($form['generate_rfp_' . $key]); ?>
                     </div>
                     <div class="modal-footer">
