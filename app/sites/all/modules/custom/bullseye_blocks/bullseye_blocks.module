@@ -55,7 +55,7 @@ function bullseye_blocks_menu() {
   );
 
   $items['calendar'] = array(
-    'title' => 'Calendar',
+    'title' => 'Activities',
     'page callback' => '_empty_page',
     'access arguments' => array('access calendar page'),
     'type' => MENU_CALLBACK
@@ -342,6 +342,27 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Calendar Block.
+    'be_calendar_activities' => array(
+      'variables' => array(),
+      'template' => 'be-calendar-activities',
+      'path' => $template_path,
+    ),
+
+    // Activities Block.
+    'be_activities' => array(
+      'variables' => array(),
+      'template' => 'be-activities',
+      'path' => $template_path,
+    ),
+
+    // Tasks Block.
+    'be_tasks' => array(
+      'variables' => array(),
+      'template' => 'be-tasks',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -481,6 +502,27 @@ function bullseye_blocks_block_info() {
   // RFPs Table Block.
   $blocks['be_rfps'] = array(
     'info' => t('RFPs Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Calendar Block.
+  $blocks['be_calendar_activities'] = array(
+    'info' => t('Calendar Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Activities Block.
+  $blocks['be_activities'] = array(
+    'info' => t('Activities Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Tasks Block.
+  $blocks['be_tasks'] = array(
+    'info' => t('Tasks Block'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );

@@ -353,7 +353,36 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_calendar_activities' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_calendar_activities',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_activities' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_activities',
+          'region' => 'column_one',
+          'weight' => '-9',
+        ),
+        'bullseye_blocks-be_create_event' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_create_event',
+          'region' => 'column_two',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_tasks' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_tasks',
+          'region' => 'column_two',
+          'weight' => '-9',
+        ),
+      ),
+    ),
+  );
   $context->condition_mode = 1;
 
   // Translatables
@@ -375,7 +404,9 @@ function context_layout_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array();
+  $context->reactions = array(
+    'template_suggestions' => 'two_column',
+  );
   $context->condition_mode = 1;
 
   // Translatables

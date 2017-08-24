@@ -16,7 +16,7 @@
       <?php endif; ?>
     <?php endforeach; ?>
   </div>
-</div>>
+</div>
   
 
 <?php print render($form['submit_container']); ?>

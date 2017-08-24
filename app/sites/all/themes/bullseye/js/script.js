@@ -185,9 +185,15 @@
           $('.generate-rfp').click(function() {
             $('button#edit-submit').click();
           });
-
         }
 
+        // For Calendar page (Activities).
+        if ($('.page-calendar').length) {
+          $('.fc-day-number').each(function() {
+            var number = $(this).html();
+            $(this).html('<span>' + number + '</span>');
+          });
+        }
 
       });
 

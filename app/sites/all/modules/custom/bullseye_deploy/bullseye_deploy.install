@@ -336,4 +336,14 @@ function bullseye_deploy_update_7028() {
   module_enable(array('accounts', 'carrier', 'proposal', 'rfp'), TRUE);
 }
 
+/**
+ * Enable Fullcalendar module and activity calendar feature.
+ */
+function bullseye_deploy_update_7029() {
+  module_enable(array(
+    'fullcalendar',
+    'activities_calendar',
+  ), TRUE);
+}
+
 
