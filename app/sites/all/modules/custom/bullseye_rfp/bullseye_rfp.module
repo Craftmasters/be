@@ -210,9 +210,6 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
 function bullseye_rfp_form($form, &$form_state) {
   $form = array();
 
-  $data = $_SESSION['add_rfp'];
-  $account = node_load($data['account_id']);
-
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
   // Fringe Rate/s.
@@ -1117,8 +1114,8 @@ function bullseye_rfp_form($form, &$form_state) {
 function bullseye_rfp_form_submit($form, &$form_state) {
   global $user;
 
-  krumo($form_state['values']);
-  die();
+  $data = $_SESSION['add_rfp'];
+  $account = node_load($data['account_id']);
 
   $be = new Bullseye($user);
 
