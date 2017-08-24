@@ -1199,6 +1199,15 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $tel_percentage_single = $form_state['values']['tel_percentage_single'];
   $tel_percentage_family = $form_state['values']['tel_percentage_family'];
   $tel_waiting_period = $form_state['values']['tel_waiting_period'];
+  // MEC.
+  $mec_current_carrier = $form_state['values']['mec_current_carrier'];
+  $mec_years_with_current_carrier = $form_state['values']['mec_years_with_current_carrier'];
+  $mec_plan_year_to_quote_start = $form_state['values']['mec_plan_year_to_quote_start'];
+  $mec_plan_year_to_quote_end = $form_state['values']['mec_plan_year_to_quote_end'];
+  $mec_renewal_of_current_plan = $form_state['values']['mec_renewal_of_current_plan'];
+  $mec_percentage_single = $form_state['values']['mec_percentage_single'];
+  $mec_percentage_family = $form_state['values']['mec_percentage_family'];
+  $mec_waiting_period = $form_state['values']['mec_waiting_period'];
 
   $node = new stdClass();
 
