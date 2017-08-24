@@ -88,17 +88,17 @@
             $(this).hide();
             $('.be-page-title').hide();
             $('.create-rfp-back').show();
-            $('.generate-rfp').show();
+            $('.save-exit').show();
             $('.be-summary-title').show();
             $('.group-information').addClass('summary-mode');
             $('.plan-specification').addClass('summary-mode');
             $('.benefits').addClass('summary-mode');
             $('.attachments').addClass('summary-mode');
             $('.census').addClass('summary-mode');
-            $('.plan-specification input').prop('disabled', true);
-            $('.benefits input').prop('disabled', true);
-            $('.attachments input').prop('disabled', true);
-            $('.census input').prop('disabled', true);
+            $('.plan-specification input').attr('readonly', true);
+            $('.benefits input').attr('readonly', true);
+            $('.attachments input').attr('readonly', true);
+            $('.census input').attr('readonly', true);
             $('.accordion-benefits').hide();
             $('.benefits-summary').show();
             $('.benefits-summary').html('');
@@ -164,7 +164,7 @@
           $('.create-rfp-back').click(function() {
             $(this).hide();
             $('.be-summary-title').hide();
-            $('.generate-rfp').hide();
+            $('.save-exit').hide();
             $('.be-page-title').show();
             $('.rfp-next-summary').show();
             $('.group-information').removeClass('summary-mode');
@@ -172,17 +172,17 @@
             $('.benefits').removeClass('summary-mode');
             $('.attachments').removeClass('summary-mode');
             $('.census').removeClass('summary-mode');
-            $('.plan-specification input').prop('disabled', false);
-            $('.benefits input').prop('disabled', false);
-            $('.attachments input').prop('disabled', false);
-            $('.census input').prop('disabled', false);
+            $('.plan-specification input').attr('readonly', false);
+            $('.benefits input').attr('readonly', false);
+            $('.attachments input').attr('readonly', false);
+            $('.census input').attr('readonly', false);
             $('.accordion-benefits').show();
             $('.benefits-summary').hide();
             $('.attachment-main').show();
             $('.attachment-summary').hide();
           });
 
-          $('.generate-rfp').click(function() {
+          $('.save-exit').click(function() {
             $('button#edit-submit').click();
           });
         }

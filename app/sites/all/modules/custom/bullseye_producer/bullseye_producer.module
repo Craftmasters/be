@@ -48,6 +48,30 @@ function bullseye_producer_form($form, &$form_state) {
     '#markup' => '<h2>' . t('Add New Producer') . '</h2>',
   );
 
+  $form['type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Type'),
+    '#options' => array(
+      'company' => 'Company',
+      'individual' => 'Individual',
+    ),
+    '#default_value' => 'Company',
+  );
+
+  $form['firstname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter First Name'),
+    ),
+  );
+
+  $form['lastname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter Last Name'),
+    ),
+  );
+
   $form['producer_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Producer Name'),
@@ -70,6 +94,51 @@ function bullseye_producer_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter Email Address'),
     ),
+  );
+
+  $form['phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Phone'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Phone Number'),
+    ),
+  );
+
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company'),
+    '#attributes' => array(
+      'placeholder' => t('Required if producer type is company'),
+    ),
+  );
+
+  $form['website'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Website'),
+    '#attributes' => array(
+      'placeholder' => t('Enter Website'),
+    ),
+  );
+
+  // Attachments.
+  $form['attachments_container'] = array(
+    '#type' => 'container',
+    'attachment' => array(),
+  );
+
+  $form['attachments_container']['attachment']['producer_agreement'] = array(
+    '#title' => t('Producer Agreement'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['current_health_life'] = array(
+    '#title' => t('Current Health and Life'),
+    '#type' => 'managed_file',
+  );
+
+  $form['attachments_container']['attachment']['errors_omission_insurance'] = array(
+    '#title' => t('Errors and Omission Insurance'),
+    '#type' => 'managed_file',
   );
 
   $form['submit_container'] = array(
