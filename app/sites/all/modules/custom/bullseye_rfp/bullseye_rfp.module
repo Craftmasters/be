@@ -160,25 +160,28 @@ function bullseye_rfp_initial_add_form($form, &$form_state) {
  * Form submit for initial create RFP Form.
  */
 function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
+  // Clear session first.
+  unset($_SESSION['add_rfp']);
+
+  $account = node_load($form_state['values']['account']['entity_id']);
   $query = '/rfps/add?';
-  $query .= 'account_name=' . $form_state['values']['account'];
+  $query .= 'account_name=' . $account->field_company[LANGUAGE_NONE][0]['value'];
 
   // Save the data temporarily to session variable.
-  if (!isset($_SESSION['rfp'])) {
-    $_SESSION['rfp'] = array(
-      'account_id' => $form_state['values']['account']['entity_id'],
-      'major_medical' => $form_state['values']['major_medical'],
-      'limited_medical' => $form_state['values']['limited_medical'],
-      'teledoc' => $form_state['values']['teledoc'],
-      'mec' => $form_state['values']['mec'],
-      'life' => $form_state['values']['life'],
-      'short_term_disability' => $form_state['values']['short_term_disability'],
-      'dental' => $form_state['values']['dental'],
-      'vision' => $form_state['values']['vision'],
-      'retirement' => $form_state['retirement'],
-      'special_benefits' => $form_state['special_benefits'],
-    );
-  }
+  $_SESSION['add_rfp'] = array(
+    'account_id' => $form_state['values']['account']['entity_id'],
+    'major_medical' => $form_state['values']['major_medical'],
+    'limited_medical' => $form_state['values']['limited_medical'],
+    'teledoc' => $form_state['values']['teledoc'],
+    'mec' => $form_state['values']['mec'],
+    'life' => $form_state['values']['life'],
+    'short_term_disability' => $form_state['values']['short_term_disability'],
+    'dental' => $form_state['values']['dental'],
+    'vision' => $form_state['values']['vision'],
+    'retirement' => $form_state['values']['retirement'],
+    'special_benefits' => $form_state['values']['special_benefits'],
+    'special_benefits_text' => $form_state['values']['special_benefits_text'],
+  );
 
   $benefits = array();
 
@@ -206,9 +209,6 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
  */
 function bullseye_rfp_form($form, &$form_state) {
   $form = array();
-
-  $data = $_SESSION['rfp'];
-  $account = node_load($data['account_id']);
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
@@ -1113,6 +1113,9 @@ function bullseye_rfp_form($form, &$form_state) {
  */
 function bullseye_rfp_form_submit($form, &$form_state) {
   global $user;
+
+  $data = $_SESSION['add_rfp'];
+  $account = node_load($data['account_id']);
 
   $be = new Bullseye($user);
 

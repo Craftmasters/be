@@ -232,8 +232,8 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $vars['state'] = '';
   $vars['code'] = '';
 
-  if (isset($_SESSION['rfp'])) {
-    $data = $_SESSION['rfp'];
+  if (isset($_SESSION['add_rfp'])) {
+    $data = $_SESSION['add_rfp'];
     $account = node_load($data['account_id']);
 
     $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
