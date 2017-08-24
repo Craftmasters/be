@@ -230,7 +230,6 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
     $account = node_load($data['account_id']);
   }
 
-  krumo($account);
   $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
   $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
   $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
