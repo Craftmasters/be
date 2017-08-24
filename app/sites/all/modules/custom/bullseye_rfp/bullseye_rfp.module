@@ -1225,7 +1225,16 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $vs_renewal_of_current_plan = $form_state['values']['vs_renewal_of_current_plan'];
   $vs_percentage_single = $form_state['values']['vs_percentage_single'];
   $vs_percentage_family = $form_state['values']['vs_percentage_family'];
-  $vs_waiting_period = $form_state['values']['ws_waiting_period'];
+  $vs_waiting_period = $form_state['values']['vs_waiting_period'];
+  // Life.
+  $lf_current_carrier = $form_state['values']['lf_current_carrier'];
+  $lf_years_with_current_carrier = $form_state['values']['lf_years_with_current_carrier'];
+  $lf_plan_year_to_quote_start = $form_state['values']['lf_plan_year_to_quote_start'];
+  $lf_plan_year_to_quote_end = $form_state['values']['lf_plan_year_to_quote_end'];
+  $lf_renewal_of_current_plan = $form_state['values']['lf_renewal_of_current_plan'];
+  $lf_percentage_single = $form_state['values']['lf_percentage_single'];
+  $lf_percentage_family = $form_state['values']['lf_percentage_family'];
+  $lf_waiting_period = $form_state['values']['lf_waiting_period'];
 
   $node = new stdClass();
 
