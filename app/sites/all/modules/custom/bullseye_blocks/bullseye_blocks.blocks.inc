@@ -49,7 +49,6 @@ function bullseye_blocks_render_be_bottom_header() {
   $vars['create_rfp_page'] = FALSE;
 
   $vars['be_page_title'] = drupal_get_title();
-  krumo($_GET);
 
   if (arg(0) == 'rfps' && arg(1) == 'add') {
     if (isset($_GET['benefits'])) {
