@@ -346,4 +346,9 @@ function bullseye_deploy_update_7029() {
   ), TRUE);
 }
 
-
+/**
+ * Install field_group module.
+ */
+function bullseye_deploy_update_7030() {
+  module_enable(array('field_group'), TRUE);
+}

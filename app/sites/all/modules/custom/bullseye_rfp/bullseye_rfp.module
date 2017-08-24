@@ -1241,6 +1241,97 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_retirees = $form_state['values']['check_identification_of_retirees'];
   $check_identification_of_covered = $form_state['values']['check_identification_of_covered'];
 
+  // Benefits.
+  // Major medical benefits.
+  $mm_current_carrier = $form_state['values']['mm_current_carrier'];
+  $mm_years_with_current_carrier = $form_state['values']['mm_years_with_current_carrier'];
+  $mm_plan_year_to_quote_start = $form_state['values']['mm_plan_year_to_quote_start'];
+  $mm_plan_year_to_quote_end = $form_state['values']['mm_plan_year_to_quote_end'];
+  $mm_renewal_of_current_plan = $form_state['values']['mm_percentage_single'];
+  $mm_percentage_family = $form_state['values']['mm_percentage_family'];
+  $mm_waiting_period = $form_state['values']['mm_waiting_period'];
+  // Limited Medical.
+  $lm_current_carrier = $form_state['values']['lm_current_carrier'];
+  $lm_years_with_current_carrier = $form_state['values']['lm_years_with_current_carrier'];
+  $lm_plan_year_to_quote_start = $form_state['values']['lm_plan_year_to_quote_start'];
+  $lm_plan_year_to_quote_end = $form_state['values']['lm_plan_year_to_quote_end'];
+  $lm_renewal_of_current_plan = $form_state['values']['lm_renewal_of_current_plan'];
+  $lm_percentage_single = $form_state['values']['lm_percentage_single'];
+  $lm_percentage_family = $form_state['values']['lm_percentage_family'];
+  $lm_waiting_period = $form_state['values']['lm_waiting_period'];
+  // Teledoc.
+  $tel_current_carrier = $form_state['values']['tel_current_carrier'];
+  $tel_years_with_current_carrier = $form_state['values']['tel_years_with_current_carrier'];
+  $tel_plan_year_to_quote_start = $form_state['values']['tel_plan_year_to_quote_start'];
+  $tel_plan_year_to_quote_end = $form_state['values']['tel_plan_year_to_quote_end'];
+  $tel_renewal_of_current_plan = $form_state['values']['tel_renewal_of_current_plan'];
+  $tel_percentage_single = $form_state['values']['tel_percentage_single'];
+  $tel_percentage_family = $form_state['values']['tel_percentage_family'];
+  $tel_waiting_period = $form_state['values']['tel_waiting_period'];
+  // MEC.
+  $mec_current_carrier = $form_state['values']['mec_current_carrier'];
+  $mec_years_with_current_carrier = $form_state['values']['mec_years_with_current_carrier'];
+  $mec_plan_year_to_quote_start = $form_state['values']['mec_plan_year_to_quote_start'];
+  $mec_plan_year_to_quote_end = $form_state['values']['mec_plan_year_to_quote_end'];
+  $mec_renewal_of_current_plan = $form_state['values']['mec_renewal_of_current_plan'];
+  $mec_percentage_single = $form_state['values']['mec_percentage_single'];
+  $mec_percentage_family = $form_state['values']['mec_percentage_family'];
+  $mec_waiting_period = $form_state['values']['mec_waiting_period'];
+  // Dental.
+  $den_current_carrier = $form_state['values']['den_current_carrier'];
+  $den_years_with_current_carrier = $form_state['values']['den_years_with_current_carrier'];
+  $den_plan_year_to_quote_start = $form_state['values']['den_plan_year_to_quote_start'];
+  $den_plan_year_to_quote_end = $form_state['values']['den_plan_year_to_quote_end'];
+  $den_renewal_of_current_plan = $form_state['values']['den_renewal_of_current_plan'];
+  $den_percentage_single = $form_state['values']['den_percentage_single'];
+  $den_percentage_family = $form_state['values']['den_percentage_family'];
+  $den_waiting_period = $form_state['values']['den_waiting_period'];
+  // Vision.
+  $vs_current_carrier = $form_state['values']['vs_current_carrier'];
+  $vs_years_with_current_carrier = $form_state['values']['vs_years_with_current_carrier'];
+  $vs_plan_year_to_quote_start = $form_state['values']['vs_plan_year_to_quote_start'];
+  $vs_plan_year_to_quote_end = $form_state['values']['vs_plan_year_to_quote_end'];
+  $vs_renewal_of_current_plan = $form_state['values']['vs_renewal_of_current_plan'];
+  $vs_percentage_single = $form_state['values']['vs_percentage_single'];
+  $vs_percentage_family = $form_state['values']['vs_percentage_family'];
+  $vs_waiting_period = $form_state['values']['vs_waiting_period'];
+  // Life.
+  $lf_current_carrier = $form_state['values']['lf_current_carrier'];
+  $lf_years_with_current_carrier = $form_state['values']['lf_years_with_current_carrier'];
+  $lf_plan_year_to_quote_start = $form_state['values']['lf_plan_year_to_quote_start'];
+  $lf_plan_year_to_quote_end = $form_state['values']['lf_plan_year_to_quote_end'];
+  $lf_renewal_of_current_plan = $form_state['values']['lf_renewal_of_current_plan'];
+  $lf_percentage_single = $form_state['values']['lf_percentage_single'];
+  $lf_percentage_family = $form_state['values']['lf_percentage_family'];
+  $lf_waiting_period = $form_state['values']['lf_waiting_period'];
+  // Short term disability.
+  $std_current_carrier = $form_state['values']['std_current_carrier'];
+  $std_years_with_current_carrier = $form_state['values']['std_years_with_current_carrier'];
+  $std_plan_year_to_quote_start = $form_state['values']['std_plan_year_to_quote_start'];
+  $std_plan_year_to_quote_end = $form_state['values']['std_plan_year_to_quote_end'];
+  $std_renewal_of_current_plan = $form_state['values']['std_renewal_of_current_plan'];
+  $std_percentage_single = $form_state['values']['std_percentage_single'];
+  $std_percentage_family = $form_state['values']['std_percentage_family'];
+  $std_waiting_period = $form_state['values']['std_waiting_period'];
+  // Retirement.
+  $ret_current_carrier = $form_state['values']['ret_current_carrier'];
+  $ret_years_with_current_carrier = $form_state['values']['ret_years_with_current_carrier'];
+  $ret_plan_year_to_quote_start = $form_state['values']['ret_plan_year_to_quote_start'];
+  $ret_plan_year_to_quote_end = $form_state['values']['ret_plan_year_to_quote_end'];
+  $ret_renewal_of_current_plan = $form_state['values']['ret_renewal_of_current_plan'];
+  $ret_percentage_single = $form_state['values']['ret_percentage_single'];
+  $ret_percentage_family = $form_state['values']['ret_percentage_family'];
+  $ret_waiting_period = $form_state['values']['ret_waiting_period'];
+  // Special Benefits.
+  $sb_current_carrier = $form_state['values']['sb_current_carrier'];
+  $sb_years_with_current_carrier = $form_state['values']['sb_years_with_current_carrier'];
+  $sb_plan_year_to_quote_start = $form_state['values']['sb_plan_year_to_quote_start'];
+  $sb_plan_year_to_quote_end = $form_state['values']['sb_plan_year_to_quote_end'];
+  $sb_renewal_of_current_plan = $form_state['values']['sb_renewal_of_current_plan'];
+  $sb_percentage_single = $form_state['values']['sb_percentage_single'];
+  $sb_percentage_family = $form_state['values']['sb_percentage_family'];
+  $sb_waiting_period = $form_state['values']['sb_waiting_period'];
+
   $node = new stdClass();
 
   $node->title = $carrier_name;
