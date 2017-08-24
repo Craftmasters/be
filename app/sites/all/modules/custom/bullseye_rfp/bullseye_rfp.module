@@ -1118,6 +1118,9 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $data = $_SESSION['add_rfp'];
   $account = node_load($data['account_id']);
 
+  kpr($form_state['values']);
+  die();
+
   $be = new Bullseye($user);
 
   // Set the producer name.
@@ -1137,6 +1140,37 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $priority = $form_state['values']['priority'];
   $due_date = $form_state['values']['due_date'];
 
+  // Plan specifications.
+  $fringe_rate = $form_state['values']['fringe_rates'];
+  $proposed_effective_date = $form_state['values']['proposed_effective_date'];
+  $other_work_locations = $form_state['values']['other_work_locations'];
+  $number_of_employees = $form_state['values']['number_of_employees'];
+  $number_of_dependents = $form_state['values']['number_of_dependents'];
+  $nature_of_business = $form_state['values']['nature_of_business'];
+  $years_in_business = $form_state['values']['years_in_business'];
+  $tax_id = $form_state['values']['tax_id'];
+  $renewal_date = $form_state['values']['renewal_date'];
+
+  // Attachments.
+  $employee_census = $form_state['values']['employee_census'];
+  $current_summary_of_benefit = $form_state['values']['current_summary_of_benefit'];
+  $current_bill = $form_state['values']['current_bill'];
+  $last_renewal_letter = $form_state['values']['last_renewal_letter'];
+  $summary_of_monthly_claims_experience = $form_state['values']['summary_of_monthly_claims_experience'];
+  $broker_of_record = $form_state['values']['broker_of_record'];
+  $letter_of_authorization = $form_state['values']['letter_of_authorization'];
+  $large_claims_report = $form_state['values']['large_claims_report'];
+
+  // Census inclusions.
+  $check_identifier = $form_state['values']['check_identifier'];
+  $check_ssn = $form_state['values']['check_ssn'];
+  $check_date_birth_age = $form_state['values']['check_date_birth_age'];
+  $check_gender = $form_state['values']['check_gender'];
+  $check_home_zip_codes = $form_state['values']['check_home_zip_codes'];
+  $check_plan_selection = $form_state['values']['check_plan_selection'];
+  $check_tier_levels = $form_state['values']['check_tier_levels'];
+  $check_identification_of_retirees = $form_state['values']['check_identification_of_retirees'];
+  $check_identification_of_covered = $form_state['values']['check_identification_of_covered'];
 
   $node = new stdClass();
 
