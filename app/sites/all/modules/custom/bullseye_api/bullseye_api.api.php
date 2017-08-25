@@ -372,4 +372,23 @@ class Bullseye {
     }
     return $arrayRewrite;
   }
+
+  /**
+   * Generate random strings.
+   *
+   * @param int $length
+   *   The length of the generated string.
+   *
+   * @return string $rand_string
+   *   The generated random string.
+   */
+  function randChars($length = 4) {
+    $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $chars_length = strlen($chars);
+    $rand_string = '';
+    for ($i = 0; $i < $length; $i++) {
+      $rand_string .= $chars[rand(0, $chars_length - 1)];
+    }
+    return $rand_string;
+  }
 }
