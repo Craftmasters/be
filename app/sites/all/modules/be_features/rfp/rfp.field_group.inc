@@ -626,6 +626,64 @@ function rfp_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_rt_percentage_contribution|node|rfp|form';
+  $field_group->group_name = 'group_rt_percentage_contribution';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Percentage of Employer Contribution',
+    'weight' => '72',
+    'children' => array(
+      0 => 'field_rt_contrib_single',
+      1 => 'field_rt_contrib_family',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-rt-percentage-contribution field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_sb_percentage_contribution|node|rfp|form';
+  $field_group->group_name = 'group_sb_percentage_contribution';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Percentage of Employer Contribution',
+    'weight' => '72',
+    'children' => array(
+      0 => 'field_sb_contrib_single',
+      1 => 'field_sb_contrib_family',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-sb-percentage-contribution field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_sb_year_to_quote|node|rfp|form';
   $field_group->group_name = 'group_sb_year_to_quote';
   $field_group->entity_type = 'node';
@@ -645,6 +703,35 @@ function rfp_field_group_info() {
       'instance_settings' => array(
         'description' => '',
         'classes' => 'group-sb-year-to-quote field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_sd_percentage_contribution|node|rfp|form';
+  $field_group->group_name = 'group_sd_percentage_contribution';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Percentage of Employer Contribution',
+    'weight' => '72',
+    'children' => array(
+      0 => 'field_sd_contrib_single',
+      1 => 'field_sd_contrib_family',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-sd-percentage-contribution field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
       ),

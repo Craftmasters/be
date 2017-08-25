@@ -2338,6 +2338,86 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_rt_contrib_family'.
+  $field_instances['node-rfp-field_rt_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 86,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_rt_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 87,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_rt_contrib_single'.
+  $field_instances['node-rfp-field_rt_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 85,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_rt_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 86,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_rt_renewal_current_plan_be'.
   $field_instances['node-rfp-field_rt_renewal_current_plan_be'] = array(
     'bundle' => 'rfp',
@@ -2376,6 +2456,86 @@ function rfp_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 50,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sb_contrib_family'.
+  $field_instances['node-rfp-field_sb_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 88,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sb_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 89,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sb_contrib_single'.
+  $field_instances['node-rfp-field_sb_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 87,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sb_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 88,
     ),
   );
 
@@ -2607,6 +2767,86 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 67,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sd_contrib_family'.
+  $field_instances['node-rfp-field_sd_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 84,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sd_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 85,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sd_contrib_single'.
+  $field_instances['node-rfp-field_sd_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 83,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sd_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 84,
     ),
   );
 
