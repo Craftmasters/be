@@ -383,7 +383,7 @@ class Bullseye {
    *   The generated random string.
    */
   function randChars($length = 4) {
-    $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $chars = (string) time();
     $chars_length = strlen($chars);
     $rand_string = '';
     for ($i = 0; $i < $length; $i++) {

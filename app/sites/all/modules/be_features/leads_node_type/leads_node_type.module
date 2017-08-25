@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Leads Node Type feature.
- */
-
-include_once 'leads_node_type.features.inc';
