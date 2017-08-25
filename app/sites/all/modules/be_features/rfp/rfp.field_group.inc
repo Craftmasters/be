@@ -110,6 +110,35 @@ function rfp_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_dn_percentage_contribution|node|rfp|form';
+  $field_group->group_name = 'group_dn_percentage_contribution';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Percentage of Employer Contribution',
+    'weight' => '72',
+    'children' => array(
+      0 => 'field_dn_contrib_single',
+      1 => 'field_db_contrib_family',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-dn-percentage-contribution field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_info|node|rfp|form';
   $field_group->group_name = 'group_info';
   $field_group->entity_type = 'node';
@@ -798,6 +827,35 @@ function rfp_field_group_info() {
       'instance_settings' => array(
         'description' => '',
         'classes' => 'group-vision field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_vs_percentage_contribution|node|rfp|form';
+  $field_group->group_name = 'group_vs_percentage_contribution';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Percentage of Employer Contribution',
+    'weight' => '72',
+    'children' => array(
+      0 => 'field_vs_contrib_single',
+      1 => 'field_vs_contrib_family',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-vs-percentage-contribution field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
       ),
