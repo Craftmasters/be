@@ -272,11 +272,36 @@ body.page-rfps-initial-add.be-lightbox {
 }
 
 .accordion-benefits-wrapper {
-  .modal-dialog {
+  .pdf-modal .modal-dialog {
     width: 750px;
   }
+  .attachment-modal .modal-dialog {
+    width: 450px;
+  }
   .modal-body {
-    padding: 40px;
+    padding: 20px 40px;
+  }
+  .modal-header {
+    border-bottom: 0px;
+    padding: 30px 40px 0px;
+    h4.modal-title {
+      color: @blue_gray;
+      font-family: 'Proximanova-Semibold';
+      font-size: 20px;
+      text-transform: uppercase;
+    }
+  }
+  .modal-footer {
+    border-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 40px;
+  }
+  .be-custom-actions {
+    margin-top: 0px;
+    text-align: center;
+    a, input[type="submit"], button {
+      padding: 10px 50px;
+    }
   }
 }
 

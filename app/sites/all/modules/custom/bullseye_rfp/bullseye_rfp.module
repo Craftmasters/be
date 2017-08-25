@@ -1402,6 +1402,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_major_medical'),
     '#name' => 'generate_rfp_major_medical',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_limited_medical'] = array(
@@ -1409,6 +1412,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_limited_medical'),
     '#name' => 'generate_rfp_limited_medical',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_teledoc'] = array(
@@ -1416,6 +1422,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_teledoc'),
     '#name' => 'generate_rfp_teledoc',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_mec'] = array(
@@ -1423,6 +1432,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_mec'),
     '#name' => 'generate_rfp_mec',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_dental'] = array(
@@ -1430,6 +1442,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_dental'),
     '#name' => 'generate_rfp_dental',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_vision'] = array(
@@ -1437,6 +1452,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_vision'),
     '#name' => 'generate_rfp_vision',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_life'] = array(
@@ -1444,6 +1462,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_life'),
     '#name' => 'generate_rfp_life',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_short_term_disability'] = array(
@@ -1451,6 +1472,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_short_term_disability'),
     '#name' => 'generate_rfp_short_term_disability',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_retirement'] = array(
@@ -1458,6 +1482,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_retirement'),
     '#name' => 'generate_rfp_retirement',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   $form['generate_rfp_special_benefits'] = array(
@@ -1465,6 +1492,9 @@ function bullseye_rfp_form($form, &$form_state) {
     '#submit' => array('generate_rfp_special_benefits'),
     '#name' => 'generate_rfp_special_benefits',
     '#value' => t('Send Email'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   // The values for the dropdown box.

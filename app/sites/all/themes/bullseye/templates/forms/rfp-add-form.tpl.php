@@ -478,8 +478,7 @@
 
           <?php foreach ($_GET['benefits'] as $key => $value) : ?>
             <?php if ($key[0] != '#') : ?>
-              <!-- Modal -->
-              <div id="modal_<?php print $key; ?>" class="modal fade" role="dialog">
+              <div id="modal_<?php print $key; ?>" class="modal fade pdf-modal" role="dialog">
                 <div class="modal-dialog">
 
                   <!-- Modal content-->
@@ -585,7 +584,30 @@
                           <p>(888) 745-0754 | support@archerjordan.com</p>
                         </div>
                       </div>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="be-custom-actions">
+                        <a href="#" class="gray-btn" data-dismiss="modal"><?php print t('Back'); ?></a>
+                        <a href="#" class="orange-btn" data-toggle="modal" data-target="#modal_attachment_<?php print $key; ?>"  data-dismiss="modal">
+                          <?php print t('Next'); ?>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
 
+                </div>
+              </div>
+
+              <div id="modal_attachment_<?php print $key; ?>" class="modal fade attachment-modal" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><?php print t('Include Attachments'); ?></h4>
+                    </div>
+                    <div class="modal-body">
                       <div class="include-attachments">
                         <?php print render($form[$key . '_fields'][$key . '_attach_ec']); ?>
                         <?php print render($form[$key . '_fields'][$key . '_attach_csob']); ?>
@@ -596,11 +618,12 @@
                         <?php print render($form[$key . '_fields'][$key . '_attach_loa']); ?>
                         <?php print render($form[$key . '_fields'][$key . '_attach_lcr']); ?>
                       </div>
-
-                      <?php print render($form['generate_rfp_' . $key]); ?>
+                      
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <div class="be-custom-actions">
+                        <?php print render($form['generate_rfp_' . $key]); ?>
+                      </div>
                     </div>
                   </div>
 
