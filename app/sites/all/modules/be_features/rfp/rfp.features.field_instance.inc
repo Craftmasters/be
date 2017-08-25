@@ -749,6 +749,86 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_lm_contrib_family'.
+  $field_instances['node-rfp-field_lm_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 72,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lm_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 73,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_lm_contrib_single'.
+  $field_instances['node-rfp-field_lm_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 71,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lm_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 72,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_lm_current_carrier'.
   $field_instances['node-rfp-field_lm_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -973,6 +1053,86 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 22,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mc_contrib_family'.
+  $field_instances['node-rfp-field_mc_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 76,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mc_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 77,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mc_contrib_single'.
+  $field_instances['node-rfp-field_mc_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 75,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mc_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 76,
     ),
   );
 
@@ -1204,6 +1364,86 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 30,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mm_contrib_family'.
+  $field_instances['node-rfp-field_mm_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 70,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mm_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 71,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mm_contrib_single'.
+  $field_instances['node-rfp-field_mm_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 69,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mm_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 70,
     ),
   );
 
@@ -2671,6 +2911,86 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_tl_contrib_family'.
+  $field_instances['node-rfp-field_tl_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 74,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 75,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_tl_contrib_single'.
+  $field_instances['node-rfp-field_tl_contrib_single'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 73,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_contrib_single',
+    'label' => 'Single',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 74,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_tl_renewal_current_plan_be'.
   $field_instances['node-rfp-field_tl_renewal_current_plan_be'] = array(
     'bundle' => 'rfp',
@@ -3070,6 +3390,7 @@ function rfp_field_default_field_instances() {
   t('Company Name');
   t('Company Street Address');
   t('Current Carrier');
+  t('Family');
   t('Fringe Rate');
   t('Is this a renewal of a current plan in BullsEye?');
   t('Nature of Business/SIC');
@@ -3082,6 +3403,7 @@ function rfp_field_default_field_instances() {
   t('Primary Email Address');
   t('Proposed Effective Date');
   t('Renewal Date');
+  t('Single');
   t('State');
   t('Tax ID');
   t('Website');
