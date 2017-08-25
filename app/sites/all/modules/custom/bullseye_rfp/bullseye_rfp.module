@@ -525,6 +525,38 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'major_medical_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'major_medical_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'major_medical_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'major_medical_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'major_medical_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'major_medical_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'major_medical_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'major_medical_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Limited Medical.
@@ -586,10 +618,42 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'limited_medical_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'limited_medical_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'limited_medical_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'limited_medical_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'limited_medical_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'limited_medical_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'limited_medical_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'limited_medical_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Telemedicine.
-  $form['telemedicine_fields'] = array(
+  $form['teledoc_fields'] = array(
     '#type' => 'container',
     'tel_current_carrier' => array(
       '#type' => 'textfield',
@@ -646,6 +710,38 @@ function bullseye_rfp_form($form, &$form_state) {
       '#attributes' => array(
         'placeholder' => t('15 Days'),
       ),
+    ),
+    'teledoc_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'teledoc_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'teledoc_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'teledoc_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'teledoc_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'teledoc_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'teledoc_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'teledoc_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
     ),
   );
 
@@ -708,6 +804,38 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'mec_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'mec_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'mec_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'mec_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'mec_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'mec_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'mec_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'mec_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Dental.
@@ -768,6 +896,38 @@ function bullseye_rfp_form($form, &$form_state) {
       '#attributes' => array(
         'placeholder' => t('15 Days'),
       ),
+    ),
+    'dental_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'dental_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'dental_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'dental_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'dental_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'dental_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'dental_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'dental_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
     ),
   );
 
@@ -830,6 +990,38 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'vision_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'vision_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'vision_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'vision_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'vision_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'vision_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'vision_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'vision_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Life.
@@ -891,12 +1083,44 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'life_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'life_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'life_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'life_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'life_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'life_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'life_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'life_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Short Term Disability.
   $form['short_term_disability_fields'] = array(
     '#type' => 'container',
-    'std_current_carrier' => array(
+      'std_current_carrier' => array(
       '#type' => 'textfield',
       '#title' => t('Current Carrier'),
       '#attributes' => array(
@@ -951,6 +1175,38 @@ function bullseye_rfp_form($form, &$form_state) {
       '#attributes' => array(
         'placeholder' => t('15 Days'),
       ),
+    ),
+    'short_term_disability_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'short_term_disability_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'short_term_disability_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'short_term_disability_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'short_term_disability_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'short_term_disability_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'short_term_disability_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'short_term_disability_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
     ),
   );
 
@@ -1013,6 +1269,38 @@ function bullseye_rfp_form($form, &$form_state) {
         'placeholder' => t('15 Days'),
       ),
     ),
+    'retirement_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'retirement_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'retirement_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'retirement_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'retirement_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'retirement_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'retirement_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'retirement_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
+    ),
   );
 
   // Special Benefits.
@@ -1073,6 +1361,38 @@ function bullseye_rfp_form($form, &$form_state) {
       '#attributes' => array(
         'placeholder' => t('15 Days'),
       ),
+    ),
+    'special_benefits_attach_ec' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Employee Census'),
+    ),
+    'special_benefits_attach_csob' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Summary of Benefit'),
+    ),
+    'special_benefits_attach_cb' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Current Bill'),
+    ),
+    'special_benefits_attach_lrlr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Last Renewal Letter & Rates'),
+    ),
+    'special_benefits_attach_somce' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Summary of Monthly Claims Experience'),
+    ),
+    'special_benefits_attach_bor' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Broker of Record'),
+    ),
+    'special_benefits_attach_loa' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Letter of Authorization'),
+    ),
+    'special_benefits_attach_lcr' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Large Claims Report'),
     ),
   );
 

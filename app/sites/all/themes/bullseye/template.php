@@ -256,6 +256,18 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
   $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
+
+  $vars['bt'] = array();
+  $vars['bt']['title_major_medical'] = 'Major Medical';
+  $vars['bt']['title_limited_medical'] = 'Limited Medical';
+  $vars['bt']['title_teledoc'] = 'Telemedicine';
+  $vars['bt']['title_mec'] = 'MEC';
+  $vars['bt']['title_life'] = 'Life & AD&D';
+  $vars['bt']['title_short_term_disability'] = 'Short Term Disability';
+  $vars['bt']['title_dental'] = 'Dental';
+  $vars['bt']['title_vision'] = 'Vision';
+  $vars['bt']['title_retirement'] = 'Retirement';
+  $vars['bt']['title_special_benefits'] = 'Special Benefits';
 }
 
 function MODULE_NAME_custom_theme() {

@@ -189,30 +189,30 @@
                   <div class="acc_head_copy">Telemedicine</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['telemedicine_fields']['tel_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['telemedicine_fields']['tel_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier"><?php print render($form['teledoc_fields']['tel_current_carrier']); ?></div>
+                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['teledoc_fields']['tel_years_with_current_carrier']); ?></div>
                     </div>
                   </div>
 
                   <div class="be-form-section">
                     <label><?php print t('Plan Year to Quote'); ?></label>
                     <div class="row">
-                      <div class="col-xs-6 quote-start"><?php print render($form['telemedicine_fields']['tel_plan_year_to_quote_start']); ?></div>
-                      <div class="col-xs-6 quote-end"><?php print render($form['telemedicine_fields']['tel_plan_year_to_quote_end']); ?></div>
+                      <div class="col-xs-6 quote-start"><?php print render($form['teledoc_fields']['tel_plan_year_to_quote_start']); ?></div>
+                      <div class="col-xs-6 quote-end"><?php print render($form['teledoc_fields']['tel_plan_year_to_quote_end']); ?></div>
                     </div>
                   </div>
 
-                  <div class="be-form-single renewal-plan"><?php print render($form['telemedicine_fields']['tel_renewal_of_current_plan']); ?></div>
+                  <div class="be-form-single renewal-plan"><?php print render($form['teledoc_fields']['tel_renewal_of_current_plan']); ?></div>
 
                   <div class="be-form-section">
                     <label><?php print t('Percentage of Employer Contribution'); ?></label>
                     <div class="row">
-                      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_percentage_single']); ?></div>
-                      <div class="col-xs-6"><?php print render($form['telemedicine_fields']['tel_percentage_family']); ?></div>
+                      <div class="col-xs-6"><?php print render($form['teledoc_fields']['tel_percentage_single']); ?></div>
+                      <div class="col-xs-6"><?php print render($form['teledoc_fields']['tel_percentage_family']); ?></div>
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['telemedicine_fields']['tel_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period"><?php print render($form['teledoc_fields']['tel_waiting_period']); ?></div>
                 </div>
               </div>
             <?php endif; ?>
@@ -486,7 +486,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><?php print $key; ?></h4>
+                      <h4 class="modal-title"><?php print $bt['title_' . $key]; ?></h4>
                     </div>
                     <div class="modal-body">
                       <div class="pdf-dummy-preview">
@@ -584,6 +584,17 @@
                           <p>100 Commons Rd, Ste 7377, Dripping Springs, TX 78620</p>
                           <p>(888) 745-0754 | support@archerjordan.com</p>
                         </div>
+                      </div>
+
+                      <div class="include-attachments">
+                        <?php print render($form[$key . '_fields'][$key . '_attach_ec']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_csob']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_cb']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_lrlr']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_somce']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_bor']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_loa']); ?>
+                        <?php print render($form[$key . '_fields'][$key . '_attach_lcr']); ?>
                       </div>
 
                       <?php print render($form['generate_rfp_' . $key]); ?>
