@@ -92,7 +92,7 @@ function rfp_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '2',
+          'weight' => '6',
         ),
       ),
       'display' => array(),
