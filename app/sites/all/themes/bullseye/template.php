@@ -257,3 +257,9 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
   $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
 }
+
+function MODULE_NAME_custom_theme() {
+  if (current_path() == 'system/ajax') {
+    return variable_get('admin_theme');
+  }
+}
