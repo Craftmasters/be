@@ -113,7 +113,6 @@
 
               // Generate RFP button.
               var generate_rfp = '<a href="#" data-toggle="modal" data-target="#modal_' + $(this).attr('data-benefit') + '" class="btn-generate-rfp" id="generate_' + $(this).attr('data-benefit') + '">Generate RFP</a>';
-              //data-toggle="modal" data-target="#myModal"
 
               // Carrier.
               var current_carrier = $(this).find('.current-carrier').find('input[type="text"]').val();
@@ -150,6 +149,7 @@
             // Build the summary block for Attachments block.
             $('.attachment-row').each(function() {
               var attach_label = $(this).find('label').html();
+              var attach_class = $(this).find('label').attr('for');
               var attach_label = '<span class="attach-label">' + attach_label + '</span>';
 
               var attach_file = $(this).find('input[type="file"]').val();
@@ -157,7 +157,7 @@
               if (attach_file == '') {
                 attach_file = 'No Attachment';
               }
-              var attach_file = '<span class="attach-file">' + attach_file + '</span>';
+              var attach_file = '<span class="attach-file ' + attach_class + '">' + attach_file + '</span>';
 
               var attach_div = '<div class="attachment-summary-row">' + attach_label + attach_file + '</div>';
               $('.attachment-summary').append(attach_div);
@@ -190,6 +190,36 @@
           $('.save-exit').click(function() {
             $('button#edit-submit').click();
           });
+
+          // For attachments.
+          $('.next-send-email').click(function() {
+            $('.include-attachments .form-type-checkbox').css('display', 'none');
+            if ($('span.edit-employee-census-upload').html() != 'No Attachment') {
+              $('div[class*="attach-ec"]').css('display', 'block');
+            }
+            if ($('span.edit-current-summary-of-benefit-upload').html() != 'No Attachment') {
+              $('div[class*="attach-csob"]').css('display', 'block');
+            }
+            if ($('span.edit-current-bill-upload').html() != 'No Attachment') {
+              $('div[class*="attach-cb"]').css('display', 'block');
+            }
+            if ($('span.edit-last-renewal-letter-upload').html() != 'No Attachment') {
+              $('div[class*="attach-lrlr"]').css('display', 'block');
+            }
+            if ($('span.edit-summary-of-monthly-claims-experience-upload').html() != 'No Attachment') {
+              $('div[class*="attach-somce"]').css('display', 'block');
+            }
+            if ($('span.edit-broker-of-record-upload').html() != 'No Attachment') {
+              $('div[class*="attach-bor"]').css('display', 'block');
+            }
+            if ($('span.edit-letter-of-authorization-upload').html() != 'No Attachment') {
+              $('div[class*="attach-loa"]').css('display', 'block');
+            }
+            if ($('span.edit-large-claims-report-upload').html() != 'No Attachment') {
+              $('div[class*="attach-lcr"]').css('display', 'block');
+            }
+          });
+
         }
 
         // For Calendar page (Activities).

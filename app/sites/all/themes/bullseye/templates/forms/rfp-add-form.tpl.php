@@ -588,7 +588,7 @@
                     <div class="modal-footer">
                       <div class="be-custom-actions">
                         <a href="#" class="gray-btn" data-dismiss="modal"><?php print t('Back'); ?></a>
-                        <a href="#" class="orange-btn" data-toggle="modal" data-target="#modal_attachment_<?php print $key; ?>"  data-dismiss="modal">
+                        <a href="#" class="orange-btn next-send-email" data-toggle="modal" data-target="#modal_attachment_<?php print $key; ?>"  data-dismiss="modal">
                           <?php print t('Next'); ?>
                         </a>
                       </div>
