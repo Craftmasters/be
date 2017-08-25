@@ -255,4 +255,5 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
 
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+  $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
 }

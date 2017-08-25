@@ -22,12 +22,14 @@
           <div class="be-view-value"><a href="<?php print $phone; ?>"><?php print $phone; ?></a></div>
         </div>
 
-        <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Website'); ?></div>
-          <div class="be-view-value">
-            <a href="#" class="orange-font"><?php print $website; ?></a>
+        <?php if ($website) : ?>
+          <div class="be-view-field">
+            <div class="be-view-label"><?php print t('Website'); ?></div>
+            <div class="be-view-value">
+              <a href="#" class="orange-font"><?php print $website; ?></a>
             </div>
-        </div>
+          </div>
+        <?php endif; ?>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Street Address'); ?></div>
@@ -92,6 +94,7 @@
           </div>
         </div>
       </div>
+      <div class="summary-cover"></div>
     </div>
   </div>
   <div class="col-md-4">
@@ -103,7 +106,7 @@
           <div class="accordion-benefits">
 
             <?php if (isset($_GET['benefits']['major_medical']) && $_GET['benefits']['major_medical'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="major_medical">
 
                 <div class="acc_head">Major Medical</div>
 
@@ -140,7 +143,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['limited_medical']) && $_GET['benefits']['limited_medical'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="limited_medical">
 
                 <div class="acc_head">Limited Medical</div>
 
@@ -178,7 +181,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['teledoc']) && $_GET['benefits']['teledoc'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="teledoc">
 
                 <div class="acc_head">Telemedicine</div>
 
@@ -215,7 +218,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['mec']) && $_GET['benefits']['mec'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="mec">
 
                 <div class="acc_head">MEC</div>
 
@@ -252,7 +255,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['dental']) && $_GET['benefits']['dental'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="dental">
 
                 <div class="acc_head">Dental</div>
 
@@ -289,7 +292,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['vision']) && $_GET['benefits']['vision'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="vision">
 
                 <div class="acc_head">Vision</div>
 
@@ -326,7 +329,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['life']) && $_GET['benefits']['life'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="life">
 
                 <div class="acc_head">Life & AD&D</div>
 
@@ -363,7 +366,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['short_term_disability']) && $_GET['benefits']['short_term_disability'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="short_term_disability">
 
                 <div class="acc_head">Short Term Disability</div>
 
@@ -400,7 +403,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['retirement']) && $_GET['benefits']['retirement'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="retirement">
 
                 <div class="acc_head">Retirement</div>
 
@@ -437,7 +440,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['special_benefits']) && $_GET['benefits']['special_benefits'] == 1) : ?>
-              <div class="accordion_in">
+              <div class="accordion_in" data-benefit="special_benefits">
 
                 <div class="acc_head">Special Benefits</div>
 
@@ -473,6 +476,130 @@
             <?php endif; ?>
           </div>
 
+          <?php foreach ($_GET['benefits'] as $key => $value) : ?>
+            <?php if ($key[0] != '#') : ?>
+              <!-- Modal -->
+              <div id="modal_<?php print $key; ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><?php print $key; ?></h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="pdf-dummy-preview">
+                        <div class="pdf-header">
+                          <img src="<?php print $pdf_logo; ?>">
+                        </div>
+                        <div class="pdf-body">
+                          <div class="pdf-body-header">
+                            <h1><span><?php print t('Request for Proposal'); ?></span></h1>
+                            <h2>ABC Company</h2>
+                          </div>
+                            
+                          <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                              <h3><?php print t('Group Information'); ?></h3>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Company Name'); ?></div>
+                                <div class="col-md-6 col-xs-6">ABC Company</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Primary Email Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">abc@abc.com</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Phone Number'); ?></div>
+                                <div class="col-md-6 col-xs-6">8888888</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Corporate Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">888 10th Street, San Antonio, TX, 8888</div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                              <h3><?php print t('Plan Specification'); ?></h3>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Quote Request For'); ?></div>
+                                <div class="col-md-6 col-xs-6">Limited Medical</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Fringe Rate\'s'); ?></div>
+                                <div class="col-md-6 col-xs-6">5000</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Proposed Effective Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Other Work Locations and Zip Codes'); ?></div>
+                                <div class="col-md-6 col-xs-6">777 Dallas, TX 900</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Number of Employees'); ?></div>
+                                <div class="col-md-6 col-xs-6">80</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Number of Dependents'); ?></div>
+                                <div class="col-md-6 col-xs-6">100</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Nature of Business/SIC'); ?></div>
+                                <div class="col-md-6 col-xs-6">4892</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Years in Business'); ?></div>
+                                <div class="col-md-6 col-xs-6">5</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Tax ID'); ?></div>
+                                <div class="col-md-6 col-xs-6">90999999</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Renewal Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Current Carrier'); ?></div>
+                                <div class="col-md-6 col-xs-6">Coverdell, 5 years</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Plan Year to Quote'); ?></div>
+                                <div class="col-md-6 col-xs-6">10/10/2018 - 10/10/2019</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Renewal'); ?></div>
+                                <div class="col-md-6 col-xs-6">No</div>
+                              </div>
+                              <div class="fields-wrapper row">
+                                <div class="col-md-6 col-xs-6"><?php print t('Waiting Period'); ?></div>
+                                <div class="col-md-6 col-xs-6">15 Days</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="pdf-footer">
+                          <p>100 Commons Rd, Ste 7377, Dripping Springs, TX 78620</p>
+                          <p>(888) 745-0754 | support@archerjordan.com</p>
+                        </div>
+                      </div>
+
+                      <?php print render($form['generate_rfp_' . $key]); ?>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+
+              
+
           <div class="benefits-summary"></div>
         </div>
       </div>
@@ -505,6 +632,7 @@
           <?php endif; ?>
         <?php endforeach; ?>
       </div>
+      <div class="summary-cover"></div>
     </div>
   </div>
 </div>
