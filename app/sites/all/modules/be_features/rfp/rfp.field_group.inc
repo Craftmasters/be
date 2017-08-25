@@ -58,7 +58,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_dental';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '28',
+    'weight' => '27',
     'children' => array(
       0 => 'field_den_plan_start',
       1 => 'field_den_plan_end',
@@ -87,11 +87,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Dental',
-    'weight' => '21',
+    'weight' => '22',
     'children' => array(
       0 => 'field_den_current_carrier',
       1 => 'field_den_years_current_carrier',
-      2 => 'group_den_year_to_quote',
+      2 => 'field_dn_renewal_current_plan_be',
+      3 => 'group_den_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -152,7 +153,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_life';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '36',
+    'weight' => '35',
     'children' => array(
       0 => 'field_lf_plan_start',
       1 => 'field_lf_plan_end',
@@ -181,11 +182,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Life',
-    'weight' => '23',
+    'weight' => '24',
     'children' => array(
       0 => 'field_lf_current_carrier',
       1 => 'field_lf_years_current_carrier',
-      2 => 'group_lf_year_to_quote',
+      2 => 'field_lf_renewal_current_plan_be',
+      3 => 'group_lf_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -211,11 +213,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Limited Medical',
-    'weight' => '18',
+    'weight' => '19',
     'children' => array(
       0 => 'field_lm_current_carrier',
       1 => 'field_lm_years_current_carrier',
-      2 => 'group_lm_year_to_quote',
+      2 => 'field_lm_renewal_current_plan_be',
+      3 => 'group_lm_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -274,7 +277,8 @@ function rfp_field_group_info() {
     'children' => array(
       0 => 'field_mm_current_carrier',
       1 => 'field_mm_years_current_carrier',
-      2 => 'group_mm_year_to_quote',
+      2 => 'field_mm_renewal_current_plan_be',
+      3 => 'group_mm_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -329,11 +333,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'MEC',
-    'weight' => '20',
+    'weight' => '21',
     'children' => array(
       0 => 'field_mec_current_carrier',
       1 => 'field_mec_years_current_carrier',
-      2 => 'group_mec_year_to_quote',
+      2 => 'field_mc_renewal_current_plan_be',
+      3 => 'group_mec_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -453,11 +458,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Retirement',
-    'weight' => '25',
+    'weight' => '26',
     'children' => array(
       0 => 'field_ret_current_carrier',
       1 => 'field_ret_years_current_carrier',
-      2 => 'group_ret_year_to_quote',
+      2 => 'field_rt_renewal_current_plan_be',
+      3 => 'group_ret_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -483,7 +489,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_special_benefits';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '57',
+    'weight' => '68',
     'children' => array(
       0 => 'field_sb_plan_start',
       1 => 'field_sb_plan_end',
@@ -512,11 +518,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Short Term Disability',
-    'weight' => '24',
+    'weight' => '25',
     'children' => array(
       0 => 'field_std_current_carrier',
       1 => 'field_std_years_current_carrier',
-      2 => 'group_std_year_to_quote',
+      2 => 'field_sd_renewal_current_plan_be',
+      3 => 'group_std_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -546,7 +553,8 @@ function rfp_field_group_info() {
     'children' => array(
       0 => 'field_sb_current_carrier',
       1 => 'field_sb_years_current_carrier',
-      2 => 'group_sb_year_to_quote',
+      2 => 'field_sb_renewal_current_plan_be',
+      3 => 'group_sb_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -630,11 +638,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Telemedicine',
-    'weight' => '19',
+    'weight' => '20',
     'children' => array(
       0 => 'field_tel_current_carrier',
       1 => 'field_tel_years_current_carrier',
-      2 => 'group_tel_year_to_quote',
+      2 => 'field_tl_renewal_current_plan_be',
+      3 => 'group_tel_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -660,11 +669,12 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Vision',
-    'weight' => '22',
+    'weight' => '23',
     'children' => array(
       0 => 'field_vs_current_carrier',
       1 => 'field_vs_years_current_carrier',
-      2 => 'group_vs_year_to_quote',
+      2 => 'field_vs_renewal_current_plan_be',
+      3 => 'group_vs_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
