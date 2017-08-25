@@ -357,6 +357,47 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_dn_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_dn_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 63,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_dn_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 61,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_email'.
   $field_instances['node-rfp-field_email'] = array(
     'bundle' => 'rfp',
@@ -627,6 +668,47 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_lf_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_lf_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 65,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lf_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 63,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_lf_years_current_carrier'.
   $field_instances['node-rfp-field_lf_years_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -891,6 +973,47 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 22,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mc_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_mc_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 62,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mc_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 60,
     ),
   );
 
@@ -1237,7 +1360,11 @@ function rfp_field_default_field_instances() {
   // Exported field_instance: 'node-rfp-field_mm_renewal_current_plan_be'.
   $field_instances['node-rfp-field_mm_renewal_current_plan_be'] = array(
     'bundle' => 'rfp',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -1811,6 +1938,47 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_rt_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_rt_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 67,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_rt_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 65,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_sb_current_carrier'.
   $field_instances['node-rfp-field_sb_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -1961,6 +2129,47 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_sb_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_sb_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 68,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sb_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 66,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_sb_years_current_carrier'.
   $field_instances['node-rfp-field_sb_years_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -1998,6 +2207,47 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 56,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sd_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_sd_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 66,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sd_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 64,
     ),
   );
 
@@ -2421,6 +2671,47 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_tl_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_tl_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 61,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 59,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_vs_current_carrier'.
   $field_instances['node-rfp-field_vs_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -2568,6 +2859,47 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'date_popup',
       'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_vs_renewal_current_plan_be'.
+  $field_instances['node-rfp-field_vs_renewal_current_plan_be'] = array(
+    'bundle' => 'rfp',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 64,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_vs_renewal_current_plan_be',
+    'label' => 'Is this a renewal of a current plan in BullsEye?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 62,
     ),
   );
 
