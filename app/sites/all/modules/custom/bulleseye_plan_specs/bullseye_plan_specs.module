@@ -170,13 +170,17 @@ function bullseye_plan_specs_form($form, &$form_state) {
 
   // @todo: add date javascript handler
   $form['plan_specs']['plan_renewal_date'] = array(
-    '#type' => 'textfield',
+    '#type' => 'date_popup',
     '#title' => t('Renewal Date'),
     '#attributes' => array(
       'placeholder' => t('mm/dd/yyyy'),
-      'class' => array(
-        'custom-date-picker',
-      ),
+    ),
+    '#date_format' => 'm/d/Y',
+    '#timepicker_options' => array(
+      'beforeShow' => 'planSpecsDateRenewal',
+      'rows' => 6,
+      'showCloseButton' => TRUE,
+      'closeButtonText' => t('Close'),
     ),
   );
 

@@ -98,6 +98,8 @@
     <?php //@todo add dynamic script when specialty Benefits is click/active auto check text?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+var dates = $('.plan-specs-date-picker');
+
 var benefits = $('#edit-benefits-in-0');
 var benefitsOthers = $('#edit-benefits-in-others');
 

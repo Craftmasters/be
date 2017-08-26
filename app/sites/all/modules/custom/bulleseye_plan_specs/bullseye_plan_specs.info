@@ -3,3 +3,5 @@ description = BullsEye module to handle Plan Specification survey form for clien
 package = BullsEye
 core = 7.x
 version = 7.x-1.0
+
+dependencies[] = date_popup
