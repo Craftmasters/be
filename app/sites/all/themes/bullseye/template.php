@@ -196,6 +196,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'producer-add-form',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
+  $items['bullseye_plan_specs_form'] = array(
+    'render element' => 'form',
+    'template' => 'plan-specs-add',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
   return $items;
 }
 
