@@ -542,7 +542,7 @@
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Number of Dependents'); ?></div>
-                                <div class="col-md-6 col-xs-6 pdf-dependendts"></div>
+                                <div class="col-md-6 col-xs-6 pdf-dependents"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Nature of Business/SIC'); ?></div>

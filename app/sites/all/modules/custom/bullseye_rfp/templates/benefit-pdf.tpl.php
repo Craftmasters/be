@@ -156,55 +156,55 @@
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Fringe Rate\'s'); ?></td>
-	      							<td></td>
+	      							<td><?php print $fringe_rates; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Proposed Effective Date'); ?></td>
-	      							<td></td>
+	      							<td><?php print $proposed_effective_date; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Other Work Locations and Zip Codes'); ?></td>
-	      							<td>fdsfdfsfds</td>
+	      							<td><?php print $other_work_locations; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Number of Employees'); ?></td>
-	      							<td></td>
+	      							<td><?php print $number_of_employees; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Number of Dependents'); ?></td>
-	      							<td></td>
+	      							<td><?php print $number_of_dependents; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Nature of Business/SIC'); ?></td>
-	      							<td></td>
+	      							<td><?php print $nature_of_business; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Years in Business'); ?></td>
-	      							<td></td>
+	      							<td><?php print $years_in_business; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Tax ID'); ?></td>
-	      							<td></td>
+	      							<td><?php print $tax_id; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Renewal Date'); ?></td>
-	      							<td></td>
+	      							<td><?php print $renewal_date; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Current Carrier'); ?></td>
-	      							<td></td>
+	      							<td><?php print $current_carrier; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Plan Year to Quote'); ?></td>
-	      							<td></td>
+	      							<td><?php print $plan_year_to_quote; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Renewal'); ?></td>
-	      							<td></td>
+	      							<td><?php print $renewal; ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td><?php print t('Waiting Period'); ?></td>
-	      							<td></td>
+	      							<td><?php print $waiting_period; ?></td>
 	      						</tr>
 	      					</tbody>
 	      				</table>
