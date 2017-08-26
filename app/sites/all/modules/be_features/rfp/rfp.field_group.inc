@@ -13,6 +13,41 @@ function rfp_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_attachments|node|rfp|form';
+  $field_group->group_name = 'group_attachments';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'rfp';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Attachments',
+    'weight' => '4',
+    'children' => array(
+      0 => 'field_employee_census',
+      1 => 'field_current_summary_of_benefit',
+      2 => 'field_current_bill',
+      3 => 'field_last_renewal_letter_rates',
+      4 => 'field_summary_monthly_claims',
+      5 => 'field_broker_of_record',
+      6 => 'field_letter_of_authorization',
+      7 => 'field_large_claims_report',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-attachments field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups[''] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_benefits|node|rfp|form';
   $field_group->group_name = 'group_benefits';
   $field_group->entity_type = 'node';
@@ -21,7 +56,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Benefits',
-    'weight' => '4',
+    'weight' => '3',
     'children' => array(
       0 => 'group_major_medical',
       1 => 'group_limited_medical',
@@ -151,7 +186,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Group Information',
-    'weight' => '2',
+    'weight' => '1',
     'children' => array(
       0 => 'field_company',
       1 => 'field_email',
@@ -555,7 +590,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Plan Specifications',
-    'weight' => '3',
+    'weight' => '2',
     'children' => array(
       0 => 'field_fringe_rate',
       1 => 'field_proposed_effective_date',
@@ -1043,6 +1078,7 @@ function rfp_field_group_info() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Attachments');
   t('Benefits');
   t('Dental');
   t('Group Information');

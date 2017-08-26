@@ -10,6 +10,85 @@
 function rfp_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-rfp-field_broker_of_record'.
+  $field_instances['node-rfp-field_broker_of_record'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 109,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_broker_of_record',
+    'label' => 'Broker of Record',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 107,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_census_must_inclusions'.
+  $field_instances['node-rfp-field_census_must_inclusions'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 112,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_census_must_inclusions',
+    'label' => 'CENSUS MUST INCLUDE THE FOLLOWING',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_city'.
   $field_instances['node-rfp-field_city'] = array(
     'bundle' => 'rfp',
@@ -127,6 +206,90 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_current_bill'.
+  $field_instances['node-rfp-field_current_bill'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 106,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_current_bill',
+    'label' => 'Current Bill',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 104,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_current_summary_of_benefit'.
+  $field_instances['node-rfp-field_current_summary_of_benefit'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 105,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_current_summary_of_benefit',
+    'label' => 'Current Summary of Benefit',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 103,
     ),
   );
 
@@ -521,6 +684,48 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_employee_census'.
+  $field_instances['node-rfp-field_employee_census'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 104,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_employee_census',
+    'label' => 'Employee Census',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 102,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_fringe_rate'.
   $field_instances['node-rfp-field_fringe_rate'] = array(
     'bundle' => 'rfp',
@@ -598,6 +803,132 @@ function rfp_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_large_claims_report'.
+  $field_instances['node-rfp-field_large_claims_report'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 111,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_large_claims_report',
+    'label' => 'Large Claims Report',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 109,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_last_renewal_letter_rates'.
+  $field_instances['node-rfp-field_last_renewal_letter_rates'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 107,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_last_renewal_letter_rates',
+    'label' => 'Last Renewal Letter & Rates',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 105,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_letter_of_authorization'.
+  $field_instances['node-rfp-field_letter_of_authorization'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 110,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_letter_of_authorization',
+    'label' => 'Letter of Authorization',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 108,
     ),
   );
 
@@ -3364,6 +3695,48 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_summary_monthly_claims'.
+  $field_instances['node-rfp-field_summary_monthly_claims'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 108,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_summary_monthly_claims',
+    'label' => 'Summary of Monthly Claims Experience',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 106,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_tax_id'.
   $field_instances['node-rfp-field_tax_id'] = array(
     'bundle' => 'rfp',
@@ -4228,13 +4601,21 @@ function rfp_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Broker of Record');
+  t('CENSUS MUST INCLUDE THE FOLLOWING');
   t('City');
   t('Company Name');
   t('Company Street Address');
+  t('Current Bill');
   t('Current Carrier');
+  t('Current Summary of Benefit');
+  t('Employee Census');
   t('Family');
   t('Fringe Rate');
   t('Is this a renewal of a current plan in BullsEye?');
+  t('Large Claims Report');
+  t('Last Renewal Letter & Rates');
+  t('Letter of Authorization');
   t('Nature of Business/SIC');
   t('Number of Dependents');
   t('Number of Employees');
@@ -4247,6 +4628,7 @@ function rfp_field_default_field_instances() {
   t('Renewal Date');
   t('Single');
   t('State');
+  t('Summary of Monthly Claims Experience');
   t('Tax ID');
   t('Waiting Period for New Employees?');
   t('Website');
