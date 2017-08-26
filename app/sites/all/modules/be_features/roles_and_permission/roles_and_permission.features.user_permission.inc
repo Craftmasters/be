@@ -10,6 +10,15 @@
 function roles_and_permission_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'Add plan specification'.
+  $permissions['Add plan specification'] = array(
+    'name' => 'Add plan specification',
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+    ),
+    'module' => 'bullseye_plan_specs',
+  );
+
   // Exported permission: 'access accounts closed deals page'.
   $permissions['access accounts closed deals page'] = array(
     'name' => 'access accounts closed deals page',
