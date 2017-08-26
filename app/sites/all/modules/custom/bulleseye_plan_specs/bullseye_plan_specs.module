@@ -110,13 +110,14 @@ function bullseye_plan_specs_form($form, &$form_state) {
 
   // @todo: add date javascript handler
   $form['plan_specs']['plan_proposed_date'] = array(
-    '#type' => 'textfield',
     '#title' => t('Proposed Effective Date'),
-    '#attributes' => array(
-      'placeholder' => t('mm/dd/yyyy'),
-      'class' => array(
-        'custom-date-picker',
-      ),
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#timepicker_options' => array(
+      'beforeShow' => 'planSpecsDateRenewal',
+      'rows' => 6,
+      'showCloseButton' => TRUE,
+      'closeButtonText' => t('Close'),
     ),
   );
 
@@ -162,7 +163,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
 
   $form['plan_specs']['plan_tax_id'] = array(
     '#type' => 'textfield',
-    '#title' => t('Years in Business'),
+    '#title' => t('Tax ID'),
     '#attributes' => array(
       'placeholder' => t('XX-XXXXXXX'),
     ),
