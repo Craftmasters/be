@@ -29,6 +29,10 @@ function bullseye_preprocess_html(&$variables, $hook) {
     $variables['classes_array'][] = 'login';
   }
 
+  $plan_specs = (arg(0) == 'plan_specs');
+  if($plan_specs){
+    $variables['classes_array'][] = 'plan-specs-form';
+  }
 }
 
 /**
