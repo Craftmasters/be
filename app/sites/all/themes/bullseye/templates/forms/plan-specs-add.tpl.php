@@ -2,63 +2,67 @@
 
 <div class="row">
   <div class="col-md-6 container-company">
-    <h2 class="heading-company-information"><?php print t('Company information'); ?></h2>
+    <h3 class="plan-spec-title"><?php print t('Company information'); ?></h3>
 
-    <div class="col-md-12">
-      <?php print render($form['company_container']['contact_company']); ?>
-    </div>
-    <div class="col-md-12">
-      <?php print render($form['company_container']['contact']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['company_container']['contact_title']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['company_container']['contact_number']); ?>
-    </div>
-    <div class="col-md-12">
-      <?php print render($form['company_container']['contact_industry']); ?>
-    </div>
-    <div class="col-md-12">
-      <?php print render($form['company_container']['contact_address']); ?>
+    <div class="row">
+      <div class="col-md-12">
+        <?php print render($form['company_container']['contact_company']); ?>
+      </div>
+      <div class="col-md-12">
+        <?php print render($form['company_container']['contact']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['company_container']['contact_title']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['company_container']['contact_number']); ?>
+      </div>
+      <div class="col-md-12">
+        <?php print render($form['company_container']['contact_industry']); ?>
+      </div>
+      <div class="col-md-12">
+        <?php print render($form['company_container']['contact_address']); ?>
+      </div>
     </div>
 
   </div>
   <div class="col-md-6 container-plan-specs">
-    <h2 class="heading-plan-sepcs"><?php print t('Plan Specification'); ?></h2>
+    <h3 class="plan-spec-title"><?php print t('Plan Specification'); ?></h3>
 
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_fringe_rates']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_proposed_date']); ?>
-    </div>
-    <div class="col-md-12">
-      <?php print render($form['plan_specs']['plan_other_location']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_num_employees']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_num_dependents']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_nature_business']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_years_business']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_tax_id']); ?>
-    </div>
-    <div class="col-md-6">
-      <?php print render($form['plan_specs']['plan_renewal_date']); ?>
+    <div class="row">
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_fringe_rates']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_proposed_date']); ?>
+      </div>
+      <div class="col-md-12">
+        <?php print render($form['plan_specs']['plan_other_location']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_num_employees']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_num_dependents']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_nature_business']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_years_business']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_tax_id']); ?>
+      </div>
+      <div class="col-md-6">
+        <?php print render($form['plan_specs']['plan_renewal_date']); ?>
+      </div>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12 container-benefits">
-    <h2 class="heading-benefits"><?php print t('Benefits Interested In'); ?></h2>
+    <h3 class="plan-spec-title"><?php print t('Benefits Interested In'); ?></h3>
 
     <div class="row">
       <div class="col-md-3">
