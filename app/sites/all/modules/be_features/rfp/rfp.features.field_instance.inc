@@ -130,46 +130,6 @@ function rfp_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-rfp-field_db_contrib_family'.
-  $field_instances['node-rfp-field_db_contrib_family'] = array(
-    'bundle' => 'rfp',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 78,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_db_contrib_family',
-    'label' => 'Family',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 79,
-    ),
-  );
-
   // Exported field_instance: 'node-rfp-field_den_current_carrier'.
   $field_instances['node-rfp-field_den_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -360,6 +320,46 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_dn_contrib_family'.
+  $field_instances['node-rfp-field_dn_contrib_family'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 99,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_dn_contrib_family',
+    'label' => 'Family',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 79,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_dn_contrib_single'.
   $field_instances['node-rfp-field_dn_contrib_single'] = array(
     'bundle' => 'rfp',
@@ -438,6 +438,46 @@ function rfp_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 28,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_dn_waiting_period'.
+  $field_instances['node-rfp-field_dn_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 93,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_dn_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 30,
     ),
   );
 
@@ -832,6 +872,46 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_lf_waiting_period'.
+  $field_instances['node-rfp-field_lf_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 95,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lf_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 38,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_lf_years_current_carrier'.
   $field_instances['node-rfp-field_lf_years_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -1139,6 +1219,46 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_lm_waiting_period'.
+  $field_instances['node-rfp-field_lm_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 90,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lm_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 26,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_lm_years_current_carrier'.
   $field_instances['node-rfp-field_lm_years_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -1297,6 +1417,46 @@ function rfp_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 32,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_mc_waiting_period'.
+  $field_instances['node-rfp-field_mc_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 92,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_mc_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 34,
     ),
   );
 
@@ -1761,8 +1921,8 @@ function rfp_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-rfp-field_mm_wating_period'.
-  $field_instances['node-rfp-field_mm_wating_period'] = array(
+  // Exported field_instance: 'node-rfp-field_mm_waiting_period'.
+  $field_instances['node-rfp-field_mm_waiting_period'] = array(
     'bundle' => 'rfp',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1783,8 +1943,8 @@ function rfp_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_mm_wating_period',
-    'label' => 'Wating Period for New Employees?',
+    'field_name' => 'field_mm_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -2462,6 +2622,46 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_rt_waiting_period'.
+  $field_instances['node-rfp-field_rt_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 97,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_rt_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 52,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_sb_contrib_family'.
   $field_instances['node-rfp-field_sb_contrib_family'] = array(
     'bundle' => 'rfp',
@@ -2633,7 +2833,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 52,
+      'weight' => 93,
     ),
   );
 
@@ -2688,7 +2888,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 51,
+      'weight' => 92,
     ),
   );
 
@@ -2730,6 +2930,46 @@ function rfp_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 69,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sb_waiting_period'.
+  $field_instances['node-rfp-field_sb_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 98,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sb_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 71,
     ),
   );
 
@@ -2891,6 +3131,46 @@ function rfp_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 33,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_sd_waiting_period'.
+  $field_instances['node-rfp-field_sd_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 96,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sd_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 35,
     ),
   );
 
@@ -3124,196 +3404,6 @@ function rfp_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-rfp-field_tel_current_carrier'.
-  $field_instances['node-rfp-field_tel_current_carrier'] = array(
-    'bundle' => 'rfp',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 21,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tel_current_carrier',
-    'label' => 'Current Carrier',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 33,
-    ),
-  );
-
-  // Exported field_instance: 'node-rfp-field_tel_plan_end'.
-  $field_instances['node-rfp-field_tel_plan_end'] = array(
-    'bundle' => 'rfp',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'show_remaining_days' => FALSE,
-        ),
-        'type' => 'date_default',
-        'weight' => 51,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tel_plan_end',
-    'label' => 'Plan End',
-    'required' => 0,
-    'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'no_fieldset' => 0,
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
-      ),
-      'type' => 'date_popup',
-      'weight' => 28,
-    ),
-  );
-
-  // Exported field_instance: 'node-rfp-field_tel_plan_start'.
-  $field_instances['node-rfp-field_tel_plan_start'] = array(
-    'bundle' => 'rfp',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'show_remaining_days' => FALSE,
-        ),
-        'type' => 'date_default',
-        'weight' => 41,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tel_plan_start',
-    'label' => 'Plan Start',
-    'required' => 0,
-    'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'no_fieldset' => 0,
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
-      ),
-      'type' => 'date_popup',
-      'weight' => 27,
-    ),
-  );
-
-  // Exported field_instance: 'node-rfp-field_tel_years_current_carrier'.
-  $field_instances['node-rfp-field_tel_years_current_carrier'] = array(
-    'bundle' => 'rfp',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 24,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tel_years_current_carrier',
-    'label' => 'Years with Current Carrier',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 34,
-    ),
-  );
-
   // Exported field_instance: 'node-rfp-field_tl_contrib_family'.
   $field_instances['node-rfp-field_tl_contrib_family'] = array(
     'bundle' => 'rfp',
@@ -3394,6 +3484,156 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_tl_current_carrier'.
+  $field_instances['node-rfp-field_tl_current_carrier'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 100,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_current_carrier',
+    'label' => 'Current Carrier',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 94,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_tl_plan_end'.
+  $field_instances['node-rfp-field_tl_plan_end'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+        ),
+        'type' => 'date_default',
+        'weight' => 103,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_plan_end',
+    'label' => 'Plan End',
+    'required' => 0,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 97,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_tl_plan_start'.
+  $field_instances['node-rfp-field_tl_plan_start'] = array(
+    'bundle' => 'rfp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+        ),
+        'type' => 'date_default',
+        'weight' => 102,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_plan_start',
+    'label' => 'Plan Start',
+    'required' => 0,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 98,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_tl_renewal_current_plan_be'.
   $field_instances['node-rfp-field_tl_renewal_current_plan_be'] = array(
     'bundle' => 'rfp',
@@ -3431,7 +3671,87 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 36,
+      'weight' => 99,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_tl_waiting_period'.
+  $field_instances['node-rfp-field_tl_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 91,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 101,
+    ),
+  );
+
+  // Exported field_instance: 'node-rfp-field_tl_years_current_carrier'.
+  $field_instances['node-rfp-field_tl_years_current_carrier'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 101,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tl_years_current_carrier',
+    'label' => 'Years with Current Carrier',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 95,
     ),
   );
 
@@ -3706,6 +4026,46 @@ function rfp_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rfp-field_vs_waiting_period'.
+  $field_instances['node-rfp-field_vs_waiting_period'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 94,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_vs_waiting_period',
+    'label' => 'Waiting Period for New Employees?',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 40,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_vs_years_current_carrier'.
   $field_instances['node-rfp-field_vs_years_current_carrier'] = array(
     'bundle' => 'rfp',
@@ -3888,7 +4248,7 @@ function rfp_field_default_field_instances() {
   t('Single');
   t('State');
   t('Tax ID');
-  t('Wating Period for New Employees?');
+  t('Waiting Period for New Employees?');
   t('Website');
   t('Years in Business');
   t('Years with Current Carrier');
