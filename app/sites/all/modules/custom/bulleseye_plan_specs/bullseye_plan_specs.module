@@ -48,10 +48,6 @@ function bullseye_plan_specs_form($form, &$form_state) {
     '#type' => 'container',
   );
 
-  $form['company_container']['company_markup'] = array(
-    '#markup' => '<h1>Company Information</h1>',
-  );
-
   $form['company_container']['contact_company'] = array(
     '#type' => 'textfield',
     '#title' => t('Company Name'),
@@ -102,10 +98,6 @@ function bullseye_plan_specs_form($form, &$form_state) {
 
   $form['plan_specs'] = array(
     '#type' => 'container',
-  );
-
-  $form['plan_specs']['plan_markup'] = array(
-    '#markup' => '<h1>Plan Specifications</h1>',
   );
 
   $form['plan_specs']['plan_fringe_rates'] = array(
@@ -190,10 +182,6 @@ function bullseye_plan_specs_form($form, &$form_state) {
 
   $form['benefits'] = array(
     '#type' => 'container',
-  );
-
-  $form['benefits']['benefits_markup'] = array(
-    '#markup' => '<h1>Benefits Interested In</h1>',
   );
 
   $form['benefits']['benefits_in'] = array(
