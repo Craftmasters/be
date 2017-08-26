@@ -110,9 +110,10 @@
               // Benefit Name.
               var benefit_name = $(this).find('.acc_head').html();
               var benefit_name = '<h1 class="benefit-name">' + benefit_name + '</h1>';
+              var main_benefit = $(this).attr('data-benefit');
 
               // Generate RFP button.
-              var generate_rfp = '<a href="#" data-toggle="modal" data-target="#modal_' + $(this).attr('data-benefit') + '" class="btn-generate-rfp" id="generate_' + $(this).attr('data-benefit') + '">Generate RFP</a>';
+              var generate_rfp = '<a href="#" data-toggle="modal" main-benefit="' + main_benefit + '" data-target="#modal_' + main_benefit + '" class="btn-generate-rfp" id="generate_' + main_benefit + '">Generate RFP</a>';
 
               // Carrier.
               var current_carrier = $(this).find('.current-carrier').find('input[type="text"]').val();
@@ -144,6 +145,58 @@
 
               var div = '<div class="benefit-summary-row">' + benefit_name + generate_rfp + carrier + quote + renewal + waiting + '</div>';
               $('.benefits-summary').append(div);
+
+              // Putting values to pdf preview.
+              $('#generate_' + main_benefit).click(function() {
+                var main_benefit = $(this).attr('main-benefit');
+                var company_name = $('#gi-company-name').text();
+                var company_email = $('#gi-email').text();
+                var company_phone = $('#gi-phone').text();
+                var company_address = $('#gi-address').text() + ', ' + $('#gi-city').text() + ', ' + $('#gi-state').text() + ' ' + $('#gi-zip-code').text();
+                var fringe_rates = $('#edit-fringe-rates').val();
+                var effective_date = $('#edit-proposed-effective-date-datepicker-popup-0').val();
+                var location = $('#edit-other-work-locations').val();
+                var employees = $('#edit-number-of-employees').val();
+                var dependents = $('#edit-number-of-dependents').val();
+                var business = $('#edit-nature-of-business').val();
+                var years_business = $('#edit-years-in-business').val();
+                var tax_id = $('#edit-tax-id').val();
+                var renewal_date = $('#edit-renewal-date-datepicker-popup-0').val();
+                var current_carrier = $('.acc_' + main_benefit + ' .current-carrier input').val();
+                var current_carrier_years = $('.acc_' + main_benefit + ' .years-with-current-carrier input').val();
+                var plan_year_quote_start = $('.acc_' + main_benefit + ' .quote-start input').val();
+                var plan_year_quote_end = $('.acc_' + main_benefit + ' .quote-end input').val();
+                var renewal = $('.acc_' + main_benefit + ' .renewal-plan input:checked').val();
+                var waiting_period = $('.acc_' + main_benefit + ' .waiting-period input').val();
+
+                if (renewal == 1) {
+                  renewal = 'Yes';
+                }
+                else {
+                  renewal = 'No';
+                }
+
+                $('.pdf-company-name').html(company_name);
+                $('.pdf-email').html(company_email);
+                $('.pdf-phone').html(company_phone);
+                $('.pdf-address').html(company_address);
+                $('.pdf-fringe-rates').html(fringe_rates);
+                $('.pdf-effective-date').html(effective_date);
+                $('.pdf-location').html(location);
+                $('.pdf-employees').html(employees);
+                $('.pdf-dependents').html(dependents);
+                $('.pdf-business').html(business);
+                $('.pdf-years-business').html(years_business);
+                $('.pdf-tax-id').html(tax_id);
+                $('.pdf-renewal-date').html(renewal_date);
+
+                $('#modal_' + main_benefit + ' .pdf-current-carrier').html(current_carrier + ', ' + current_carrier_years);
+                $('#modal_' + main_benefit + ' .pdf-plan-year-quote').html(plan_year_quote_start + ' - ' + plan_year_quote_end);
+                $('#modal_' + main_benefit + ' .pdf-renewal').html(renewal);
+                $('#modal_' + main_benefit + ' .pdf-waiting-period').html(waiting_period);
+
+              });
+
             });
 
             // Build the summary block for Attachments block.

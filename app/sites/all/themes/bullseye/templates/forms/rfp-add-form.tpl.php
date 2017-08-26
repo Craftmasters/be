@@ -7,33 +7,33 @@
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Name'); ?></div>
-          <div class="be-view-value font-bold"><?php print $company; ?></div>
+          <div class="be-view-value font-bold" id="gi-company-name"><?php print $company; ?></div>
         </div>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Primary Email Address'); ?></div>
           <div class="be-view-value">
-            <a href="mailto:<?php print $email; ?>" class="orange-font"><?php print $email; ?></a>
+            <a href="mailto:<?php print $email; ?>" class="orange-font" id="gi-email"><?php print $email; ?></a>
           </div>
         </div>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Phone Number'); ?></div>
-          <div class="be-view-value"><a href="<?php print $phone; ?>"><?php print $phone; ?></a></div>
+          <div class="be-view-value"><a href="<?php print $phone; ?>" id="gi-phone"><?php print $phone; ?></a></div>
         </div>
 
         <?php if ($website) : ?>
           <div class="be-view-field">
             <div class="be-view-label"><?php print t('Website'); ?></div>
             <div class="be-view-value">
-              <a href="#" class="orange-font"><?php print $website; ?></a>
+              <a href="#" class="orange-font" id="gi-website"><?php print $website; ?></a>
             </div>
           </div>
         <?php endif; ?>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Street Address'); ?></div>
-          <div class="be-view-value"><?php print $street; ?></div>
+          <div class="be-view-value" id="gi-address"><?php print $street; ?></div>
         </div>
 
         <div class="be-view-field-row row">
@@ -41,21 +41,21 @@
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('City'); ?></div>
-              <div class="be-view-value"><?php print $city; ?></div>
+              <div class="be-view-value" id="gi-city"><?php print $city; ?></div>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('State'); ?></div>
-              <div class="be-view-value"><?php print $state; ?></div>
+              <div class="be-view-value" id="gi-state"><?php print $state; ?></div>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('Zip Code'); ?></div>
-              <div class="be-view-value"><?php print $code; ?></div>
+              <div class="be-view-value" id="gi-zip-code"><?php print $code; ?></div>
             </div>
           </div>
 
@@ -106,7 +106,7 @@
           <div class="accordion-benefits">
 
             <?php if (isset($_GET['benefits']['major_medical']) && $_GET['benefits']['major_medical'] == 1) : ?>
-              <div class="accordion_in" data-benefit="major_medical">
+              <div class="accordion_in acc_major_medical" data-benefit="major_medical">
 
                 <div class="acc_head">Major Medical</div>
 
@@ -143,7 +143,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['limited_medical']) && $_GET['benefits']['limited_medical'] == 1) : ?>
-              <div class="accordion_in" data-benefit="limited_medical">
+              <div class="accordion_in acc_limited_medical" data-benefit="limited_medical">
 
                 <div class="acc_head">Limited Medical</div>
 
@@ -181,7 +181,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['teledoc']) && $_GET['benefits']['teledoc'] == 1) : ?>
-              <div class="accordion_in" data-benefit="teledoc">
+              <div class="accordion_in acc_teledoc" data-benefit="teledoc">
 
                 <div class="acc_head">Telemedicine</div>
 
@@ -218,7 +218,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['mec']) && $_GET['benefits']['mec'] == 1) : ?>
-              <div class="accordion_in" data-benefit="mec">
+              <div class="accordion_in acc_mec" data-benefit="mec">
 
                 <div class="acc_head">MEC</div>
 
@@ -255,7 +255,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['dental']) && $_GET['benefits']['dental'] == 1) : ?>
-              <div class="accordion_in" data-benefit="dental">
+              <div class="accordion_in acc_dental" data-benefit="dental">
 
                 <div class="acc_head">Dental</div>
 
@@ -292,7 +292,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['vision']) && $_GET['benefits']['vision'] == 1) : ?>
-              <div class="accordion_in" data-benefit="vision">
+              <div class="accordion_in acc_vision" data-benefit="vision">
 
                 <div class="acc_head">Vision</div>
 
@@ -329,7 +329,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['life']) && $_GET['benefits']['life'] == 1) : ?>
-              <div class="accordion_in" data-benefit="life">
+              <div class="accordion_in acc_life" data-benefit="life">
 
                 <div class="acc_head">Life & AD&D</div>
 
@@ -366,7 +366,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['short_term_disability']) && $_GET['benefits']['short_term_disability'] == 1) : ?>
-              <div class="accordion_in" data-benefit="short_term_disability">
+              <div class="accordion_in acc_short_term_disability" data-benefit="short_term_disability">
 
                 <div class="acc_head">Short Term Disability</div>
 
@@ -403,7 +403,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['retirement']) && $_GET['benefits']['retirement'] == 1) : ?>
-              <div class="accordion_in" data-benefit="retirement">
+              <div class="accordion_in acc_retirement" data-benefit="retirement">
 
                 <div class="acc_head">Retirement</div>
 
@@ -440,7 +440,7 @@
             <?php endif; ?>
 
             <?php if (isset($_GET['benefits']['special_benefits']) && $_GET['benefits']['special_benefits'] == 1) : ?>
-              <div class="accordion_in" data-benefit="special_benefits">
+              <div class="accordion_in acc_special_benefits" data-benefit="special_benefits">
 
                 <div class="acc_head">Special Benefits</div>
 
@@ -478,7 +478,7 @@
 
           <?php foreach ($_GET['benefits'] as $key => $value) : ?>
             <?php if ($key[0] != '#') : ?>
-              <div id="modal_<?php print $key; ?>" class="modal fade pdf-modal" role="dialog">
+              <div id="modal_<?php print $key; ?>" class="modal fade pdf-modal" role="dialog" main-benefit="<?php print $key; ?>">
                 <div class="modal-dialog">
 
                   <!-- Modal content-->
@@ -495,7 +495,7 @@
                         <div class="pdf-body">
                           <div class="pdf-body-header">
                             <h1><span><?php print t('Request for Proposal'); ?></span></h1>
-                            <h2>ABC Company</h2>
+                            <h2 class="pdf-company-name"></h2>
                           </div>
                             
                           <div class="row">
@@ -503,78 +503,78 @@
                               <h3><?php print t('Group Information'); ?></h3>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Company Name'); ?></div>
-                                <div class="col-md-6 col-xs-6">ABC Company</div>
+                                <div class="col-md-6 col-xs-6 pdf-company-name"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Primary Email Address'); ?></div>
-                                <div class="col-md-6 col-xs-6">abc@abc.com</div>
+                                <div class="col-md-6 col-xs-6 pdf-email"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Phone Number'); ?></div>
-                                <div class="col-md-6 col-xs-6">8888888</div>
+                                <div class="col-md-6 col-xs-6 pdf-phone"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Corporate Address'); ?></div>
-                                <div class="col-md-6 col-xs-6">888 10th Street, San Antonio, TX, 8888</div>
+                                <div class="col-md-6 col-xs-6 pdf-address"></div>
                               </div>
                             </div>
                             <div class="col-md-6 col-xs-6">
                               <h3><?php print t('Plan Specification'); ?></h3>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Quote Request For'); ?></div>
-                                <div class="col-md-6 col-xs-6">Limited Medical</div>
+                                <div class="col-md-6 col-xs-6 pdf-benefit-name"><?php print $bt['title_' . $key]; ?></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Fringe Rate\'s'); ?></div>
-                                <div class="col-md-6 col-xs-6">5000</div>
+                                <div class="col-md-6 col-xs-6 pdf-fringe-rates"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Proposed Effective Date'); ?></div>
-                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                                <div class="col-md-6 col-xs-6 pdf-effective-date"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Other Work Locations and Zip Codes'); ?></div>
-                                <div class="col-md-6 col-xs-6">777 Dallas, TX 900</div>
+                                <div class="col-md-6 col-xs-6 pdf-location"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Number of Employees'); ?></div>
-                                <div class="col-md-6 col-xs-6">80</div>
+                                <div class="col-md-6 col-xs-6 pdf-employees"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Number of Dependents'); ?></div>
-                                <div class="col-md-6 col-xs-6">100</div>
+                                <div class="col-md-6 col-xs-6 pdf-dependendts"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Nature of Business/SIC'); ?></div>
-                                <div class="col-md-6 col-xs-6">4892</div>
+                                <div class="col-md-6 col-xs-6 pdf-business"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Years in Business'); ?></div>
-                                <div class="col-md-6 col-xs-6">5</div>
+                                <div class="col-md-6 col-xs-6 pdf-years-business"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Tax ID'); ?></div>
-                                <div class="col-md-6 col-xs-6">90999999</div>
+                                <div class="col-md-6 col-xs-6 pdf-tax-id"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Renewal Date'); ?></div>
-                                <div class="col-md-6 col-xs-6">10/10/2018</div>
+                                <div class="col-md-6 col-xs-6 pdf-renewal-date"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Current Carrier'); ?></div>
-                                <div class="col-md-6 col-xs-6">Coverdell, 5 years</div>
+                                <div class="col-md-6 col-xs-6 pdf-current-carrier"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Plan Year to Quote'); ?></div>
-                                <div class="col-md-6 col-xs-6">10/10/2018 - 10/10/2019</div>
+                                <div class="col-md-6 col-xs-6 pdf-plan-year-quote"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Renewal'); ?></div>
-                                <div class="col-md-6 col-xs-6">No</div>
+                                <div class="col-md-6 col-xs-6 pdf-renewal"></div>
                               </div>
                               <div class="fields-wrapper row">
                                 <div class="col-md-6 col-xs-6"><?php print t('Waiting Period'); ?></div>
-                                <div class="col-md-6 col-xs-6">15 Days</div>
+                                <div class="col-md-6 col-xs-6 pdf-waiting-period"></div>
                               </div>
                             </div>
                           </div>
@@ -630,9 +630,7 @@
                 </div>
               </div>
             <?php endif; ?>
-          <?php endforeach; ?>
-
-              
+          <?php endforeach; ?> 
 
           <div class="benefits-summary"></div>
         </div>
