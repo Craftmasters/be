@@ -1852,6 +1852,12 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
   $dompdf->setPaper('A4', 'portrait');
   $dompdf->render();
   $dompdf->stream($filename);
+
+  // Saving pdf to server.  
+  /*$output = $dompdf->output();
+  $dest = "/your-directory/final_file.pdf";        
+  $result = file_put_contents($dest, $output); */
+
 }
 
 /**
