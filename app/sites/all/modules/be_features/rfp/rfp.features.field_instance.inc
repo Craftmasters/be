@@ -37,7 +37,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -236,7 +236,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -278,7 +278,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -711,7 +711,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -833,7 +833,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -875,7 +875,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -917,7 +917,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -3722,7 +3722,7 @@ function rfp_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => '',
-      'file_extensions' => 'txt',
+      'file_extensions' => 'jpeg pdf doc docx',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
