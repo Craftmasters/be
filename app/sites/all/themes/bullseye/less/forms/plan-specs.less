@@ -1,0 +1,77 @@
+body.plan-specs-form{
+  background: url(/sites/all/themes/bullseye/images/login.png) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .plan-spec-wrapper {
+    display: table;
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0 auto;
+  }
+  .plan-spec-inner {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .plan-spec-footer {
+    text-align: center;
+    margin-top: 9px;
+    padding-bottom: 30px;
+
+    img{
+      width: 133px;
+      opacity: 0.8;
+    }
+    p{
+      color: #ebebeb;
+      font-size: 16px;
+      font-family: 'Proximanova-Medium';
+      margin: 0px;
+      padding: 0px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 5px;
+    }
+  }
+
+  #plan-specification-container{
+    background: #fff;
+    max-width: 1110px;
+    padding: 20px 30px;
+  }
+  #bullseye-plan-specs-form{
+    .help-block{
+      display: none;
+    }
+
+    > div{
+      > .row{
+        margin: 0;
+      }
+    }
+
+    h3.plan-spec-title{
+      color: #5c7596;
+      text-transform: uppercase;
+      font-family: 'Proximanova-Regular';
+      font-size: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 20px 0;
+    }
+
+    input{
+      margin-bottom: 20px;
+    }
+    
+    #edit-submit-container{
+      text-align: center !important;
+
+      button.green-btn{
+        border-radius: 30px;
+        padding-left: 90px;
+        padding-right: 90px;
+      }
+    }
+  }
+}

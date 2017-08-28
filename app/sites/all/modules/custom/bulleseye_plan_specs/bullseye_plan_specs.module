@@ -1,0 +1,230 @@
+<?php
+/**
+ * Bullseye plan specification module.
+ */
+
+// constant access arguments
+define('BULLSEYE_PLAN_SPECS_ADD', 'Add plan specification');
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_plan_specs_menu() {
+  $items = array();
+
+  $items['plan_specs'] = array(
+    'title' => 'Plan Specifications',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_plan_specs_form'),
+    'access arguments' => array(BULLSEYE_PLAN_SPECS_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+/**
+ * implementation of hook permission
+ */
+function bullseye_plan_specs_permission(){
+  return array(
+    BULLSEYE_PLAN_SPECS_ADD => array(
+      'title' => t(BULLSEYE_PLAN_SPECS_ADD),
+      'description' => t('Allow users on adding plan specifications.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Add plan specifciation form
+ */
+function bullseye_plan_specs_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['company_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['company_container']['contact_company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company Name'),
+    '#attributes' => array(
+      'placeholder' => t('Add Company'),
+    ),
+  );
+
+  $form['company_container']['contact'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Primary Contact'),
+    '#attributes' => array(
+      'placeholder' => t('Add Contact'),
+    ),
+  );
+
+  $form['company_container']['contact_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#attributes' => array(
+      'placeholder' => t('Add Title'),
+    ),
+  );
+
+  $form['company_container']['contact_number'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Contact Number'),
+    '#attributes' => array(
+      'placeholder' => t('Add Phone Number'),
+    ),
+  );
+
+  $form['company_container']['contact_industry'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Industry'),
+    '#attributes' => array(
+      'placeholder' => t('Add Industry, Separated by commas'),
+    ),
+  );
+
+  $form['company_container']['contact_address'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Complete Address'),
+    '#attributes' => array(
+      'placeholder' => t('Add Address'),
+    ),
+  );
+
+  $form['plan_specs'] = array(
+    '#type' => 'container',
+  );
+
+  $form['plan_specs']['plan_fringe_rates'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Fringe Rate/s'),
+    '#attributes' => array(
+      'placeholder' => t('$4.27, $5.03'),
+    ),
+  );
+
+  // @todo: add date javascript handler
+  $form['plan_specs']['plan_proposed_date'] = array(
+    '#title' => t('Proposed Effective Date'),
+    '#type' => 'date_popup',
+    '#attributes' => array(
+      'placeholder' => t('mm/dd/yyyy'),
+    ),
+    '#date_format' => 'm/d/Y',
+    '#timepicker_options' => array(
+      'beforeShow' => 'planSpecsDateRenewal',
+      'rows' => 6,
+      'showCloseButton' => TRUE,
+      'closeButtonText' => t('Close'),
+    ),
+  );
+
+  $form['plan_specs']['plan_other_location'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Other Work Location and Zip Codes'),
+    '#attributes' => array(
+      'placeholder' => t('Dallas 88829, New Jersey 81920'),
+    ),
+  );
+
+  $form['plan_specs']['plan_num_employees'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Employees'),
+    '#attributes' => array(
+      'placeholder' => t('200'),
+    ),
+  );
+
+  $form['plan_specs']['plan_num_dependents'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Dependents'),
+    '#attributes' => array(
+      'placeholder' => t('100'),
+    ),
+  );
+
+  $form['plan_specs']['plan_nature_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nature of Business/SIC'),
+    '#attributes' => array(
+      'placeholder' => t('xxxx'),
+    ),
+  );
+
+  $form['plan_specs']['plan_years_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Years in Business'),
+    '#attributes' => array(
+      'placeholder' => t('5'),
+    ),
+  );
+
+  $form['plan_specs']['plan_tax_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tax ID'),
+    '#attributes' => array(
+      'placeholder' => t('XX-XXXXXXX'),
+    ),
+  );
+
+  // @todo: add date javascript handler
+  $form['plan_specs']['plan_renewal_date'] = array(
+    '#type' => 'date_popup',
+    '#title' => t('Renewal Date'),
+    '#attributes' => array(
+      'placeholder' => t('mm/dd/yyyy'),
+    ),
+    '#date_format' => 'm/d/Y',
+    '#timepicker_options' => array(
+      'beforeShow' => 'planSpecsDateRenewal',
+      'rows' => 6,
+      'showCloseButton' => TRUE,
+      'closeButtonText' => t('Close'),
+    ),
+  );
+
+  $form['benefits'] = array(
+    '#type' => 'container',
+  );
+
+  $form['benefits']['benefits_in'] = array(
+    '#type' => 'checkboxes',
+    // @todo: dynamically load all the benefits from db?
+    '#options' => array(
+      'mm' => t('Major Medical'),
+      'tm' => t('Telemedicine'),
+      'ladd' => t('Life & AD&D'),
+      'd' => t('Dental'),
+      'lm' => t('Limited Medical'),
+      'mec' => t('MEC'),
+      'std' => t('Short Term Disability'),
+      'v' => t('Vision'),
+      'r' => t('Retirement'),
+      // @todo: add js handler for Specialty Benefits text field
+      '0' => t('Specialty Benefits'),
+    ),
+  );
+
+  $form['benefits']['benefits_in_others'] = array(
+    '#type' => 'textfield',
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}
