@@ -347,6 +347,8 @@ class Bullseye {
 
   /**
    * Implement getUnique value.
+   *
+   * This function will filter the duplicate result in an array.
    */
   function getUnique($array, $preserveKeys = false) {
     // Unique Array for return
@@ -390,5 +392,13 @@ class Bullseye {
       $rand_string .= $chars[rand(0, $chars_length - 1)];
     }
     return $rand_string;
+  }
+
+  /**
+   * Email RFP.
+   */
+  function emailRfp($from, $to, $subject, $body, $attachments) {
+    $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
+    $email->send();
   }
 }

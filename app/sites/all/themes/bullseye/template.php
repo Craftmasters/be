@@ -29,6 +29,10 @@ function bullseye_preprocess_html(&$variables, $hook) {
     $variables['classes_array'][] = 'login';
   }
 
+  $plan_specs = (arg(0) == 'plan_specs');
+  if($plan_specs){
+    $variables['classes_array'][] = 'plan-specs-form';
+  }
 }
 
 /**
@@ -40,7 +44,7 @@ function bullseye_preprocess_html(&$variables, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function bullseye_preprocess_page(&$vars, $hook) {
-  global $base_url;
+  global $base_url; //krumo(node_load(5321));
 
   // Theme directory.
   $theme_directory = path_to_theme('theme', 'bullseye');
@@ -194,6 +198,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
   $items['bullseye_producer_form'] = array(
     'render element' => 'form',
     'template' => 'producer-add-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
+  $items['bullseye_plan_specs_form'] = array(
+    'render element' => 'form',
+    'template' => 'plan-specs-add',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
   return $items;
