@@ -56,7 +56,25 @@ function bullseye_producer_acct_permission(){
  * Individual producer account registration form
  */
 function bullseye_producer_acct_select() {
-  return theme('bullseye_producer_acct_select');
+  global $base_url; //krumo(node_load(5321));
+
+  // Theme directory.
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $producer_acct_company_img = $base_url . '/' . $theme_directory . '/images/producer-acct-company-logo.jpg';
+  $producer_acct_individual_img = $base_url . '/' . $theme_directory . '/images/producer-acct-individual-logo.jpg';
+
+  $producer_acct_individual_link = url('producer/registration/individual', array('absolute' => true));
+  $producer_acct_company_link = url('producer/registration/company', array('absolute' => true));
+
+  $vars = array(
+    'producer_acct_company_img' => $producer_acct_company_img,
+    'producer_acct_individual_img' => $producer_acct_individual_img,
+    'producer_acct_individual_link' => $producer_acct_individual_link,
+    'producer_acct_company_link' => $producer_acct_company_link,
+  );
+
+  return theme('bullseye_producer_acct_select', $vars);
 }
 
 /**
