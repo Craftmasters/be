@@ -2026,6 +2026,8 @@ function generate_rfp_life($form, &$form_state) {
  * Submit handler for generate_rfp_short_term_disability.
  */
 function generate_rfp_short_term_disability($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['std_current_carrier'];
@@ -2034,7 +2036,13 @@ function generate_rfp_short_term_disability($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['std_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['std_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['std_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Short Term Disability', $values, $form_state['values']);
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->emailRfp($from, $to, $subject, $body, $attachments);
 }
 
 /**
