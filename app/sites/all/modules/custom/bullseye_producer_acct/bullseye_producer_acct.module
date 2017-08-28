@@ -1,0 +1,126 @@
+<?php
+/**
+ * Bullseye plan specification module.
+ */
+
+// constant access arguments
+define('BULLSEYE_PRODUCER_ACCT_ADD', 'Producers registration page');
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_producer_acct_menu() {
+  $items = array();
+
+  $items['producer/registration'] = array(
+    'title' => 'Producer Registration Page',
+    'page callback' => 'bullseye_producer_acct_select',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/registration/individual'] = array(
+    'title' => 'Individual Producer Registration Page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_acct_indiv_form'),
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/registration/company'] = array(
+    'title' => 'Company Producer Registration Page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_acct_company_form'),
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * implementation of hook permission
+ */
+function bullseye_producer_acct_permission(){
+  return array(
+    BULLSEYE_PRODUCER_ACCT_ADD => array(
+      'title' => t(BULLSEYE_PRODUCER_ACCT_ADD),
+      'description' => t('Allow users to register account for company producer or individual producer.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Individual producer account registration form
+ */
+function bullseye_producer_acct_select() {
+  return theme('bullseye_producer_acct_select');
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Individual producer account registration form
+ */
+function bullseye_producer_acct_indiv_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['company_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['company_container']['contact_company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company Name'),
+    '#attributes' => array(
+      'placeholder' => t('Add Company'),
+    ),
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Individual producer account registration form
+ */
+function bullseye_producer_acct_company_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['company_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['company_container']['contact_company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company Name'),
+    '#attributes' => array(
+      'placeholder' => t('Add Company'),
+    ),
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}

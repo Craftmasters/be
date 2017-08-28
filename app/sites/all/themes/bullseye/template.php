@@ -205,6 +205,10 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'plan-specs-add',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
+  $items['bullseye_producer_acct_select'] = array(
+    'template' => 'page--producer-acct-select',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/pages',
+  );
   return $items;
 }
 
