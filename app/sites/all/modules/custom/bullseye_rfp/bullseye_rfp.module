@@ -55,7 +55,7 @@ function bullseye_rfp_menu() {
     'page arguments' => array('bullseye_rfp_admin_form'),
     'access arguments' => array('administer rfp settings'),
     'file' => 'bullseye_rfp.admin.inc',
-    'file path' => drupal_get_path('module', 'derusni'),
+    'file path' => drupal_get_path('module', 'bullseye_rfp'),
     'weight' => 5,
     'type' => MENU_NORMAL_ITEM,
   );
