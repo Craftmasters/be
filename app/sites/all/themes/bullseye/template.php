@@ -210,6 +210,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'page--producer-acct-select',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/pages',
   );
+  $items['bullseye_producer_acct_indiv_form'] = array(
+    'render element' => 'form',
+    'template' => 'producer-acct-indiv',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
   return $items;
 }
 

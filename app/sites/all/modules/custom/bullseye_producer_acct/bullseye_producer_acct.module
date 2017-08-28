@@ -87,27 +87,66 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
-  $form['company_container'] = array(
-    '#type' => 'container',
+  $form['producer_fname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('First Name'),
+    ),
   );
 
-  $form['company_container']['contact_company'] = array(
+  $form['producer_lname'] = array(
     '#type' => 'textfield',
-    '#title' => t('Company Name'),
     '#attributes' => array(
-      'placeholder' => t('Add Company'),
+      'placeholder' => t('Last Name'),
     ),
+  );
+
+  $form['producer_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email Address'),
+    '#attributes' => array(
+      'placeholder' => t('Add Email'),
+    ),
+    '#element_validate' => array('bullseye_producer_acct_email_element_validate'),
+  );
+
+  $form['producer_phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Phone'),
+    '#attributes' => array(
+      'placeholder' => t('___-____-_____'),
+    ),
+  );
+
+  $form['read_sca_dba'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('I have read the SCA and DBA documents.'),
+  );
+
+  $form['agree_terms_privacy'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('I agree to Bullseye Terms & Privacy Policy.'),
   );
 
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
-      'class' => array('green-btn'),
+      'class' => array('orange-btn'),
     ),
-    '#value' => t('Submit'),
+    '#value' => t('Next'),
   );
 
   return $form;
+}
+
+/**
+ * helper function
+ * allows validation of email addresses
+ */
+function bullseye_producer_acct_email_element_validate($element, &$form_state, $form) {
+   if (!valid_email_address($element['#value'])) {
+     form_error($element, t('Please enter a valid email address.'));
+   }
 }
 
 /**
@@ -116,9 +155,8 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
  * Individual producer account registration form
  */
 function bullseye_producer_acct_company_form($form, &$form_state) {
-  $form = array();
-
-  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+  // copy form array from individual form
+  $form = bullseye_producer_acct_indiv_form($form, $form_state);
 
   $form['company_container'] = array(
     '#type' => 'container',
