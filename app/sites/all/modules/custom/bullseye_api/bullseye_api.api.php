@@ -395,7 +395,28 @@ class Bullseye {
   /**
    * Email RFP.
    */
-  function emailRfp($address, $body, $attachments) {
-    //
+  function emailRfp($from, $to, $subject, $body, $attachments) {
+    // Attachments.
+    $file = file_load($form_state['values'][0]);
+
+    // Build the message.
+    $message = array(
+      'headers' => array('Content-Type' => 'text/html'),
+      'key' => 'test',
+      'to' => $to,
+      'from' => $from,
+      'subject' => $subject,
+      'body' => theme('mail_frp', $variables);
+    );
+    $message['attachments'][] = array(
+      'filepath' => $file->uri,
+      'filename' => $file->filename,
+      'filemime' => $file->filemime,
+      'list' => TRUE
+    );
+
+    $system = drupal_mail_system('mimemail', 'test');
+    $system->format($message);
+    $result = $system->mail($message);
   }
 }
