@@ -65,7 +65,6 @@ class AttachmentEmail {
         $header .= "Content-Transfer-Encoding: base64\r\n";
         $header .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n\r\n";
         $header .= $content ."\r\n\r\n";
-
       }
 
       $header .= "--".$uid."--";
