@@ -23,6 +23,7 @@
     </div>
   </div>
 </div>
+<?php // @todo add if is company page add company fields ?>
 
 <?php /* temporary static checkbox placeholder */ ?>
 <div>
