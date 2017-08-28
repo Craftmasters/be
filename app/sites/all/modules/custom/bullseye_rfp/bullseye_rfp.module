@@ -35,6 +35,31 @@ function bullseye_rfp_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  // Config Sesssion for BullsEye.
+  $items['admin/config/bullseye'] = array(
+    'title' => 'BullsEye Settings',
+    'description' => 'Settings related to BullsEye',
+    'weight' => -30,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'position' => 'right',
+  );
+
+  // Derusni premium configuration page.
+  $items['admin/config/bullseye/rfp'] = array(
+    'title' => 'RFP Settings',
+    'description' => 'RFP settings page.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_rfp_admin_form'),
+    'access arguments' => array('administer rfp settings'),
+    'file' => 'bullseye_rfp.admin.inc',
+    'file path' => drupal_get_path('module', 'derusni'),
+    'weight' => 5,
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -46,6 +71,10 @@ function bullseye_rfp_permission() {
     'add rfp' => array(
       'title' => t('Create new RFP'),
       'description' => t('Allow user to add new rfp.'),
+    ),
+    'administer rfp settings' => array(
+      'title' => t('Administer RFP'),
+      'description' => t('Allow user to manage RFP settings.'),
     ),
   );
 }
