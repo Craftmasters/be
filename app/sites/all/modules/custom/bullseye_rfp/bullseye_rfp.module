@@ -1874,6 +1874,8 @@ function generate_rfp_major_medical($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['mm_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['mm_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['mm_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
 
   // Send the email.
@@ -1886,6 +1888,8 @@ function generate_rfp_major_medical($form, &$form_state) {
  * Submit handler for generate_rfp_limited_medical.
  */
 function generate_rfp_limited_medical($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['lm_current_carrier'];
@@ -1894,7 +1898,13 @@ function generate_rfp_limited_medical($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['lm_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['lm_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['lm_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Limited Medical', $values, $form_state['values']);
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->emailRfp($from, $to, $subject, $body, $attachments);
 }
 
 /**
