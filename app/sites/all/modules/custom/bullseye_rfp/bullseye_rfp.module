@@ -1984,7 +1984,13 @@ function generate_rfp_vision($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['vs_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['vs_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['vs_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Vision', $values, $form_state['values']);
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->emailRfp($from, $to, $subject, $body, $attachments);
 }
 
 /**
