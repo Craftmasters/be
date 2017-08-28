@@ -1550,7 +1550,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   krumo($account);
   krumo($form_state['values']);
-  die();
+  //die();
 
   $be = new Bullseye($user);
 
@@ -1853,9 +1853,9 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
   $dompdf->render();
   $dompdf->stream($filename);
 
-  // Saving pdf to server.  
+  // Saving pdf to server.
   /*$output = $dompdf->output();
-  $dest = "/your-directory/final_file.pdf";        
+  $dest = "/your-directory/final_file.pdf";
   $result = file_put_contents($dest, $output); */
 
 }
