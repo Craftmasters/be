@@ -1934,6 +1934,8 @@ function generate_rfp_teledoc($form, &$form_state) {
  * Submit handler for generate_rfp_mec.
  */
 function generate_rfp_mec($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['mec_current_carrier'];
@@ -1955,6 +1957,8 @@ function generate_rfp_mec($form, &$form_state) {
  * Submit handler for generate_rfp_dental.
  */
 function generate_rfp_dental($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['den_current_carrier'];
@@ -1976,6 +1980,8 @@ function generate_rfp_dental($form, &$form_state) {
  * Submit handler for generate_rfp_vision.
  */
 function generate_rfp_vision($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['vs_current_carrier'];
@@ -1997,6 +2003,8 @@ function generate_rfp_vision($form, &$form_state) {
  * Submit handler for generate_rfp_life.
  */
 function generate_rfp_life($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['lf_current_carrier'];
@@ -2005,7 +2013,13 @@ function generate_rfp_life($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['lf_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['lf_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['lf_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Life & AD&D', $values, $form_state['values']);
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->emailRfp($from, $to, $subject, $body, $attachments);
 }
 
 /**
