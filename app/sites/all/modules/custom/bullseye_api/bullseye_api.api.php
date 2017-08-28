@@ -391,4 +391,11 @@ class Bullseye {
     }
     return $rand_string;
   }
+
+  /**
+   * Email RFP.
+   */
+  function emailRfp($address, $body, $attachments) {
+    //
+  }
 }
