@@ -1579,26 +1579,9 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   krumo($account);
   krumo($form_state['values']);
-  //die();
+  die();
 
   $be = new Bullseye($user);
-
-  // Set the producer name.
-  $carrier_name = $form_state['values']['carrier_name'];
-  $contact_name = $form_state['values']['primary_contact_name'];
-  $contact_email = $form_state['values']['primary_contact_email'];
-  $major_medical = $form_state['values']['major_medical'];
-  $limited_medical = $form_state['values']['limited_medical'];
-  $teledoc = $form_state['values']['teledoc'];
-  $mec = $form_state['values']['mec'];
-  $dental = $form_state['values']['dental'];
-  $vision = $form_state['values']['vision'];
-  $life = $form_state['values']['life'];
-  $short_term_disability = $form_state['values']['short_term_disability'];
-  $special_benefits = $form_state['values']['special_benefits'];
-  $retirement = $form_state['values']['retirement'];
-  $priority = $form_state['values']['priority'];
-  $due_date = $form_state['values']['due_date'];
 
   // Plan specifications.
   $fringe_rate = $form_state['values']['fringe_rates'];
@@ -1734,6 +1717,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $node->status = 1;
   $node->promote = 0;
   $node->comment = 0;
+
+  // Cons vars.
+  $lang = $node->language;
+  $val = 'value';
+
+  /***************
+   * Group Info
+   ***************/
+  // Company.
+  $node->field_company[$lang][0][$val] = $account->field_company[$lang][0][$val];
+  // Primary email.
+  $node->field_email[$lang][0][$val] = $account->field_email[$lang][0][$val];
+  // Phone number.
+  $node->field_phone_number[$lang][0][$val] = $account->field_phone_number[$lang][0][$val];
+  // Website.
+  $node->field_website[$lang][0][$val] = $account->field_website[$lang][0][$val];
+  // Company Street Address.
+  $node->field_company_street_address[$lang][0][$val] = $account->field_company_street_address[$lang][0][$val];
+  // City.
+  $node->field_city[$lang][0][$val] = $account->field_city[$lang][0][$val];
+  // State.
+  $node->field_frp_state[$lang][0][$val] = $account->field_frp_state[$lang][0][$val];
+  // Zip Code.
+  $node->field_zip_code[$lang][0][$val] = $account->field_zip_code[$lang][0][$val];
 
   // For contact name.
   if ($contact_name) {
