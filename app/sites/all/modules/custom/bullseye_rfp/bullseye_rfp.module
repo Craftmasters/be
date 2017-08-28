@@ -2072,6 +2072,8 @@ function generate_rfp_retirement($form, &$form_state) {
  * Submit handler for generate_rfp_special_benefits.
  */
 function generate_rfp_special_benefits($form, &$form_state) {
+  global $user;
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['sb_current_carrier'];
@@ -2080,5 +2082,11 @@ function generate_rfp_special_benefits($form, &$form_state) {
   $values['plan_year_to_quote_end'] = $form_state['values']['sb_plan_year_to_quote_end'];
   $values['renewal'] = $form_state['values']['sb_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['sb_waiting_period'];
+
+  // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Special Benefits', $values, $form_state['values']);
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->emailRfp($from, $to, $subject, $body, $attachments);
 }
