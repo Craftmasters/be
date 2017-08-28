@@ -347,6 +347,8 @@ class Bullseye {
 
   /**
    * Implement getUnique value.
+   *
+   * This function will filter the duplicate result in an array.
    */
   function getUnique($array, $preserveKeys = false) {
     // Unique Array for return
