@@ -352,3 +352,10 @@ function bullseye_deploy_update_7029() {
 function bullseye_deploy_update_7030() {
   module_enable(array('field_group'), TRUE);
 }
+
+/**
+ * Install bullseye_current_progress module.
+ */
+function bullseye_deploy_update_7031() {
+  module_enable(array('bullseye_current_progress'), TRUE);
+}

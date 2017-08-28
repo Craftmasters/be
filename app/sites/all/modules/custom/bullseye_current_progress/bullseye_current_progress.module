@@ -1,0 +1,60 @@
+<?php
+/**
+ * Bullseye current progress module.
+ */
+
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Leads Form.
+ */
+function bullseye_cp_leads_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-cp-form';
+
+  /*
+  $form['type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Type'),
+    '#options' => array(
+      'company' => 'Company',
+      'individual' => 'Individual',
+    ),
+    '#default_value' => 'Company',
+  );
+
+  $form['firstname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter First Name'),
+    ),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Save'),
+  );
+  */
+
+  return $form;
+}
+
+/**
+ * Form submit for current progress leads form.
+ */
+function bullseye_cp_leads_form_submit($form, &$form_state) {
+  
+}
