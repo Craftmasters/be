@@ -1617,16 +1617,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-
-  // Teledoc.
-  $tel_current_carrier = $value['tel_current_carrier'];
-  $tel_years_with_current_carrier = $value['tel_years_with_current_carrier'];
-  $tel_plan_year_to_quote_start = $value['tel_plan_year_to_quote_start'];
-  $tel_plan_year_to_quote_end = $value['tel_plan_year_to_quote_end'];
-  $tel_renewal_of_current_plan = $value['tel_renewal_of_current_plan'];
-  $tel_percentage_single = $value['tel_percentage_single'];
-  $tel_percentage_family = $value['tel_percentage_family'];
-  $tel_waiting_period = $value['tel_waiting_period'];
   // MEC.
   $mec_current_carrier = $value['mec_current_carrier'];
   $mec_years_with_current_carrier = $value['mec_years_with_current_carrier'];
@@ -1763,8 +1753,8 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $mcc = 'field_mm_current_carrier';
   $node->$mcc[$lang][0][$val] = $value['mm_current_carrier'];
   // Years with current carrier.
-  $ycc = 'field_mm_years_current_carrier';
-  $node->$ycc[$lang][0][$val] = $value['mm_years_with_current_carrier'];
+  $mycc = 'field_mm_years_current_carrier';
+  $node->$mycc[$lang][0][$val] = $value['mm_years_with_current_carrier'];
   // Plan Year to Quote.
   $mps = 'field_mm_plan_start';
   $node->$mps[$lang][0][$val] = $value['mm_plan_year_to_quote_start'];
@@ -1787,7 +1777,8 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $lcc = 'field_lm_current_carrier';
   $node->$lcc[$lang][0][$val] = $value['lm_current_carrier'];
   // Years with current carrier.
-  $node->$lcc[$lang][0][$val] = $value['lm_years_with_current_carrier'];
+  $lycc = 'field_lm_years_current_carrier';
+  $node->$lycc[$lang][0][$val] = $value['lm_years_with_current_carrier'];
   // Plan Year to Quote.
   $lps = 'field_lm_plan_start';
   $node->$lps[$lang][0][$val] = $value['lm_plan_year_to_quote_start'];
@@ -1804,6 +1795,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $lwp = 'field_lm_waiting_period';
   $node->$lwp[$lang][0][$val] = $value['lm_waiting_period'];
+
+  // Teledoc.
+  // Current Carrier.
+  $tcc = 'field_tl_current_carrier';
+  $node->$tcc[$lang][0][$val] = $value['tel_current_carrier'];
+  // Years with current carrier.
+  $tycc = 'field_tl_years_current_carrier';
+  $node->$tycc[$lang][0][$val] = $value['tel_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $lps = 'field_lm_plan_start';
+  $node->$lps[$lang][0][$val] = $value['tel_plan_year_to_quote_start'];
+  $lpe = 'field_lm_plan_end';
+  $node->$lpe[$lang][0][$val] = $value['tel_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $lber = 'field_lm_renewal_current_plan_be';
+  $node->$lber[$lang][0][$val] = $value['tel_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $lcs = 'field_lm_contrib_single';
+  $node->$lcs[$lang][0][$val] = $value['tel_percentage_single'];
+  $lcf = 'field_lm_contrib_family';
+  $node->$lcf[$lang][0][$val] = $value['tel_percentage_family'];
+  // Waiting Period for New Employees?
+  $lwp = 'field_lm_waiting_period';
+  $node->$lwp[$lang][0][$val] = $value['tel_waiting_period'];
 
 
   // Save the carrier in the storage.
