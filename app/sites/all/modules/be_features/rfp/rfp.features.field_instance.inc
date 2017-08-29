@@ -3948,7 +3948,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 97,
+      'weight' => 99,
     ),
   );
 

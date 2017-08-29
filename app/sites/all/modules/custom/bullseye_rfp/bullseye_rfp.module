@@ -1799,21 +1799,21 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $tycc = 'field_tl_years_current_carrier';
   $node->$tycc[$lang][0][$val] = $value['tel_years_with_current_carrier'];
   // Plan Year to Quote.
-  $lps = 'field_lm_plan_start';
-  $node->$lps[$lang][0][$val] = $value['tel_plan_year_to_quote_start'];
-  $lpe = 'field_lm_plan_end';
-  $node->$lpe[$lang][0][$val] = $value['tel_plan_year_to_quote_end'];
+  $tps = 'field_tl_plan_start';
+  $node->$tps[$lang][0][$val] = $value['tel_plan_year_to_quote_start'];
+  $tpe = 'field_tl_plan_end';
+  $node->$tpe[$lang][0][$val] = $value['tel_plan_year_to_quote_end'];
   // Is this a renewal of a current plan in BullsEye?
-  $lber = 'field_lm_renewal_current_plan_be';
-  $node->$lber[$lang][0][$val] = $value['tel_renewal_of_current_plan'];
+  $tber = 'field_tl_renewal_current_plan_be';
+  $node->$tber[$lang][0][$val] = $value['tel_renewal_of_current_plan'];
   // Percentage of Employer Contribution.
-  $lcs = 'field_lm_contrib_single';
-  $node->$lcs[$lang][0][$val] = $value['tel_percentage_single'];
-  $lcf = 'field_lm_contrib_family';
-  $node->$lcf[$lang][0][$val] = $value['tel_percentage_family'];
+  $tcs = 'field_tl_contrib_single';
+  $node->$tcs[$lang][0][$val] = $value['tel_percentage_single'];
+  $tcf = 'field_tl_contrib_family';
+  $node->$tcf[$lang][0][$val] = $value['tel_percentage_family'];
   // Waiting Period for New Employees?
-  $lwp = 'field_lm_waiting_period';
-  $node->$lwp[$lang][0][$val] = $value['tel_waiting_period'];
+  $twp = 'field_tl_waiting_period';
+  $node->$twp[$lang][0][$val] = $value['tel_waiting_period'];
 
 
   // Save the carrier in the storage.
