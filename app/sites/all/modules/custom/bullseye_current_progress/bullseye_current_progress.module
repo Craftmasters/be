@@ -36,6 +36,7 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#default_value' => 'no',
   );
 
+  // Temporary field only for UI until no backend implementation.
   $form['classify_group'] = array(
     '#type' => 'textarea',
     '#attributes' => array(
