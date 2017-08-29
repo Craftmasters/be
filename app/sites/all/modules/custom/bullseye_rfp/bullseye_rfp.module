@@ -1576,6 +1576,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   $data = $_SESSION['add_rfp'];
   $account = node_load($data['account_id']);
+  $form_state['values'] = $value;
 
   krumo($account);
   krumo($form_state['values']);
@@ -1584,73 +1585,65 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $be = new Bullseye($user);
 
   // Plan specifications.
-  $fringe_rate = $form_state['values']['fringe_rates'];
-  $proposed_effective_date = $form_state['values']['proposed_effective_date'];
-  $other_work_locations = $form_state['values']['other_work_locations'];
-  $number_of_employees = $form_state['values']['number_of_employees'];
-  $number_of_dependents = $form_state['values']['number_of_dependents'];
-  $nature_of_business = $form_state['values']['nature_of_business'];
-  $years_in_business = $form_state['values']['years_in_business'];
-  $tax_id = $form_state['values']['tax_id'];
-  $renewal_date = $form_state['values']['renewal_date'];
+  $fringe_rate = $value['fringe_rates'];
+  $proposed_effective_date = $value['proposed_effective_date'];
+  $other_work_locations = $value['other_work_locations'];
+  $number_of_employees = $value['number_of_employees'];
+  $number_of_dependents = $value['number_of_dependents'];
+  $nature_of_business = $value['nature_of_business'];
+  $years_in_business = $value['years_in_business'];
+  $tax_id = $value['tax_id'];
+  $renewal_date = $value['renewal_date'];
 
   // Attachments.
-  $employee_census = $form_state['values']['employee_census'];
-  $current_summary_of_benefit = $form_state['values']['current_summary_of_benefit'];
-  $current_bill = $form_state['values']['current_bill'];
-  $last_renewal_letter = $form_state['values']['last_renewal_letter'];
-  $summary_of_monthly_claims_experience = $form_state['values']['summary_of_monthly_claims_experience'];
-  $broker_of_record = $form_state['values']['broker_of_record'];
-  $letter_of_authorization = $form_state['values']['letter_of_authorization'];
-  $large_claims_report = $form_state['values']['large_claims_report'];
+  $employee_census = $value['employee_census'];
+  $current_summary_of_benefit = $value['current_summary_of_benefit'];
+  $current_bill = $value['current_bill'];
+  $last_renewal_letter = $value['last_renewal_letter'];
+  $summary_of_monthly_claims_experience = $value['summary_of_monthly_claims_experience'];
+  $broker_of_record = $value['broker_of_record'];
+  $letter_of_authorization = $value['letter_of_authorization'];
+  $large_claims_report = $value['large_claims_report'];
 
   // Census inclusions.
-  $check_identifier = $form_state['values']['check_identifier'];
-  $check_ssn = $form_state['values']['check_ssn'];
-  $check_date_birth_age = $form_state['values']['check_date_birth_age'];
-  $check_gender = $form_state['values']['check_gender'];
-  $check_home_zip_codes = $form_state['values']['check_home_zip_codes'];
-  $check_plan_selection = $form_state['values']['check_plan_selection'];
-  $check_tier_levels = $form_state['values']['check_tier_levels'];
-  $check_identification_of_retirees = $form_state['values']['check_identification_of_retirees'];
-  $check_identification_of_covered = $form_state['values']['check_identification_of_covered'];
+  $check_identifier = $value['check_identifier'];
+  $check_ssn = $value['check_ssn'];
+  $check_date_birth_age = $value['check_date_birth_age'];
+  $check_gender = $value['check_gender'];
+  $check_home_zip_codes = $value['check_home_zip_codes'];
+  $check_plan_selection = $value['check_plan_selection'];
+  $check_tier_levels = $value['check_tier_levels'];
+  $check_identification_of_retirees = $value['check_identification_of_retirees'];
+  $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-  // Major medical benefits.
-  $mm_current_carrier = $form_state['values']['mm_current_carrier'];
-  $mm_years_with_current_carrier = $form_state['values']['mm_years_with_current_carrier'];
-  $mm_plan_year_to_quote_start = $form_state['values']['mm_plan_year_to_quote_start'];
-  $mm_plan_year_to_quote_end = $form_state['values']['mm_plan_year_to_quote_end'];
-  $mm_renewal_of_current_plan = $form_state['values']['mm_percentage_single'];
-  $mm_percentage_family = $form_state['values']['mm_percentage_family'];
-  $mm_waiting_period = $form_state['values']['mm_waiting_period'];
   // Limited Medical.
-  $lm_current_carrier = $form_state['values']['lm_current_carrier'];
-  $lm_years_with_current_carrier = $form_state['values']['lm_years_with_current_carrier'];
-  $lm_plan_year_to_quote_start = $form_state['values']['lm_plan_year_to_quote_start'];
-  $lm_plan_year_to_quote_end = $form_state['values']['lm_plan_year_to_quote_end'];
-  $lm_renewal_of_current_plan = $form_state['values']['lm_renewal_of_current_plan'];
-  $lm_percentage_single = $form_state['values']['lm_percentage_single'];
-  $lm_percentage_family = $form_state['values']['lm_percentage_family'];
-  $lm_waiting_period = $form_state['values']['lm_waiting_period'];
+  $lm_current_carrier = $value['lm_current_carrier'];
+  $lm_years_with_current_carrier = $value['lm_years_with_current_carrier'];
+  $lm_plan_year_to_quote_start = $value['lm_plan_year_to_quote_start'];
+  $lm_plan_year_to_quote_end = $value['lm_plan_year_to_quote_end'];
+  $lm_renewal_of_current_plan = $value['lm_renewal_of_current_plan'];
+  $lm_percentage_single = $value['lm_percentage_single'];
+  $lm_percentage_family = $value['lm_percentage_family'];
+  $lm_waiting_period = $value['lm_waiting_period'];
   // Teledoc.
-  $tel_current_carrier = $form_state['values']['tel_current_carrier'];
-  $tel_years_with_current_carrier = $form_state['values']['tel_years_with_current_carrier'];
-  $tel_plan_year_to_quote_start = $form_state['values']['tel_plan_year_to_quote_start'];
-  $tel_plan_year_to_quote_end = $form_state['values']['tel_plan_year_to_quote_end'];
-  $tel_renewal_of_current_plan = $form_state['values']['tel_renewal_of_current_plan'];
-  $tel_percentage_single = $form_state['values']['tel_percentage_single'];
-  $tel_percentage_family = $form_state['values']['tel_percentage_family'];
-  $tel_waiting_period = $form_state['values']['tel_waiting_period'];
+  $tel_current_carrier = $value['tel_current_carrier'];
+  $tel_years_with_current_carrier = $value['tel_years_with_current_carrier'];
+  $tel_plan_year_to_quote_start = $value['tel_plan_year_to_quote_start'];
+  $tel_plan_year_to_quote_end = $value['tel_plan_year_to_quote_end'];
+  $tel_renewal_of_current_plan = $value['tel_renewal_of_current_plan'];
+  $tel_percentage_single = $value['tel_percentage_single'];
+  $tel_percentage_family = $value['tel_percentage_family'];
+  $tel_waiting_period = $value['tel_waiting_period'];
   // MEC.
-  $mec_current_carrier = $form_state['values']['mec_current_carrier'];
-  $mec_years_with_current_carrier = $form_state['values']['mec_years_with_current_carrier'];
-  $mec_plan_year_to_quote_start = $form_state['values']['mec_plan_year_to_quote_start'];
-  $mec_plan_year_to_quote_end = $form_state['values']['mec_plan_year_to_quote_end'];
-  $mec_renewal_of_current_plan = $form_state['values']['mec_renewal_of_current_plan'];
-  $mec_percentage_single = $form_state['values']['mec_percentage_single'];
-  $mec_percentage_family = $form_state['values']['mec_percentage_family'];
-  $mec_waiting_period = $form_state['values']['mec_waiting_period'];
+  $mec_current_carrier = $value['mec_current_carrier'];
+  $mec_years_with_current_carrier = $value['mec_years_with_current_carrier'];
+  $mec_plan_year_to_quote_start = $value['mec_plan_year_to_quote_start'];
+  $mec_plan_year_to_quote_end = $value['mec_plan_year_to_quote_end'];
+  $mec_renewal_of_current_plan = $value['mec_renewal_of_current_plan'];
+  $mec_percentage_single = $value['mec_percentage_single'];
+  $mec_percentage_family = $value['mec_percentage_family'];
+  $mec_waiting_period = $value['mec_waiting_period'];
   // Dental.
   $den_current_carrier = $form_state['values']['den_current_carrier'];
   $den_years_with_current_carrier = $form_state['values']['den_years_with_current_carrier'];
@@ -1746,77 +1739,58 @@ function bullseye_rfp_form_submit($form, &$form_state) {
    * Plan Specifications
    **************/
   // Fringe Rate.
-  $node->field_fringe_rate[$lang][0][$val] = $form_state['values']['fringe_rates'];
+  $node->field_fringe_rate[$lang][0][$val] = $value['fringe_rates'];
   // Proposed Effective Date.
-  $node->field_proposed_effective_date[$lang][0][$val] = $form_state['values']['proposed_effective_date'];
+  $ped = 'field_proposed_effective_date';
+  $node->$ped[$lang][0][$val] = $value['proposed_effective_date'];
   // Other Work Locations and Zip Codes.
-  $node->field_other_work_locations[$lang][0][$val] = $form_state['values']['other_work_locations'];
+  $owl = 'field_other_work_locations';
+  $node->$owl[$lang][0][$val] = $value['other_work_locations'];
   // Number of Employees.
-  $node->field_number_of_employees[$lang][0][$val] = $form_state['values']['number_of_employees'];
+  $noe = 'field_number_of_employees';
+  $node->$noe[$lang][0][$val] = $value['number_of_employees'];
   // Number of Dependents.
-  $node->field_number_of_dependents[$lang][0][$val] = $form_state['values']['number_of_dependents'];
+  $nod = 'field_number_of_dependents';
+  $node->$nod[$lang][0][$val] = $value['number_of_dependents'];
   // Nature of Business/SIC.
-  $node->field_nature_of_business_sic[$lang][0][$val] = $form_state['values']['nature_of_business'];
+  $nbs = 'field_nature_of_business_sic';
+  $node->$nbs[$lang][0][$val] = $value['nature_of_business'];
   // Years in Business.
-  $node->field_years_in_business[$lang][0][$val] = $form_state['values']['years_in_business'];
+  $yib = 'field_years_in_business';
+  $node->$yib[$lang][0][$val] = $value['years_in_business'];
   // Tax ID.
-  $node->field_tax_id[$lang][0][$val] = $form_state['values']['tax_id'];
+  $node->field_tax_id[$lang][0][$val] = $value['tax_id'];
   // Renewal Date.
-  $node->field_renewal_date[$lang][0][$val] = $form_state['values']['renewal_date'];
+  $node->field_renewal_date[$lang][0][$val] = $value['renewal_date'];
 
-  // For contact name.
-  if ($contact_name) {
-    $node->field_primary_contact[$node->language][0]['value'] = $contact_name;
-  }
+  /*************
+   * Benefits
+   *************/
+  // Major Medical.
+  // Current carrier.
+  $mcc = 'field_mm_current_carrier';
+  $node->$mcc[$lang][0][$val] = $value['mm_current_carrier'];
+  // Years with current carrier.
+  $ycc = 'field_mm_years_current_carrier';
+  $node->$ycc[$lang][0][$val] = $value['mm_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $mps = 'field_mm_plan_start';
+  $node->$mps[$lang][0][$val] = $value['mm_plan_year_to_quote_start'];
+  $mpe = 'field_mm_plan_end';
+  $node->$mpe[$lang][0][$val] = $value['mm_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $ber = 'field_mm_renewal_current_plan_be';
+  $node->$ber[$lang][0][$val] = $value['mm_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $mcs = 'field_mm_contrib_single';
+  $node->$mcs[$lang][0][$val] = $value['mm_percentage_single'];
+  $mcf = 'field_mm_contrib_family';
+  $node->$mcf[$lang][0][$val] = $value['mm_percentage_family'];
+  // Waiting Period for New Employees?
+  $mwp = 'field_mm_waiting_period';
+  $node->$mwp[$lang][0][$val] = $value['mm_waiting_period'];
 
-  // For contact email.
-  if ($contact_email) {
-    $node->field_email[$node->language][0]['value'] = $contact_email;
-  }
 
-  // For major medical.
-  if ($major_medical == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'major_medical';
-  }
-  if ($limited_medical == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'limited_medical';
-  }
-  if ($teledoc == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'teledoc';
-  }
-  if ($mec == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'mec';
-  }
-  if ($dental == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'dental';
-  }
-  if ($vision == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'vision';
-  }
-  if ($life == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'life';
-  }
-  if ($short_term_disability == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'short_term_disability';
-  }
-  if ($special_benefits == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'special_benefits';
-  }
-  if ($retirement == 1) {
-    $node->field_benefits[$node->language][]['value'] = 'retirement';
-  }
-
-  if ($priority) {
-    $node->field_priority[$node->language][0]['value'] = $priority;
-  }
-
-  if ($due_date) {
-    $node->field_due_date[$node->language][0]['value'] = $due_date;
-  }
-
-  if ($priority) {
-    $node->field_priority[$node->language][0]['value'] = $priority;
-  }
 
   // Save the carrier in the storage.
   $node = node_submit($node);
