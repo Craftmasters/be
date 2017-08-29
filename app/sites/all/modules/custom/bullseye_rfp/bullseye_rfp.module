@@ -1742,6 +1742,28 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Zip Code.
   $node->field_zip_code[$lang][0][$val] = $account->field_zip_code[$lang][0][$val];
 
+  /**************
+   * Plan Specifications
+   **************/
+  // Fringe Rate.
+  $node->field_fringe_rate[$lang][0][$val] = $form_state['values']['fringe_rates'];
+  // Proposed Effective Date.
+  $node->field_proposed_effective_date[$lang][0][$val] = $form_state['values']['proposed_effective_date'];
+  // Other Work Locations and Zip Codes.
+  $node->field_other_work_locations[$lang][0][$val] = $form_state['values']['other_work_locations'];
+  // Number of Employees.
+  $node->field_number_of_employees[$lang][0][$val] = $form_state['values']['number_of_employees'];
+  // Number of Dependents.
+  $node->field_number_of_dependents[$lang][0][$val] = $form_state['values']['number_of_dependents'];
+  // Nature of Business/SIC.
+  $node->field_nature_of_business_sic[$lang][0][$val] = $form_state['values']['nature_of_business'];
+  // Years in Business.
+  $node->field_years_in_business[$lang][0][$val] = $form_state['values']['years_in_business'];
+  // Tax ID.
+  $node->field_tax_id[$lang][0][$val] = $form_state['values']['tax_id'];
+  // Renewal Date.
+  $node->field_renewal_date[$lang][0][$val] = $form_state['values']['renewal_date'];
+
   // For contact name.
   if ($contact_name) {
     $node->field_primary_contact[$node->language][0]['value'] = $contact_name;
