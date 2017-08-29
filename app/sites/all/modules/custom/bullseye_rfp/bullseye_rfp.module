@@ -1578,10 +1578,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $account = node_load($data['account_id']);
   $form_state['values'] = $value;
 
-  krumo($account);
-  krumo($form_state['values']);
-  die();
-
   $be = new Bullseye($user);
 
   // Plan specifications.
