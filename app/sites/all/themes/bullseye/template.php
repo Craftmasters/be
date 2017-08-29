@@ -162,10 +162,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'bullseye_rfp_form':
       break;
-    case 'bullseye_producer_acct_indiv_form':
-      unset($form['read_sca_dba']['#title']);
-      unset($form['agree_terms_privacy']['#title']);
-      break;
     default:
       break;
   }

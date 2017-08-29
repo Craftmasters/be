@@ -120,11 +120,13 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
 
   $form['read_sca_dba'] = array(
     '#type' => 'checkbox',
+    '#title_display' => 'invisible',
     '#title' => t('I have read the SCA and DBA documents.'),
   );
 
   $form['agree_terms_privacy'] = array(
     '#type' => 'checkbox',
+    '#title_display' => 'invisible',
     '#title' => t('I agree to Bullseye Terms & Privacy Policy.'),
   );
 
