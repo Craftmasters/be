@@ -44,7 +44,7 @@ function bullseye_preprocess_html(&$variables, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function bullseye_preprocess_page(&$vars, $hook) {
-  global $base_url; //krumo(node_load(5321));
+  global $base_url; krumo(node_load(5321));
 
   // Theme directory.
   $theme_directory = path_to_theme('theme', 'bullseye');
