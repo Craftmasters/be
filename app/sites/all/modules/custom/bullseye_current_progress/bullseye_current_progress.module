@@ -12,7 +12,9 @@
 function bullseye_current_progress_leads_form($form, &$form_state) {
   $form = array();
 
-  $form['#attributes']['class'][] = 'be-cp-form';
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
   
   $form['work_sca_dbra'] = array(
     '#type' => 'radios',
@@ -36,41 +38,52 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#default_value' => 'no',
   );
 
-  // Temporary field only for UI until no backend implementation.
-  $form['classify_group'] = array(
-    '#type' => 'textarea',
-    '#attributes' => array(
-      'placeholder' => t('Add a group and press Enter'),
-    ),
-  );
-
-  $form['contacts'] = array();
-
   module_load_include('inc', 'field_collection', 'field_collection.pages');
-  $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
-  field_attach_form('field_collection_item', $field_collection_item, $form['contacts'], $form_state);
+  module_load_include('inc', 'node', 'node.pages');
 
-  $node = new stdClass();
-  $node->type = 'accounts'; //content type
-  field_attach_form('node', $node, $form, $form_state); //it will attach all the fields
-  unset($form['body']); //unset other fields like this.
+  $node_form = new stdClass;
+  $node_form->type = 'accounts';
+  $node_form->language = LANGUAGE_NONE;
+  //$form_account = drupal_get_form('accounts_node_form', $node_form);
 
-  $form['submit_container'] = array(
-    '#type' => 'container',
+  $field = field_info_field('field_contacts');
+  $instance = field_info_instance('node', 'field_contacts', 'accounts');
+  $items = field_get_items('node', $node_form, 'field_contacts');
+  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+
+  $field = field_info_field('field_tags');
+  $instance = field_info_instance('node', 'field_tags', 'accounts');
+  $items = field_get_items('node', $node_form, 'field_tags');
+  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+
+  $form['priority'] = array(
+    '#type' => 'select',
+    '#title' => t('Set Priority'),
+    '#options' => array(
+      'low' => t('Low'),
+      'yes_dbra' => t('Medium'),
+      'yes_both' => t('High'),
+    ),
+    '#default_value' => 'low',
   );
 
-  $form['submit_container']['cancel'] = array(
-    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  $form['convert_to_prospect'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
   );
 
-  $form['submit_container']['submit'] = array(
+  $form['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Save'),
   );
-  
 
   return $form;
 }
@@ -79,7 +92,25 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
  * Form submit for current progress leads form.
  */
 function bullseye_current_progress_leads_form_submit($form, &$form_state) {
-  
+  foreach ($form_state['values']['field_contacts'][LANGUAGE_NONE] as $key => $value) {
+    if (is_numeric($key)) {
+      $fc = 'field_contacts';
+      $v = 'values';
+      $lang = LANGUAGE_NONE;
+      $name = $form_state[$v][$fc][$lang][$key]['field_contact_name'][$lang][0]['value'];
+      $email = $form_state[$v][$fc][$lang][$key]['field_email'][$lang][0]['value'];
+      $phone = $form_state[$v][$fc][$lang][$key]['field_phone_number'][$lang][0]['value'];
+      $position = $form_state[$v][$fc][$lang][$key]['field_position'][$lang][0]['value'];
+      $empty_condition = ($name == '' && $email == '' && $phone == '' && $position == '');
+
+      // Since field collection remove button is buggy when programmatically attached to custom form,
+      // temporary workaround is let the user just empty the row fields of the item they want
+      // to remove and, here on the submit handler we just unset the empty rows on form_state['values'].
+      if ($empty_condition) {
+        unset($form_state[$v][$fc][$lang][$key]);
+      }
+    }
+  }
 }
 
 /**
