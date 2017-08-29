@@ -128,12 +128,37 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
     '#title' => t('I agree to Bullseye Terms & Privacy Policy.'),
   );
 
+
+  /*page-2*/
+  $form['sign_petition'] = array(
+    '#markup' => 'https://app.hellosign.com/s/56b2a684'
+  );
+  
+  $form['file_health_life'] = array(
+    '#type' => 'file',
+    '#title' => t('Upload a copy of current Health and Life.'),
+    '#title_display' => 'invisible',
+    '#attributes' => array(
+      'class' => array('orange-btn', 'square-btn'),
+    ),
+  );
+
+  $form['file_error_omission_insurance'] = array(
+    '#type' => 'file',
+    '#title' => t('Upload a copy of Errors and Omission Insurance'),
+    '#title_display' => 'invisible',
+    '#attributes' => array(
+      'class' => array('orange-btn', 'square-btn'),
+    ),
+  );
+
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
-      'class' => array('orange-btn'),
+      // 'class' => array('orange-btn'),
+      'class' => array('green-btn'),
     ),
-    '#value' => t('Next'),
+    '#value' => t('Submit'),
   );
 
   return $form;
