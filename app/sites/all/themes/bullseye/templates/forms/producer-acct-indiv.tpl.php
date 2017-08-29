@@ -50,21 +50,24 @@ A few more things to wrap this up.</h4>
   <div class="producer-acct-check">
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
-      <a href="<?php print render($form['sign_petition']); ?>" class="button orange-btn square-btn">Link to Agreement</a>
+      <label for="producer-acct-petition" class="producer-acct-file-label">Sign the Producer Agreement</label>
+      <a id="producer-acct-petition" href="<?php print render($form['sign_petition']); ?>" target="_blank" class="button orange-btn square-btn">Link to Agreement</a>
     </div>
   </div>
 
   <div class="producer-acct-check">
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
-    <?php print render($form['file_health_life']); ?>
+      <label for="edit-file-health-life" class="producer-acct-file-label">Upload a copy of current Health and Life</label>
+      <?php print render($form['file_health_life']); ?>
     </div>
   </div>
 
   <div class="producer-acct-check">
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
-    <?php print render($form['file_error_omission_insurance']); ?>
+      <label for="edit-file-error-omission-insurance" class="producer-acct-file-label">Upload a copy of Errors and Omission Insurance</label>
+      <?php print render($form['file_error_omission_insurance']); ?>
     </div>
   </div>
 
@@ -75,3 +78,13 @@ A few more things to wrap this up.</h4>
 <div class="hidden-container">
   <?php print drupal_render_children($form); ?>
 </div>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+$('#producer-acct-next-btn').click(function(e){
+  e.preventDefault();
+  $('#producer-acct-page-1').hide();
+  $('#producer-acct-page-2').show();
+  return false;
+});
+});  
+</script>

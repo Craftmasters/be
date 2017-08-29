@@ -138,19 +138,17 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
   
   $form['file_health_life'] = array(
     '#type' => 'file',
-    '#title' => t('Upload a copy of current Health and Life.'),
-    '#title_display' => 'invisible',
+    '#title' => t('Browse'),
     '#attributes' => array(
-      'class' => array('orange-btn', 'square-btn'),
+      'class' => array('element-invisible'),
     ),
   );
 
   $form['file_error_omission_insurance'] = array(
     '#type' => 'file',
-    '#title' => t('Upload a copy of Errors and Omission Insurance'),
-    '#title_display' => 'invisible',
+    '#title' => t('Browse'),
     '#attributes' => array(
-      'class' => array('orange-btn', 'square-btn'),
+      'class' => array('element-invisible'),
     ),
   );
 
