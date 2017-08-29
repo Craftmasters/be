@@ -30,6 +30,8 @@
   <div class="be-form-single"><?php print render($form['field_tags']); ?></div>
 </div>
 
+<?php print render($form['field_contacts']); ?>
+
 <div class="hidden-container">
   <?php print render($form['title']); ?>
 </div>

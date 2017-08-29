@@ -315,6 +315,7 @@ function accounts_field_default_field_instances() {
   // Exported field_instance: 'node-accounts-field_contacts'.
   $field_instances['node-accounts-field_contacts'] = array(
     'bundle' => 'accounts',
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -341,14 +342,18 @@ function accounts_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_contacts',
     'label' => 'Contacts',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'module' => 'field_collection',
-      'settings' => array(),
-      'type' => 'field_collection_embed',
+      'active' => 0,
+      'module' => 'field_collection_table',
+      'settings' => array(
+        'nodragging' => FALSE,
+        'title_on_top' => TRUE,
+      ),
+      'type' => 'field_collection_table',
       'weight' => 35,
     ),
   );
