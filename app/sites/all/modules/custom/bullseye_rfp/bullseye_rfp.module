@@ -1571,7 +1571,6 @@ function bullseye_rfp_form($form, &$form_state) {
  * Form submit for carrier form.
  */
 function bullseye_rfp_form_submit($form, &$form_state) {
-
   global $user;
 
   $data = $_SESSION['add_rfp'];
