@@ -1612,16 +1612,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-
-  // Life.
-  $lf_current_carrier = $form_state['values']['lf_current_carrier'];
-  $lf_years_with_current_carrier = $form_state['values']['lf_years_with_current_carrier'];
-  $lf_plan_year_to_quote_start = $form_state['values']['lf_plan_year_to_quote_start'];
-  $lf_plan_year_to_quote_end = $form_state['values']['lf_plan_year_to_quote_end'];
-  $lf_renewal_of_current_plan = $form_state['values']['lf_renewal_of_current_plan'];
-  $lf_percentage_single = $form_state['values']['lf_percentage_single'];
-  $lf_percentage_family = $form_state['values']['lf_percentage_family'];
-  $lf_waiting_period = $form_state['values']['lf_waiting_period'];
   // Short term disability.
   $std_current_carrier = $form_state['values']['std_current_carrier'];
   $std_years_with_current_carrier = $form_state['values']['std_years_with_current_carrier'];
@@ -1860,6 +1850,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $vwp = 'field_vs_waiting_period';
   $node->$vwp[$lang][0][$val] = $value['vs_waiting_period'];
+
+  // Life.
+  // Current Carrier.
+  $licc = 'field_lf_current_carrier';
+  $node->$licc[$lang][0][$val] = $value['lf_current_carrier'];
+  // Years with current carrier.
+  $liycc = 'field_lf_years_current_carrier';
+  $node->$liycc[$lang][0][$val] = $value['lf_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $lips = 'field_lf_plan_start';
+  $node->$lips[$lang][0][$val] = $value['lf_plan_year_to_quote_start'];
+  $lipe = 'field_lf_plan_end';
+  $node->$lipe[$lang][0][$val] = $value['lf_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $liber = 'field_lf_renewal_current_plan_be';
+  $node->$liber[$lang][0][$val] = $value['lf_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $lics = 'field_lf_contrib_single';
+  $node->$lics[$lang][0][$val] = $value['lf_percentage_single'];
+  $licf = 'field_lf_contrib_family';
+  $node->$licf[$lang][0][$val] = $value['lf_percentage_family'];
+  // Waiting Period for New Employees?
+  $liwp = 'field_lf_waiting_period';
+  $node->$liwp[$lang][0][$val] = $value['lf_waiting_period'];
 
 
   // Save the carrier in the storage.
