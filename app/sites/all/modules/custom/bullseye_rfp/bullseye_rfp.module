@@ -1612,15 +1612,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-  // Short term disability.
-  $std_current_carrier = $form_state['values']['std_current_carrier'];
-  $std_years_with_current_carrier = $form_state['values']['std_years_with_current_carrier'];
-  $std_plan_year_to_quote_start = $form_state['values']['std_plan_year_to_quote_start'];
-  $std_plan_year_to_quote_end = $form_state['values']['std_plan_year_to_quote_end'];
-  $std_renewal_of_current_plan = $form_state['values']['std_renewal_of_current_plan'];
-  $std_percentage_single = $form_state['values']['std_percentage_single'];
-  $std_percentage_family = $form_state['values']['std_percentage_family'];
-  $std_waiting_period = $form_state['values']['std_waiting_period'];
   // Retirement.
   $ret_current_carrier = $form_state['values']['ret_current_carrier'];
   $ret_years_with_current_carrier = $form_state['values']['ret_years_with_current_carrier'];
@@ -1874,6 +1865,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $liwp = 'field_lf_waiting_period';
   $node->$liwp[$lang][0][$val] = $value['lf_waiting_period'];
+
+  // Short term disability.
+  // Current Carrier.
+  $stdcc = 'field_std_current_carrier';
+  $node->$stdcc[$lang][0][$val] = $value['std_current_carrier'];
+  // Years with current carrier.
+  $stdycc = 'field_std_years_current_carrier';
+  $node->$stdycc[$lang][0][$val] = $value['std_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $stdps = 'field_std_plan_start';
+  $node->$stdps[$lang][0][$val] = $value['std_plan_year_to_quote_start'];
+  $stdpe = 'field_std_plan_end';
+  $node->$stdpe[$lang][0][$val] = $value['std_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $stdber = 'field_sd_renewal_current_plan_be';
+  $node->$stdber[$lang][0][$val] = $value['std_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $stdcs = 'field_sd_contrib_single';
+  $node->$stdcs[$lang][0][$val] = $value['std_percentage_single'];
+  $stdcf = 'field_sd_contrib_family';
+  $node->$stdcf[$lang][0][$val] = $value['std_percentage_family'];
+  // Waiting Period for New Employees?
+  $stdwp = 'field_sd_waiting_period';
+  $node->$stdwp[$lang][0][$val] = $value['std_waiting_period'];
 
 
   // Save the carrier in the storage.
