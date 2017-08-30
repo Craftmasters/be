@@ -1612,15 +1612,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-  // MEC.
-  $mec_current_carrier = $value['mec_current_carrier'];
-  $mec_years_with_current_carrier = $value['mec_years_with_current_carrier'];
-  $mec_plan_year_to_quote_start = $value['mec_plan_year_to_quote_start'];
-  $mec_plan_year_to_quote_end = $value['mec_plan_year_to_quote_end'];
-  $mec_renewal_of_current_plan = $value['mec_renewal_of_current_plan'];
-  $mec_percentage_single = $value['mec_percentage_single'];
-  $mec_percentage_family = $value['mec_percentage_family'];
-  $mec_waiting_period = $value['mec_waiting_period'];
+
   // Dental.
   $den_current_carrier = $form_state['values']['den_current_carrier'];
   $den_years_with_current_carrier = $form_state['values']['den_years_with_current_carrier'];
@@ -1814,6 +1806,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $twp = 'field_tl_waiting_period';
   $node->$twp[$lang][0][$val] = $value['tel_waiting_period'];
+
+  // MEC.
+  // Current Carrier.
+  $mecc = 'field_mec_current_carrier';
+  $node->$mecc[$lang][0][$val] = $value['mec_current_carrier'];
+  // Years with current carrier.
+  $meycc = 'field_mec_years_current_carrier';
+  $node->$meycc[$lang][0][$val] = $value['mec_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $meps = 'field_mec_plan_start';
+  $node->$meps[$lang][0][$val] = $value['mec_plan_year_to_quote_start'];
+  $mepe = 'field_mec_plan_end';
+  $node->$mepe[$lang][0][$val] = $value['mec_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $meber = 'field_mc_renewal_current_plan_be';
+  $node->$meber[$lang][0][$val] = $value['mec_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $mecs = 'field_mc_contrib_single';
+  $node->$mecs[$lang][0][$val] = $value['mec_percentage_single'];
+  $mecf = 'field_mc_contrib_family';
+  $node->$mecf[$lang][0][$val] = $value['mec_percentage_family'];
+  // Waiting Period for New Employees?
+  $mewp = 'field_mc_waiting_period';
+  $node->$mewp[$lang][0][$val] = $value['mec_waiting_period'];
 
 
   // Save the carrier in the storage.
