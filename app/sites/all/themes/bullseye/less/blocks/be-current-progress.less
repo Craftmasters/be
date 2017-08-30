@@ -100,7 +100,22 @@
 			padding: 0px 0px 35px;
 		}
 		.modal-body {
-			min-height: 250px;
+			min-height: 200px;
+			display: table;
+			width: 100%;
+			text-align: center;
+		}
+		.modal-body-wrap {
+			vertical-align: middle;
+			display: table-cell;
+		}
+		.modal-body-inner {
+			padding: 0 30px;
+		}
+		h3 {
+			font-family: 'Proximanova-Regular';
+			font-size: 20px;
+			color: @field_value_color;
 		}
 	}
 	.be-bs-modal-progress {
@@ -110,6 +125,7 @@
 		text-align: center;
 	  width: 20%;
 	  .pr-line {
+	  	height: 20px;
 	  	span {
 	  		display: inline-block;
 	  		width: 10px;
@@ -117,6 +133,7 @@
 	  		border-radius: 100%;
 	  		background-color: #fff;
 	  		position: relative;
+	  		vertical-align: middle;
 	  		&::after {
 	  			content: ' ';
 	  			position: absolute;
@@ -132,6 +149,7 @@
 	  	font-size: 15px;
 	  	font-family: 'Proximanova-Regular';
 	  	white-space: nowrap;
+	  	margin-top: 10px;
 	  }
 	  &:last-child {
 	  	.pr-line {
@@ -149,6 +167,103 @@
 	  	}
 	  }
 	}
+
+	#edit-work-sca-dbra,
+	#edit-plan-to-work-sca-dbra {
+		display: none;
+	}
+
+	.field-name-field-tags {
+		input {
+			word-wrap: break-word;
+	    word-break: break-all;
+	    height: 80px;
+	    border-bottom: none;
+	    border: 1px solid #fff - 30;
+	    border-radius: 5px;
+	    padding: 15px 20px;
+		}
+	}
+
+	.field-name-field-contacts {
+		text-align: left;
+		button[value="Remove"],
+		.tabledrag-hide,
+		a.tabledrag-toggle-weight,
+		label,
+		.field-multiple-drag {
+			display: none;
+		}
+		tr {
+			background-color: transparent;
+		}
+		th {
+			border-bottom: none;
+		}
+		td {
+			padding: 0px;
+			border-top: none;
+		}
+		.field-type-text {
+			width: 25%;
+			vertical-align: top;
+			display: inline-block;
+			padding: 0px 5px;
+			input[type="text"] {
+				border-bottom: none;
+				font-size: 14px;
+			}
+		}
+		.form-group {
+			margin-bottom: 0px;
+		}
+		tr {
+			&.draggable {
+				&:last-child {
+					.field-type-text {
+						input[type="text"] {
+							border-bottom: 2px solid @textfield_bottom_border_color;
+							&:focus,
+							&:active {
+								border-bottom: 2px solid @orange;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		div[id*="field-contacts-add-more-wrapper"] {
+			position: relative;
+		}
+		.field-add-more-submit {
+			border: none;
+			position: absolute;
+			top: -38px;
+			right: 0px;
+			margin: 0px;
+			padding: 0px;
+			background-color: transparent;
+			cursor: pointer;
+			font-size: 30px;
+			color: @green;
+		}
+	}
+
+	table.table-header-vc {
+		margin-top: 20px;
+		width: 100%;
+		border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+		th {
+			width: 25%;
+			color: @blue_gray;
+			text-transform: uppercase;
+			font-family: 'Proximanova-Medium';
+			font-size: 14px;
+			padding: 0px 5px 5px;
+		}
+	}
+
 }
 	
 

@@ -18,7 +18,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   
   $form['work_sca_dbra'] = array(
     '#type' => 'radios',
-    '#title' => t('Did this lead/company ever work under SCA and/or DBRA?'),
     '#options' => array(
       'yes_sca' => t('Yes, SCA'),
       'yes_dbra' => t('Yes, DBRA'),
@@ -30,7 +29,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
 
   $form['plan_to_work_sca_dbra'] = array(
     '#type' => 'radios',
-    '#title' => t('Did this lead/company have plans on working under SCA/DBRA in the future?'),
     '#options' => array(
       'yes' => t('Yes'),
       'no' => t('No'),
@@ -51,16 +49,22 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   $items = field_get_items('node', $node_form, 'field_contacts');
   $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $my_field;
+  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';
 
   $field = field_info_field('field_tags');
   $instance = field_info_instance('node', 'field_tags', 'accounts');
   $items = field_get_items('node', $node_form, 'field_tags');
   $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $my_field;
+  $form['field_tags'][LANGUAGE_NONE]['#title'] = '';
+  $form['field_tags'][LANGUAGE_NONE]['#attributes'] = array(
+    'placeholder' => t('+ Enter groups separated by commas ...'),
+  );
+
+  //kpr($form['field_contacts']);
 
   $form['priority'] = array(
     '#type' => 'select',
-    '#title' => t('Set Priority'),
     '#options' => array(
       'low' => t('Low'),
       'yes_dbra' => t('Medium'),
@@ -84,6 +88,7 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     ),
     '#value' => t('Save'),
   );
+
 
   return $form;
 }

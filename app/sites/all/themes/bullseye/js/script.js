@@ -292,6 +292,30 @@
               return false;
             }
           });
+
+          $('#btn-verify-yes-sca').click(function() {
+            $('#edit-work-sca-dbra-yes-sca').prop('checked', true);
+          });
+
+          $('#btn-verify-yes-dbra').click(function() {
+            $('#edit-work-sca-dbra-yes-dbra').prop('checked', true);
+          });
+
+          $('#btn-verify-yes-both').click(function() {
+            $('#edit-work-sca-dbra-yes-both').prop('checked', true);
+          });
+
+          $('#btn-verify-no').click(function() {
+            $('#edit-work-sca-dbra-no').prop('checked', true);
+          });
+
+          $('#btn-plan-sca-dbra-yes').click(function() {
+            $('#edit-plan-to-work-sca-dbra-yes').prop('checked', true);
+          });
+
+          $('#btn-plan-sca-dbra-no').click(function() {
+            $('#edit-plan-to-work-sca-dbra-no').prop('checked', true);
+          });
         }
 
       });
