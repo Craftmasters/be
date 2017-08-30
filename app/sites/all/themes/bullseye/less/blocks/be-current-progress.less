@@ -7,6 +7,10 @@
 		color: @form_title_color;
 		font-size: 19px;
 		font-family: 'Proximanova-Regular';
+		&:focus,
+		&:active {
+			outline: none;
+		}
 	}
 
 	div[class*="col-xs-"] {
@@ -86,3 +90,55 @@
 		}
 	}
 }
+
+
+#block-bullseye-blocks-be-current-progress {
+	.be-bs-modal-progress {
+		padding: 15px 0px 10px;
+	}
+	.modal-progress-item {
+		text-align: center;
+	  width: 20%;
+	  .pr-line {
+	  	span {
+	  		display: inline-block;
+	  		width: 10px;
+	  		height: 10px;
+	  		border-radius: 100%;
+	  		background-color: #fff;
+	  		position: relative;
+	  		&::after {
+	  			content: ' ';
+	  			position: absolute;
+	  			height: 2px;
+	  			width: 143px;
+	  			background-color: #fff;
+	  			top: 42%;
+	  		}
+	  	}
+	  }
+	  h3 {
+	  	color: #fff;
+	  	font-size: 15px;
+	  	font-family: 'Proximanova-Regular';
+	  	white-space: nowrap;
+	  }
+	  &:last-child {
+	  	.pr-line {
+	  		span {
+	  			background: url(../../images/icons/gray_check_round.svg);
+		      background-position: center;
+		      background-repeat: no-repeat;
+		      border: 1px solid #fff;
+		      width: 20px;
+		      height: 20px;
+	  			&::after {
+	  				display: none;
+	  			}
+	  		}
+	  	}
+	  }
+	}
+}
+	
+
