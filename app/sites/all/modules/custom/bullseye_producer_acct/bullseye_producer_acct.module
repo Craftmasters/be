@@ -35,6 +35,13 @@ function bullseye_producer_acct_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producer/registration/confirmation'] = array(
+    'title' => 'Registration successful',
+    'page callback' => 'bullseye_producer_acct_confirm',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -51,9 +58,7 @@ function bullseye_producer_acct_permission(){
 }
 
 /**
- * Implements hook_form().
- *
- * Individual producer account registration form
+ * Selection page
  */
 function bullseye_producer_acct_select() {
   global $base_url; //krumo(node_load(5321));
@@ -75,6 +80,14 @@ function bullseye_producer_acct_select() {
   );
 
   return theme('bullseye_producer_acct_select', $vars);
+}
+
+/**
+ * confirmation page
+ */
+function bullseye_producer_acct_confirm(){
+
+  return theme('bullseye_producer_acct_confirm');
 }
 
 /**
@@ -180,6 +193,15 @@ function bullseye_producer_acct_email_element_validate($element, &$form_state, $
    if (!valid_email_address($element['#value'])) {
      form_error($element, t('Please enter a valid email address.'));
    }
+}
+
+/**
+ * hook_form_submit()
+ */
+function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
+  // do business logic here
+  // then redirect to confirmation page
+
 }
 
 /**
