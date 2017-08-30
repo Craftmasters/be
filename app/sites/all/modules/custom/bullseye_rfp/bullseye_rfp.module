@@ -1612,15 +1612,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
   // Benefits.
-  // Retirement.
-  $ret_current_carrier = $form_state['values']['ret_current_carrier'];
-  $ret_years_with_current_carrier = $form_state['values']['ret_years_with_current_carrier'];
-  $ret_plan_year_to_quote_start = $form_state['values']['ret_plan_year_to_quote_start'];
-  $ret_plan_year_to_quote_end = $form_state['values']['ret_plan_year_to_quote_end'];
-  $ret_renewal_of_current_plan = $form_state['values']['ret_renewal_of_current_plan'];
-  $ret_percentage_single = $form_state['values']['ret_percentage_single'];
-  $ret_percentage_family = $form_state['values']['ret_percentage_family'];
-  $ret_waiting_period = $form_state['values']['ret_waiting_period'];
   // Special Benefits.
   $sb_current_carrier = $form_state['values']['sb_current_carrier'];
   $sb_years_with_current_carrier = $form_state['values']['sb_years_with_current_carrier'];
@@ -1889,6 +1880,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $stdwp = 'field_sd_waiting_period';
   $node->$stdwp[$lang][0][$val] = $value['std_waiting_period'];
+
+  // Retirement.
+  // Current Carrier.
+  $rtcc = 'field_ret_current_carrier';
+  $node->$rtcc[$lang][0][$val] = $value['ret_current_carrier'];
+  // Years with current carrier.
+  $rtycc = 'field_ret_years_current_carrier';
+  $node->$rtycc[$lang][0][$val] = $value['ret_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $rtps = 'field_ret_plan_start';
+  $node->$rtps[$lang][0][$val] = $value['ret_plan_year_to_quote_start'];
+  $rtpe = 'field_ret_plan_end';
+  $node->$rtpe[$lang][0][$val] = $value['ret_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $rtber = 'field_rt_renewal_current_plan_be';
+  $node->$rtber[$lang][0][$val] = $value['ret_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $rtcs = 'field_rt_contrib_single';
+  $node->$rtcs[$lang][0][$val] = $value['ret_percentage_single'];
+  $rtcf = 'field_rt_contrib_family';
+  $node->$rtcf[$lang][0][$val] = $value['ret_percentage_family'];
+  // Waiting Period for New Employees?
+  $rtwp = 'field_rt_waiting_period';
+  $node->$rtwp[$lang][0][$val] = $value['ret_waiting_period'];
 
 
   // Save the carrier in the storage.
