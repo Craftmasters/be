@@ -1613,16 +1613,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   // Benefits.
 
-
-  // Vision.
-  $vs_current_carrier = $form_state['values']['vs_current_carrier'];
-  $vs_years_with_current_carrier = $form_state['values']['vs_years_with_current_carrier'];
-  $vs_plan_year_to_quote_start = $form_state['values']['vs_plan_year_to_quote_start'];
-  $vs_plan_year_to_quote_end = $form_state['values']['vs_plan_year_to_quote_end'];
-  $vs_renewal_of_current_plan = $form_state['values']['vs_renewal_of_current_plan'];
-  $vs_percentage_single = $form_state['values']['vs_percentage_single'];
-  $vs_percentage_family = $form_state['values']['vs_percentage_family'];
-  $vs_waiting_period = $form_state['values']['vs_waiting_period'];
   // Life.
   $lf_current_carrier = $form_state['values']['lf_current_carrier'];
   $lf_years_with_current_carrier = $form_state['values']['lf_years_with_current_carrier'];
@@ -1846,6 +1836,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $dewp = 'field_dn_waiting_period';
   $node->$dewp[$lang][0][$val] = $value['den_waiting_period'];
+
+  // Vision.
+  // Current Carrier.
+  $vcc = 'field_vs_current_carrier';
+  $node->$vcc[$lang][0][$val] = $value['vs_current_carrier'];
+  // Years with current carrier.
+  $vycc = 'field_vs_years_current_carrier';
+  $node->$vycc[$lang][0][$val] = $value['vs_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $vps = 'field_vs_plan_start';
+  $node->$vps[$lang][0][$val] = $value['vs_plan_year_to_quote_start'];
+  $vpe = 'field_vs_plan_end';
+  $node->$vpe[$lang][0][$val] = $value['vs_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $vber = 'field_vs_renewal_current_plan_be';
+  $node->$vber[$lang][0][$val] = $value['vs_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $vcs = 'field_vs_contrib_single';
+  $node->$vcs[$lang][0][$val] = $value['vs_percentage_single'];
+  $vcf = 'field_vs_contrib_family';
+  $node->$vcf[$lang][0][$val] = $value['vs_percentage_family'];
+  // Waiting Period for New Employees?
+  $vwp = 'field_vs_waiting_period';
+  $node->$vwp[$lang][0][$val] = $value['vs_waiting_period'];
 
 
   // Save the carrier in the storage.
