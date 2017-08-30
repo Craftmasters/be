@@ -283,6 +283,17 @@
           });
         }
 
+        // For Current Progress Leads.
+        if ($('#bullseye-current-progress-leads-form').length) {
+          $(window).keydown(function(event){
+            
+            if(event.keyCode == 13) {
+              event.preventDefault();
+              return false;
+            }
+          });
+        }
+
       });
 
       $(window).load(function() {
