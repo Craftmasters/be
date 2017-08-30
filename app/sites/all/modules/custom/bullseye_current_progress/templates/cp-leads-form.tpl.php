@@ -1,56 +1,76 @@
 <div class="current-progress-main">
 	
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_verification; ?>">
 		<div class="col-xs-2">
-			<span class="indicator initial big gray-check"></span>
+			<span class="indicator initial"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link"><?php print t('Verification'); ?></a>
+			<a href="#" class="cp-link big-step"><span><?php print t('Verification'); ?></span></a>
 		</div>
 	</div>
 
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_verify_sca_dbra; ?>">
 		<div class="col-xs-2">
-			<span class="indicator green"></span>
+			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#verify-sca-dbra"><?php print t('Verify if SCA/DBRA'); ?></a>
+			<a href="#" class="cp-link" data-toggle="modal" data-target="#verify-sca-dbra">
+				<span><?php print t('Verify if SCA/DBRA'); ?></span>
+			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_classify_to_group; ?>">
 		<div class="col-xs-2">
-			<span class="indicator green"></span>
+			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#classify-to-group"><?php print t('Classify to group'); ?></a>
+			<a href="#" class="cp-link" data-toggle="modal" data-target="#classify-to-group">
+				<span><?php print t('Classify to group'); ?></span>
+			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_validate_point_of_contact; ?>">
 		<div class="col-xs-2">
-			<span class="indicator gray"></span>
+			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link gray" data-toggle="modal" data-target="#validate-contacts"><?php print t('Validate point of contact'); ?></a>
+			<a href="#" class="cp-link gray" data-toggle="modal" data-target="#validate-contacts">
+				<span><?php print t('Validate point of contact'); ?></span>
+			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_set_priority; ?>">
 		<div class="col-xs-2">
-			<span class="indicator gray"></span>
+			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#set-priority"><?php print t('Set Priority'); ?></a>
+			<a href="#" class="cp-link" data-toggle="modal" data-target="#set-priority">
+				<span><?php print t('Set Priority'); ?></span>	
+			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row ">
+	<div class="cp-step row <?php print $class_convert_to_prospect; ?>">
 		<div class="col-xs-2">
-			<span class="indicator end big no-check"></span>
+			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#convert-to-prospect"><?php print t('Convert to Prospect'); ?></a>
+				
+			<?php if ($account_status == 'prospect') : ?>
+				<a href="#" class="cp-link big-step">
+					<span><?php print t('Converted to Prospect!'); ?></span>
+				</a>
+				<a href="/company/<?php print arg(1); ?>?from=prospects" class="cp-link orange">
+					<span><?php print t('Go to Prospect Page'); ?></span>
+				</a>
+			<?php else: ?>
+				<a href="#" class="cp-link big-step" data-toggle="modal" data-target="#convert-to-prospect">
+					<span><?php print t('Convert to Prospect'); ?></span>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>
@@ -185,7 +205,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <div class="be-custom-actions">
-	        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+	        	<?php print render($form['submit']); ?>
 	        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#verify-sca-dbra" data-dismiss="modal"><?php print t('Back'); ?></button>
 	        </div>
 	      </div>
@@ -231,7 +251,7 @@
 	      <div class="modal-footer">
 	        <div class="be-custom-actions">
 	        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#verify-sca-dbra" data-dismiss="modal"><?php print t('Back'); ?></button>
-	        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+	        	<?php print render($form['submit']); ?>
 	        	<button type="button" class="green-btn"  data-toggle="modal" data-target="#validate-contacts" data-dismiss="modal"><?php print t('Next: Validate point of contact'); ?></button>
 	        </div>
 	      </div>
@@ -285,7 +305,7 @@
 	      <div class="modal-footer">
 	        <div class="be-custom-actions">
 	        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#classify-to-group" data-dismiss="modal"><?php print t('Back'); ?></button>
-	        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+	        	<?php print render($form['submit']); ?>
 	        	<button type="button" class="green-btn"  data-toggle="modal" data-target="#set-priority" data-dismiss="modal"><?php print t('Next: Set Priority'); ?></button>
 	        </div>
 	      </div>
@@ -332,7 +352,7 @@
 	      <div class="modal-footer">
 	        <div class="be-custom-actions">
 	        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#validate-contacts" data-dismiss="modal"><?php print t('Back'); ?></button>
-	        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+	        	<?php print render($form['submit']); ?>
 	        	<button type="button" class="green-btn"  data-toggle="modal" data-target="#convert-to-prospect" data-dismiss="modal"><?php print t('Next: Convert to Prospect'); ?></button>
 	        </div>
 	      </div>
@@ -372,14 +392,12 @@
 	      	<div class="modal-body-wrap">
 	      		<div class="modal-body-inner">
 	      			<h3><?php print t('Convert to prospect?'); ?></h3>
-	      			<?php print render($form['convert_to_prospect']); ?>
-        		<?php print render($form['submit']); ?>
 	      		</div>
 	      	</div>
 	      </div>
 	      <div class="modal-footer">
 	        <div class="be-custom-actions">
-	        	<button type="button" class="green-btn" data-dismiss="modal"><?php print t('Yes'); ?></button>
+	        	<?php print render($form['convert_to_prospect']); ?>
 	        	<button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 	        </div>
 	      </div>

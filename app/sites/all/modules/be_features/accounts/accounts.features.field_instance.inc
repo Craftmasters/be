@@ -348,12 +348,12 @@ function accounts_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 0,
-      'module' => 'field_collection_table',
+      'module' => 'field_collection',
       'settings' => array(
         'nodragging' => FALSE,
         'title_on_top' => TRUE,
       ),
-      'type' => 'field_collection_table',
+      'type' => 'field_collection_embed',
       'weight' => 35,
     ),
   );

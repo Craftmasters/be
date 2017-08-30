@@ -24,7 +24,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
       'yes_both' => t('Yes, Both'),
       'no' => t('No'),
     ),
-    '#default_value' => 'no',
   );
 
   $form['plan_to_work_sca_dbra'] = array(
@@ -33,7 +32,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
       'yes' => t('Yes'),
       'no' => t('No'),
     ),
-    '#default_value' => 'no',
   );
 
   module_load_include('inc', 'field_collection', 'field_collection.pages');
@@ -70,7 +68,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
       'yes_dbra' => t('Medium'),
       'yes_both' => t('High'),
     ),
-    '#default_value' => 'low',
   );
 
   $form['convert_to_prospect'] = array(
@@ -84,9 +81,9 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
-      'class' => array('green-btn'),
+      'class' => array('orange-btn'),
     ),
-    '#value' => t('Save'),
+    '#value' => t('Save and Exit'),
   );
 
 
@@ -116,6 +113,7 @@ function bullseye_current_progress_leads_form_submit($form, &$form_state) {
       }
     }
   }
+  kpr($form);die();
 }
 
 /**
@@ -129,3 +127,72 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   );
   return $items;
 }
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_leads_form(&$vars) {
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
+  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
+  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $vars['class_verification'] = '';
+  $vars['class_convert_to_prospect'] = '';
+
+  $vars['class_verify_sca_dbra'] = '';
+  $vars['class_classify_to_group'] = '';
+  $vars['class_validate_point_of_contact'] = '';
+  $vars['class_set_priority'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'verify_sca_dbra') {
+    $vars['class_verify_sca_dbra'] = 'current-step';
+  }
+  elseif ($action_status == 'classify_to_group') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'current-step';
+  }
+  elseif ($action_status == 'validate_point_of_contact') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'current-step';
+  }
+  elseif ($action_status == 'set_priority') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'current-step';
+    if ($workflow_status == 'convert_to_prospect') {
+      $vars['class_set_priority'] = 'done-step';
+    }
+  }
+
+  if ($workflow_status == 'verification') {
+    $vars['class_verification'] = 'gray-check';
+    $vars['class_convert_to_prospect'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_prospect') {
+    $vars['class_verification'] = 'green-check';
+    $vars['class_convert_to_prospect'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'prospect') {
+    $vars['class_convert_to_prospect'] = 'green-check';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

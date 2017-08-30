@@ -56,8 +56,12 @@ function accounts_field_default_field_bases() {
       'allowed_values' => array(
         'send_email' => 'Send email campaign',
         'verify_sca_dbra' => 'Verify SCA/DBRA',
+        'classify_to_group' => 'Classify to group',
+        'validate_point_of_contact' => 'Validate point of contact',
+        'set_priority' => 'Set priority',
       ),
       'allowed_values_function' => '',
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'list_text',
@@ -731,9 +735,11 @@ function accounts_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         'engagement' => 'Engagement',
+        'convert_to_prospect' => 'Convert to prospect',
         'verification' => 'Verification',
       ),
       'allowed_values_function' => '',
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'list_text',
