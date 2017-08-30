@@ -92,6 +92,7 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('First Name'),
     ),
+    '#required' => true,
   );
 
   $form['producer_lname'] = array(
@@ -99,35 +100,42 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Last Name'),
     ),
+    '#required' => true,
   );
 
   $form['producer_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email Address'),
+    '#title_display' => 'invisible',
     '#attributes' => array(
       'placeholder' => t('Add Email'),
     ),
     '#element_validate' => array('bullseye_producer_acct_email_element_validate'),
+    '#required' => true,
   );
 
   $form['producer_phone'] = array(
     '#type' => 'textfield',
     '#title' => t('Phone'),
+    '#title_display' => 'invisible',
     '#attributes' => array(
       'placeholder' => t('___-____-_____'),
     ),
+    '#required' => true,
   );
 
   $form['read_sca_dba'] = array(
     '#type' => 'checkbox',
     '#title_display' => 'invisible',
     '#title' => t('I have read the SCA and DBA documents.'),
+    '#required' => true,
   );
 
   $form['agree_terms_privacy'] = array(
     '#type' => 'checkbox',
     '#title_display' => 'invisible',
     '#title' => t('I agree to Bullseye Terms & Privacy Policy.'),
+    '#required' => true,
   );
 
 

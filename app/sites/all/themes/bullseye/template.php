@@ -212,7 +212,7 @@ function bullseye_theme($existing, $type, $theme, $path) {
   );
   $items['bullseye_producer_acct_indiv_form'] = array(
     'render element' => 'form',
-    'template' => 'producer-acct-indiv',
+    'template' => 'producer-acct',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
   return $items;

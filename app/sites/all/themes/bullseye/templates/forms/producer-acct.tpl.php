@@ -17,9 +17,11 @@
     </div>
     <div class="row">
       <div class="col-md-6">
+        <label for="edit-producer-email">Email Address</label>
         <?php print render($form['producer_email']); ?>
       </div>
       <div class="col-md-6">
+        <label for="edit-producer-phone">Phone</label>
         <?php print render($form['producer_phone']); ?>
       </div>
     </div>
@@ -43,11 +45,11 @@
 </div>
 
 <?php /* page 2 */ ?>
-<div id="producer-acct-page-2">
+<div id="producer-acct-page-2" style="display: none;">
   <h4 class="producer-title">You’re almost done!<br/>
 A few more things to wrap this up.</h4>
 
-  <div class="producer-acct-check">
+  <div class="producer-acct-check producer-acct-aggreement">
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
       <label for="producer-acct-petition" class="producer-acct-file-label">Sign the Producer Agreement</label>
@@ -82,8 +84,27 @@ A few more things to wrap this up.</h4>
 jQuery(document).ready(function($) {
 $('#producer-acct-next-btn').click(function(e){
   e.preventDefault();
-  $('#producer-acct-page-1').hide();
-  $('#producer-acct-page-2').show();
+  // @todo: validate and check if required fields have been inputted and checked
+  var inputs = $('#producer-acct-page-1').find('input.required');
+  if(inputs.length > 0){
+    var hasNoVal = false;
+    inputs.each(function(index, value){
+      input = $(value);
+      if(input.is(':checkbox') && input.is(':checked')){
+        hasNoVal = true;
+        return false;
+      }
+      else if(input.is(':text') && input.val() == ''){
+        hasNoVal = true;
+        return false;
+      }
+    });
+  }
+
+  if(!hasNoVal){
+    $('#producer-acct-page-1').hide();
+    $('#producer-acct-page-2').show();
+  }
   return false;
 });
 });  
