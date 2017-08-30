@@ -1611,17 +1611,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $check_identification_of_retirees = $value['check_identification_of_retirees'];
   $check_identification_of_covered = $value['check_identification_of_covered'];
 
-  // Benefits.
-  // Special Benefits.
-  $sb_current_carrier = $form_state['values']['sb_current_carrier'];
-  $sb_years_with_current_carrier = $form_state['values']['sb_years_with_current_carrier'];
-  $sb_plan_year_to_quote_start = $form_state['values']['sb_plan_year_to_quote_start'];
-  $sb_plan_year_to_quote_end = $form_state['values']['sb_plan_year_to_quote_end'];
-  $sb_renewal_of_current_plan = $form_state['values']['sb_renewal_of_current_plan'];
-  $sb_percentage_single = $form_state['values']['sb_percentage_single'];
-  $sb_percentage_family = $form_state['values']['sb_percentage_family'];
-  $sb_waiting_period = $form_state['values']['sb_waiting_period'];
-
+  // Map the data to RFP storage entity.
   $node = new stdClass();
 
   $node->title = 'RFP' . $be->randChars(6);
@@ -1904,6 +1894,30 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Waiting Period for New Employees?
   $rtwp = 'field_rt_waiting_period';
   $node->$rtwp[$lang][0][$val] = $value['ret_waiting_period'];
+
+  // Special Benefits.
+  // Current Carrier.
+  $sbcc = 'field_sb_current_carrier';
+  $node->$rtcc[$lang][0][$val] = $value['sb_current_carrier'];
+  // Years with current carrier.
+  $sbycc = 'field_sb_years_current_carrier';
+  $node->$sbycc[$lang][0][$val] = $value['sb_years_with_current_carrier'];
+  // Plan Year to Quote.
+  $sbps = 'field_sb_plan_start';
+  $node->$sbps[$lang][0][$val] = $value['sb_plan_year_to_quote_start'];
+  $sbpe = 'field_sb_plan_end';
+  $node->$sbpe[$lang][0][$val] = $value['sb_plan_year_to_quote_end'];
+  // Is this a renewal of a current plan in BullsEye?
+  $sbber = 'field_sb_renewal_current_plan_be';
+  $node->$sbber[$lang][0][$val] = $value['sb_renewal_of_current_plan'];
+  // Percentage of Employer Contribution.
+  $sbcs = 'field_sb_contrib_single';
+  $node->$sbcs[$lang][0][$val] = $value['sb_percentage_single'];
+  $sbcf = 'field_sb_contrib_family';
+  $node->$sbcf[$lang][0][$val] = $value['sb_percentage_family'];
+  // Waiting Period for New Employees?
+  $sbwp = 'field_sb_waiting_period';
+  $node->$sbwp[$lang][0][$val] = $value['sb_waiting_period'];
 
 
   // Save the carrier in the storage.
