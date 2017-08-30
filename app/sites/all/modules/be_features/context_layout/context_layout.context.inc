@@ -549,6 +549,8 @@ function context_layout_context_default_contexts() {
     'path' => array(
       'values' => array(
         'company' => 'company',
+        'company/*' => 'company/*',
+        'company/*/*' => 'company/*/*',
       ),
     ),
   );

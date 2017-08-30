@@ -1,0 +1,215 @@
+<?php
+/**
+ * Bullseye current progress module.
+ */
+
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Leads Form.
+ */
+function bullseye_current_progress_leads_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+  
+  $form['work_sca_dbra'] = array(
+    '#type' => 'radios',
+    '#options' => array(
+      'yes_sca' => t('Yes, SCA'),
+      'yes_dbra' => t('Yes, DBRA'),
+      'yes_both' => t('Yes, Both'),
+      'no' => t('No'),
+    ),
+  );
+
+  $form['plan_to_work_sca_dbra'] = array(
+    '#type' => 'radios',
+    '#options' => array(
+      'yes' => t('Yes'),
+      'no' => t('No'),
+    ),
+  );
+
+  module_load_include('inc', 'field_collection', 'field_collection.pages');
+  module_load_include('inc', 'node', 'node.pages');
+
+  $node_form = new stdClass;
+  $node_form->type = 'accounts';
+  $node_form->language = LANGUAGE_NONE;
+
+  // Getting the field "Contacts" field collection from accounts content type fields.
+  $field = field_info_field('field_contacts');
+  $instance = field_info_instance('node', 'field_contacts', 'accounts');
+  $items = field_get_items('node', $node_form, 'field_contacts');
+  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';
+
+  // Getting the field "Tags" from accounts content type fields.
+  $field = field_info_field('field_tags');
+  $instance = field_info_instance('node', 'field_tags', 'accounts');
+  $items = field_get_items('node', $node_form, 'field_tags');
+  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+  $form['field_tags'][LANGUAGE_NONE]['#title'] = '';
+  $form['field_tags'][LANGUAGE_NONE]['#attributes'] = array(
+    'placeholder' => t('+ Enter groups separated by commas ...'),
+  );
+
+  $form['priority'] = array(
+    '#type' => 'select',
+    '#options' => array(
+      'low' => t('Low'),
+      'yes_dbra' => t('Medium'),
+      'yes_both' => t('High'),
+    ),
+  );
+
+  $form['convert_to_prospect'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+
+
+  return $form;
+}
+
+/**
+ * Form submit for current progress leads form.
+ */
+function bullseye_current_progress_leads_form_submit($form, &$form_state) {
+  foreach ($form_state['values']['field_contacts'][LANGUAGE_NONE] as $key => $value) {
+    if (is_numeric($key)) {
+      $fc = 'field_contacts';
+      $v = 'values';
+      $lang = LANGUAGE_NONE;
+      $name = $form_state[$v][$fc][$lang][$key]['field_contact_name'][$lang][0]['value'];
+      $email = $form_state[$v][$fc][$lang][$key]['field_email'][$lang][0]['value'];
+      $phone = $form_state[$v][$fc][$lang][$key]['field_phone_number'][$lang][0]['value'];
+      $position = $form_state[$v][$fc][$lang][$key]['field_position'][$lang][0]['value'];
+      $empty_condition = ($name == '' && $email == '' && $phone == '' && $position == '');
+
+      // Since field collection remove button is buggy when programmatically attached to custom form,
+      // temporary workaround is let the user just empty the row fields of the item they want
+      // to remove and, here on the submit handler we just unset the empty rows on form_state['values'].
+      if ($empty_condition) {
+        unset($form_state[$v][$fc][$lang][$key]);
+      }
+    }
+  }
+  kpr($form);die();
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_leads_form(&$vars) {
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
+  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
+  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $vars['class_verification'] = '';
+  $vars['class_convert_to_prospect'] = '';
+
+  $vars['class_verify_sca_dbra'] = '';
+  $vars['class_classify_to_group'] = '';
+  $vars['class_validate_point_of_contact'] = '';
+  $vars['class_set_priority'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'verify_sca_dbra') {
+    $vars['class_verify_sca_dbra'] = 'current-step';
+  }
+  elseif ($action_status == 'classify_to_group') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'current-step';
+  }
+  elseif ($action_status == 'validate_point_of_contact') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'current-step';
+  }
+  elseif ($action_status == 'set_priority') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'current-step';
+    if ($workflow_status == 'convert_to_prospect') {
+      $vars['class_set_priority'] = 'done-step';
+    }
+  }
+
+  if ($workflow_status == 'verification') {
+    $vars['class_verification'] = 'gray-check';
+    $vars['class_convert_to_prospect'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_prospect') {
+    $vars['class_verification'] = 'green-check';
+    $vars['class_convert_to_prospect'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'prospect') {
+    $vars['class_convert_to_prospect'] = 'green-check';
+  }
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Prospects Form.
+ */
+function bullseye_current_progress_prospects_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  return $form;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bullseye_current_progress_theme($existing, $type, $theme, $path) {
+  $items['bullseye_current_progress_leads_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-leads-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['bullseye_current_progress_prospects_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-prospects-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+
+  return $items;
+}
+
+
+
+
+
+
+
+
+
+

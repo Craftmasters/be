@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Accounts (150)'); ?></span>
-        <a class="be-table-button" href="#"><?php print t('Add New'); ?></a>
-        <a class="be-table-button" href="#"><?php print t('Import'); ?></a>
+        <a class="be-table-button" href="/node/add/accounts?account_status=lead" rel="lightframe"><?php print t('Add New'); ?></a>
+        <a class="be-table-button" href="/admin/content/leads/import" rel="lightframe"><?php print t('Import'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
@@ -29,7 +29,7 @@
           <th><?php print t('Business Type'); ?></th>
           <th><?php print t('Contract'); ?></th>
           <th><?php print t('Priority'); ?></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 5; $i++) : ?>

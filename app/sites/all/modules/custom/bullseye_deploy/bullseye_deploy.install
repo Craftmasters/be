@@ -352,3 +352,31 @@ function bullseye_deploy_update_7029() {
 function bullseye_deploy_update_7030() {
   module_enable(array('field_group'), TRUE);
 }
+
+/**
+ * Install bullseye_current_progress module.
+ */
+function bullseye_deploy_update_7031() {
+  module_enable(array('bullseye_current_progress'), TRUE);
+}
+
+/**
+ * Install bullseye_leads module.
+ */
+function bullseye_deploy_update_7032() {
+  module_enable(array('bullseye_leads'), TRUE);
+}
+
+/**
+ * Install field_collection module.
+ */
+function bullseye_deploy_update_7033() {
+  module_enable(array('field_collection'), TRUE);
+}
+
+/**
+ * Install field_collection_table module.
+ */
+function bullseye_deploy_update_7034() {
+  module_enable(array('field_collection_table'), TRUE);
+}
