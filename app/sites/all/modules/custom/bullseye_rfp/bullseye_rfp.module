@@ -1590,16 +1590,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $tax_id = $value['tax_id'];
   $renewal_date = $value['renewal_date'];
 
-  // Attachments.
-  $employee_census = $value['employee_census'];
-  $current_summary_of_benefit = $value['current_summary_of_benefit'];
-  $current_bill = $value['current_bill'];
-  $last_renewal_letter = $value['last_renewal_letter'];
-  $summary_of_monthly_claims_experience = $value['summary_of_monthly_claims_experience'];
-  $broker_of_record = $value['broker_of_record'];
-  $letter_of_authorization = $value['letter_of_authorization'];
-  $large_claims_report = $value['large_claims_report'];
-
   // Census inclusions.
   $check_identifier = $value['check_identifier'];
   $check_ssn = $value['check_ssn'];
@@ -1919,6 +1909,17 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $sbwp = 'field_sb_waiting_period';
   $node->$sbwp[$lang][0][$val] = $value['sb_waiting_period'];
 
+  /*************
+   * Attachments.
+   *************/
+  $node->field_employee_census[$lang][0]['fid'] = $value['employee_census'];
+  $node->field_current_summary_of_benefit[$lang][0]['fid'] = $value['current_summary_of_benefit'];
+  $node->field_current_bill[$lang][0]['fid'] = $value['current_bill'];
+  $node->field_last_renewal_letter_rates[$lang][0]['fid'] = $value['last_renewal_letter'];
+  $node->field_summary_monthly_claims[$lang][0]['fid'] = $value['summary_of_monthly_claims_experience'];
+  $node->field_broker_of_record[$lang][0]['fid'] = $value['broker_of_record'];
+  $node->field_letter_of_authorization[$lang][0]['fid'] = $value['letter_of_authorization'];
+  $node->field_large_claims_report[$lang][0]['fid'] = $value['large_claims_report'];
 
   // Save the carrier in the storage.
   $node = node_submit($node);
