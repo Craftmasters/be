@@ -1845,7 +1845,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $node->$decf[$lang][0][$val] = $value['den_percentage_family'];
   // Waiting Period for New Employees?
   $dewp = 'field_dn_waiting_period';
-  $node->$dewp[$lang][0][$val] = $value['den_waiting_period];
+  $node->$dewp[$lang][0][$val] = $value['den_waiting_period'];
 
 
   // Save the carrier in the storage.
