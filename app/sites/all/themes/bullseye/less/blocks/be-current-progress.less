@@ -187,6 +187,7 @@
 
 	.field-name-field-contacts {
 		text-align: left;
+		margin-bottom: 30px;
 		button[value="Remove"],
 		.tabledrag-hide,
 		a.tabledrag-toggle-weight,
@@ -208,10 +209,15 @@
 			width: 25%;
 			vertical-align: top;
 			display: inline-block;
-			padding: 0px 5px;
+			padding: 0px 5px 0px;
 			input[type="text"] {
 				border-bottom: none;
 				font-size: 14px;
+				padding: 0px 5px;
+				&:focus,
+				&:active {
+					background-color: #fff - 5;
+				}
 			}
 		}
 		.form-group {
@@ -260,7 +266,7 @@
 			text-transform: uppercase;
 			font-family: 'Proximanova-Medium';
 			font-size: 14px;
-			padding: 0px 5px 5px;
+			padding: 0px 10px 5px;
 		}
 	}
 
