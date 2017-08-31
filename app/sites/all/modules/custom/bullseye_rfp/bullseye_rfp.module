@@ -1600,21 +1600,21 @@ function bullseye_rfp_form_submit($form, &$form_state) {
    * Group Info
    ***************/
   // Company.
-  $node->group_info['field_company'][$lang][0][$val] = $account->field_company[$lang][0][$val];
+  $node->field_company[$lang][0][$val] = $account->field_company[$lang][0][$val];
   // Primary email.
-  $node->group_info['field_email'][$lang][0][$val] = $account->field_email[$lang][0][$val];
+  $node->field_email[$lang][0][$val] = $account->field_email[$lang][0][$val];
   // Phone number.
-  $node->group_info['field_phone_number'][$lang][0][$val] = $account->field_phone_number[$lang][0][$val];
+  $node->field_phone_number[$lang][0][$val] = $account->field_work_phone[$lang][0][$val];
   // Website.
-  $node->group_info['field_website'][$lang][0][$val] = $account->field_website[$lang][0][$val];
+  $node->field_website[$lang][0][$val] = $account->field_work_website[$lang][0][$val];
   // Company Street Address.
-  $node->group_info['field_company_street_address'][$lang][0][$val] = $account->field_company_street_address[$lang][0][$val];
+  $node->field_company_street_address[$lang][0][$val] = $account->field_street[$lang][0][$val];
   // City.
-  $node->group_info['field_city'][$lang][0][$val] = $account->field_city[$lang][0][$val];
+  $node->field_city[$lang][0][$val] = $account->field_city[$lang][0][$val];
   // State.
-  $node->group_info['field_frp_state'][$lang][0][$val] = $account->field_frp_state[$lang][0][$val];
+  $node->field_frp_state[$lang][0][$val] = $account->field_state[$lang][0][$val];
   // Zip Code.
-  $node->group_info['field_zip_code'][$lang][0][$val] = $account->field_zip_code[$lang][0][$val];
+  $node->field_zip_code[$lang][0][$val] = $account->field_postal_code[$lang][0][$val];
 
   /**************
    * Plan Specifications
