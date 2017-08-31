@@ -461,7 +461,9 @@ function bullseye_blocks_render_be_header_progress() {
  * RFPs Block (Table).
  */
 function bullseye_blocks_render_be_rfps() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -471,6 +473,8 @@ function bullseye_blocks_render_be_rfps() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['rfps'] = $be->getRfps();
+  $vars['be'] = $be;
 
   $output = theme('be_rfps', $vars);
 
