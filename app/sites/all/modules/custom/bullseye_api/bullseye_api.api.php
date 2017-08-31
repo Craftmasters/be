@@ -320,22 +320,32 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
-      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
-      $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
-      $query->join('field_data_field_due_date', 'date', 'n.nid = date.entity_id');
-      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->leftJoin('field_data_field_company', 'cmp', 'n.nid = cmp.entity_id');
+      $query->leftJoin('field_data_field_mm_current_carrier', 'mmcc', 'n.nid = mmcc.entity_id');
+      $query->leftJoin('field_data_field_lm_current_carrier', 'lmcc', 'n.nid = lmcc.entity_id');
+      $query->leftJoin('field_data_field_tl_current_carrier', 'tlcc', 'n.nid = tlcc.entity_id');
+      $query->leftJoin('field_data_field_mec_current_carrier', 'mccc', 'n.nid = mccc.entity_id');
+      $query->leftJoin('field_data_field_den_current_carrier', 'dncc', 'n.nid = dncc.entity_id');
+      $query->leftJoin('field_data_field_vs_current_carrier', 'vscc', 'n.nid = vscc.entity_id');
+      $query->leftJoin('field_data_field_lf_current_carrier', 'lfcc', 'n.nid = lfcc.entity_id');
+      $query->leftJoin('field_data_field_std_current_carrier', 'sdcc', 'n.nid = sdcc.entity_id');
+      $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
+      $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
       $rfps = $query
-        ->distinct()
         ->fields('n', array('nid', 'title'))
-        ->fields('contact', array('field_primary_contact_value'))
-        ->fields('email', array('field_email_value'))
-        ->fields('benefits', array('field_benefits_value'))
-        ->fields('date', array('field_due_date_value'))
-        ->fields('priority', array('field_priority_value'))
+        ->fields('cmp', array('field_company_value'))
+        ->fields('mmcc', array('field_mm_current_carrier_value'))
+        ->fields('lmcc', array('field_lm_current_carrier_value'))
+        ->fields('tlcc', array('field_tl_current_carrier_value'))
+        ->fields('mccc', array('field_mec_current_carrier_value'))
+        ->fields('dncc', array('field_den_current_carrier_value'))
+        ->fields('vscc', array('field_vs_current_carrier_value'))
+        ->fields('lfcc', array('field_lf_current_carrier_value'))
+        ->fields('sdcc', array('field_std_current_carrier_value'))
+        ->fields('rtcc', array('field_ret_current_carrier_value'))
+        ->fields('sbcc', array('field_sb_current_carrier_value'))
         ->condition('n.type', 'rfp', '=')
         ->condition('n.status', 1, '=')
-        ->groupBy('n.nid')
         ->execute()
         ->fetchAll();
 
@@ -400,5 +410,17 @@ class Bullseye {
   function emailRfp($from, $to, $subject, $body, $attachments) {
     $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
     $email->send();
+  }
+
+  /**
+   * Determine if benefits in RFP is active.
+   */
+  function isActive($param) {
+    if (!is_null($param)) {
+      print "dot-priority green";
+    }
+    else {
+      print "dot-priority gray";
+    }
   }
 }

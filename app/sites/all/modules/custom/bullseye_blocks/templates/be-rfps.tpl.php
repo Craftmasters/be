@@ -37,25 +37,25 @@
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
+        <?php foreach($rfps as $rfp): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font">RFP366152</span></td>
-            <td><span class="gray-font">Massive Dynamic</span></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
+            <td><span class="gray-font"><?php print $rfp->field_company_value; ?></span></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_mm_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_lm_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_tl_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_mec_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_den_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_vs_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_lf_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_std_current_carrier_value); ?>"></td>
+            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_sb_current_carrier_value); ?>"></td>
             <td><span class="light-gray-font">8/30/2017</span></td>
             <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <td><span class="light-gray-font">James J.</span></td>
           </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
