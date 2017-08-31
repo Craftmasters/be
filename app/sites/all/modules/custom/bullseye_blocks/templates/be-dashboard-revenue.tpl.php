@@ -16,7 +16,7 @@
 	    </div>
     </div>
     <div class="chart-container">
-    	<canvas id="dashboard-revenue" height="250"></canvas>
+    	<canvas id="dashboard-revenue" height="227"></canvas>
     </div>
   </div>
 </div>

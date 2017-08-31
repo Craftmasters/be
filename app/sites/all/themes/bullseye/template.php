@@ -104,6 +104,8 @@ function bullseye_preprocess_page(&$vars, $hook) {
     if (user_is_logged_in()) {
       hide($vars['page']['content']['system_main']['default_message']);
       drupal_add_js($theme_directory . '/js/Chart.bundle.min.js');
+      drupal_add_js($theme_directory . '/js/d3.min.js');
+      drupal_add_js($theme_directory . '/js/d3pie.min.js');
     }
   }
 

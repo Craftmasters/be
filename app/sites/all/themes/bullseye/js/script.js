@@ -319,7 +319,6 @@
         }
 
         // For dashboard revenue chart.
-        // For hours page Metrics Chart.
         if ($("#dashboard-revenue").length) {
           var dashboard_revenue = $("#dashboard-revenue");
           var data = {
@@ -373,6 +372,69 @@
             type: 'bar',
             data: data,
             options: options
+          });
+        }
+
+        // For dashboard performance chart.
+        if ($('#performance-chart').length) {
+          var performance_chart = new d3pie('performance-chart', {
+            header: {
+              title: {
+                text: 'WIN RATIO',
+                color: '#92a5b9',
+                fontSize: 16,
+                font: 'Proximanova-Semibold'
+              },
+              subtitle: {
+                text: '40%',
+                color: '#6c6c6c',
+                fontSize: 40,
+                font: 'Proximanova-Light'
+              },
+              location: 'pie-center',
+              titleSubtitlePadding: 0
+            },
+            size: {
+              canvasHeight: 180,
+              canvasWidth: 180,
+              pieInnerRadius: '84%',
+              pieOuterRadius: '100%'
+            },
+            data: {
+              sortOrder: 'label-desc',
+              content: [
+                {
+                  label: '',
+                  value: 40,
+                  color: '#F58A3E'
+                },
+                {
+                  label: '',
+                  value: 60,
+                  color: '#87AEB6'
+                }
+              ]
+            },
+            labels: {
+              outer: {
+                format: 'none',
+                pieDistance: 20
+              },
+              inner: {
+                format: 'none'
+              },
+            },
+            misc: {
+              colors: {
+                segmentStroke: 'transparent'
+              },
+              canvasPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+              }
+            }
           });
         }
 

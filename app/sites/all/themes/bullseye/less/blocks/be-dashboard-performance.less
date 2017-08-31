@@ -1,0 +1,78 @@
+#block-bullseye-blocks-be-dashboard-performance {
+	.row {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+}
+
+.performace-chart-container {
+	text-align: center;
+}
+
+#performance-chart {
+	width: 180px;
+	height: 180px;
+	display: inline-block;
+}
+
+.top-performers-wrapper {
+	display: table;
+	height: 180px;
+}
+
+.top-performers {
+	display: table-cell;
+	vertical-align: middle;
+	h3 {
+		color: @table_header_tr_color;
+		font-size: 18px;
+		font-family: 'Proximanova-Semibold';
+		text-transform: uppercase;
+		margin-bottom: 20px;
+	}
+	.performer {
+		margin-bottom: 7px;
+	}
+	.perf-name {
+		color: @tb_gray_font;
+		font-family: 'Proximanova-Regular';
+		font-size: 13px;
+	}
+	.perf-score {
+		text-align: right;
+	}
+	span.score {
+		color: @green;
+		font-family: 'Proximanova-Medium';
+		font-size: 13px;
+		min-width: 36px;
+    display: inline-block;
+	}
+	span.up-down {
+		i.fa-arrow-up {
+			color: @green;
+		}
+		i.fa-arrow-down {
+			color: red;
+		}
+	}
+}
+
+.performance-top {
+	margin-top: 25px;
+}
+
+.performance-bottom {
+	margin-top: 30px;
+	h2 {
+		color: @tb_light_gray_font;
+		font-size: 13px;
+		font-family: 'Proximanova-Semibold';
+		text-transform: uppercase;
+	}
+	h1 {
+		color: @textfield_color;
+		font-size: 35px;
+		font-family: 'Proximanova-Light';
+	}
+}
