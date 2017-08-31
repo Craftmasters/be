@@ -1804,14 +1804,53 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   /*************
    * Attachments.
    *************/
-  $node->field_employee_census[$lang][0]['fid'] = $value['employee_census'];
-  $node->field_current_summary_of_benefit[$lang][0]['fid'] = $value['current_summary_of_benefit'];
-  $node->field_current_bill[$lang][0]['fid'] = $value['current_bill'];
-  $node->field_last_renewal_letter_rates[$lang][0]['fid'] = $value['last_renewal_letter'];
-  $node->field_summary_monthly_claims[$lang][0]['fid'] = $value['summary_of_monthly_claims_experience'];
-  $node->field_broker_of_record[$lang][0]['fid'] = $value['broker_of_record'];
-  $node->field_letter_of_authorization[$lang][0]['fid'] = $value['letter_of_authorization'];
-  $node->field_large_claims_report[$lang][0]['fid'] = $value['large_claims_report'];
+  if ($value['employee_census'] != 0) {
+    $census_file = file_load($value['employee_census']);
+    $census_file->display = 1;
+    $census_file = file_copy($census_file, 'public://');
+    $node->field_employee_census[$lang][0] = (array) $census_file;
+  }
+  if ($value['current_summary_of_benefit'] != 0) {
+    $sb_file = file_load($value['current_summary_of_benefit']);
+    $sb_file->display = 1;
+    $sb_file = file_copy($sb_file, 'public://');
+    $node->field_current_summary_of_benefit[$lang][0] = (array) $sb_file;
+  }
+  if ($value['current_bill'] != 0) {
+    $cb_file = file_load($value['current_bill']);
+    $cb_file->display = 1;
+    $cb_file = file_copy($cb_file, 'public://');
+    $node->field_current_bill[$lang][0] = (array) $cb_file;
+  }
+  if ($value['last_renewal_letter'] != 0) {
+    $rl_file = file_load($value['last_renewal_letter']);
+    $rl_file->display = 1;
+    $rl_file = file_copy($rl_file, 'public://');
+    $node->field_last_renewal_letter_rates[$lang][0] = (array) $rl_file;
+  }
+  if ($value['summary_of_monthly_claims_experience'] != 0) {
+    $mce_file = file_load($value['summary_of_monthly_claims_experience']);
+    $mce_file->display = 1;
+    $mce_file = file_copy($mce_file, 'public://');
+    $node->field_summary_monthly_claims[$lang][0] = (array) $mce_file;
+  }
+  if ($value['broker_of_record'] != 0) {
+    $br_file = file_load($value['broker_of_record']);
+    $br_file = file_copy($br_file, 'public://');
+    $node->field_broker_of_record[$lang][0] = (array) $br_file;
+  }
+  if ($value['letter_of_authorization'] != 0) {
+    $la_file = file_load($value['letter_of_authorization']);
+    $la_file->display = 1;
+    $la_file = file_copy($la_file, 'public://');
+    $node->field_letter_of_authorization[$lang][0] = (array) $la_file;
+  }
+  if ($value['large_claims_report'] != 0) {
+    $cr_file = file_load($value['large_claims_report']);
+    $cr_file->display = 1;
+    $cr_file = file_copy($cr_file, 'public://');
+    $node->field_large_claims_report[$lang][0] = (array) $cr_file;
+  }
 
   // Census Inclusions.
   if ($value['check_identifier'] == 1) {
