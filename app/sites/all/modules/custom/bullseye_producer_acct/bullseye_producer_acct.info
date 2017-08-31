@@ -1,0 +1,5 @@
+name = BullsEye Producer Account Registration
+description = BullsEye module to handle Login from Producer (Individual and Company Producer)
+package = BullsEye
+core = 7.x
+version = 7.x-1.0

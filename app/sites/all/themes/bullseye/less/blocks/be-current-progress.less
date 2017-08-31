@@ -11,6 +11,28 @@
 		&:active {
 			outline: none;
 		}
+		&.orange span {
+			background-color: @orange;
+			color: #fff;
+			border-radius: 5px;
+			padding: 8px 10px;
+			margin-left: -7px;
+			position: relative;
+			line-height: normal;
+	    position: relative;
+	    top: -33px;
+			&::after {
+				content: ' ';
+		    width: 0px;
+		    height: 0px;
+		    border-top: 19px solid transparent;
+		    border-left: 23px solid @orange;
+		    border-bottom: 18px solid transparent;
+		    position: absolute;
+		    right: -19px;
+		    top: 0px;
+			}
+		}
 	}
 
 	div[class*="col-xs-"] {
@@ -31,6 +53,7 @@
 		display: inline-block;
 		vertical-align: middle;
 		position: relative;
+		background-color: @cp_gray;
 		&::before {
 			content: ' ';
 			position: absolute;
@@ -41,9 +64,6 @@
 	    left: 45%;
 	    height: 121px;
 		}
-		&::after {
-
-		}
 		&.green {
 			background-color: @green;
 			&::before {
@@ -51,48 +71,113 @@
 				z-index: 1;
 			}
 		}
-		&.gray {
-			background-color: @cp_gray;
+		&.initial,
+    &.end {
+    	&::before {
+				display: none;
+			}
+    }
+	}
+
+	.big-step {
+		font-weight: 900;
+	}
+
+	&.current-step {
+		a.cp-link span {
+			background-color: @green;
+			color: #fff;
+			border-radius: 5px;
+			padding: 8px 10px;
+			margin-left: -7px;
+			position: relative;
+			&::after {
+				content: ' ';
+		    width: 0px;
+		    height: 0px;
+		    border-top: 19px solid transparent;
+		    border-left: 23px solid #59cd90;
+		    border-bottom: 18px solid transparent;
+		    position: absolute;
+		    right: -19px;
+		    top: 0px;
+			}
 		}
-		&.gray-check,
-		&.no-check,
-		&.green-check {
-			background: url(../../images/icons/gray_check_round.svg);
-      background-position: center;
-      background-repeat: no-repeat;
-      width: 30px;
-      border-radius: initial;
-      height: 30px;
-      z-index: 2;
-      &.initial,
-      &.end {
-      	&::before {
-					display: none;
-				}
-      }
-		}
-		&.no-check {
-			background: url(../../images/icons/gray_no_check_round.svg);
-      background-position: center;
-      background-repeat: no-repeat;
-		}
-		&.green-check {
-			background: url(../../images/icons/green_check_round.svg);
-      background-position: center;
-      background-repeat: no-repeat;
+		.indicator {
+			background-color: @green;
+			&::before {
+				background-color: @green;
+				z-index: 1;
+			}
 		}
 	}
 
-	&.initial,
-	&.end {
-		a.cp-link {
-			font-weight: 900;
+	&.done-step {
+		.indicator {
+			background-color: @green;
+			&::before {
+				background-color: @green;
+				z-index: 1;
+			}
+		}
+	}
+
+	&.gray-check,
+	&.no-check,
+	&.green-check {
+		.indicator {
+			background: url(../../images/icons/gray_check_round.svg);
+	    background-position: center;
+	    background-repeat: no-repeat;
+	    width: 30px;
+	    border-radius: initial;
+	    height: 30px;
+	    z-index: 2;
+		}
+	}
+	&.no-check {
+		.indicator {
+			background: url(../../images/icons/gray_no_check_round.svg);
+	    background-position: center;
+	    background-repeat: no-repeat;
+		}
+	}
+	&.green-check {
+		.indicator {
+			background: url(../../images/icons/green_check_round.svg);
+	    background-position: center;
+	    background-repeat: no-repeat;
 		}
 	}
 }
 
 
 #block-bullseye-blocks-be-current-progress {
+	.be-bs-modal {
+		.be-custom-actions {
+			text-align: center;
+			margin-top: 0px;
+			padding: 0px 0px 35px;
+		}
+		.modal-body {
+			min-height: 200px;
+			display: table;
+			width: 100%;
+			text-align: center;
+		}
+		.modal-body-wrap {
+			vertical-align: middle;
+			display: table-cell;
+		}
+		.modal-body-inner {
+			padding: 0 30px;
+		}
+		h3 {
+			font-family: 'Proximanova-Regular';
+			font-size: 20px;
+			color: @field_value_color;
+		}
+	}
 	.be-bs-modal-progress {
 		padding: 15px 0px 10px;
 	}
@@ -100,6 +185,7 @@
 		text-align: center;
 	  width: 20%;
 	  .pr-line {
+	  	height: 20px;
 	  	span {
 	  		display: inline-block;
 	  		width: 10px;
@@ -107,6 +193,7 @@
 	  		border-radius: 100%;
 	  		background-color: #fff;
 	  		position: relative;
+	  		vertical-align: middle;
 	  		&::after {
 	  			content: ' ';
 	  			position: absolute;
@@ -122,6 +209,7 @@
 	  	font-size: 15px;
 	  	font-family: 'Proximanova-Regular';
 	  	white-space: nowrap;
+	  	margin-top: 10px;
 	  }
 	  &:last-child {
 	  	.pr-line {
@@ -139,6 +227,120 @@
 	  	}
 	  }
 	}
+
+	#edit-work-sca-dbra,
+	#edit-plan-to-work-sca-dbra {
+		display: none;
+	}
+
+	.field-name-field-tags {
+		input {
+			word-wrap: break-word;
+	    word-break: break-all;
+	    height: 80px;
+	    border-bottom: none;
+	    border: 1px solid #fff - 30;
+	    border-radius: 5px;
+	    padding: 15px 20px;
+		}
+	}
+
+	.field-name-field-contacts {
+		text-align: left;
+		margin-bottom: 30px;
+		button[value="Remove"],
+		.tabledrag-hide,
+		a.tabledrag-toggle-weight,
+		label,
+		.field-multiple-drag {
+			display: none;
+		}
+		tr {
+			background-color: transparent;
+		}
+		th {
+			border-bottom: none;
+		}
+		td {
+			padding: 0px;
+			border-top: none;
+		}
+		.field-type-text {
+			width: 25%;
+			vertical-align: top;
+			display: inline-block;
+			padding: 0px 5px 0px;
+			input[type="text"] {
+				border-bottom: none;
+				font-size: 14px;
+				padding: 0px 5px;
+				&:focus,
+				&:active {
+					background-color: #fff - 5;
+				}
+			}
+		}
+		.form-group {
+			margin-bottom: 0px;
+		}
+		tr {
+			&.draggable {
+				&:last-child {
+					.field-type-text {
+						input[type="text"] {
+							border-bottom: 2px solid @textfield_bottom_border_color;
+							&:focus,
+							&:active {
+								border-bottom: 2px solid @orange;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		div[id*="field-contacts-add-more-wrapper"] {
+			position: relative;
+		}
+		.field-add-more-submit {
+			border: none;
+			position: absolute;
+			top: -38px;
+			right: 0px;
+			margin: 0px;
+			padding: 0px;
+			background-color: transparent;
+			cursor: pointer;
+			font-size: 30px;
+			color: @green;
+		}
+	}
+
+	table.table-header-vc {
+		margin-top: 20px;
+		width: 100%;
+		border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+		th {
+			width: 25%;
+			color: @blue_gray;
+			text-transform: uppercase;
+			font-family: 'Proximanova-Medium';
+			font-size: 14px;
+			padding: 0px 10px 5px;
+		}
+	}
+
+	.form-item-priority {
+		text-align: center;
+		#edit-priority {
+			width: 250px;
+			text-align: center;
+			display: inline-block;
+			margin-top: 20px;
+		}
+	}
+		
+
 }
 	
 

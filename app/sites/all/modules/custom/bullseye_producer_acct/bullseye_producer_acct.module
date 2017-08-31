@@ -1,0 +1,237 @@
+<?php
+/**
+ * Bullseye plan specification module.
+ */
+
+// constant access arguments
+define('BULLSEYE_PRODUCER_ACCT_ADD', 'Producers registration page');
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_producer_acct_menu() {
+  $items = array();
+
+  $items['producer/registration'] = array(
+    'title' => 'Producer Registration Page',
+    'page callback' => 'bullseye_producer_acct_select',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/registration/individual'] = array(
+    'title' => 'Individual Producer Registration Page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_acct_indiv_form'),
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/registration/company'] = array(
+    'title' => 'Company Producer Registration Page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_acct_company_form'),
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/registration/confirmation'] = array(
+    'title' => 'Registration successful',
+    'page callback' => 'bullseye_producer_acct_confirm',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * implementation of hook permission
+ */
+function bullseye_producer_acct_permission(){
+  return array(
+    BULLSEYE_PRODUCER_ACCT_ADD => array(
+      'title' => t(BULLSEYE_PRODUCER_ACCT_ADD),
+      'description' => t('Allow users to register account for company producer or individual producer.'),
+    ),
+  );
+}
+
+/**
+ * Selection page
+ */
+function bullseye_producer_acct_select() {
+  global $base_url; //krumo(node_load(5321));
+
+  // Theme directory.
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $producer_acct_company_img = $base_url . '/' . $theme_directory . '/images/producer-acct-company-logo.jpg';
+  $producer_acct_individual_img = $base_url . '/' . $theme_directory . '/images/producer-acct-individual-logo.jpg';
+
+  $producer_acct_individual_link = url('producer/registration/individual', array('absolute' => true));
+  $producer_acct_company_link = url('producer/registration/company', array('absolute' => true));
+
+  $vars = array(
+    'producer_acct_company_img' => $producer_acct_company_img,
+    'producer_acct_individual_img' => $producer_acct_individual_img,
+    'producer_acct_individual_link' => $producer_acct_individual_link,
+    'producer_acct_company_link' => $producer_acct_company_link,
+  );
+
+  return theme('bullseye_producer_acct_select', $vars);
+}
+
+/**
+ * confirmation page
+ */
+function bullseye_producer_acct_confirm(){
+
+  return theme('bullseye_producer_acct_confirm');
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Individual producer account registration form
+ */
+function bullseye_producer_acct_indiv_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['producer_fname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('First Name'),
+    ),
+    '#required' => true,
+  );
+
+  $form['producer_lname'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Last Name'),
+    ),
+    '#required' => true,
+  );
+
+  $form['producer_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email Address'),
+    '#title_display' => 'invisible',
+    '#attributes' => array(
+      'placeholder' => t('Add Email'),
+    ),
+    '#element_validate' => array('bullseye_producer_acct_email_element_validate'),
+    '#required' => true,
+  );
+
+  $form['producer_phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Phone'),
+    '#title_display' => 'invisible',
+    '#attributes' => array(
+      'placeholder' => t('___-____-_____'),
+    ),
+    '#required' => true,
+  );
+
+  $form['read_sca_dba'] = array(
+    '#type' => 'checkbox',
+    '#title_display' => 'invisible',
+    '#title' => t('I have read the SCA and DBA documents.'),
+    '#required' => true,
+  );
+
+  $form['agree_terms_privacy'] = array(
+    '#type' => 'checkbox',
+    '#title_display' => 'invisible',
+    '#title' => t('I agree to Bullseye Terms & Privacy Policy.'),
+    '#required' => true,
+  );
+
+
+  /*page-2*/
+  $form['sign_petition'] = array(
+    '#markup' => 'https://app.hellosign.com/s/56b2a684'
+  );
+  
+  $form['file_health_life'] = array(
+    '#type' => 'file',
+    '#title' => t('Browse'),
+    '#attributes' => array(
+      'class' => array('element-invisible'),
+    ),
+  );
+
+  $form['file_error_omission_insurance'] = array(
+    '#type' => 'file',
+    '#title' => t('Browse'),
+    '#attributes' => array(
+      'class' => array('element-invisible'),
+    ),
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      // 'class' => array('orange-btn'),
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * helper function
+ * allows validation of email addresses
+ */
+function bullseye_producer_acct_email_element_validate($element, &$form_state, $form) {
+   if (!valid_email_address($element['#value'])) {
+     form_error($element, t('Please enter a valid email address.'));
+   }
+}
+
+/**
+ * hook_form_submit()
+ */
+function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
+  // do business logic here
+  // then redirect to confirmation page
+
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Individual producer account registration form
+ */
+function bullseye_producer_acct_company_form($form, &$form_state) {
+  // copy form array from individual form
+  $form = bullseye_producer_acct_indiv_form($form, $form_state);
+
+  $form['company_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['company_container']['contact_company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company Name'),
+    '#attributes' => array(
+      'placeholder' => t('Add Company'),
+    ),
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}

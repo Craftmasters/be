@@ -1,0 +1,180 @@
+body.page-producer-registration{
+  background: url(/sites/all/themes/bullseye/images/login.png) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .producer-acct-wrapper {
+    display: table;
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 670px;
+  }
+  .producer-acct-inner {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .producer-acct-footer {
+    text-align: center;
+    margin-top: 9px;
+    padding-bottom: 30px;
+
+    img{
+      width: 133px;
+      opacity: 0.8;
+    }
+    p{
+      color: #ebebeb;
+      font-size: 16px;
+      font-family: 'Proximanova-Medium';
+      margin: 0px;
+      padding: 0px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 5px;
+    }
+  }
+
+  #producer-acct-container{
+    background: #fff;
+    max-width: 670px;
+    padding: 20px 30px 50px;
+    margin: 30px auto;
+    text-align: center;
+
+    h3.producer-title{
+      color: #5c7596;
+      font-family: 'Proximanova-Regular';
+      font-size: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 30px 0;
+    }
+
+    h4.producer-title{
+      color: #5c7596;
+      text-transform: uppercase;
+      font-family: 'Proximanova-Regular';
+      font-size: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 20px 0;
+    }
+
+    p{
+      color: #6C6C6C;
+      font-size: 13px;
+    }
+  }
+
+  #bullseye-producer-acct-indiv-form{
+    text-align: left;
+
+    .row{
+      margin: 0;
+    }
+    .col-md-6{
+      padding: 0;
+    }
+
+    .form-item{
+      margin: 20px 0;
+      margin-right: 30px;
+    }
+
+    .producer-acct-link{
+      color: #F58A3E;
+    }
+
+    .single-row-check-box{
+      overflow: auto;
+      height: auto;
+      width: auto;
+      margin-bottom: 20px;
+
+      .form-item{
+        float: left;
+        margin: 0;
+      }
+    }
+
+    .button-container, .submit-container{
+      text-align: center;
+      
+      button.orange-btn, button.green-btn{
+        border-radius: 30px;
+        padding: 10px 90px;
+        text-transform: uppercase;
+        color: #fff;
+        border: 0;
+        font-size: 16px;
+      }
+      
+      button.orange-btn{
+        background: #F58A3E;
+      }
+
+      button.green-btn{
+        background: #59CD90;
+      }
+    }
+
+    .producer-acct-check{
+      margin: 30px 0;
+
+      .check-icon-gray, .check-icon-green{
+        height: 41px;
+        width: 41px;
+        background: url(../../images/producer-acct-check-gray.jpg) no-repeat center center;
+        float: left;
+        padding: 45px 35px;
+      }
+
+      .check-icon-green{
+        background-image: url(../../images/producer-acct-check-green.jpg);
+      }
+
+      .orange-btn.square-btn, .form-type-file label.control-label{
+        display-inline: block;
+        border-radius: 3px;
+        padding: 10px 30px;
+        text-transform: uppercase;
+        color: #fff;
+        border: 0;
+        font-size: 16px;
+        background: #F58A3E;
+        cursor: pointer; cursor: hand;
+      }
+
+      .producer-acct-file-label{
+        display: block;
+        color: #6C6C6C;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+body.page-producer-registration-confirmation{
+  #producer-acct-container{
+    max-width: 530px;
+    margin: 0 auto;
+
+    .producer-acct-check{
+
+      .check-icon-gray{
+        height: 41px;
+        width: 41px;
+        background: url(../../images/producer-acct-check-gray.jpg) no-repeat center center;
+        margin: 0 auto;
+        padding: 45px 35px;
+      }
+
+      p{
+        font-size: 16px;
+        color: #5C7596;
+      }
+    }
+  }
+}
