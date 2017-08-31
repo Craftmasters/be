@@ -182,6 +182,22 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
+  $form['convert_to_opportunity'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+
   return $form;
 }
 
