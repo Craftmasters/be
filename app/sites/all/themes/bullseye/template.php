@@ -33,6 +33,13 @@ function bullseye_preprocess_html(&$variables, $hook) {
   if($plan_specs){
     $variables['classes_array'][] = 'plan-specs-form';
   }
+
+  // For Dashboard page.
+  if (drupal_is_front_page()) {
+    if (user_is_logged_in()) {
+      $variables['classes_array'][] = 'dashboard';
+    }
+  }
 }
 
 /**
@@ -90,6 +97,13 @@ function bullseye_preprocess_page(&$vars, $hook) {
 
   if (arg(0) == 'rfps' && arg(1) == 'add') {
     drupal_add_js($theme_directory . '/js/smk-accordion.min.js');
+  }
+
+  // For Dashboard page.
+  if (drupal_is_front_page()) {
+    if (user_is_logged_in()) {
+      hide($vars['page']['content']['system_main']['default_message']);
+    }
   }
 
 }
