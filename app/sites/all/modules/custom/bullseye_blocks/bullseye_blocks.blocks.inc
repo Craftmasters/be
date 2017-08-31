@@ -322,11 +322,11 @@ function bullseye_blocks_render_be_current_progress() {
   $vars['cp_form'] = FALSE;
 
   if (isset($_GET['from'])) {
-    if ($_GET['from'] == 'leads') {
+    if ($_GET['from'] == 'lead') {
       $leads_cp_form = drupal_get_form('bullseye_current_progress_leads_form');
       $vars['cp_form'] = drupal_render($leads_cp_form);
     }
-    elseif ($_GET['from'] == 'prospects') {
+    elseif ($_GET['from'] == 'prospect') {
       $prospects_cp_form = drupal_get_form('bullseye_current_progress_prospects_form');
       $vars['cp_form'] = drupal_render($prospects_cp_form);
     }
