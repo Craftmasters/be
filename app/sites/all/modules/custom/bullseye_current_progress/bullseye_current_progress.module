@@ -112,7 +112,6 @@ function bullseye_current_progress_leads_form_submit($form, &$form_state) {
       }
     }
   }
-  kpr($form);die();
 }
 
 /**
