@@ -19,6 +19,7 @@ features[context][] = accounts_opportunities_page
 features[context][] = accounts_page
 features[context][] = accounts_prospects_blocks
 features[context][] = accounts_prospects_page
+features[context][] = add_producer_page
 features[context][] = calendar_blocks
 features[context][] = calendar_page
 features[context][] = carriers_blocks

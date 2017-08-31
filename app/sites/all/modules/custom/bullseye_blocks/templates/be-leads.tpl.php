@@ -40,8 +40,8 @@
               <span class="gray-font">Chris Devon</span>
             </td>
             <td><span class="light-gray-font">Chief Operations Officer</span></td>
-            <!-- link "/company/allen-markarian?from=leads" where node url allen-markarian is the alias -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=leads" class="orange-font">ABC Company</a></span></td>
+            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
+            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">ABC Company</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>
@@ -57,8 +57,8 @@
               <span class="gray-font">Greg Holloway</span>
             </td>
             <td><span class="light-gray-font">VP of Human Resources</span></td>
-            <!-- "/company/allen-markarian?from=leads" where allen-markarian is the node url alias of the lead -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=leads" class="orange-font">Sharklame Ent.</a></span></td>
+            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
+            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">Sharklame Ent.</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>
@@ -74,8 +74,8 @@
               <span class="gray-font">Jake Leithold</span>
             </td>
             <td><span class="light-gray-font">Benefits Manager</span></td>
-            <!-- link "/company/allen-markarian?from=leads" where allen-markarian is the node url alias of the lead -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=leads" class="orange-font">Pitbull Inc.</a></span></td>
+            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
+            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">Pitbull Inc.</a></span></td>
             <td><span class="orange-font">jackjames@abc.com</span></td>
             <td><span class="light-gray-font">Conference 2016</span></td>
             <td><span class="light-gray-font">Women Owned</span></td>

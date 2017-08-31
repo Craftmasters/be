@@ -35,7 +35,8 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="dot-priority red"></span></td>
-            <td><span class="orange-font"><a href="/company?from=deals-in-progress" class="orange-font">ABC Company</a></span></td>
+            <!-- link "/company/allen-markarian?from=deal-in-progress" where 'allen-markarian' is the alias and 'deal-in-progress' is the status of account -->
+            <td><span class="orange-font"><a href="/company/allen-markarian?from=deal-in-progress" class="orange-font">ABC Company</a></span></td>
             <td><span class="gray-font">Chris Devon</span></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_gray; ?>"></td>

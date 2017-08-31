@@ -125,10 +125,10 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
   $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
 
-  $vars['class_verification'] = '';
-  $vars['class_convert_to_prospect'] = '';
+  $vars['class_verification'] = 'gray-check';
+  $vars['class_convert_to_prospect'] = 'no-check';
 
-  $vars['class_verify_sca_dbra'] = '';
+  $vars['class_verify_sca_dbra'] = 'current-step';
   $vars['class_classify_to_group'] = '';
   $vars['class_validate_point_of_contact'] = '';
   $vars['class_set_priority'] = '';
