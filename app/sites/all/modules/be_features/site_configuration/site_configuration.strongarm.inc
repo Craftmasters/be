@@ -35,7 +35,10 @@ function site_configuration_strongarm() {
 ~user/reset/*
 ~user/reset/*/*
 ~user/reset/*/*/*
-~user/reset/*/*/*/*';
+~user/reset/*/*/*/*
+~plan_specs
+~producer/registration
+~producer/registration/*';
   $export['anonymous_login_paths'] = $strongarm;
 
   $strongarm = new stdClass();
