@@ -281,31 +281,183 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->join('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->join('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->join('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->join('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->join('field_data_field_title', 'pos', 'n.nid = pos.entity_id');
-      $query->join('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->join('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
-      $query->join('field_data_field_source', 'source', 'n.nid = source.entity_id');
-      $query->join('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
+      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
+      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
+      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
+      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $accounts = $query
-        ->distinct()
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
         ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
-        ->fields('btype', array('field_type_of_business'))
+        ->fields('btype', array('field_type_of_business_value'))
+        ->fields('title', array('field_title_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
-        ->groupBy('n.nid')
         ->execute()
         ->fetchAll();
 
       cache_set('accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Count all accounts.
+   */
+  function countAllAccnt() {
+    if ($cache = cache_get('count_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Get all leads account.
+   */
+  function getLeadsAccounts() {
+    if ($cache = cache_get('leads_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
+      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
+      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
+      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
+      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('mname', array('field_middle_name_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('comp', array('field_company_value'))
+        ->fields('mail', array('field_email_value'))
+        ->fields('source', array('field_source_value'))
+        ->fields('btype', array('field_type_of_business_value'))
+        ->fields('title', array('field_title_value'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'lead', '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('leads_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Count all leads account.
+   */
+  function countLeadsAccnt() {
+    if ($cache = cache_get('count_leads_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'lead', '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_leads_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Get all prospects account.
+   */
+  function getProspectsAccounts() {
+    if ($cache = cache_get('prospect_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
+      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
+      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
+      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
+      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('mname', array('field_middle_name_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('comp', array('field_company_value'))
+        ->fields('mail', array('field_email_value'))
+        ->fields('source', array('field_source_value'))
+        ->fields('btype', array('field_type_of_business_value'))
+        ->fields('title', array('field_title_value'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'prospect', '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('prospect_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Count all prospects account.
+   */
+  function countProspectsAccnt() {
+    if ($cache = cache_get('count_prospect_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'prospect', '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_prospect_accounts_listing', $accounts, 'cache');
     }
 
     return $accounts;
@@ -421,6 +573,18 @@ class Bullseye {
     }
     else {
       print "dot-priority gray";
+    }
+  }
+
+  /**
+   * Build account name.
+   */
+  function buildAccountName($fname, $mname, $lname) {
+    if ($mname) {
+      print ucfirst($fname) . ' ' . ucfirst($mname) . '. ' . ucfirst($lname);
+    }
+    else {
+      print ucfirst($fname) . ' ' . ucfirst($lname);
     }
   }
 }

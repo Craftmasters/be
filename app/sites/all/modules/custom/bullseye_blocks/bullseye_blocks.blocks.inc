@@ -80,7 +80,9 @@ function bullseye_blocks_render_be_bottom_header() {
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -90,6 +92,9 @@ function bullseye_blocks_render_be_leads() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['leads'] = $be->getLeadsAccounts();
+  $vars['be'] = $be;
+  $vars['total'] = $be->countLeadsAccnt();
 
   $output = theme('be_leads', $vars);
 
@@ -103,7 +108,9 @@ function bullseye_blocks_render_be_leads() {
  * Accounts Block (Table).
  */
 function bullseye_blocks_render_be_accounts() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -113,6 +120,9 @@ function bullseye_blocks_render_be_accounts() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['accounts'] = $be->getAllAccounts();
+  $vars['be'] = $be;
+  $vars['total'] = $be->countAllAccnt();
 
   $output = theme('be_accounts', $vars);
 
@@ -126,7 +136,9 @@ function bullseye_blocks_render_be_accounts() {
  * Prospects Block (Table).
  */
 function bullseye_blocks_render_be_prospects() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -136,6 +148,9 @@ function bullseye_blocks_render_be_prospects() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['be'] = $be;
+  $vars['prospects'] = $be->getProspectsAccounts();
+  $vars['total'] = $be->countProspectsAccnt();
 
   $output = theme('be_prospects', $vars);
 

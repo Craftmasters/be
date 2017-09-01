@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Leads (50)'); ?></span>
+        <span class="account-count"><?php print t('All Leads (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/node/add/accounts?account_status=lead" rel="lightframe"><?php print t('Add New'); ?></a>
         <a class="be-table-button" href="/admin/content/leads/import" rel="lightframe"><?php print t('Import'); ?></a>
       </div>
@@ -27,62 +27,57 @@
           <th><?php print t('Email'); ?></th>
           <th><?php print t('Source'); ?></th>
           <th><?php print t('Business Type'); ?></th>
-          <th><?php print t('Contract'); ?></th>
-          <th><?php print t('Priority'); ?></th>
-        </tr> 
+          <!--<th><?php //print t('Contract'); ?></th>
+          <th><?php //print t('Priority'); ?></th>-->
+        </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
+        <?php foreach ($leads as $l): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">Chris Devon</span>
+              <span class="gray-font">
+                <?php $be->buildAccountName($l->field_firstname_value, $l->field_middle_name_value, $l->field_lastname_value); ?>
+              </span>
             </td>
-            <td><span class="light-gray-font">Chief Operations Officer</span></td>
-            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">ABC Company</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority red"></span></td>
-          </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/icons/default_user.svg">
-              <span class="gray-font">Greg Holloway</span>
+              <span class="light-gray-font">
+                <?php print $l->field_title_value; ?>
+              </span>
             </td>
-            <td><span class="light-gray-font">VP of Human Resources</span></td>
-            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">Sharklame Ent.</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority green"></span></td>
+
           </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/icons/default_user.svg">
-              <span class="gray-font">Jake Leithold</span>
+              <span class="orange-font">
+                <a href="/company/allen-markarian?from=leads" class="orange-font">
+                  <?php print $l->field_company_value; ?>
+                </a>
+              </span>
             </td>
-            <td><span class="light-gray-font">Benefits Manager</span></td>
-            <!-- link "/company/allen-markarian?from=lead" where 'allen-markarian' is the alias and 'lead' is the status of account -->
-            <td><span class="orange-font"><a href="/company/allen-markarian?from=lead" class="orange-font">Pitbull Inc.</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority blue"></span></td>
+            <td>
+              <span class="orange-font">
+                <?php print $l->field_email_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $l->field_source_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $l->field_type_of_business_value; ?>
+              </span>
+            </td>
+            <!--<td>
+              <span class="light-gray-font">
+                SCA
+              </span>
+            </td>
+            <td><span class="dot-priority red"></span></td>-->
           </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
