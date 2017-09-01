@@ -18,10 +18,13 @@ function bullseye_blocks_render_be_top_header() {
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
-
+  
   $vars = array();
+  $vars['username'] = '';
 
-  $vars['username'] = $user->name;
+  if (isset($user->name)) {
+    $vars['username'] = $user->name;
+  }
 
   $vars['plus_icon'] = $base_url . '/' . $theme_directory . '/images/icons/plus.svg';
   $vars['envelope_icon'] = $base_url . '/' . $theme_directory . '/images/icons/mail.svg';
