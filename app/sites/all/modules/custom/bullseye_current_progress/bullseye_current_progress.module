@@ -165,7 +165,14 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_convert_to_prospect'] = 'no-check current-step';
   }
 
-  if ($vars['account_status'] == 'prospect') {
+  if ($vars['account_status'] == 'prospect' ||
+      $vars['account_status'] == 'opportunity' ||
+      $vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
 }
@@ -182,7 +189,50 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
+  $form['convert_to_opportunity'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
+  
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_prospects_form(&$vars) {
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
+  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
+  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $vars['class_engagement'] = 'gray-check';
+  $vars['class_convert_to_opportunity'] = 'no-check';
+
+  $vars['class_send_email_campaign'] = 'current-step';
+  $vars['class_build_rapport'] = '';
+  $vars['class_receive_feedback'] = '';
+  
 }
 
 /**

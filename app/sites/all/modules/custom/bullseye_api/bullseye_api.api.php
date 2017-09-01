@@ -290,7 +290,10 @@ class Bullseye {
       $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+      $query->leftJoin('field_data_field_account_status', 'astatus', 'n.nid = astatus.entity_id');
       $accounts = $query
+        ->fields('n', array('nid'))
+        ->fields('astatus', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
@@ -353,6 +356,8 @@ class Bullseye {
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $accounts = $query
+        ->fields('n', array('nid'))
+        ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
@@ -418,6 +423,8 @@ class Bullseye {
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $accounts = $query
+        ->fields('n', array('nid'))
+        ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))

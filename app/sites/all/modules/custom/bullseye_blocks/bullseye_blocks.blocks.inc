@@ -96,6 +96,22 @@ function bullseye_blocks_render_be_leads() {
   $vars['be'] = $be;
   $vars['total'] = $be->countLeadsAccnt();
 
+  $vars['aliases'] = array();
+
+  foreach ($vars['leads'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
+
   $output = theme('be_leads', $vars);
 
   return array(
@@ -124,6 +140,22 @@ function bullseye_blocks_render_be_accounts() {
   $vars['be'] = $be;
   $vars['total'] = $be->countAllAccnt();
 
+  $vars['aliases'] = array();
+
+  foreach ($vars['accounts'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
+
   $output = theme('be_accounts', $vars);
 
   return array(
@@ -151,6 +183,22 @@ function bullseye_blocks_render_be_prospects() {
   $vars['be'] = $be;
   $vars['prospects'] = $be->getProspectsAccounts();
   $vars['total'] = $be->countProspectsAccnt();
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['prospects'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_prospects', $vars);
 
