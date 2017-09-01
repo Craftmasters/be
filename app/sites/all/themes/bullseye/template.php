@@ -106,6 +106,7 @@ function bullseye_preprocess_page(&$vars, $hook) {
       drupal_add_js($theme_directory . '/js/Chart.bundle.min.js');
       drupal_add_js($theme_directory . '/js/d3.min.js');
       drupal_add_js($theme_directory . '/js/d3pie.min.js');
+      drupal_add_js($theme_directory . '/js/countUp.js');
     }
   }
 

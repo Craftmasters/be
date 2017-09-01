@@ -64,6 +64,28 @@
       // For lightbox iframes.
       $(document).ready(function() {
 
+        // For dashboard statistics animation.
+        if ($('.statistics-dashboard').length) {
+          var lead_num = $('#stat-lead-num').html();
+          var prospect_num = $('#stat-prospect-num').html();
+          var opportunity_num = $('#stat-opportunity-num').html();
+          var deal_num = $('#stat-deal-num').html();
+          var closed_num = $('#stat-closed-num').html();
+
+          lead_num = new CountUp('stat-lead-num', 0, lead_num);
+          prospect_num = new CountUp('stat-prospect-num', 0, prospect_num);
+          opportunity_num = new CountUp('stat-opportunity-num', 0, opportunity_num);
+          deal_num = new CountUp('stat-deal-num', 0, deal_num);
+          closed_num = new CountUp('stat-closed-num', 0, closed_num);
+
+          lead_num.start();
+          prospect_num.start();
+          opportunity_num.start();
+          deal_num.start();
+          closed_num.start();
+        }
+
+
         // Adding class to body element of the lightbox iframe
         var parent_iframe = $(window.frameElement).parent().find('iframe#lightboxFrame');
         parent_iframe.contents().find('body').addClass('be-lightbox');
