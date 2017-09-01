@@ -1,0 +1,80 @@
+<?php
+/**
+ * Bullseye plan specification module.
+ */
+
+// constant access arguments
+define('BULLSEYE_PRODUCER_FILE_VIEW', 'View File browser');
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_producer_file_menu() {
+  $items = array();
+
+  $items['producer/file'] = array(
+    'title' => 'Files',
+    'page callback' => 'bullseye_producer_file_page',
+    'access arguments' => array(BULLSEYE_PRODUCER_FILE_VIEW),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+/**
+ * implementation of hook permission
+ */
+function bullseye_producer_file_permission(){
+  return array(
+    BULLSEYE_PRODUCER_FILE_VIEW => array(
+      'title' => t(BULLSEYE_PRODUCER_FILE_VIEW),
+      'description' => t('Allow users on adding plan specifications.'),
+    ),
+  );
+}
+
+/**
+ * file browser page for producers
+ */
+function bullseye_producer_file_page(){
+  // global $base_url; //krumo(node_load(5321));
+
+  // // Theme directory.
+  // $theme_directory = path_to_theme('theme', 'bullseye');
+
+  // $producer_acct_company_img = $base_url . '/' . $theme_directory . '/images/icons/producer-acct-company-logo.jpg';
+  $vars = array();
+
+  return theme('bullseye_producer_file_page', $vars);
+}
+
+/**
+ * helper function
+ * load content structure by user
+ */
+function bullseye_producer_file_user_load(){
+  
+}
+
+/**
+ * helper function
+ * processes file tree array into 
+ */
+function _bullseye_producer_file_tree_process(){
+
+}
+
+/**
+ * helper function
+ * sample data provided for the tree process
+ */
+function _bullseye_producer_file_tree_process_sample(){
+  return array(
+    'ABC Company' => array(
+      '2017',
+    ),
+    'Gekko & Co.' => array(
+      '2017',
+    ),
+  );
+}

@@ -1,0 +1,5 @@
+name = BullsEye Producer File Browser
+description = BullsEye module to file browser for producer
+package = BullsEye
+core = 7.x
+version = 7.x-1.0

@@ -221,6 +221,10 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'page--producer-acct-confirm',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/pages',
   );
+  $items['bullseye_producer_file_page'] = array(
+    'template' => 'page--producer-file-page',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/pages',
+  );
   return $items;
 }
 
