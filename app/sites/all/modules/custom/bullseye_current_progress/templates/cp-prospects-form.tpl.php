@@ -1,6 +1,6 @@
 <div class="current-progress-main">
 	
-	<div class="cp-step row gray-check">
+	<div class="cp-step row <?php print $class_engagement; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
 		</div>
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 
-	<div class="cp-step row no-check">
+	<div class="cp-step ro<?php print $class_convert_to_opportunity; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>

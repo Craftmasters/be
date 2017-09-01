@@ -54,11 +54,13 @@ function accounts_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'send_email' => 'Send email campaign',
         'verify_sca_dbra' => 'Verify SCA/DBRA',
         'classify_to_group' => 'Classify to group',
         'validate_point_of_contact' => 'Validate point of contact',
         'set_priority' => 'Set priority',
+        'send_email' => 'Send email campaign',
+        'build_rapport' => 'Build Rapport',
+        'receive_feedback' => 'Receive Feedback',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
