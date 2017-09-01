@@ -313,6 +313,29 @@ class Bullseye {
   /**
    * Get all leads account.
    */
+  function countAllAccnt() {
+    if ($cache = cache_get('count_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Get all leads account.
+   */
   function getLeadsAccounts() {
     if ($cache = cache_get('leads_accounts_listing')) {
       $accounts = $cache->data;

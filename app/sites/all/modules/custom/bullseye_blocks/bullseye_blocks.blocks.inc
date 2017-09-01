@@ -117,6 +117,7 @@ function bullseye_blocks_render_be_accounts() {
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['accounts'] = $be->getAllAccounts();
   $vars['be'] = $be;
+  $vars['total'] = $be->countAllAccnt();
 
   $output = theme('be_accounts', $vars);
 
