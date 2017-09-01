@@ -66,11 +66,11 @@
 
         // For dashboard statistics animation.
         if ($('.statistics-dashboard').length) {
-          var lead_num = $('#stat-lead-num').html();
-          var prospect_num = $('#stat-prospect-num').html();
-          var opportunity_num = $('#stat-opportunity-num').html();
-          var deal_num = $('#stat-deal-num').html();
-          var closed_num = $('#stat-closed-num').html();
+          var lead_num = $('#stat-lead-num').attr('data-number');
+          var prospect_num = $('#stat-prospect-num').attr('data-number');
+          var opportunity_num = $('#stat-opportunity-num').attr('data-number');
+          var deal_num = $('#stat-deal-num').attr('data-number');
+          var closed_num = $('#stat-closed-num').attr('data-number');
 
           lead_num = new CountUp('stat-lead-num', 0, lead_num);
           prospect_num = new CountUp('stat-prospect-num', 0, prospect_num);
