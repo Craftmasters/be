@@ -21,6 +21,8 @@ function bullseye_blocks_render_be_top_header() {
 
   $vars = array();
 
+  $vars['username'] = $user->name;
+
   $vars['plus_icon'] = $base_url . '/' . $theme_directory . '/images/icons/plus.svg';
   $vars['envelope_icon'] = $base_url . '/' . $theme_directory . '/images/icons/mail.svg';
   $vars['gear_icon'] = $base_url . '/' . $theme_directory . '/images/icons/gear.svg';
