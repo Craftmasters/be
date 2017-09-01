@@ -46,7 +46,8 @@
                 <?php print $l->field_title_value; ?>
               </span>
             </td>
-            <!-- link "/company/allen-markarian?from=leads" where node url allen-markarian is the alias -->
+
+          </tr>
             <td>
               <span class="orange-font">
                 <a href="/company/allen-markarian?from=leads" class="orange-font">

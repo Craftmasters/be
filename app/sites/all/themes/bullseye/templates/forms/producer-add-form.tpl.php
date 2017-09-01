@@ -14,10 +14,8 @@
 
 <div class="be-form-section select-benefits-container">
 	<div class="row">
-	  <div class="row">
-			<div class="col-xs-6"><?php print render($form['phone']); ?></div>
-			<div class="col-xs-6"><?php print render($form['website']); ?></div>
-		</div>
+		<div class="col-xs-6"><?php print render($form['phone']); ?></div>
+		<div class="col-xs-6"><?php print render($form['website']); ?></div>
 	</div>
 </div>
 

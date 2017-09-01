@@ -318,6 +318,126 @@
           });
         }
 
+        // For dashboard revenue chart.
+        if ($("#dashboard-revenue").length) {
+          var dashboard_revenue = $("#dashboard-revenue");
+          var data = {
+            labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+            datasets: [{
+              label: 'Closed Deals',
+              backgroundColor: '#f58a3e',
+              data: [6000, 9000, 10000, 8100, 5600, 1500, 5400],
+            }, {
+              label: 'Deals in Progress',
+              backgroundColor: '#ffbc34',
+              data: [7000, 5000, 29900, 8100, 5600, 8500, 34000]
+            }]
+          };
+          var options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                stacked: true,
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                  fontColor: '#92A6B9',
+                  fontFamily: 'Proximanova-Bold',
+                  fontSize: 12
+                }
+              }],
+              yAxes: [{
+                stacked: true,
+                ticks: {
+                  fontColor: '#92A6B9',
+                  fontFamily: 'Proximanova-Bold',
+                  fontSize: 14,
+                  min: 0,
+                  max: 50000,
+                  fixedStepSize: 25000,
+                  callback: function(value, index, values) {
+                    var value_comma = value.toLocaleString();
+                    return '$' + value_comma;
+                  }
+                },
+              }]
+            },
+          };
+          var dashboard_revenue_chart = new Chart(dashboard_revenue, {
+            type: 'bar',
+            data: data,
+            options: options
+          });
+        }
+
+        // For dashboard performance chart.
+        if ($('#performance-chart').length) {
+          var performance_chart = new d3pie('performance-chart', {
+            header: {
+              title: {
+                text: 'WIN RATIO',
+                color: '#92a5b9',
+                fontSize: 16,
+                font: 'Proximanova-Semibold'
+              },
+              subtitle: {
+                text: '40%',
+                color: '#6c6c6c',
+                fontSize: 40,
+                font: 'Proximanova-Light'
+              },
+              location: 'pie-center',
+              titleSubtitlePadding: 0
+            },
+            size: {
+              canvasHeight: 180,
+              canvasWidth: 180,
+              pieInnerRadius: '84%',
+              pieOuterRadius: '100%'
+            },
+            data: {
+              sortOrder: 'label-desc',
+              content: [
+                {
+                  label: '',
+                  value: 40,
+                  color: '#F58A3E'
+                },
+                {
+                  label: '',
+                  value: 60,
+                  color: '#87AEB6'
+                }
+              ]
+            },
+            labels: {
+              outer: {
+                format: 'none',
+                pieDistance: 20
+              },
+              inner: {
+                format: 'none'
+              },
+            },
+            misc: {
+              colors: {
+                segmentStroke: 'transparent'
+              },
+              canvasPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+              }
+            }
+          });
+        }
+
       });
 
       $(window).load(function() {

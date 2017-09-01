@@ -61,6 +61,12 @@ function bullseye_blocks_render_be_bottom_header() {
     drupal_set_title(t('Activities'));
     $vars['be_page_title'] = t('Activities');
   }
+  elseif (drupal_is_front_page()) {
+    if (user_is_logged_in()) {
+      drupal_set_title('Dashboard');
+      $vars['be_page_title'] = t('Dashboard');
+    }
+  }
 
   $output = theme('be_bottom_header', $vars);
 
@@ -320,20 +326,17 @@ function bullseye_blocks_render_be_carriers() {
  * Current Progress Block.
  */
 function bullseye_blocks_render_be_current_progress() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
   $vars['cp_form'] = FALSE;
 
   if (isset($_GET['from'])) {
-    if ($_GET['from'] == 'leads') {
+    if ($_GET['from'] == 'lead') {
       $leads_cp_form = drupal_get_form('bullseye_current_progress_leads_form');
       $vars['cp_form'] = drupal_render($leads_cp_form);
     }
-    elseif ($_GET['from'] == 'prospects') {
+    elseif ($_GET['from'] == 'prospect') {
       $prospects_cp_form = drupal_get_form('bullseye_current_progress_prospects_form');
       $vars['cp_form'] = drupal_render($prospects_cp_form);
     }
@@ -351,9 +354,6 @@ function bullseye_blocks_render_be_current_progress() {
  * Create Event Block.
  */
 function bullseye_blocks_render_be_create_event() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -453,9 +453,6 @@ function bullseye_blocks_render_be_files() {
  * Header Progress Block.
  */
 function bullseye_blocks_render_be_header_progress() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -498,9 +495,6 @@ function bullseye_blocks_render_be_rfps() {
  * Calendar Block.
  */
 function bullseye_blocks_render_be_calendar_activities() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -516,9 +510,6 @@ function bullseye_blocks_render_be_calendar_activities() {
  * Activities Block.
  */
 function bullseye_blocks_render_be_activities() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -534,13 +525,55 @@ function bullseye_blocks_render_be_activities() {
  * Tasks Block.
  */
 function bullseye_blocks_render_be_tasks() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
   $output = theme('be_tasks', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Statistics Block.
+ */
+function bullseye_blocks_render_be_dashboard_statistics() {
+
+  $vars = array();
+
+  $output = theme('be_dashboard_statistics', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Revenue Block.
+ */
+function bullseye_blocks_render_be_dashboard_revenue() {
+
+  $vars = array();
+
+  $output = theme('be_dashboard_revenue', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Performance Block.
+ */
+function bullseye_blocks_render_be_dashboard_performance() {
+
+  $vars = array();
+
+  $output = theme('be_dashboard_performance', $vars);
 
   return array(
     'subject' => '',

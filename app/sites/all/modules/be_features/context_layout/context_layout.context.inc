@@ -343,6 +343,29 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'add_producer_page';
+  $context->description = '';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'producer/add' => 'producer/add',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'template_suggestions' => 'page',
+  );
+  $context->condition_mode = 0;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  $export['add_producer_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'calendar_blocks';
   $context->description = 'All blocks from the calendar page to be put here.';
   $context->tag = 'Blocks';
@@ -564,6 +587,79 @@ function context_layout_context_default_contexts() {
   t('Company landing page.');
   t('Location');
   $export['company_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'dashboard_admin_blocks';
+  $context->description = 'Dashboard blocks for the admin role.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'dashboard_admin_page' => 'dashboard_admin_page',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_dashboard_statistics' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_statistics',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_dashboard_revenue' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_revenue',
+          'region' => 'column_one',
+          'weight' => '-9',
+        ),
+        'bullseye_blocks-be_dashboard_performance' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_performance',
+          'region' => 'column_one',
+          'weight' => '-8',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Blocks');
+  t('Dashboard blocks for the admin role.');
+  $export['dashboard_admin_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'dashboard_admin_page';
+  $context->description = 'Dashboard for Admin Role';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        '<front>' => '<front>',
+      ),
+    ),
+    'user' => array(
+      'values' => array(
+        'admin' => 'admin',
+        'administrator' => 'administrator',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Dashboard for Admin Role');
+  t('Location');
+  $export['dashboard_admin_page'] = $context;
 
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
