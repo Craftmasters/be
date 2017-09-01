@@ -53,7 +53,8 @@ function bullseye_producer_file_page(){
  * load content structure by user
  */
 function bullseye_producer_file_user_load(){
-  
+  // example data only
+  return _bullseye_producer_file_tree_process_sample();
 }
 
 /**

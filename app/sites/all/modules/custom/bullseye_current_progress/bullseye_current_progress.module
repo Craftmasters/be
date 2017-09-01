@@ -3,7 +3,6 @@
  * Bullseye current progress module.
  */
 
-
 /**
  * Implements hook_form().
  *
@@ -112,7 +111,6 @@ function bullseye_current_progress_leads_form_submit($form, &$form_state) {
       }
     }
   }
-  kpr($form);die();
 }
 
 /**
@@ -126,10 +124,10 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
   $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
 
-  $vars['class_verification'] = '';
-  $vars['class_convert_to_prospect'] = '';
+  $vars['class_verification'] = 'gray-check';
+  $vars['class_convert_to_prospect'] = 'no-check';
 
-  $vars['class_verify_sca_dbra'] = '';
+  $vars['class_verify_sca_dbra'] = 'current-step';
   $vars['class_classify_to_group'] = '';
   $vars['class_validate_point_of_contact'] = '';
   $vars['class_set_priority'] = '';
@@ -166,7 +164,14 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_convert_to_prospect'] = 'no-check current-step';
   }
 
-  if ($vars['account_status'] == 'prospect') {
+  if ($vars['account_status'] == 'prospect' ||
+      $vars['account_status'] == 'opportunity' ||
+      $vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
 }
@@ -183,6 +188,110 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
+  $form['convert_to_opportunity'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_prospects_form(&$vars) {
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
+  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
+  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $vars['class_engagement'] = 'gray-check';
+  $vars['class_convert_to_opportunity'] = 'no-check';
+
+  // Skip email campign because mailchimp not yet available.
+  $vars['class_send_email_campaign'] = 'done-step';
+
+  $vars['class_build_rapport'] = 'current-step';
+  $vars['class_receive_feedback'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'build_rapport') {
+    $vars['class_build_rapport'] = 'current-step';
+  }
+  elseif ($action_status == 'receive_feedback') {
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'current-step';
+    if ($workflow_status == 'convert_to_opportunity') {
+      $vars['class_receive_feedback'] = 'done-step';
+    }
+  }
+
+  if ($workflow_status == 'engagement') {
+    $vars['class_engagement'] = 'gray-check';
+    $vars['class_convert_to_opportunity'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_opportunity') {
+    $vars['class_engagement'] = 'green-check';
+    $vars['class_convert_to_opportunity'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'opportunity' ||
+      $vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_send_email_campaign'] = 'done-step';
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_to_opportunity'] = 'green-check';
+  } 
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Opportunities Form.
+ */
+function bullseye_current_progress_opportunities_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  /*$form['convert_to_prospect'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+ */
   return $form;
 }
 
@@ -200,7 +309,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
     'template' => 'cp-prospects-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
-
+  $items['bullseye_current_progress_opportunities_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-opportunities-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
   return $items;
 }
 

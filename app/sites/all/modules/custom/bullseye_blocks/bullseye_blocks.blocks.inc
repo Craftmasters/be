@@ -18,8 +18,13 @@ function bullseye_blocks_render_be_top_header() {
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
-
+  
   $vars = array();
+  $vars['username'] = '';
+
+  if (isset($user->name)) {
+    $vars['username'] = $user->name;
+  }
 
   $vars['plus_icon'] = $base_url . '/' . $theme_directory . '/images/icons/plus.svg';
   $vars['envelope_icon'] = $base_url . '/' . $theme_directory . '/images/icons/mail.svg';
@@ -61,6 +66,12 @@ function bullseye_blocks_render_be_bottom_header() {
     drupal_set_title(t('Activities'));
     $vars['be_page_title'] = t('Activities');
   }
+  elseif (drupal_is_front_page()) {
+    if (user_is_logged_in()) {
+      drupal_set_title('Dashboard');
+      $vars['be_page_title'] = t('Dashboard');
+    }
+  }
 
   $output = theme('be_bottom_header', $vars);
 
@@ -74,7 +85,9 @@ function bullseye_blocks_render_be_bottom_header() {
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -84,6 +97,25 @@ function bullseye_blocks_render_be_leads() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['leads'] = $be->getLeadsAccounts();
+  $vars['be'] = $be;
+  $vars['total'] = $be->countLeadsAccnt();
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['leads'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_leads', $vars);
 
@@ -97,7 +129,9 @@ function bullseye_blocks_render_be_leads() {
  * Accounts Block (Table).
  */
 function bullseye_blocks_render_be_accounts() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -107,6 +141,25 @@ function bullseye_blocks_render_be_accounts() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['accounts'] = $be->getAllAccounts();
+  $vars['be'] = $be;
+  $vars['total'] = $be->countAllAccnt();
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['accounts'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_accounts', $vars);
 
@@ -120,7 +173,9 @@ function bullseye_blocks_render_be_accounts() {
  * Prospects Block (Table).
  */
 function bullseye_blocks_render_be_prospects() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -130,6 +185,25 @@ function bullseye_blocks_render_be_prospects() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['be'] = $be;
+  $vars['prospects'] = $be->getProspectsAccounts();
+  $vars['total'] = $be->countProspectsAccnt();
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['prospects'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_prospects', $vars);
 
@@ -143,7 +217,9 @@ function bullseye_blocks_render_be_prospects() {
  * Opportunities Block (Table).
  */
 function bullseye_blocks_render_be_opportunities() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -157,6 +233,25 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['arrow_green'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-green.svg';
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
+  $vars['be'] = $be;
+  $vars['opportunities'] = $be->getOpportunityAccounts();
+  $vars['total'] = $be->countOpportunityAccnt();
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['opportunities'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_opportunities', $vars);
 
@@ -170,7 +265,9 @@ function bullseye_blocks_render_be_opportunities() {
  * Deals in Progress Block (Table).
  */
 function bullseye_blocks_render_be_deals_in_progress() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -184,6 +281,25 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $vars['arrow_green'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-green.svg';
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
+  $vars['deals'] = $be->getDealsAccounts();
+  $vars['total'] = $be->countDealsAccnt();
+  $vars['be'] = $be;
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['deals'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_deals_in_progress', $vars);
 
@@ -310,22 +426,23 @@ function bullseye_blocks_render_be_carriers() {
  * Current Progress Block.
  */
 function bullseye_blocks_render_be_current_progress() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
   $vars['cp_form'] = FALSE;
 
   if (isset($_GET['from'])) {
-    if ($_GET['from'] == 'leads') {
+    if ($_GET['from'] == 'lead') {
       $leads_cp_form = drupal_get_form('bullseye_current_progress_leads_form');
       $vars['cp_form'] = drupal_render($leads_cp_form);
     }
-    elseif ($_GET['from'] == 'prospects') {
+    elseif ($_GET['from'] == 'prospect') {
       $prospects_cp_form = drupal_get_form('bullseye_current_progress_prospects_form');
       $vars['cp_form'] = drupal_render($prospects_cp_form);
+    }
+    elseif ($_GET['from'] == 'opportunity') {
+      $opportunities_cp_form = drupal_get_form('bullseye_current_progress_opportunities_form');
+      $vars['cp_form'] = drupal_render($opportunities_cp_form);
     }
   }
 
@@ -341,9 +458,6 @@ function bullseye_blocks_render_be_current_progress() {
  * Create Event Block.
  */
 function bullseye_blocks_render_be_create_event() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -443,9 +557,6 @@ function bullseye_blocks_render_be_files() {
  * Header Progress Block.
  */
 function bullseye_blocks_render_be_header_progress() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -461,7 +572,9 @@ function bullseye_blocks_render_be_header_progress() {
  * RFPs Block (Table).
  */
 function bullseye_blocks_render_be_rfps() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -471,6 +584,8 @@ function bullseye_blocks_render_be_rfps() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['rfps'] = $be->getRfps();
+  $vars['be'] = $be;
 
   $output = theme('be_rfps', $vars);
 
@@ -484,9 +599,6 @@ function bullseye_blocks_render_be_rfps() {
  * Calendar Block.
  */
 function bullseye_blocks_render_be_calendar_activities() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -502,9 +614,6 @@ function bullseye_blocks_render_be_calendar_activities() {
  * Activities Block.
  */
 function bullseye_blocks_render_be_activities() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
@@ -520,13 +629,63 @@ function bullseye_blocks_render_be_activities() {
  * Tasks Block.
  */
 function bullseye_blocks_render_be_tasks() {
-  global $base_url;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
   $output = theme('be_tasks', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Statistics Block.
+ */
+function bullseye_blocks_render_be_dashboard_statistics() {
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
+
+  $vars = array();
+
+  $vars['leads_total'] = $be->countLeadsAccnt();
+  $vars['prospects_total'] = $be->countProspectsAccnt();
+  $vars['opportunities_total'] = $be->countOpportunityAccnt();
+  $vars['deals_total'] = $be->countDealsAccnt();
+
+  $output = theme('be_dashboard_statistics', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Revenue Block.
+ */
+function bullseye_blocks_render_be_dashboard_revenue() {
+
+  $vars = array();
+
+  $output = theme('be_dashboard_revenue', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Dashboard Performance Block.
+ */
+function bullseye_blocks_render_be_dashboard_performance() {
+
+  $vars = array();
+
+  $output = theme('be_dashboard_performance', $vars);
 
   return array(
     'subject' => '',

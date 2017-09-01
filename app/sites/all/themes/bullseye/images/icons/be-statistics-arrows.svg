@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="12411.001 11035.001 1190.544 84.192">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.976" y1="0.573" x2="0.028" y2="0.577" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#59cd90"/>
+      <stop offset="1" stop-color="#87aeb6"/>
+    </linearGradient>
+  </defs>
+  <path id="Intersection_7" data-name="Intersection 7" class="cls-1" d="M-10876.354-10677.821H-11076v-.329l41.543-41.547-41.543-41.54v-.762h199.656v.423l0-.006,41.884,41.885-41.884,41.891Zm-237,0H-11313v-.329l41.544-41.547-41.544-41.54v-.762h199.657v.423l0-.006,41.885,41.885-41.885,41.891Zm-237,0H-11550v-.329l41.544-41.547-41.544-41.54v-.762h199.657v.42l0,0,41.885,41.885-41.885,41.891Zm-238,0H-11788v-.329l41.546-41.547-41.546-41.54v-.762h199.656v.42l0,0,41.885,41.885-41.885,41.891Zm-237,0H-12025v-.329l41.543-41.547-41.543-41.54v-.762h199.656v.42l0,0,41.885,41.885-41.885,41.891Z" transform="translate(24436 21797)"/>
+</svg>

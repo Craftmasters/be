@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-9">
-        <span class="account-count"><?php print t('All Deals in Progress (6)'); ?></span>
+        <span class="account-count"><?php print t('All Deals in Progress (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/node/add/accounts?account_status=deal_in_progress" rel="lightframe"><?php print t('Add New Deal in Progress'); ?></a>
         <!--<a class="be-table-button" href="#"><?php print t('Import Deals in Progress'); ?></a>-->
       </div>
@@ -31,18 +31,29 @@
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 3; $i++) : ?>
+        <?php foreach ($deals as $d): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="dot-priority red"></span></td>
-            <td><span class="orange-font"><a href="/company?from=deals-in-progress" class="orange-font">ABC Company</a></span></td>
-            <td><span class="gray-font">Chris Devon</span></td>
+            <!-- link "/company/allen-markarian?from=deal-in-progress" where 'allen-markarian' is the alias and 'deal-in-progress' is the status of account -->
+            <td>
+              <span class="orange-font">
+                <a href="/company/<?php print $aliases[$d->nid]['alias'];?>?from=<?php print $aliases[$d->nid]['status'];?>" class="orange-font">
+                  <?php print $d->field_company_value; ?>
+                </a>
+              </span>
+            </td>
+            <td>
+              <span class="gray-font">
+                <?php $be->buildAccountName($d->field_firstname_value, $d->field_middle_name_value, $d->field_lastname_value); ?>
+              </span>
+            </td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_gray; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_orange; ?>"></td>
             <td><span class="light-gray-font"><a href="#" class="light-gray-font">Pitbull.pdf</a></span></td>
           </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>

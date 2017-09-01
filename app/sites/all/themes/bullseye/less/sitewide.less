@@ -290,6 +290,8 @@
 
   .top-header-inner {
    	height: @top_header_height;
+    position: relative;
+    z-index: 10;
   }
 
   ul.top-header-icons {
@@ -693,6 +695,10 @@
 
  	.be-tables {
  		width: 100%;
+    table-layout: fixed;
+    .cell-check {
+      width: 50px;
+    }
  		thead tr {
  			background-color: @table_header_tr_color;
  			th {

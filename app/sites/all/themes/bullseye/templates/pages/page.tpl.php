@@ -125,10 +125,8 @@
           <?php print $messages; ?>
           <?php if ($column == 'one-col') : ?>
             <div class="row column-wrapper one-col">
-              <div class="col-md-12">
-                <?php print render($page['column_one']); ?>
-                <?php print render($page['content']); ?>
-              </div>
+              <?php print render($page['column_one']); ?>
+              <?php print render($page['content']); ?>
             </div>
           <?php elseif ($column == 'two-col') : ?>
             <div class="row column-wrapper two-col">

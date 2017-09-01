@@ -363,6 +363,27 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Dashboard Statistics Block.
+    'be_dashboard_statistics' => array(
+      'variables' => array(),
+      'template' => 'be-dashboard-statistics',
+      'path' => $template_path,
+    ),
+
+    // Dashboard Revenue Block.
+    'be_dashboard_revenue' => array(
+      'variables' => array(),
+      'template' => 'be-dashboard-revenue',
+      'path' => $template_path,
+    ),
+
+    // Dashboard Performance Block.
+    'be_dashboard_performance' => array(
+      'variables' => array(),
+      'template' => 'be-dashboard-performance',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -526,6 +547,27 @@ function bullseye_blocks_block_info() {
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
+
+  // Dashboard Statistics Block.
+  $blocks['be_dashboard_statistics'] = array(
+    'info' => t('Dashboard - Statistics Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Dashboard Revenue Block.
+  $blocks['be_dashboard_revenue'] = array(
+    'info' => t('Dashboard - Revenue Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Dashboard Performance Block.
+  $blocks['be_dashboard_performance'] = array(
+    'info' => t('Dashboard - Performance Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
   
   // Return block definitions.
   return $blocks;
@@ -558,7 +600,22 @@ function bullseye_blocks_preprocess_block(&$variables) {
 
   // Define block column classes for bullseye_blocks.
   if ($variables['block']->module == 'bullseye_blocks') {
-
+    if ($variables['block']->delta == 'be_leads' || 
+        $variables['block']->delta == 'be_accounts' ||
+        $variables['block']->delta == 'be_prospects' ||
+        $variables['block']->delta == 'be_opportunities' ||
+        $variables['block']->delta == 'be_deals_in_progress' ||
+        $variables['block']->delta == 'be_closed_deals' ||
+        $variables['block']->delta == 'be_proposals' ||
+        $variables['block']->delta == 'be_producers' ||
+        $variables['block']->delta == 'be_carriers' ||
+        $variables['block']->delta == 'be_dashboard_statistics') {
+      $variables['classes_array'][] = 'col-md-12';
+    }
+    if ($variables['block']->delta == 'be_dashboard_revenue' || 
+        $variables['block']->delta == 'be_dashboard_performance') {
+      $variables['classes_array'][] = 'col-md-6';
+    }
   }
   
 }

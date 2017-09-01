@@ -63,7 +63,7 @@
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Prospect!'); ?></span>
 				</a>
-				<a href="/company/<?php print arg(1); ?>?from=prospects" class="cp-link orange">
+				<a href="/company/<?php print arg(1); ?>?from=prospect" class="cp-link orange">
 					<span><?php print t('Go to Prospect Page'); ?></span>
 				</a>
 			<?php else: ?>
