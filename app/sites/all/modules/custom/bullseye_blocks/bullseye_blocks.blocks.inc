@@ -88,6 +88,7 @@ function bullseye_blocks_render_be_leads() {
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['leads'] = $be->getLeadsAccounts();
   $vars['be'] = $be;
+  $vars['total'] = $be->countLeadsAccnt();
 
   $output = theme('be_leads', $vars);
 

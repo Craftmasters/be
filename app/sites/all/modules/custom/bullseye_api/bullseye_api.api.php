@@ -311,7 +311,7 @@ class Bullseye {
   }
 
   /**
-   * Get all the accounts.
+   * Get all leads account.
    */
   function getLeadsAccounts() {
     if ($cache = cache_get('leads_accounts_listing')) {
@@ -345,6 +345,31 @@ class Bullseye {
         ->fetchAll();
 
       cache_set('leads_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Get all leads account.
+   */
+  function countLeadsAccnt() {
+    if ($cache = cache_get('count_leads_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'lead', '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_leads_accounts_listing', $accounts, 'cache');
     }
 
     return $accounts;
