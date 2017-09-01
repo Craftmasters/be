@@ -85,7 +85,6 @@
           closed_num.start();
         }
 
-
         // Adding class to body element of the lightbox iframe
         var parent_iframe = $(window.frameElement).parent().find('iframe#lightboxFrame');
         parent_iframe.contents().find('body').addClass('be-lightbox');
@@ -348,11 +347,11 @@
             datasets: [{
               label: 'Closed Deals',
               backgroundColor: '#f58a3e',
-              data: [6000, 9000, 10000, 8100, 5600, 1500, 5400],
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             }, {
               label: 'Deals in Progress',
               backgroundColor: '#ffbc34',
-              data: [7000, 5000, 29900, 8100, 5600, 8500, 34000]
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             }]
           };
           var options = {
@@ -408,7 +407,7 @@
                 font: 'Proximanova-Semibold'
               },
               subtitle: {
-                text: '40%',
+                text: '0%',
                 color: '#6c6c6c',
                 fontSize: 40,
                 font: 'Proximanova-Light'
@@ -427,12 +426,12 @@
               content: [
                 {
                   label: '',
-                  value: 40,
+                  value: 0,
                   color: '#F58A3E'
                 },
                 {
                   label: '',
-                  value: 60,
+                  value: 100,
                   color: '#87AEB6'
                 }
               ]
