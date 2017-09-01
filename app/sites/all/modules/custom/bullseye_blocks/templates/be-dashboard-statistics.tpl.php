@@ -3,25 +3,25 @@
     <div class="statistics-dashboard">
       <div class="stat-item">
         <div class="stat-item-inner">
-          <span class="stat-number">0</span>
+          <span class="stat-number"><?php print $leads_total; ?></span>
           <span class="stat-desc"><?php print t('Leads'); ?></span>
         </div>
       </div>
       <div class="stat-item">
         <div class="stat-item-inner">
-          <span class="stat-number">0</span>
+          <span class="stat-number"><?php print $prospects_total; ?></span>
           <span class="stat-desc"><?php print t('Prospects'); ?></span>
         </div>
       </div>
       <div class="stat-item">
         <div class="stat-item-inner">
-          <span class="stat-number">0</span>
+          <span class="stat-number"><?php print $opportunities_total; ?></span>
           <span class="stat-desc"><?php print t('Opportunities'); ?></span>
         </div>
       </div>
       <div class="stat-item">
         <div class="stat-item-inner">
-          <span class="stat-number">0</span>
+          <span class="stat-number"><?php print $deals_total; ?></span>
           <span class="stat-desc"><?php print t('Deals in Progress'); ?></span>
         </div>
       </div>
