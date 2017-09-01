@@ -437,6 +437,10 @@ function bullseye_blocks_render_be_current_progress() {
       $prospects_cp_form = drupal_get_form('bullseye_current_progress_prospects_form');
       $vars['cp_form'] = drupal_render($prospects_cp_form);
     }
+    elseif ($_GET['from'] == 'opportunity') {
+      $opportunities_cp_form = drupal_get_form('bullseye_current_progress_opportunities_form');
+      $vars['cp_form'] = drupal_render($opportunities_cp_form);
+    }
   }
 
   $output = theme('be_current_progress', $vars);

@@ -3,7 +3,6 @@
  * Bullseye current progress module.
  */
 
-
 /**
  * Implements hook_form().
  *
@@ -212,7 +211,6 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
  * Form submit for current progress prospects form.
  */
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
-  
 }
 
 /**
@@ -263,8 +261,38 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
     $vars['class_build_rapport'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_to_opportunity'] = 'green-check';
-  }
-  
+  } 
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Opportunities Form.
+ */
+function bullseye_current_progress_opportunities_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  /*$form['convert_to_prospect'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+ */
+  return $form;
 }
 
 /**
@@ -281,7 +309,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
     'template' => 'cp-prospects-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
-
+  $items['bullseye_current_progress_opportunities_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-opportunities-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
   return $items;
 }
 
