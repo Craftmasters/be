@@ -105,7 +105,6 @@ function bullseye_blocks_render_be_accounts() {
   global $base_url, $user;
 
   $be = new Bullseye($user);
-  krumo($be->getAllAccounts());
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
