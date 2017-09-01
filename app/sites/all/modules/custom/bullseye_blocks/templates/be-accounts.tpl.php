@@ -32,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($accounts as $a): ?>
+        <?php foreach ($accounts as $key => $a): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
@@ -48,7 +48,7 @@
             </td>
             <td>
               <span class="orange-font">
-                <a href="/company?from=accounts" class="orange-font">
+                <a href="/company/<?php print $aliases[$a->nid]['alias'];?>?from=<?php print $aliases[$a->nid]['status'];?>" class="orange-font">
                   <?php print $a->field_company_value; ?>
                 </a>
               </span>

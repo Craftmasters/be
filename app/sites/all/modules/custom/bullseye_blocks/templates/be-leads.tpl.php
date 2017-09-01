@@ -46,11 +46,9 @@
                 <?php print $l->field_title_value; ?>
               </span>
             </td>
-
-          </tr>
             <td>
               <span class="orange-font">
-                <a href="/company/allen-markarian?from=leads" class="orange-font">
+                <a href="/company/<?php print $aliases[$l->nid]['alias'];?>?from=<?php print $aliases[$l->nid]['status'];?>" class="orange-font">
                   <?php print $l->field_company_value; ?>
                 </a>
               </span>
