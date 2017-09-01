@@ -27,59 +27,55 @@
           <th><?php print t('Email'); ?></th>
           <th><?php print t('Source'); ?></th>
           <th><?php print t('Business Type'); ?></th>
-          <th><?php print t('Contract'); ?></th>
-          <th><?php print t('Priority'); ?></th>
+          <!--<th><?php //print t('Contract'); ?></th>
+          <th><?php //print t('Priority'); ?></th>-->
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
+        <?php foreach ($accounts as $a): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">Chris Devon</span>
+              <span class="gray-font">
+                <?php $be->buildAccountName($a->field_firstname_value, $a->field_middle_name_value, $a->field_lastname_value); ?>
+              </span>
             </td>
-            <td><span class="light-gray-font">Chief Operations Officer</span></td>
-            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">ABC Company</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority red"></span></td>
-          </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">Greg Holloway</span>
+              <span class="light-gray-font">
+                <?php print $a->field_title_value; ?>
+              </span>
             </td>
-            <td><span class="light-gray-font">VP of Human Resources</span></td>
-            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">Sharklame Ent.</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority green"></span></td>
-          </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 5; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">Jake Leithold</span>
+              <span class="orange-font">
+                <a href="/company?from=accounts" class="orange-font">
+                  <?php print $a->field_company_value; ?>
+                </a>
+              </span>
             </td>
-            <td><span class="light-gray-font">Benefits Manager</span></td>
-            <td><span class="orange-font"><a href="/company?from=accounts" class="orange-font">Pitbull Inc.</a></span></td>
-            <td><span class="orange-font">jackjames@abc.com</span></td>
-            <td><span class="light-gray-font">Conference 2016</span></td>
-            <td><span class="light-gray-font">Women Owned</span></td>
-            <td><span class="light-gray-font">SCA</span></td>
-            <td><span class="dot-priority blue"></span></td>
+            <td>
+              <span class="orange-font">
+                <?php print $a->field_email_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $a->field_source_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $a->field_type_of_business_value; ?>
+              </span>
+            </td>
+            <!--<td>
+              <span class="light-gray-font">
+                SCA
+              </span>
+            </td>
+            <td><span class="dot-priority red"></span></td>-->
           </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>

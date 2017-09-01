@@ -97,7 +97,10 @@ function bullseye_blocks_render_be_leads() {
  * Accounts Block (Table).
  */
 function bullseye_blocks_render_be_accounts() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
+  krumo($be->getAllAccounts());
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -107,6 +110,8 @@ function bullseye_blocks_render_be_accounts() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['accounts'] = $be->getAllAccounts();
+  $vars['be'] = $be;
 
   $output = theme('be_accounts', $vars);
 
