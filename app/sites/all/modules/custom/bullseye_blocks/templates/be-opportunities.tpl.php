@@ -45,7 +45,11 @@
                 </a>
               </span>
             </td>
-            <td><span class="gray-font">Chris Devon</span></td>
+            <td>
+              <span class="gray-font">
+                <?php $be->buildAccountName($o->field_firstname_value, $o->field_middle_name_value, $o->field_lastname_value); ?>
+              </span>
+            </td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
             <td class="be-table-arrow-td"><img src="<?php print $arrow_orange; ?>"></td>

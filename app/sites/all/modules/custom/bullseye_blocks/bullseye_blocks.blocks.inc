@@ -244,7 +244,9 @@ function bullseye_blocks_render_be_opportunities() {
  * Deals in Progress Block (Table).
  */
 function bullseye_blocks_render_be_deals_in_progress() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -258,6 +260,9 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $vars['arrow_green'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-green.svg';
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
+  $vars['deals'] = $be->getDealsAccounts();
+  $vars['total'] = $be->countDealsAccnt();
+  $vars['be'] = $be;
 
   $output = theme('be_deals_in_progress', $vars);
 
