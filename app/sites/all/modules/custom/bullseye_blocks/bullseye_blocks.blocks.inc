@@ -74,7 +74,9 @@ function bullseye_blocks_render_be_bottom_header() {
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -84,6 +86,8 @@ function bullseye_blocks_render_be_leads() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['leads'] = $be->getLeadsAccounts();
+  $vars['be'] = $be;
 
   $output = theme('be_leads', $vars);
 
