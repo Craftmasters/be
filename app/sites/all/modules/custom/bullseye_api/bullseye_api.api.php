@@ -557,6 +557,8 @@ class Bullseye {
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $accounts = $query
+        ->fields('n', array('nid'))
+        ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))

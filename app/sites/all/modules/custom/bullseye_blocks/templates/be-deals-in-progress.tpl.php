@@ -38,7 +38,7 @@
             <!-- link "/company/allen-markarian?from=deal-in-progress" where 'allen-markarian' is the alias and 'deal-in-progress' is the status of account -->
             <td>
               <span class="orange-font">
-                <a href="/company/allen-markarian?from=deal-in-progress" class="orange-font">
+                <a href="/company/<?php print $aliases[$d->nid]['alias'];?>?from=<?php print $aliases[$d->nid]['status'];?>" class="orange-font">
                   <?php print $d->field_company_value; ?>
                 </a>
               </span>
