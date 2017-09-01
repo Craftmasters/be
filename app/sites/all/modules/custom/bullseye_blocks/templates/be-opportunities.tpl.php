@@ -40,7 +40,7 @@
             <!-- link "/company/allen-markarian?from=opportunity" where 'allen-markarian' is the alias and 'opportunity' is the status of account -->
             <td>
               <span class="orange-font">
-                <a href="/company/allen-markarian?from=opportunity" class="orange-font">
+                <a href="/company/<?php print $aliases[$o->nid]['alias'];?>?from=<?php print $aliases[$o->nid]['status'];?>" class="orange-font">
                   <?php print $o->field_company_value; ?>
                 </a>
               </span>

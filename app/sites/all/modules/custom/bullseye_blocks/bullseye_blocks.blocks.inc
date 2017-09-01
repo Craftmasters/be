@@ -232,6 +232,22 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['opportunities'] = $be->getOpportunityAccounts();
   $vars['total'] = $be->countOpportunityAccnt();
 
+  $vars['aliases'] = array();
+
+  foreach ($vars['opportunities'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
+
   $output = theme('be_opportunities', $vars);
 
   return array(
