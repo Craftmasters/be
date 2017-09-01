@@ -11,7 +11,7 @@
 		</div>
 	</div>
 
-	<div class="cp-step row done-step">
+	<div class="cp-step row <?php print $class_send_email_campaign; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 
-	<div class="cp-step row current-step">
+	<div class="cp-step row <?php print $class_build_rapport; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div class="cp-step row">
+	<div class="cp-step row <?php print $class_receive_feedback; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
@@ -44,14 +44,23 @@
 		</div>
 	</div>
 
-	<div class="cp-step ro<?php print $class_convert_to_opportunity; ?>">
+	<div class="cp-step row <?php print $class_convert_to_opportunity; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link big-step" data-toggle="modal" data-target="#convert-to-opportunity">
-				<span><?php print t('Convert to Opportunities'); ?></span>
-			</a>
+			<?php if ($account_status == 'opportunity') : ?>
+				<a href="#" class="cp-link big-step">
+					<span><?php print t('Converted to Opportunity!'); ?></span>
+				</a>
+				<a href="/company/<?php print arg(1); ?>?from=opportunity" class="cp-link orange">
+					<span><?php print t('Go to Opportunity Page'); ?></span>
+				</a>
+			<?php else: ?>
+				<a href="#" class="cp-link big-step" data-toggle="modal" data-target="#convert-to-prospect">
+					<span><?php print t('Convert to Opportunity'); ?></span>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

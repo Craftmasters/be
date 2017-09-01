@@ -229,9 +229,41 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
   $vars['class_engagement'] = 'gray-check';
   $vars['class_convert_to_opportunity'] = 'no-check';
 
-  $vars['class_send_email_campaign'] = 'current-step';
-  $vars['class_build_rapport'] = '';
+  // Skip email campign because mailchimp not yet available.
+  $vars['class_send_email_campaign'] = 'done-step';
+
+  $vars['class_build_rapport'] = 'current-step';
   $vars['class_receive_feedback'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'build_rapport') {
+    $vars['class_build_rapport'] = 'current-step';
+  }
+  elseif ($action_status == 'receive_feedback') {
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'current-step';
+    if ($workflow_status == 'convert_to_opportunity') {
+      $vars['class_receive_feedback'] = 'done-step';
+    }
+  }
+
+  if ($workflow_status == 'engagement') {
+    $vars['class_engagement'] = 'gray-check';
+    $vars['class_convert_to_opportunity'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_opportunity') {
+    $vars['class_engagement'] = 'green-check';
+    $vars['class_convert_to_opportunity'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'opportunity' ||
+      $vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_send_email_campaign'] = 'done-step';
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_to_opportunity'] = 'green-check';
+  }
   
 }
 

@@ -736,9 +736,10 @@ function accounts_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'engagement' => 'Engagement',
-        'convert_to_prospect' => 'Convert to prospect',
         'verification' => 'Verification',
+        'convert_to_prospect' => 'Convert to prospect',
+        'engagement' => 'Engagement',
+        'convert_to_opportunity' => 'Convert to opportunity',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
