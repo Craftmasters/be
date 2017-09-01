@@ -513,7 +513,7 @@ function context_layout_context_default_contexts() {
           'module' => 'bullseye_blocks',
           'delta' => 'be_header_progress',
           'region' => 'bottom_header',
-          'weight' => '-10',
+          'weight' => '-27',
         ),
         'bullseye_blocks-be_current_progress' => array(
           'module' => 'bullseye_blocks',

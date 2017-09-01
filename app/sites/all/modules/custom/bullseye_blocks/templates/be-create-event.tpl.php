@@ -27,6 +27,8 @@
 		          	</div>
 		          	<div class="be-event-input">
 		          		<select>
+			          		<option value="1"><?php print t('Email'); ?></option>
+			          		<option value="1"><?php print t('Meeting'); ?></option>
 		          			<option value="1"><?php print t('Phone Call'); ?></option>
 		          		</select>
 		          	</div>
@@ -39,10 +41,7 @@
 		          		<?php print t('Date'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<!-- To be changed to datetimepicker -->
-		          		<select>
-		          			<option value="1">07/06/2017</option>
-		          		</select>
+		          		<input type="text" id="create-event-date-activity">
 		          	</div>
 		          </div>
           	</div>
@@ -82,6 +81,8 @@
 		          	</div>
 		          	<div class="be-event-input">
 		          		<select>
+		          			<option value="1"><?php print t('Email'); ?></option>
+			          		<option value="1"><?php print t('Meeting'); ?></option>
 		          			<option value="1"><?php print t('Phone Call'); ?></option>
 		          		</select>
 		          	</div>
@@ -120,10 +121,7 @@
 		          		<?php print t('Due Date'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<!-- To be changed to datetimepicker -->
-		          		<select>
-		          			<option value="1">07/06/2017</option>
-		          		</select>
+		          		<input type="text" id="create-event-date-task">
 		          	</div>
 		          </div>
           	</div>

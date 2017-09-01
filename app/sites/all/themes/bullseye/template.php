@@ -110,6 +110,14 @@ function bullseye_preprocess_page(&$vars, $hook) {
     }
   }
 
+  // Add datepicker library for create event block.
+  $adminimal_directory = drupal_get_path('theme', 'adminimal');
+
+  // Firefox doesn't support html5 date input.
+  // So we are using jquery datepicker for date fields.
+  drupal_add_library('system', 'ui.datepicker');
+  drupal_add_css($adminimal_directory . '/css/jquery.ui.theme.css');
+
 }
 
 
