@@ -76,7 +76,6 @@ function bullseye_producer_file_directory_render(){
   $directory = bullseye_producer_file_directory_user_load();
   $vars = array(
     'directory' => $directory,
-    'bullseye_producer_file_directory_user_load' => '',
   );
 
   return theme('bullseye_producer_file_directory', $vars);
