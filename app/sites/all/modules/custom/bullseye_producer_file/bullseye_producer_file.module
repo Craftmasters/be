@@ -12,7 +12,7 @@ define('BULLSEYE_PRODUCER_FILE_VIEW', 'View File browser');
 function bullseye_producer_file_menu() {
   $items = array();
 
-  $items['producer/file'] = array(
+  $items['producer_file_browser'] = array(
     'title' => 'Files',
     'page callback' => 'bullseye_producer_file_page',
     'access arguments' => array(BULLSEYE_PRODUCER_FILE_VIEW),
@@ -34,6 +34,15 @@ function bullseye_producer_file_permission(){
 }
 
 /**
+ * helper function
+ * checks if the user can access the directory
+ */
+function bullseye_producer_file_directory_access($directory_name = ''){
+  return true;
+}
+
+
+/**
  * file browser page for producers
  */
 function bullseye_producer_file_page(){
@@ -43,30 +52,50 @@ function bullseye_producer_file_page(){
   // $theme_directory = path_to_theme('theme', 'bullseye');
 
   // $producer_acct_company_img = $base_url . '/' . $theme_directory . '/images/icons/producer-acct-company-logo.jpg';
-  $vars = array();
+  $total_files = bullseye_producer_file_get_file_total();
+  $vars = array(
+    'directory_html' => bullseye_producer_file_directory_render(),
+    'total_files' => $total_files,
+  );
 
-  return theme('bullseye_producer_file_page', $vars);
+  return theme('producer_file_browser', $vars);
 }
 
 /**
  * helper function
- * load content structure by user
+ * retrieve total file numbers
  */
-function bullseye_producer_file_user_load(){
+function bullseye_producer_file_get_file_total(){
+  return 4;
+}
+
+/**
+ *
+ */
+function bullseye_producer_file_directory_render(){
+  $directory = bullseye_producer_file_directory_user_load();
+  $vars = array(
+    'directory' => $directory,
+    'bullseye_producer_file_directory_user_load' => '',
+  );
+
+  return theme('bullseye_producer_file_directory', $vars);
+}
+
+/**
+ * helper function
+ * load content directories available for users
+ */
+function bullseye_producer_file_directory_user_load($directory_name = ''){
   // example data only
+  echo '1';
   return _bullseye_producer_file_tree_process_sample();
+
+  // actual logic should load all the directories that the user can access
 }
 
 /**
- * helper function
- * processes file tree array into 
- */
-function _bullseye_producer_file_tree_process(){
-
-}
-
-/**
- * helper function
+ * test function
  * sample data provided for the tree process
  */
 function _bullseye_producer_file_tree_process_sample(){
