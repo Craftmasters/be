@@ -115,8 +115,35 @@
             },
           });
         });
+
+        // Prospect - Engagement - Receive Feedback
+        $('#btn-receive-feedback').click(function() {
+          $.ajax({
+            url: '/be-cp/receive-feedback',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
         
-          
+        // Prospect - Engagement - Convert to opportunity
+        $('#btn-convert-to-opportunity').click(function() {
+          $.ajax({
+            url: '/be-cp/convert-to-opportunity',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
       });
    
     }

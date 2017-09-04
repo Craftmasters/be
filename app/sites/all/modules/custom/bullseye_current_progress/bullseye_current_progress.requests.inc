@@ -43,3 +43,25 @@ function be_cp_convert_to_prospect() {
 
   drupal_json_output($wrapper);
 }
+
+function be_cp_receive_feedback() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_action_status->set('receive_feedback');
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+function be_cp_convert_to_opportunity() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_workflow_status->set('convert_to_opportunity');
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}

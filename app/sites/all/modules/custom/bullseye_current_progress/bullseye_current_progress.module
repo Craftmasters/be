@@ -36,6 +36,20 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/receive-feedback'] = array(
+    'page callback' => 'be_cp_receive_feedback',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/convert-to-opportunity'] = array(
+    'page callback' => 'be_cp_convert_to_opportunity',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -153,17 +167,22 @@ function bullseye_current_progress_leads_form_submit($form, &$form_state) {
     }
   }
 
+  // Setting the new statuses of the account.
   $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
   $wrapper->field_action_status->set('build_rapport');
   $wrapper->field_workflow_status->set('engagement');
   $wrapper->field_account_status->set('prospect');
   $wrapper->save();
 
+  // Clear the leads and prospects listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
   cache_clear_all('leads_accounts_listing', 'cache');
   cache_clear_all('count_leads_accounts_listing', 'cache');
   cache_clear_all('prospect_accounts_listing', 'cache');
   cache_clear_all('count_prospect_accounts_listing', 'cache');
 
+  // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
 }
 
@@ -243,7 +262,16 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
-  $form['convert_to_opportunity'] = array(
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  $form['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
       'class' => array('green-btn'),
@@ -251,12 +279,9 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
     '#value' => t('Yes'),
   );
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress.js',
   );
 
   return $form;
@@ -266,18 +291,35 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
  * Form submit for current progress prospects form.
  */
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
+  // Setting the new statuses of the account.
+  //$wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  //$wrapper->field_action_status->set('build_rapport');
+  //$wrapper->field_workflow_status->set('engagement');
+  //$wrapper->field_account_status->set('opportunity');
+  //$wrapper->save();
+
+  // Clear the prospects and opportunities listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing', 'cache');
+  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
 }
 
 /**
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_prospects_form(&$vars) {
-  $alias  = 'content/' . arg(1);
-  $path = drupal_lookup_path('source', $alias);
-  $node = menu_get_object('node', 1, $path);
-  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
-  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
-  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
 
   $vars['class_engagement'] = 'gray-check';
   $vars['class_convert_to_opportunity'] = 'no-check';
