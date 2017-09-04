@@ -15,6 +15,27 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/lead/validate-point-of-contact'] = array(
+    'page callback' => 'be_cp_lead_validate_point_of_contact',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/setpriority'] = array(
+    'page callback' => 'be_cp_lead_set_priority',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/convert-to-prospect'] = array(
+    'page callback' => 'be_cp_convert_to_prospect',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -29,6 +50,15 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   $form['#parents'] = array();
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
   
   $form['work_sca_dbra'] = array(
     '#type' => 'radios',
@@ -83,20 +113,12 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     ),
   );
 
-  $form['convert_to_prospect'] = array(
+  $form['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Yes'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
   );
 
   // Attach js for ajax requests
@@ -130,19 +152,31 @@ function bullseye_current_progress_leads_form_submit($form, &$form_state) {
       }
     }
   }
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('build_rapport');
+  $wrapper->field_workflow_status->set('engagement');
+  $wrapper->field_account_status->set('prospect');
+  $wrapper->save();
+
+  cache_clear_all('leads_accounts_listing', 'cache');
+  cache_clear_all('count_leads_accounts_listing', 'cache');
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
 }
 
 /**
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_leads_form(&$vars) {
-  $alias  = 'content/' . arg(1);
-  $path = drupal_lookup_path('source', $alias);
-  $node = menu_get_object('node', 1, $path);
-  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
-  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
-  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
-  $vars['nid'] = $node->nid;
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
 
   $vars['class_verification'] = 'gray-check';
   $vars['class_convert_to_prospect'] = 'no-check';
@@ -194,6 +228,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
+
 }
 
 /**

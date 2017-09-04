@@ -73,6 +73,49 @@
             },
           });
         });
+
+        // Lead - Verification - Validate point of contact
+        $('#btn-validate-point-of-contact').click(function() {
+          $.ajax({
+            url: '/be-cp/lead/validate-point-of-contact',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
+        // Lead - Verification - Set Priority
+        $('#btn-set-priority').click(function() {
+          $.ajax({
+            url: '/be-cp/setpriority',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
+        // Lead - Verification - Convert to prospect
+        $('#btn-convert-to-prospect').click(function() {
+          $.ajax({
+            url: '/be-cp/convert-to-prospect',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+        
           
       });
    
