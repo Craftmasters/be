@@ -55,6 +55,7 @@ function bullseye_producer_file_page(){
   $total_files = bullseye_producer_file_get_file_total();
   $vars = array(
     'directory_html' => bullseye_producer_file_directory_render(),
+    'files_html' => bullseye_producer_file_files_table_render(),
     'total_files' => $total_files,
   );
 
@@ -70,7 +71,7 @@ function bullseye_producer_file_get_file_total(){
 }
 
 /**
- *
+ * renders the directory as tree view
  */
 function bullseye_producer_file_directory_render(){
   $directory = bullseye_producer_file_directory_user_load();
@@ -79,6 +80,59 @@ function bullseye_producer_file_directory_render(){
   );
 
   return theme('bullseye_producer_file_directory', $vars);
+}
+
+/**
+ * renders the files as tables
+ */
+function bullseye_producer_file_files_table_render(){
+  $directory = bullseye_producer_file_directory_user_load();
+  $files = bullseye_producer_file_get_all_files();
+  $vars = array(
+    'directory' => $directory,
+    'files' => $files,
+  );
+
+  return theme('bullseye_producer_file_files_table', $vars);
+}
+
+/**
+ * helper function
+ * get all files of each directory
+ */
+function bullseye_producer_file_get_all_files(){
+  // example only
+  $files = array(
+    'Arrow Trust Docs' => array(
+      'type' => 'doc',
+      'account' => 'ABC Company',
+      'upload_date' => '1493942400',
+      'upload_name' => 'James J.',
+      'last_access' => '1493942400',
+    ),
+    'Benefits Enrollment Guide' => array(
+      'type' => 'pdf',
+      'account' => 'Gekko & Co',
+      'upload_date' => '1492041600',
+      'upload_name' => 'Mikka C.',
+      'last_access' => '1492041600',
+    ),
+    'Employee Manual' => array(
+      'type' => 'pptx',
+      'account' => 'ABC Company',
+      'upload_date' => '1496275200',
+      'upload_name' => 'Beata S.',
+      'last_access' => '1496275200',
+    ),
+    'Monthly Benefits Computation' => array(
+      'type' => 'xlsx',
+      'account' => 'Umbrella Corporation',
+      'upload_date' => '1493596800',
+      'upload_name' => 'James J.',
+      'last_access' => '1493596800',
+    ),
+  );
+  return $files;
 }
 
 /**

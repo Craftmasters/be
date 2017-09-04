@@ -247,6 +247,10 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'producer-file-directory-tree',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates',
   );
+  $items['bullseye_producer_file_files_table'] = array(
+    'template' => 'producer-file-table',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates',
+  );
   return $items;
 }
 
