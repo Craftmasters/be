@@ -36,10 +36,10 @@
             <td><span class="orange-font"><?php print $producer->field_producer_name_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
-            <td><span class="gray-font">850</span></td>
-            <td><span class="gray-font">300</span></td>
-            <td><span class="gray-font">100</span></td>
-            <td><span class="gray-font">30%</span></td>
+            <td><span class="gray-font">0</span></td>
+            <td><span class="gray-font">0</span></td>
+            <td><span class="gray-font">0</span></td>
+            <td><span class="gray-font">0%</span></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
