@@ -18,7 +18,7 @@ function bullseye_blocks_render_be_top_header() {
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
-  
+
   $vars = array();
   $vars['username'] = '';
 
@@ -654,6 +654,7 @@ function bullseye_blocks_render_be_dashboard_statistics() {
   $vars['prospects_total'] = $be->countProspectsAccnt();
   $vars['opportunities_total'] = $be->countOpportunityAccnt();
   $vars['deals_total'] = $be->countDealsAccnt();
+  $vars['closed_deals_total'] = $be->countClosedDeals();
 
   $output = theme('be_dashboard_statistics', $vars);
 

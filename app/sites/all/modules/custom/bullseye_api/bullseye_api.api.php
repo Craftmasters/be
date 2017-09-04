@@ -605,6 +605,73 @@ class Bullseye {
   }
 
   /**
+   * Get all closed deals account.
+   */
+  function getClosedDeals() {
+    if ($cache = cache_get('closed_deals_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
+      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
+      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
+      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
+      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->fields('type', array('field_account_status_value'))
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('mname', array('field_middle_name_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('comp', array('field_company_value'))
+        ->fields('mail', array('field_email_value'))
+        ->fields('source', array('field_source_value'))
+        ->fields('btype', array('field_type_of_business_value'))
+        ->fields('title', array('field_title_value'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'closed_deal', '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('closed_deals_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
+   * Count all closed deals account.
+   */
+  function countClosedDeals() {
+    if ($cache = cache_get('count_closed_deals_accounts_listing')) {
+      $accounts = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $accounts = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('type.field_account_status_value', 'closed_deal', '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('count_closed_deals_accounts_listing', $accounts, 'cache');
+    }
+
+    return $accounts;
+  }
+
+  /**
    * Get RFPs.
    */
   function getRfps() {
