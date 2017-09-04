@@ -7,7 +7,9 @@
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Company Name'); ?></div>
-          <div class="be-view-value font-bold" id="gi-company-name"><?php print $company; ?></div>
+          <div class="be-view-value font-bold" id="gi-company-name">
+            <?php print $company; ?>
+          </div>
         </div>
 
         <div class="be-view-field">
@@ -497,7 +499,7 @@
                             <h1><span><?php print t('Request for Proposal'); ?></span></h1>
                             <h2 class="pdf-company-name"></h2>
                           </div>
-                            
+
                           <div class="row">
                             <div class="col-md-6 col-xs-6">
                               <h3><?php print t('Group Information'); ?></h3>
@@ -618,7 +620,7 @@
                         <?php print render($form[$key . '_fields'][$key . '_attach_loa']); ?>
                         <?php print render($form[$key . '_fields'][$key . '_attach_lcr']); ?>
                       </div>
-                      
+
                     </div>
                     <div class="modal-footer">
                       <div class="be-custom-actions">
@@ -630,7 +632,7 @@
                 </div>
               </div>
             <?php endif; ?>
-          <?php endforeach; ?> 
+          <?php endforeach; ?>
 
           <div class="benefits-summary"></div>
         </div>
