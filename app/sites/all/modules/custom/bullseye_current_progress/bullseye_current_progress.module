@@ -292,11 +292,11 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
  */
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   // Setting the new statuses of the account.
-  //$wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
-  //$wrapper->field_action_status->set('build_rapport');
-  //$wrapper->field_workflow_status->set('engagement');
-  //$wrapper->field_account_status->set('opportunity');
-  //$wrapper->save();
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('receive_specifications');
+  $wrapper->field_workflow_status->set('plan_specification');
+  $wrapper->field_account_status->set('opportunity');
+  $wrapper->save();
 
   // Clear the prospects and opportunities listing cache so that
   // the new account changes will reflect to the 
