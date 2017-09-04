@@ -45,6 +45,8 @@ function bullseye_blocks_render_be_top_header() {
 function bullseye_blocks_render_be_bottom_header() {
   global $user;
 
+  $be = new Bullseye($user);
+
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
@@ -71,6 +73,9 @@ function bullseye_blocks_render_be_bottom_header() {
       drupal_set_title('Dashboard');
       $vars['be_page_title'] = t('Dashboard');
     }
+  }
+  elseif (arg(0) == 'company') {
+    $vars['be_page_title'] = $be->getCompanyNameByAlias('content/' . arg(1));
   }
 
   $output = theme('be_bottom_header', $vars);
