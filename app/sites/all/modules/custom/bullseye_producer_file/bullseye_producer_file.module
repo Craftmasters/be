@@ -1,0 +1,109 @@
+<?php
+/**
+ * Bullseye plan specification module.
+ */
+
+// constant access arguments
+define('BULLSEYE_PRODUCER_FILE_VIEW', 'View File browser');
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_producer_file_menu() {
+  $items = array();
+
+  $items['producer_file_browser'] = array(
+    'title' => 'Files',
+    'page callback' => 'bullseye_producer_file_page',
+    'access arguments' => array(BULLSEYE_PRODUCER_FILE_VIEW),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+/**
+ * implementation of hook permission
+ */
+function bullseye_producer_file_permission(){
+  return array(
+    BULLSEYE_PRODUCER_FILE_VIEW => array(
+      'title' => t(BULLSEYE_PRODUCER_FILE_VIEW),
+      'description' => t('Allow users on adding plan specifications.'),
+    ),
+  );
+}
+
+/**
+ * helper function
+ * checks if the user can access the directory
+ */
+function bullseye_producer_file_directory_access($directory_name = ''){
+  return true;
+}
+
+
+/**
+ * file browser page for producers
+ */
+function bullseye_producer_file_page(){
+  // global $base_url; //krumo(node_load(5321));
+
+  // // Theme directory.
+  // $theme_directory = path_to_theme('theme', 'bullseye');
+
+  // $producer_acct_company_img = $base_url . '/' . $theme_directory . '/images/icons/producer-acct-company-logo.jpg';
+  $total_files = bullseye_producer_file_get_file_total();
+  $vars = array(
+    'directory_html' => bullseye_producer_file_directory_render(),
+    'total_files' => $total_files,
+  );
+
+  return theme('producer_file_browser', $vars);
+}
+
+/**
+ * helper function
+ * retrieve total file numbers
+ */
+function bullseye_producer_file_get_file_total(){
+  return 4;
+}
+
+/**
+ *
+ */
+function bullseye_producer_file_directory_render(){
+  $directory = bullseye_producer_file_directory_user_load();
+  $vars = array(
+    'directory' => $directory,
+  );
+
+  return theme('bullseye_producer_file_directory', $vars);
+}
+
+/**
+ * helper function
+ * load content directories available for users
+ */
+function bullseye_producer_file_directory_user_load($directory_name = ''){
+  // example data only
+  echo '1';
+  return _bullseye_producer_file_tree_process_sample();
+
+  // actual logic should load all the directories that the user can access
+}
+
+/**
+ * test function
+ * sample data provided for the tree process
+ */
+function _bullseye_producer_file_tree_process_sample(){
+  return array(
+    'ABC Company' => array(
+      '2017',
+    ),
+    'Gekko & Co.' => array(
+      '2017',
+    ),
+  );
+}
