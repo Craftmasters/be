@@ -4,6 +4,21 @@
  */
 
 /**
+* Implements hook_menu().
+*/
+function bullseye_current_progress_menu() {
+
+  $items['be-cp/lead/verify'] = array(
+    'page callback' => 'be_cp_lead_verify',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_form().
  *
  * Current Progress for Leads Form.
@@ -84,6 +99,10 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#value' => t('Save and Exit'),
   );
 
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress.js',
+  );
 
   return $form;
 }
@@ -123,6 +142,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
   $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
   $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+  $vars['nid'] = $node->nid;
 
   $vars['class_verification'] = 'gray-check';
   $vars['class_convert_to_prospect'] = 'no-check';

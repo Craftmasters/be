@@ -122,6 +122,7 @@
           <?php print render($page['bottom_header']); ?>
         </div>
         <div class="content-region">
+          <div id="ajax-result"></div>
           <?php print $messages; ?>
           <?php if ($column == 'one-col') : ?>
             <div class="row column-wrapper one-col">
