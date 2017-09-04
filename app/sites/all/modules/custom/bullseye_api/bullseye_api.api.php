@@ -774,6 +774,8 @@ class Bullseye {
 
   /**
    * Determine if benefits in RFP is active.
+   *
+   * Classes for RFP account by row on listing page.
    */
   function isActive($param) {
     if (!is_null($param)) {
