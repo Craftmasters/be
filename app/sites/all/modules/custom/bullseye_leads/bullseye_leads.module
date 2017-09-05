@@ -203,6 +203,9 @@ function bullseye_leads_import($rows) {
 
         $node = node_submit($node);
         node_save($node);
+
+        // Notify the user once the import is done.
+        drupal_set_message(t('Import successfully completed.'));
       }
       else {
         drupal_set_message(t('Account is already in our system.'));
