@@ -440,8 +440,12 @@
                   <div class="acc_head_copy">Short Term Disability</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['short_term_disability_fields']['std_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['short_term_disability_fields']['std_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['short_term_disability_fields']['std_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['short_term_disability_fields']['std_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
