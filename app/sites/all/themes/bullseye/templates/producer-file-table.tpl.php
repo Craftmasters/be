@@ -4,9 +4,9 @@
  */
 ?>
 <?php
-function producer_file_process_files($directory_name = ''){
+function producer_file_process_files($files = ''){
   ?>
-<?php foreach($name as $file_name => $data):
+<?php foreach($files as $file_name => $data):
   $col_id = str_replace(' ', '-', strtolower($file_name));
   ?>
   <tr>
@@ -34,6 +34,6 @@ function producer_file_process_files($directory_name = ''){
     </tr>
   </thead>
   <tbody>
-    <?php producer_file_process_directory($files); ?>
+    <?php producer_file_process_files($files); ?>
   </tbody>
 </table>
