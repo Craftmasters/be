@@ -74,6 +74,36 @@
           });
         });
 
+        // Lead - Verification - Plan to work SCA/DBRA - Yes
+        $('#btn-plan-sca-dbra-yes').click(function() {
+          $.ajax({
+            url: '/be-cp/plan-work-sca-dbra',
+            method: 'POST',
+            data: {
+              nid: nid,
+              plan_to_work_sca_dbra: 'yes'
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
+        // Lead - Verification - Plan to work SCA/DBRA - No
+        $('#btn-plan-sca-dbra-no').click(function() {
+          $.ajax({
+            url: '/be-cp/plan-work-sca-dbra',
+            method: 'POST',
+            data: {
+              nid: nid,
+              plan_to_work_sca_dbra: 'no'
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
         // Lead - Verification - Validate point of contact
         $('#btn-validate-point-of-contact').click(function() {
           $.ajax({

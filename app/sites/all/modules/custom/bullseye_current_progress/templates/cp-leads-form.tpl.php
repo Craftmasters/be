@@ -59,7 +59,7 @@
 		</div>
 		<div class="col-xs-10">
 				
-			<?php if ($account_status == 'prospect') : ?>
+			<?php if ($account_status != 'lead') : ?>
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Prospect!'); ?></span>
 				</a>
@@ -251,7 +251,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#verify-sca-dbra" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<?php print render($form['save_exit_classify_group']); ?>
 		        	<button id="btn-validate-point-of-contact" type="button" class="green-btn"  data-toggle="modal" data-target="#validate-contacts" data-dismiss="modal"><?php print t('Next: Validate point of contact'); ?></button>
 		        </div>
 		      </div>
@@ -305,7 +305,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#classify-to-group" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<?php print render($form['save_exit_validate_contact']); ?>
 		        	<button id="btn-set-priority" type="button" class="green-btn"  data-toggle="modal" data-target="#set-priority" data-dismiss="modal"><?php print t('Next: Set Priority'); ?></button>
 		        </div>
 		      </div>
