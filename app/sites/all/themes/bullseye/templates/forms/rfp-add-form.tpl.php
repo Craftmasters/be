@@ -13,29 +13,43 @@
         </div>
 
         <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Primary Email Address'); ?></div>
+          <div class="be-view-label">
+            <?php print t('Primary Email Address'); ?>
+          </div>
           <div class="be-view-value">
-            <a href="mailto:<?php print $email; ?>" class="orange-font" id="gi-email"><?php print $email; ?></a>
+            <a href="mailto:<?php print $email; ?>" class="orange-font" id="gi-email">
+              <?php print $email; ?>
+            </a>
           </div>
         </div>
 
         <div class="be-view-field">
           <div class="be-view-label"><?php print t('Phone Number'); ?></div>
-          <div class="be-view-value"><a href="<?php print $phone; ?>" id="gi-phone"><?php print $phone; ?></a></div>
+          <div class="be-view-value">
+            <a href="<?php print $phone; ?>" id="gi-phone">
+              <?php print $phone; ?>
+            </a>
+          </div>
         </div>
 
         <?php if ($website) : ?>
           <div class="be-view-field">
             <div class="be-view-label"><?php print t('Website'); ?></div>
             <div class="be-view-value">
-              <a href="#" class="orange-font" id="gi-website"><?php print $website; ?></a>
+              <a href="#" class="orange-font" id="gi-website">
+                <?php print $website; ?>
+              </a>
             </div>
           </div>
         <?php endif; ?>
 
         <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Company Street Address'); ?></div>
-          <div class="be-view-value" id="gi-address"><?php print $street; ?></div>
+          <div class="be-view-label">
+            <?php print t('Company Street Address'); ?>
+          </div>
+          <div class="be-view-value" id="gi-address">
+            <?php print $street; ?>
+          </div>
         </div>
 
         <div class="be-view-field-row row">
@@ -43,21 +57,27 @@
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('City'); ?></div>
-              <div class="be-view-value" id="gi-city"><?php print $city; ?></div>
+              <div class="be-view-value" id="gi-city">
+                <?php print $city; ?>
+              </div>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('State'); ?></div>
-              <div class="be-view-value" id="gi-state"><?php print $state; ?></div>
+              <div class="be-view-value" id="gi-state">
+                <?php print $state; ?>
+              </div>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="be-view-field">
               <div class="be-view-label"><?php print t('Zip Code'); ?></div>
-              <div class="be-view-value" id="gi-zip-code"><?php print $code; ?></div>
+              <div class="be-view-value" id="gi-zip-code">
+                <?php print $code; ?>
+              </div>
             </div>
           </div>
 
@@ -67,32 +87,54 @@
     </div>
 
     <div class="be-regular-block plan-specification">
-      <h2 class="be-regular-h2"><?php print t('Plan Specifications'); ?></h2>
-      <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
+      <h2 class="be-regular-h2">
+        <?php print t('Plan Specifications'); ?>
+      </h2>
+      <a href="#" class="edit-link edit-account-details">
+        <img src="<?php print $edit_icon; ?>">
+      </a>
       <div class="be-block-main plan-specification-inner">
         <div class="be-form-section">
           <div class="row">
-            <div class="col-xs-6"><?php print render($form['fringe_rates']); ?></div>
-            <div class="col-xs-6"><?php print render($form['proposed_effective_date']); ?></div>
+            <div class="col-xs-6">
+              <?php print render($form['fringe_rates']); ?>
+            </div>
+            <div class="col-xs-6">
+              <?php print render($form['proposed_effective_date']); ?>
+            </div>
           </div>
         </div>
-        <div class="be-form-single"><?php print render($form['other_work_locations']); ?></div>
-        <div class="be-form-section">
-          <div class="row">
-            <div class="col-xs-6"><?php print render($form['number_of_employees']); ?></div>
-            <div class="col-xs-6"><?php print render($form['number_of_dependents']); ?></div>
-          </div>
-        </div>
-        <div class="be-form-section">
-          <div class="row">
-            <div class="col-xs-6"><?php print render($form['nature_of_business']); ?></div>
-            <div class="col-xs-6"><?php print render($form['years_in_business']); ?></div>
-          </div>
+        <div class="be-form-single">
+          <?php print render($form['other_work_locations']); ?>
         </div>
         <div class="be-form-section">
           <div class="row">
-            <div class="col-xs-6"><?php print render($form['tax_id']); ?></div>
-            <div class="col-xs-6"><?php print render($form['renewal_date']); ?></div>
+            <div class="col-xs-6">
+              <?php print render($form['number_of_employees']); ?>
+            </div>
+            <div class="col-xs-6">
+              <?php print render($form['number_of_dependents']); ?>
+            </div>
+          </div>
+        </div>
+        <div class="be-form-section">
+          <div class="row">
+            <div class="col-xs-6">
+              <?php print render($form['nature_of_business']); ?>
+            </div>
+            <div class="col-xs-6">
+              <?php print render($form['years_in_business']); ?>
+            </div>
+          </div>
+        </div>
+        <div class="be-form-section">
+          <div class="row">
+            <div class="col-xs-6">
+              <?php print render($form['tax_id']); ?>
+            </div>
+            <div class="col-xs-6">
+              <?php print render($form['renewal_date']); ?>
+            </div>
           </div>
         </div>
       </div>
@@ -101,8 +143,12 @@
   </div>
   <div class="col-md-4">
     <div class="be-regular-block benefits">
-      <h2 class="be-regular-h2"><?php print t('Benefits'); ?></h2>
-      <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
+      <h2 class="be-regular-h2">
+        <?php print t('Benefits'); ?>
+      </h2>
+      <a href="#" class="edit-link edit-account-details">
+        <img src="<?php print $edit_icon; ?>">
+      </a>
       <div class="be-block-main">
         <div class="accordion-benefits-wrapper">
           <div class="accordion-benefits">
@@ -116,30 +162,48 @@
                   <div class="acc_head_copy">Major Medical</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['major_medical_fields']['mm_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['major_medical_fields']['mm_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['major_medical_fields']['mm_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['major_medical_fields']['mm_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
                   <div class="be-form-section">
                     <label><?php print t('Plan Year to Quote'); ?></label>
                     <div class="row">
-                      <div class="col-xs-6 quote-start"><?php print render($form['major_medical_fields']['mm_plan_year_to_quote_start']); ?></div>
-                      <div class="col-xs-6 quote-end"><?php print render($form['major_medical_fields']['mm_plan_year_to_quote_end']); ?></div>
+                      <div class="col-xs-6 quote-start">
+                        <?php print render($form['major_medical_fields']['mm_plan_year_to_quote_start']); ?>
+                      </div>
+                      <div class="col-xs-6 quote-end">
+                        <?php print render($form['major_medical_fields']['mm_plan_year_to_quote_end']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single renewal-plan"><?php print render($form['major_medical_fields']['mm_renewal_of_current_plan']); ?></div>
+                  <div class="be-form-single renewal-plan">
+                    <?php print render($form['major_medical_fields']['mm_renewal_of_current_plan']); ?>
+                  </div>
 
                   <div class="be-form-section">
-                    <label><?php print t('Percentage of Employer Contribution'); ?></label>
+                    <label>
+                      <?php print t('Percentage of Employer Contribution'); ?>
+                    </label>
                     <div class="row">
-                      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_percentage_single']); ?></div>
-                      <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_percentage_family']); ?></div>
+                      <div class="col-xs-6">
+                        <?php print render($form['major_medical_fields']['mm_percentage_single']); ?>
+                      </div>
+                      <div class="col-xs-6">
+                        <?php print render($form['major_medical_fields']['mm_percentage_family']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['major_medical_fields']['mm_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period">
+                    <?php print render($form['major_medical_fields']['mm_waiting_period']); ?>
+                  </div>
                 </div>
               </div>
             <?php endif; ?>
