@@ -513,30 +513,48 @@
                 <div class="acc_content">
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['special_benefits_fields']['sb_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['special_benefits_fields']['sb_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['special_benefits_fields']['sb_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['special_benefits_fields']['sb_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
                   <div class="be-form-section">
                     <label><?php print t('Plan Year to Quote'); ?></label>
                     <div class="row">
-                      <div class="col-xs-6 quote-start"><?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_start']); ?></div>
-                      <div class="col-xs-6 quote-end"><?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_end']); ?></div>
+                      <div class="col-xs-6 quote-start">
+                        <?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_start']); ?>
+                      </div>
+                      <div class="col-xs-6 quote-end">
+                        <?php print render($form['special_benefits_fields']['sb_plan_year_to_quote_end']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single renewal-plan"><?php print render($form['special_benefits_fields']['sb_renewal_of_current_plan']); ?></div>
+                  <div class="be-form-single renewal-plan">
+                    <?php print render($form['special_benefits_fields']['sb_renewal_of_current_plan']); ?>
+                  </div>
 
                   <div class="be-form-section">
-                    <label><?php print t('Percentage of Employer Contribution'); ?></label>
+                    <label>
+                      <?php print t('Percentage of Employer Contribution'); ?>
+                    </label>
                     <div class="row">
-                      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_percentage_single']); ?></div>
-                      <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_percentage_family']); ?></div>
+                      <div class="col-xs-6">
+                        <?php print render($form['special_benefits_fields']['sb_percentage_single']); ?>
+                      </div>
+                      <div class="col-xs-6">
+                        <?php print render($form['special_benefits_fields']['sb_percentage_family']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['special_benefits_fields']['sb_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period">
+                    <?php print render($form['special_benefits_fields']['sb_waiting_period']); ?>
+                  </div>
                 </div>
               </div>
             <?php endif; ?>
@@ -551,7 +569,9 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><?php print $bt['title_' . $key]; ?></h4>
+                      <h4 class="modal-title">
+                        <?php print $bt['title_' . $key]; ?>
+                      </h4>
                     </div>
                     <div class="modal-body">
                       <div class="pdf-dummy-preview">
@@ -560,15 +580,23 @@
                         </div>
                         <div class="pdf-body">
                           <div class="pdf-body-header">
-                            <h1><span><?php print t('Request for Proposal'); ?></span></h1>
+                            <h1>
+                              <span>
+                                <?php print t('Request for Proposal'); ?>
+                              </span>
+                            </h1>
                             <h2 class="pdf-company-name"></h2>
                           </div>
 
                           <div class="row">
                             <div class="col-md-6 col-xs-6">
-                              <h3><?php print t('Group Information'); ?></h3>
+                              <h3>
+                                <?php print t('Group Information'); ?>
+                              </h3>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Company Name'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Company Name'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-company-name"></div>
                               </div>
                               <div class="fields-wrapper row">
