@@ -25,7 +25,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <form class="form-inline" role="form">
+        <form role="form">
           <div class="form-group">
             <div id="model-email-success" class="alert-box success" style="display: none">
               <span>success: </span><?php print t('Your Mail Successfully Sent'); ?>.
@@ -44,6 +44,8 @@
             <textarea class="form-control" rows="5" id="email-body"></textarea>
           </div>
         </form>
+      </div>
+      <div class="modal-footer">
         <button id="email-send" class="btn btn-default email-send"><?php print t('Send'); ?></button>
       </div>
     </div>

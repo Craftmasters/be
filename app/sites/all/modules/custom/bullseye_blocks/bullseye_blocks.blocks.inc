@@ -77,6 +77,9 @@ function bullseye_blocks_render_be_bottom_header() {
   elseif (arg(0) == 'company') {
     $vars['be_page_title'] = $be->getCompanyNameByAlias('content/' . arg(1));
   }
+  elseif (arg(0) == 'gmail-connector') {
+    $vars['be_page_title'] = t('Mailbox');
+  }
 
   $output = theme('be_bottom_header', $vars);
 

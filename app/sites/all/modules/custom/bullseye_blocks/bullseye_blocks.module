@@ -617,6 +617,14 @@ function bullseye_blocks_preprocess_block(&$variables) {
       $variables['classes_array'][] = 'col-md-6';
     }
   }
+
+  if ($variables['block']->module == 'system') {
+    if ($variables['block']->delta == 'main') {
+      if (arg(0) == 'gmail-connector') {
+        $variables['classes_array'][] = 'col-md-12';
+      }
+    }
+  }
   
 }
 

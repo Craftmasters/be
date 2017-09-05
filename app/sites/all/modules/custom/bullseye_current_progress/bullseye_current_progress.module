@@ -102,6 +102,10 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   module_load_include('inc', 'field_collection', 'field_collection.pages');
   module_load_include('inc', 'node', 'node.pages');
 
+  $node_form = new stdClass;
+  $node_form->type = 'accounts';
+  $node_form->language = LANGUAGE_NONE;
+
   // Getting the field "Contacts" field collection from accounts content type fields.
   $field = field_info_field('field_contacts');
   $instance = field_info_instance('node', 'field_contacts', 'accounts');
@@ -210,7 +214,7 @@ function save_exit_classify_group($form, &$form_state) {
  * Form submit for current progress leads form.
  */
 function save_exit_validate_contact($form, &$form_state) {
-  
+  kpr($form_state['values']);
 }
 
 /**
