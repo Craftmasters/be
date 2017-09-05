@@ -304,15 +304,26 @@
 			      				</tr>
 		      				</thead>
 		      				<tbody>
-		      					<?php foreach ($contacts as $key => $value) : ?>
-		      						<tr contact-id="<?php print $value['item_id']; ?>" class="old-data">
-		      							<td><input type="text" class="con-name" value="<?php print $value['name']; ?>"></td>
-		      							<td><input type="text" class="con-position" value="<?php print $value['position']; ?>"></td>
-		      							<td><input type="text" class="con-phone" value="<?php print $value['phone']; ?>"></td>
-		      							<td><input type="text" class="con-email" value="<?php print $value['email']; ?>"></td>
-		      							<td><button type="button" class="con-delete">Delete</button></td>
-		      						</tr>
-		      					<?php endforeach; ?>
+			      				<?php if (!empty($contacts)) : ?>
+			      					<?php foreach ($contacts as $key => $value) : ?>
+			      						<tr contact-id="<?php print $value['item_id']; ?>" class="old-data">
+			      							<td><input type="text" class="con-name" value="<?php print $value['name']; ?>"></td>
+			      							<td><input type="text" class="con-position" value="<?php print $value['position']; ?>"></td>
+			      							<td><input type="text" class="con-phone" value="<?php print $value['phone']; ?>"></td>
+			      							<td><input type="text" class="con-email" value="<?php print $value['email']; ?>"></td>
+			      							<td><button type="button" class="con-delete">Delete</button></td>
+			      						</tr>
+			      					<?php endforeach; ?>
+			      				<?php else: ?>
+			      					<tr class="new-data">
+			      						<td><input type="text" class="con-name" value=""></td>
+		      							<td><input type="text" class="con-position" value=""></td>
+		      							<td><input type="text" class="con-phone" value=""></td>
+		      							<td><input type="text" class="con-email" value=""></td>
+		      							<td><button type="button" class="con-delete-new">Delete</button></td>
+			      					</tr>
+			      				<?php endif; ?>
+			      					
 		      				</tbody>
 		      			</table>
 		      		</div>
