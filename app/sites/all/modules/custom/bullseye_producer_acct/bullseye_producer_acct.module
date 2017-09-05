@@ -175,6 +175,8 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
     ),
   );
 
+  $form['#is_individual'] = true;
+
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
@@ -215,17 +217,25 @@ function bullseye_producer_acct_company_form($form, &$form_state) {
   // copy form array from individual form
   $form = bullseye_producer_acct_indiv_form($form, $form_state);
 
-  $form['company_container'] = array(
-    '#type' => 'container',
-  );
-
-  $form['company_container']['contact_company'] = array(
+  $form['producer_company'] = array(
     '#type' => 'textfield',
     '#title' => t('Company Name'),
     '#attributes' => array(
       'placeholder' => t('Add Company'),
     ),
+    '#title_display' => 'invisible',
   );
+
+  $form['producer_website'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Website'),
+    '#attributes' => array(
+      'placeholder' => t('Website'),
+    ),
+    '#title_display' => 'invisible',
+  );
+
+  $form['#is_individual'] = false;
 
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
