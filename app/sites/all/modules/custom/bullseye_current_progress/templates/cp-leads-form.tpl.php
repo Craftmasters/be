@@ -290,15 +290,31 @@
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
-		      			<table class="table-header-vc">
-		      				<tr>
-		      					<th><?php print t('Name'); ?></th>
-		      					<th><?php print t('Position'); ?></th>
-		      					<th><?php print t('Contact Number'); ?></th>
-		      					<th><?php print t('Email Address'); ?></th>
-		      				</tr>
+		      			<div class="add-contact-container">
+		      				<button type="button" id="add-contact">Add</button>
+		      			</div>
+		      			<table class="table-vc">
+		      				<thead>
+		      					<tr>
+			      					<th><?php print t('Name'); ?></th>
+			      					<th><?php print t('Position'); ?></th>
+			      					<th><?php print t('Contact Number'); ?></th>
+			      					<th><?php print t('Email Address'); ?></th>
+			      					<th></th>
+			      				</tr>
+		      				</thead>
+		      				<tbody>
+		      					<?php foreach ($contacts as $key => $value) : ?>
+		      						<tr contact-id="<?php print $value['item_id']; ?>" class="old-data">
+		      							<td><input type="text" class="con-name" value="<?php print $value['name']; ?>"></td>
+		      							<td><input type="text" class="con-position" value="<?php print $value['position']; ?>"></td>
+		      							<td><input type="text" class="con-phone" value="<?php print $value['phone']; ?>"></td>
+		      							<td><input type="text" class="con-email" value="<?php print $value['email']; ?>"></td>
+		      							<td><button type="button" class="con-delete">Delete</button></td>
+		      						</tr>
+		      					<?php endforeach; ?>
+		      				</tbody>
 		      			</table>
-		      			<?php print render($form['field_contacts']); ?>
 		      		</div>
 		      	</div>
 		      </div>

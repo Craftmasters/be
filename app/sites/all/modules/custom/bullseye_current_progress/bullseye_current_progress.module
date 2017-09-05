@@ -57,6 +57,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/delete-contact'] = array(
+    'page callback' => 'be_cp_delete_contact',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -107,12 +114,12 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   $node_form->language = LANGUAGE_NONE;
 
   // Getting the field "Contacts" field collection from accounts content type fields.
-  $field = field_info_field('field_contacts');
+  /*$field = field_info_field('field_contacts');
   $instance = field_info_instance('node', 'field_contacts', 'accounts');
   $items = field_get_items('node', $node, 'field_contacts');
   $my_field = field_default_form('node', $node, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $my_field;
-  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';
+  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';*/
 
   // Getting the field "Tags" from accounts content type fields.
   $field = field_info_field('field_tags');
@@ -272,6 +279,30 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['contacts'] = array();
+
+  foreach ($wrapper->field_contacts->value() as $key => $value) {
+    $item = array();
+    $item['item_id'] = $value->item_id;
+    $item['name'] = '';
+    $item['email'] = '';
+    $item['phone'] = '';
+    $item['position'] = '';
+    if (isset($value->field_contact_name[LANGUAGE_NONE][0]['value'])) {
+      $item['name'] = $value->field_contact_name[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_email[LANGUAGE_NONE][0]['value'])) {
+      $item['email'] = $value->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_phone_number[LANGUAGE_NONE][0]['value'])) {
+      $item['phone'] = $value->field_phone_number[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_position[LANGUAGE_NONE][0]['value'])) {
+      $item['position'] = $value->field_position[LANGUAGE_NONE][0]['value'];
+    }
+    $vars['contacts'][] = $item;
+  }
 
   $vars['class_verification'] = 'gray-check';
   $vars['class_convert_to_prospect'] = 'no-check';

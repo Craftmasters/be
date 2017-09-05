@@ -1,5 +1,6 @@
 <?php
 
+// For updating the lead verification field.
 function be_cp_lead_verify() {
 
   $nid = $_POST['nid'];
@@ -13,6 +14,7 @@ function be_cp_lead_verify() {
   drupal_json_output($wrapper);
 }
 
+// For updating the plan to work under sca/dbra field.
 function be_cp_plan_to_work_sca_dbra() {
 
   $nid = $_POST['nid'];
@@ -37,6 +39,14 @@ function be_cp_lead_validate_point_of_contact() {
   $wrapper->save();
 
   drupal_json_output($wrapper);
+}
+
+function be_cp_delete_contact() {
+  $item_id = $_POST['item_id'];
+
+  $result = entity_delete('field_collection_item', $item_id);
+
+  drupal_json_output('success');
 }
 
 function be_cp_lead_set_priority() {

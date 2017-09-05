@@ -174,6 +174,41 @@
           });
         });
 
+        // Delete contact from validate point of contact phase.
+        $('.con-delete').each(function() {
+          $(this).click(function() {
+            var item_id = $(this).closest('tr').attr('contact-id');
+            $.ajax({
+              url: '/be-cp/delete-contact',
+              method: 'POST',
+              data: {
+                item_id: item_id,
+              },
+              success: function(result){
+                console.log(result);
+                if (result == 'success') {
+                  $('tr[contact-id="' + item_id + '"]').remove();
+                }
+              },
+            });
+          });
+        });
+
+        $('#add-contact').click(function() {
+          var random_num = Math.floor((Math.random() * 10000000) + 1);
+          var name_td = '<td><input type="text" class="con-name" value=""></td>';
+          var position_td = '<td><input type="text" class="con-position" value=""></td>';
+          var phone_td = '<td><input type="text" class="con-phone" value=""></td>';
+          var email_td = '<td><input type="text" class="con-email" value=""></td>';
+          var delete_td = '<td><button type="button" class="con-delete-new">Delete</button></td>';
+          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + name_td + position_td + phone_td + email_td + delete_td + '</tr>';
+          $('table.table-vc tbody').append(tr);
+
+          $('tr[tr-num="' + random_num + '"] button.con-delete-new').click(function() {
+            $(this).closest('tr').remove();
+          });
+        });
+
       });
    
     }
