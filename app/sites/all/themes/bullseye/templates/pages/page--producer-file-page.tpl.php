@@ -1,24 +1,28 @@
 <div id="producer-file-container">
   <div class="row">
-    <div class="col-md-4 producer-file-tree">
-      <div class="file-tree-heading">
-        <div class="col-md-6">
-          <span class="tree-count">All Files (<?php echo $total_files ?>)<span class="fa fa-sort-desc"></span> | <button class="orange-btn">Upload</button></span>
+    <div class="col-md-5">
+      <div class="producer-file-tree">
+        <div class="row file-tree-heading">
+          <div class="col-md-8 col-sm-7">
+            <span class="tree-count">All Files (<?php echo $total_files ?>)<span class="fa fa-sort-desc"></span> <span class="line-divider">|</span><button class="orange-btn">Upload</button></span>
+          </div>
+          <div class="col-md-4 col-sm-5">
+            <button class="icon-button icon-gear">Configuration</button>
+            <button class="icon-button icon-search">Search</button>
+          </div>
         </div>
-        <div class="col-md-6">
-          <button class="icon-search">Search</button>
-          <button class="icon-gear">Configuration</button>
-        </div>
-      </div>
-      <div class="file-tree-content">
-        <div class="file-tree-content-inner">
-          <?php echo $directory_html; ?>
+        <div class="file-tree-content">
+          <div class="file-tree-content-inner">
+            <?php echo $directory_html; ?>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-8 producer-file-browser">
-      <div class="producer-file-browser-inner">
-        <?php echo $files_html; ?>
+    <div class="col-md-7">
+      <div class="producer-file-browser">
+        <div class="producer-file-browser-inner">
+          <?php echo $files_html; ?>
+        </div>
       </div>
     </div>
   </div>

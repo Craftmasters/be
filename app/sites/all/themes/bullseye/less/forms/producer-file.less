@@ -1,0 +1,111 @@
+.page-producer-file-browser{
+  #producer-file-container{
+    > .row{
+      margin: 0;
+
+      .producer-file-tree{
+        background: #fff;
+
+        .row.file-tree-heading{
+          margin: 0;
+          padding: 20px;
+          border-bottom: 1px solid #9BC1BC;
+
+          .tree-count{
+            .fa.fa-sort-desc{
+              margin: 0 10px;
+              position: relative;
+              top: -3px;
+              color: #9097A6;
+              font-size: 13px;
+            }
+            .line-divider{
+              font-size: 22px;
+              position: relative;
+              color: #9097A6;
+              top: 3px;
+              line-height: 0;
+              margin-right: 15px;
+            }
+            .orange-btn{
+              background: #F58A3E;
+              border: 0;
+              color: #fff;
+              text-transform: uppercase;
+              font-size: 14px;
+              padding: 5px 13px;
+              border-radius: 3px;
+            }
+          }
+
+          .icon-button{
+            height: 15px;
+            width: 15px;
+            font-size: 0;
+            border: 0;
+            padding: 10px;
+            float: right;
+            margin-left: 15px;
+          }
+          .icon-search{
+            background: url(../../images/icons/magnifying_glass_gray.svg) no-repeat;
+          }
+          .icon-gear{
+            background: url(../../images/icons/gray_gear.svg) no-repeat;
+          }
+        }
+
+        .file-tree-content{
+          padding: 20px;
+          .file-tree-content-inner{
+            .directory-name-tree-container{
+              color: #757C83;
+              margin-top: 5px;
+              .directory-name{
+                list-style: none;
+                margin-bottom: 5px;
+                .icon-folder{
+                  height: 19px;
+                  display: inline-block;
+                  width: 23px;
+                  background: url(../../images/icon-folder.png) no-repeat 0 0;
+                  margin-right: 10px;
+                }
+              }
+              .directory-name.has-children{
+                position: relative;
+                >:before{
+                  content: "\f0dd";
+                  font-family: FontAwesome;
+                  left: -11px;
+                  position: absolute;
+                  top: 0;
+                  color: #9097A6;
+                  font-size: 10px;
+                }
+                .directory-name-tree-container-child{
+                  margin-top: 5px;
+                }
+              }
+              .directory-name.has-children.tree-close{
+                >:before{
+                  content: "\f0da";
+                }
+                .directory-name-tree-container{
+                  display: none;
+                }
+              }
+            }
+            .directory-name-tree-container-main{
+              padding-left: 20px;
+            }
+          }
+        }
+      }
+
+      .producer-file-browser{
+        background: #fff;
+      }
+    }
+  }
+}

@@ -106,30 +106,30 @@ function bullseye_producer_file_get_all_files(){
     'Arrow Trust Docs' => array(
       'type' => 'doc',
       'account' => 'ABC Company',
-      'upload_date' => '1493942400',
+      'upload_date' => '05/20/2017',
       'upload_name' => 'James J.',
-      'last_access' => '1493942400',
+      'last_access' => '05/20/2017',
     ),
     'Benefits Enrollment Guide' => array(
       'type' => 'pdf',
       'account' => 'Gekko & Co',
-      'upload_date' => '1492041600',
+      'upload_date' => '04/13/2017',
       'upload_name' => 'Mikka C.',
-      'last_access' => '1492041600',
+      'last_access' => '04/13/2017',
     ),
     'Employee Manual' => array(
       'type' => 'pptx',
       'account' => 'ABC Company',
-      'upload_date' => '1496275200',
+      'upload_date' => '06/01/2017',
       'upload_name' => 'Beata S.',
-      'last_access' => '1496275200',
+      'last_access' => '06/01/2017',
     ),
     'Monthly Benefits Computation' => array(
       'type' => 'xlsx',
       'account' => 'Umbrella Corporation',
-      'upload_date' => '1493596800',
+      'upload_date' => '05/01/2017',
       'upload_name' => 'James J.',
-      'last_access' => '1493596800',
+      'last_access' => '05/01/2017',
     ),
   );
   return $files;
@@ -141,7 +141,6 @@ function bullseye_producer_file_get_all_files(){
  */
 function bullseye_producer_file_directory_user_load($directory_name = ''){
   // example data only
-  echo '1';
   return _bullseye_producer_file_tree_process_sample();
 
   // actual logic should load all the directories that the user can access
