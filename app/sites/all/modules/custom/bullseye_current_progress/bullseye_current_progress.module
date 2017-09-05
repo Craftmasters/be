@@ -50,6 +50,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/plan-work-sca-dbra'] = array(
+    'page callback' => 'be_cp_plan_to_work_sca_dbra',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 

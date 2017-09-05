@@ -49,7 +49,7 @@
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<?php if ($account_status == 'opportunity') : ?>
+			<?php if ($account_status != 'prospect') : ?>
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Opportunity!'); ?></span>
 				</a>

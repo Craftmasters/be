@@ -3,9 +3,26 @@
 function be_cp_lead_verify() {
 
   $nid = $_POST['nid'];
+  $sca_dbra = $_POST['sca_dbra'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_action_status->set('classify_to_group');
+  $wrapper->field_work_sca_dbra->set($sca_dbra);
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+function be_cp_plan_to_work_sca_dbra() {
+
+  $nid = $_POST['nid'];
+  $plan_to_work_sca_dbra = $_POST['plan_to_work_sca_dbra'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  if ($plan_to_work_sca_dbra == 'yes') {
+    $wrapper->field_action_status->set('classify_to_group');
+  }
+  $wrapper->field_plan_work_under_sca_dbra->set($plan_to_work_sca_dbra);
   $wrapper->save();
 
   drupal_json_output($wrapper);
