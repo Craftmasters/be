@@ -1,12 +1,18 @@
 <div class="row">
   <div class="col-md-4">
     <div class="be-regular-block group-information">
-      <h2 class="be-regular-h2"><?php print t('Group Information'); ?></h2>
-      <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
+      <h2 class="be-regular-h2">
+        <?php print t('Group Information'); ?>
+      </h2>
+      <a href="#" class="edit-link edit-account-details">
+        <img src="<?php print $edit_icon; ?>">
+      </a>
       <div class="be-block-main">
 
         <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Company Name'); ?></div>
+          <div class="be-view-label">
+            <?php print t('Company Name'); ?>
+          </div>
           <div class="be-view-value font-bold" id="gi-company-name">
             <?php print $company; ?>
           </div>
@@ -24,7 +30,9 @@
         </div>
 
         <div class="be-view-field">
-          <div class="be-view-label"><?php print t('Phone Number'); ?></div>
+          <div class="be-view-label">
+            <?php print t('Phone Number'); ?>
+          </div>
           <div class="be-view-value">
             <a href="<?php print $phone; ?>" id="gi-phone">
               <?php print $phone; ?>
@@ -34,7 +42,9 @@
 
         <?php if ($website) : ?>
           <div class="be-view-field">
-            <div class="be-view-label"><?php print t('Website'); ?></div>
+            <div class="be-view-label">
+              <?php print t('Website'); ?>
+            </div>
             <div class="be-view-value">
               <a href="#" class="orange-font" id="gi-website">
                 <?php print $website; ?>
@@ -56,7 +66,9 @@
 
           <div class="col-xs-4">
             <div class="be-view-field">
-              <div class="be-view-label"><?php print t('City'); ?></div>
+              <div class="be-view-label">
+                <?php print t('City'); ?>
+              </div>
               <div class="be-view-value" id="gi-city">
                 <?php print $city; ?>
               </div>
@@ -65,7 +77,9 @@
 
           <div class="col-xs-4">
             <div class="be-view-field">
-              <div class="be-view-label"><?php print t('State'); ?></div>
+              <div class="be-view-label">
+                <?php print t('State'); ?>
+              </div>
               <div class="be-view-value" id="gi-state">
                 <?php print $state; ?>
               </div>
@@ -74,7 +88,9 @@
 
           <div class="col-xs-4">
             <div class="be-view-field">
-              <div class="be-view-label"><?php print t('Zip Code'); ?></div>
+              <div class="be-view-label">
+                <?php print t('Zip Code'); ?>
+              </div>
               <div class="be-view-value" id="gi-zip-code">
                 <?php print $code; ?>
               </div>
@@ -217,8 +233,12 @@
                   <div class="acc_head_copy">Limited Medical</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['limited_medical_fields']['lm_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['limited_medical_fields']['lm_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['limited_medical_fields']['lm_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['limited_medical_fields']['lm_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
@@ -308,7 +328,9 @@
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['teledoc_fields']['tel_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period">
+                    <?php print render($form['teledoc_fields']['tel_waiting_period']); ?>
+                  </div>
                 </div>
               </div>
             <?php endif; ?>
