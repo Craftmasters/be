@@ -572,74 +572,112 @@
                                 <div class="col-md-6 col-xs-6 pdf-company-name"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Primary Email Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Primary Email Address'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-email"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Phone Number'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Phone Number'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-phone"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Corporate Address'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Corporate Address'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-address"></div>
                               </div>
                             </div>
                             <div class="col-md-6 col-xs-6">
-                              <h3><?php print t('Plan Specification'); ?></h3>
+                              <h3>
+                                <?php print t('Plan Specification'); ?>
+                              </h3>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Quote Request For'); ?></div>
-                                <div class="col-md-6 col-xs-6 pdf-benefit-name"><?php print $bt['title_' . $key]; ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Quote Request For'); ?>
+                                </div>
+                                <div class="col-md-6 col-xs-6 pdf-benefit-name">
+                                  <?php print $bt['title_' . $key]; ?>
+                                </div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Fringe Rate\'s'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Fringe Rate\'s'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-fringe-rates"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Proposed Effective Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Proposed Effective Date'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-effective-date"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Other Work Locations and Zip Codes'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Other Work Locations and Zip Codes'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-location"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Number of Employees'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Number of Employees'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-employees"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Number of Dependents'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Number of Dependents'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-dependents"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Nature of Business/SIC'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Nature of Business/SIC'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-business"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Years in Business'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Years in Business'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-years-business"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Tax ID'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Tax ID'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-tax-id"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Renewal Date'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Renewal Date'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-renewal-date"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Current Carrier'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Current Carrier'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-current-carrier"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Plan Year to Quote'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Plan Year to Quote'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-plan-year-quote"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Renewal'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Renewal'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-renewal"></div>
                               </div>
                               <div class="fields-wrapper row">
-                                <div class="col-md-6 col-xs-6"><?php print t('Waiting Period'); ?></div>
+                                <div class="col-md-6 col-xs-6">
+                                  <?php print t('Waiting Period'); ?>
+                                </div>
                                 <div class="col-md-6 col-xs-6 pdf-waiting-period"></div>
                               </div>
                             </div>
@@ -653,7 +691,9 @@
                     </div>
                     <div class="modal-footer">
                       <div class="be-custom-actions">
-                        <a href="#" class="gray-btn" data-dismiss="modal"><?php print t('Back'); ?></a>
+                        <a href="#" class="gray-btn" data-dismiss="modal">
+                          <?php print t('Back'); ?>
+                        </a>
                         <a href="#" class="orange-btn next-send-email" data-toggle="modal" data-target="#modal_attachment_<?php print $key; ?>"  data-dismiss="modal">
                           <?php print t('Next'); ?>
                         </a>
@@ -671,7 +711,9 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><?php print t('Include Attachments'); ?></h4>
+                      <h4 class="modal-title">
+                        <?php print t('Include Attachments'); ?>
+                      </h4>
                     </div>
                     <div class="modal-body">
                       <div class="include-attachments">
