@@ -366,30 +366,48 @@
                   <div class="acc_head_copy">Vision</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['vision_fields']['vs_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['vision_fields']['vs_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['vision_fields']['vs_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['vision_fields']['vs_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
                   <div class="be-form-section">
                     <label><?php print t('Plan Year to Quote'); ?></label>
                     <div class="row">
-                      <div class="col-xs-6 quote-start"><?php print render($form['vision_fields']['vs_plan_year_to_quote_start']); ?></div>
-                      <div class="col-xs-6 quote-end"><?php print render($form['vision_fields']['vs_plan_year_to_quote_end']); ?></div>
+                      <div class="col-xs-6 quote-start">
+                        <?php print render($form['vision_fields']['vs_plan_year_to_quote_start']); ?>
+                      </div>
+                      <div class="col-xs-6 quote-end">
+                        <?php print render($form['vision_fields']['vs_plan_year_to_quote_end']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single renewal-plan"><?php print render($form['vision_fields']['vs_renewal_of_current_plan']); ?></div>
+                  <div class="be-form-single renewal-plan">
+                    <?php print render($form['vision_fields']['vs_renewal_of_current_plan']); ?>
+                  </div>
 
                   <div class="be-form-section">
-                    <label><?php print t('Percentage of Employer Contribution'); ?></label>
+                    <label>
+                      <?php print t('Percentage of Employer Contribution'); ?>
+                    </label>
                     <div class="row">
-                      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_percentage_single']); ?></div>
-                      <div class="col-xs-6"><?php print render($form['vision_fields']['vs_percentage_family']); ?></div>
+                      <div class="col-xs-6">
+                        <?php print render($form['vision_fields']['vs_percentage_single']); ?>
+                      </div>
+                      <div class="col-xs-6">
+                        <?php print render($form['vision_fields']['vs_percentage_family']); ?>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['vision_fields']['vs_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period">
+                    <?php print render($form['vision_fields']['vs_waiting_period']); ?>
+                  </div>
                 </div>
               </div>
             <?php endif; ?>
@@ -403,8 +421,12 @@
                   <div class="acc_head_copy">Life & AD&D</div>
                   <div class="be-form-section">
                     <div class="row">
-                      <div class="col-xs-6 current-carrier"><?php print render($form['life_fields']['lf_current_carrier']); ?></div>
-                      <div class="col-xs-6 years-with-current-carrier"><?php print render($form['life_fields']['lf_years_with_current_carrier']); ?></div>
+                      <div class="col-xs-6 current-carrier">
+                        <?php print render($form['life_fields']['lf_current_carrier']); ?>
+                      </div>
+                      <div class="col-xs-6 years-with-current-carrier">
+                        <?php print render($form['life_fields']['lf_years_with_current_carrier']); ?>
+                      </div>
                     </div>
                   </div>
 
