@@ -38,10 +38,10 @@
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 2; $i++) : ?>
+          <!--
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="orange-font">365234</span></td>
-            <!-- link "/company/allen-markarian?from=opportunities" where 'allen-markarian' is the alias and 'lead' is the status of account -->
             <td><span class="gray-font"><a href="/company/allen-markarian?from=lead" class="gray-font">ABC Company</a></span></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
@@ -55,27 +55,7 @@
             <td><span class="light-gray-font">8/30/2017</span></td>
             <td class="be-dot-td"><span class="dot-priority blue"></span></td>
             <td><span class="light-gray-font">James J</span></td>
-          </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font">325434</span></td>
-            <!-- link "/company/allen-markarian?from=opportunities" where 'allen-markarian' is the alias and 'opportunities' is the status of account -->
-            <td><span class="gray-font"><a href="/company/allen-markarian?from=lead" class="gray-font">XYZ Inc.</a></span></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td><span class="light-gray-font">8/30/2017</span></td>
-            <td class="be-dot-td"><span class="dot-priority red"></span></td>
-            <td><span class="light-gray-font">Beata S.</span></td>
-          </tr>
+          </tr>-->
         <?php endfor; ?>
       </tbody>
     </table>

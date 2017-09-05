@@ -203,6 +203,33 @@ class Bullseye {
   }
 
   /**
+   * Get company name by url_alias.
+   *
+   * @param string $alias
+   *   the alias name of node.
+   */
+  function getCompanyNameByAlias($alias) {
+
+    $query = db_select('url_alias', 'ua');
+    $nid = $query
+      ->fields('ua', array('source'))
+      ->condition('ua.alias', $alias, '=')
+      ->execute()
+      ->fetchField();
+
+    $nid = str_replace('node/', '', $nid);
+
+    $query = db_select('field_data_field_company', 'c');
+    $company_name = $query
+      ->fields('c', array('field_company_value'))
+      ->condition('c.entity_id', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $company_name;
+  }
+
+  /**
    * Get all the carriers.
    */
   function getCarriers() {
