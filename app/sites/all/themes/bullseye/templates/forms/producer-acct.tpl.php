@@ -29,10 +29,13 @@
   <?php // @todo add if is company page add company fields ?>
 
   <?php /* temporary static checkbox placeholder */ ?>
+  <?php /*
   <div class="single-row-check-box">
     <?php print render($form['read_sca_dba']); ?>
     <label for="edit-read-sca-dba">I have read the <a href="#" class="producer-acct-link">SCA</a> and <a href="#" class="producer-acct-link">DBA</a> documents.</label>
   </div>
+  */
+  ?>
   <div class="single-row-check-box">
     <?php print render($form['agree_terms_privacy']); ?>
     <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link">Terms</a> & <a href="#" class="producer-acct-link">Privacy</a> Policy.</label>
