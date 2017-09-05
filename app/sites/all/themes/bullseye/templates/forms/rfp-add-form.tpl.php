@@ -383,7 +383,9 @@
                     </div>
                   </div>
 
-                  <div class="be-form-single waiting-period"><?php print render($form['mec_fields']['mec_waiting_period']); ?></div>
+                  <div class="be-form-single waiting-period">
+                    <?php print render($form['mec_fields']['mec_waiting_period']); ?>
+                  </div>
                 </div>
               </div>
             <?php endif; ?>
