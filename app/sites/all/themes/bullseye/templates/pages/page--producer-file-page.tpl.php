@@ -1,6 +1,6 @@
 <div id="producer-file-container">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="producer-file-tree">
         <div class="row file-tree-heading">
           <div class="col-md-8 col-sm-7">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
       <div class="producer-file-browser">
         <div class="producer-file-browser-inner">
           <?php echo $files_html; ?>

@@ -105,6 +105,44 @@
 
       .producer-file-browser{
         background: #fff;
+
+        .producer-file-browser-inner{
+
+          .file-browser-files-table{
+            font-size: 15px;
+            width: 100%;
+
+            thead{
+              background: #87AEB6;
+              color: #fff;
+            }
+
+            tr >th,
+            tr >td{
+              padding: 13px 20px;
+
+              .file-row-checkbox{
+                height: 16px;
+                width: 16px;
+                top: -10px;
+                left: 20px;
+              }
+            }
+
+            tbody{
+              >tr{
+                border-bottom: 1px solid #757C83;
+
+                td{
+                  color: #92A6B9;
+                }
+                td.file-name{
+                  color: #F58A3E;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

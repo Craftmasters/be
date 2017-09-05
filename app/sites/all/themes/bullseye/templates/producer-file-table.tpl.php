@@ -6,11 +6,21 @@
 <?php
 function producer_file_process_files($files = ''){
   ?>
-<?php foreach($files as $file_name => $data):
+<?php 
+  $x = 0;
+  $total_rows = count($files);
+  $last_row = '';
+  foreach($files as $file_name => $data):
   $col_id = str_replace(' ', '-', strtolower($file_name));
+
+  if($x == $total_rows-1){
+    $last_row = ' file-row-last-row';
+  }
   ?>
-  <tr>
-    <td class="checkbox"><input type="checkbox" id="<?php echo $col_id ?>" /></td>
+  <tr class="file-row-<?php echo $x; ?><?php echo $last_row ?>">
+    <td>
+      <div class="checkbox"><input type="checkbox" class="<?php echo $col_id ?> file-row-checkbox" /></div>
+    </td>
     <td class="file-name"><?php echo $file_name ?></td>
     <td class="file-type"><?php echo $data['type'] ?></td>
     <td class="account-name"><?php echo $data['account'] ?></td>
@@ -18,21 +28,26 @@ function producer_file_process_files($files = ''){
     <td class="upload-name"><?php echo $data['upload_name'] ?></td>
     <td class="last-access"><?php echo $data['last_access'] ?></td>
   </tr>
-<?php endforeach; ?>
+<?php
+  $x++;
+  endforeach;
+?>
 <?php
 }
 
 ?>
-<table class="file-browser-tree-container">
+<table class="file-browser-files-table">
   <thead>
     <tr>
-      <th>Check All</th>
-      <th>Filename -- Sort Button</th>
-      <th>Type -- Sort Button</th>
-      <th>Account -- Sort Button</th>
-      <th>Uploaded On -- Sort Button</th>
-      <th>Uploaded By -- Sort Button</th>
-      <th>Last Accessed -- Sort Button</th>
+      <th>
+        <div class="checkbox"><input type="checkbox" id="file-browser-check-all-files" class="file-row-checkbox"></div>
+      </th>
+      <th>Filename<div class="sort-btn asc"></div></th>
+      <th>Type<div class="sort-btn asc"></div></th>
+      <th>Account<div class="sort-btn asc"></div></th>
+      <th>Uploaded On<div class="sort-btn asc"></div></th>
+      <th>Uploaded By<div class="sort-btn asc"></div></th>
+      <th>Last Accessed<div class="sort-btn asc"></div></th>
     </tr>
   </thead>
   <tbody>
