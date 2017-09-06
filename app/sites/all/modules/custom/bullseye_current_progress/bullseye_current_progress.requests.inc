@@ -35,6 +35,49 @@ function be_cp_plan_to_work_sca_dbra() {
 }
 
 /**
+ * Saving the tags.
+ */
+function be_cp_save_exit_ctg() {
+
+  $nid = $_POST['nid'];
+  $tags_value = $_POST['tags_value'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $tags = explode(',', $tags_value);
+  $tids = array();
+
+  if (!empty($tags_value)) {
+    foreach ($tags as $key => $value) {
+      $tag = trim($value);
+      $tags[$key] = $tag;
+
+      $result = db_query('SELECT t.tid FROM {taxonomy_term_data} t WHERE t.name = :name AND t.vid = 1', array(':name' => $tag));
+      $record = $result->fetchAssoc();
+
+      if (!empty($record)) {
+        $tids[] = $record['tid'];
+      }
+      else {
+        $term = new stdClass();
+        $term->name = $tag;
+        $term->vid = 1;
+        taxonomy_term_save($term);
+        $tids[] = $term->tid;
+      }
+
+    }
+    $wrapper->field_tags->set($tids);
+  }
+  else {
+    $wrapper->field_tags->set(array());
+  }
+  $wrapper->save();
+
+  drupal_json_output($tids);
+}
+
+/**
  * For updating the account status to vpc.
  * Also for saving the tags.
  */
@@ -86,6 +129,7 @@ function be_cp_save_exit_vpc() {
 
   $nid = $_POST['nid'];
   $contacts = $_POST['contacts'];
+  $old_contacts = $_POST['old_contacts'];
 
   $node = node_load($nid);
   $item_ids = array();
@@ -107,6 +151,16 @@ function be_cp_save_exit_vpc() {
     $cwrapper->save();
 
     $item_ids[] = $collection->item_id;
+  }
+
+  foreach ($old_contacts as $key1 => $value1) {
+    $collection = field_collection_item_load($value1['id']);
+    $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    $wrapper->field_contact_name->set($value1['name']);
+    $wrapper->field_position->set($value1['position']);
+    $wrapper->field_phone_number->set($value1['phone']);
+    $wrapper->field_email->set($value1['email']);
+    $wrapper->save();
   }
 
   drupal_json_output($item_ids);
@@ -131,6 +185,7 @@ function be_cp_lead_set_priority() {
 
   $nid = $_POST['nid'];
   $contacts = $_POST['contacts'];
+  $old_contacts = $_POST['old_contacts'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_action_status->set('set_priority');
@@ -158,7 +213,32 @@ function be_cp_lead_set_priority() {
     $item_ids[] = $collection->item_id;
   }
 
+  foreach ($old_contacts as $key1 => $value1) {
+    $collection = field_collection_item_load($value1['id']);
+    $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    $wrapper->field_contact_name->set($value1['name']);
+    $wrapper->field_position->set($value1['position']);
+    $wrapper->field_phone_number->set($value1['phone']);
+    $wrapper->field_email->set($value1['email']);
+    $wrapper->save();
+  }
+
   drupal_json_output($item_ids);
+}
+
+/**
+ * Setting the workflow status to prospect.
+ */
+function be_cp_save_exit_sp() {
+
+  $nid = $_POST['nid'];
+  $priority = $_POST['priority'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_set_priority->set($priority);
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
 }
 
 /**

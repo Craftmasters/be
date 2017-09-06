@@ -104,6 +104,21 @@
           });
         });
 
+        $('#btn-save-exit-ctg').click(function() {
+          var tags_value = $('#edit-field-tags-und').val();
+          $.ajax({
+            url: '/be-cp/save-exit-ctg',
+            method: 'POST',
+            data: {
+              nid: nid,
+              tags_value: tags_value
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
         // Lead - Verification - Validate point of contact
         $('#btn-validate-point-of-contact').click(function() {
           var tags_value = $('#edit-field-tags-und').val();
@@ -231,6 +246,18 @@
             contacts.push(obj);
           });
 
+          var old_contacts = [];
+          $('.table-vc .old-data').each(function() {
+            var obj = {
+              'name': $(this).find('.con-name').val(),
+              'position' : $(this).find('.con-position').val(),
+              'phone' : $(this).find('.con-phone').val(),
+              'email' : $(this).find('.con-email').val(),
+              'id': $(this).attr('contact-id'),
+            };
+            old_contacts.push(obj);
+          });
+
           // Setting the new status of account to set priority.
           $.ajax({
             url: '/be-cp/setpriority',
@@ -238,6 +265,7 @@
             data: {
               nid: nid,
               contacts: contacts,
+              old_contacts: old_contacts
             },
             success: function(result){
               console.log(result);
@@ -269,6 +297,22 @@
                   });
                 });
               });
+            },
+          });
+        });
+
+        // Lead - Verification - Convert to prospect
+        $('#btn-save-exit-sp').click(function() {
+          var priority = $('#edit-priority').val();
+          $.ajax({
+            url: '/be-cp/save-exit-sp',
+            method: 'POST',
+            data: {
+              nid: nid,
+              priority: priority
+            },
+            success: function(result){
+              console.log(result);
             },
           });
         });
