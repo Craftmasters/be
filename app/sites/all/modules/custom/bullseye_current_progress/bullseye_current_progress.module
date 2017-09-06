@@ -189,6 +189,9 @@ function refresh_page($form, &$form_state) {
  * Form submit for current progress leads form.
  */
 function save_exit_classify_group($form, &$form_state) {
+  // Setting the taxonomy terms to node.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+
   if (!empty($form_state['values']['field_tags'][LANGUAGE_NONE])) {
     // Saving taxonomy terms
     foreach ($form_state['values']['field_tags'][LANGUAGE_NONE] as $key1 => $value1) {
@@ -214,45 +217,29 @@ function save_exit_classify_group($form, &$form_state) {
         $tag_tids[] = $value1['tid'];
       }
     }
-
-    // Setting the taxonomy terms to node.
-    $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
-    $wrapper->field_tags->set($tag_tids);
-    $wrapper->save();
   }
+  else {
+    $wrapper->field_tags->set(array());
+  }
+  $wrapper->save();
 }
 
 /**
  * Form submit for current progress leads form.
  */
 function save_exit_set_priority($form, &$form_state) {
-  kpr($form_state);die();
+  $priority = $form_state['values']['priority'];
+
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_set_priority->set($priority);
+  $wrapper->save();
 }
 
 /**
  * Form submit for current progress leads form.
  */
 function convert_to_prospect($form, &$form_state) {
-  
-  foreach ($form_state['values']['field_contacts'][LANGUAGE_NONE] as $key => $value) {
-    if (is_numeric($key)) {
-      $fc = 'field_contacts';
-      $v = 'values';
-      $lang = LANGUAGE_NONE;
-      $name = $form_state[$v][$fc][$lang][$key]['field_contact_name'][$lang][0]['value'];
-      $email = $form_state[$v][$fc][$lang][$key]['field_email'][$lang][0]['value'];
-      $phone = $form_state[$v][$fc][$lang][$key]['field_phone_number'][$lang][0]['value'];
-      $position = $form_state[$v][$fc][$lang][$key]['field_position'][$lang][0]['value'];
-      $empty_condition = ($name == '' && $email == '' && $phone == '' && $position == '');
-
-      // Since field collection remove button is buggy when programmatically attached to custom form,
-      // temporary workaround is let the user just empty the row fields of the item they want
-      // to remove and, here on the submit handler we just unset the empty rows on form_state['values'].
-      if ($empty_condition) {
-        unset($form_state[$v][$fc][$lang][$key]);
-      }
-    }
-  }
 
   // Setting the new statuses of the account.
   $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);

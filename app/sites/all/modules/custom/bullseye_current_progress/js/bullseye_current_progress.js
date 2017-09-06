@@ -275,11 +275,13 @@
 
         // Lead - Verification - Convert to prospect
         $('#btn-convert-to-prospect').click(function() {
+          var priority = $('#edit-priority').val();
           $.ajax({
             url: '/be-cp/convert-to-prospect',
             method: 'POST',
             data: {
               nid: nid,
+              priority: priority
             },
             success: function(result){
               console.log(result);

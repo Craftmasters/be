@@ -167,9 +167,11 @@ function be_cp_lead_set_priority() {
 function be_cp_convert_to_prospect() {
 
   $nid = $_POST['nid'];
+  $priority = $_POST['priority'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_workflow_status->set('convert_to_prospect');
+  $wrapper->field_set_priority->set($priority);
   $wrapper->save();
 
   drupal_json_output($wrapper);
