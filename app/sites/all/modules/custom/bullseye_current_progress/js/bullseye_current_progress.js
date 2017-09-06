@@ -11,8 +11,44 @@
   Drupal.behaviors.bullseye_current_progress = {
     attach: function (context, settings) {
 
+
+
       $(document).ready(function() {
         var nid = $('.current-progress-main').attr('node-id');
+
+        // Refresh classes of current progress block.
+        function refreshClasses(nid) {
+          $.ajax({
+            url: '/be-cp/refresh-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log();
+              $('#div-verification').removeClass('gray-check no-check green-check');
+              $('#div-vsd').removeClass('current-step done-step');
+              $('#div-ctg').removeClass('current-step done-step');
+              $('#div-vpc').removeClass('current-step done-step');
+              $('#div-sp').removeClass('current-step done-step');
+              $('#div-ctp').removeClass('gray-check no-check green-check');
+
+              $('#div-verification').addClass(result['class_verification']);
+              $('#div-vsd').addClass(result['class_verify_sca_dbra']);
+              $('#div-ctg').addClass(result['class_classify_to_group']);
+              $('#div-vpc').addClass(result['class_validate_point_of_contact']);
+              $('#div-sp').addClass(result['class_set_priority']);
+              $('#div-ctp').addClass(result['class_convert_to_prospect']);
+
+              $('#div-vsd a.cp-link').attr('data-toggle', result['modal_access_vsd']);
+              $('#div-ctg a.cp-link').attr('data-toggle', result['modal_access_ctg']);
+              $('#div-vpc a.cp-link').attr('data-toggle', result['modal_access_vpc']);
+              $('#div-sp a.cp-link').attr('data-toggle', result['modal_access_sp']);
+              $('#div-ctp a.cp-link').attr('data-toggle', result['modal_access_ctp']);
+
+            },
+          });
+        }
 
         // Lead - Verification - Verify SCA/DBRA - Yes, SCA
         $('#btn-verify-yes-sca').click(function() {
@@ -25,6 +61,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -40,6 +77,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -55,6 +93,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -85,6 +124,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -115,6 +155,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -131,6 +172,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -240,6 +282,8 @@
                   });
                 });
               });
+
+              refreshClasses(nid);
             },
           });
         });
@@ -309,6 +353,8 @@
                   });
                 });
               });
+
+              refreshClasses(nid);
             },
           });
         });
@@ -325,6 +371,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -341,6 +388,7 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
             },
           });
         });
@@ -374,36 +422,7 @@
         });
 
         $('.be-bs-modal').on('hidden.bs.modal', function () {
-          $.ajax({
-            url: '/be-cp/refresh-classes',
-            method: 'POST',
-            data: {
-              nid: nid,
-            },
-            success: function(result){
-              console.log();
-              $('#div-verification').removeClass('gray-check no-check green-check');
-              $('#div-vsd').removeClass('current-step done-step');
-              $('#div-ctg').removeClass('current-step done-step');
-              $('#div-vpc').removeClass('current-step done-step');
-              $('#div-sp').removeClass('current-step done-step');
-              $('#div-ctp').removeClass('gray-check no-check green-check');
-
-              $('#div-verification').addClass(result['class_verification']);
-              $('#div-vsd').addClass(result['class_verify_sca_dbra']);
-              $('#div-ctg').addClass(result['class_classify_to_group']);
-              $('#div-vpc').addClass(result['class_validate_point_of_contact']);
-              $('#div-sp').addClass(result['class_set_priority']);
-              $('#div-ctp').addClass(result['class_convert_to_prospect']);
-
-              $('#div-vsd a.cp-link').attr('data-toggle', result['modal_access_vsd']);
-              $('#div-ctg a.cp-link').attr('data-toggle', result['modal_access_ctg']);
-              $('#div-vpc a.cp-link').attr('data-toggle', result['modal_access_vpc']);
-              $('#div-sp a.cp-link').attr('data-toggle', result['modal_access_sp']);
-              $('#div-ctp a.cp-link').attr('data-toggle', result['modal_access_ctp']);
-
-            },
-          });
+          refreshClasses(nid);
         });
 
       });
