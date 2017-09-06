@@ -995,6 +995,42 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_set_priority'.
+  $field_instances['node-accounts-field_set_priority'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 38,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_set_priority',
+    'label' => 'Set Priority',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 38,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_source'.
   $field_instances['node-accounts-field_source'] = array(
     'bundle' => 'accounts',
@@ -1620,6 +1656,7 @@ function accounts_field_default_field_instances() {
   t('Prefix');
   t('Producers');
   t('Referral Partners');
+  t('Set Priority');
   t('Source');
   t('State');
   t('State Code');

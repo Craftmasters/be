@@ -131,8 +131,8 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#type' => 'select',
     '#options' => array(
       'low' => t('Low'),
-      'yes_dbra' => t('Medium'),
-      'yes_both' => t('High'),
+      'medium' => t('Medium'),
+      'high' => t('High'),
     ),
   );
 
@@ -140,6 +140,18 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#type' => 'submit',
     '#submit' => array(
       'save_exit_classify_group',
+      'refresh_page',
+    ),
+    '#attributes' => array(
+      'class' => array('orange-btn'),
+    ),
+    '#value' => t('Save and Exit'),
+  );
+
+  $form['save_exit_set_priority'] = array(
+    '#type' => 'submit',
+    '#submit' => array(
+      'save_exit_set_priority',
       'refresh_page',
     ),
     '#attributes' => array(
@@ -208,6 +220,13 @@ function save_exit_classify_group($form, &$form_state) {
     $wrapper->field_tags->set($tag_tids);
     $wrapper->save();
   }
+}
+
+/**
+ * Form submit for current progress leads form.
+ */
+function save_exit_set_priority($form, &$form_state) {
+  kpr($form_state);die();
 }
 
 /**

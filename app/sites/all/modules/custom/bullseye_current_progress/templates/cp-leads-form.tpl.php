@@ -378,7 +378,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#validate-contacts" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<?php print render($form['save_exit_set_priority']); ?>
 		        	<button id="btn-convert-to-prospect" type="button" class="green-btn"  data-toggle="modal" data-target="#convert-to-prospect" data-dismiss="modal"><?php print t('Next: Convert to Prospect'); ?></button>
 		        </div>
 		      </div>
