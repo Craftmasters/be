@@ -64,6 +64,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/save-exit-vpc'] = array(
+    'page callback' => 'be_cp_save_exit_vpc',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -109,18 +116,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   module_load_include('inc', 'field_collection', 'field_collection.pages');
   module_load_include('inc', 'node', 'node.pages');
 
-  $node_form = new stdClass;
-  $node_form->type = 'accounts';
-  $node_form->language = LANGUAGE_NONE;
-
-  // Getting the field "Contacts" field collection from accounts content type fields.
-  /*$field = field_info_field('field_contacts');
-  $instance = field_info_instance('node', 'field_contacts', 'accounts');
-  $items = field_get_items('node', $node, 'field_contacts');
-  $my_field = field_default_form('node', $node, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
-  $form += (array) $my_field;
-  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';*/
-
   // Getting the field "Tags" from accounts content type fields.
   $field = field_info_field('field_tags');
   $instance = field_info_instance('node', 'field_tags', 'accounts');
@@ -145,19 +140,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#type' => 'submit',
     '#submit' => array(
       'save_exit_classify_group',
-      'refresh_page',
-    ),
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
-  );
-
-  $form['save_exit_validate_contact'] = array(
-    '#type' => 'submit',
-    '#submit' => array(
-      'save_exit_classify_group',
-      'save_exit_validate_contact',
       'refresh_page',
     ),
     '#attributes' => array(
@@ -199,11 +181,22 @@ function save_exit_classify_group($form, &$form_state) {
     // Saving taxonomy terms
     foreach ($form_state['values']['field_tags'][LANGUAGE_NONE] as $key1 => $value1) {
       if ($value1['tid'] == 'autocreate') {
-        $term = new stdClass();
-        $term->name = $value1['name'];
-        $term->vid = $value1['vid'];
-        taxonomy_term_save($term);
-        $tag_tids[] = $term->tid;
+
+        // Check if tag is alredy existing due to it might be
+        // Added already at ajax requests.
+        $result = db_query('SELECT t.tid FROM {taxonomy_term_data} t WHERE t.name = :name AND t.vid = 1', array(':name' => $value1['name']));
+        $record = $result->fetchAssoc();
+
+        if (!empty($record)) {
+          $tag_tids[] = $record['tid'];
+        }
+        else {
+          $term = new stdClass();
+          $term->name = $value1['name'];
+          $term->vid = $value1['vid'];
+          taxonomy_term_save($term);
+          $tag_tids[] = $term->tid;
+        }
       }
       else {
         $tag_tids[] = $value1['tid'];
@@ -215,13 +208,6 @@ function save_exit_classify_group($form, &$form_state) {
     $wrapper->field_tags->set($tag_tids);
     $wrapper->save();
   }
-}
-
-/**
- * Form submit for current progress leads form.
- */
-function save_exit_validate_contact($form, &$form_state) {
-  
 }
 
 /**

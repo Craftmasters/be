@@ -323,7 +323,6 @@
 		      							<td><button type="button" class="con-delete-new">Delete</button></td>
 			      					</tr>
 			      				<?php endif; ?>
-			      					
 		      				</tbody>
 		      			</table>
 		      		</div>
@@ -332,7 +331,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#classify-to-group" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<?php print render($form['save_exit_validate_contact']); ?>
+		        	<button id="btn-save-exit-vpc" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button id="btn-set-priority" type="button" class="green-btn"  data-toggle="modal" data-target="#set-priority" data-dismiss="modal"><?php print t('Next: Set Priority'); ?></button>
 		        </div>
 		      </div>

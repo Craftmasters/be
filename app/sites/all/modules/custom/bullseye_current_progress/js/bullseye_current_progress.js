@@ -106,11 +106,13 @@
 
         // Lead - Verification - Validate point of contact
         $('#btn-validate-point-of-contact').click(function() {
+          var tags_value = $('#edit-field-tags-und').val();
           $.ajax({
             url: '/be-cp/lead/validate-point-of-contact',
             method: 'POST',
             data: {
               nid: nid,
+              tags_value: tags_value
             },
             success: function(result){
               console.log(result);
@@ -118,8 +120,50 @@
           });
         });
 
-        // Lead - Verification - Set Priority
-        $('#btn-set-priority').click(function() {
+        // Delete contact from validate point of contact phase.
+        $('.con-delete').each(function() {
+          $(this).click(function() {
+            var item_id = $(this).closest('tr').attr('contact-id');
+            $.ajax({
+              url: '/be-cp/delete-contact',
+              method: 'POST',
+              data: {
+                item_id: item_id,
+              },
+              success: function(result){
+                console.log(result);
+                if (result == 'success') {
+                  $('tr[contact-id="' + item_id + '"]').remove();
+                }
+              },
+            });
+          });
+        });
+
+        // Add button for validate point of contact phase.
+        $('#add-contact').click(function() {
+          var random_num = Math.floor((Math.random() * 10000000) + 1);
+          var name_td = '<td><input type="text" class="con-name" value=""></td>';
+          var position_td = '<td><input type="text" class="con-position" value=""></td>';
+          var phone_td = '<td><input type="text" class="con-phone" value=""></td>';
+          var email_td = '<td><input type="text" class="con-email" value=""></td>';
+          var delete_td = '<td><button type="button" class="con-delete-new">Delete</button></td>';
+          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + name_td + position_td + phone_td + email_td + delete_td + '</tr>';
+          $('table.table-vc tbody').append(tr);
+
+          $('tr[tr-num="' + random_num + '"] button.con-delete-new').click(function() {
+            $(this).closest('tr').remove();
+          });
+        });
+
+        // Delete event for delete button in validate point of contact phase.
+        $('.con-delete-new').click(function() {
+          $(this).closest('tr').remove();
+        });
+
+        // Lead - Verification - VPC - save and exit
+        $('#btn-save-exit-vpc').click(function() {
+          // Get the contacts data.
           var contacts = [];
           $('.table-vc .new-data').each(function() {
             var obj = {
@@ -130,6 +174,64 @@
             };
             contacts.push(obj);
           });
+
+          // Saving the contacts.
+          $.ajax({
+            url: '/be-cp/save-exit-vpc',
+            method: 'POST',
+            data: {
+              nid: nid,
+              contacts: contacts,
+            },
+            success: function(result){
+              console.log(result);
+              $.each(result, function(i, item) {
+                $('tr.new-data').eq(i).attr('contact-id', item);
+                $('tr.new-data').eq(i).addClass('old-data');
+                $('tr.new-data').eq(i).removeAttr('tr-num');
+              });
+
+              // Binding delete event to newly added elements.
+              $('tr.old-data').each(function() {
+                var item_id = $(this).attr('contact-id');
+                $(this).removeClass('new-data');
+                $(this).find('button.con-delete-new').addClass('con-delete');
+                $(this).find('button.con-delete').removeClass('con-delete-new');
+                $(this).find('button.con-delete').click(function() {
+                  $.ajax({
+                    url: '/be-cp/delete-contact',
+                    method: 'POST',
+                    data: {
+                      item_id: item_id,
+                    },
+                    success: function(result){
+                      console.log(result);
+                      if (result == 'success') {
+                        $('tr[contact-id="' + item_id + '"]').remove();
+                      }
+                    },
+                  });
+                });
+              });
+            },
+          });
+        });
+
+        // Lead - Verification - Set Priority
+        $('#btn-set-priority').click(function() {
+          // Get the contacts data.
+          var contacts = [];
+          $('.table-vc .new-data').each(function() {
+            var obj = {
+              'name': $(this).find('.con-name').val(),
+              'position' : $(this).find('.con-position').val(),
+              'phone' : $(this).find('.con-phone').val(),
+              'email' : $(this).find('.con-email').val(),
+            };
+            contacts.push(obj);
+          });
+
+          // Setting the new status of account to set priority.
           $.ajax({
             url: '/be-cp/setpriority',
             method: 'POST',
@@ -144,6 +246,8 @@
                 $('tr.new-data').eq(i).addClass('old-data');
                 $('tr.new-data').eq(i).removeAttr('tr-num');
               });
+
+              // Binding delete event to newly added elements.
               $('tr.old-data').each(function() {
                 var item_id = $(this).attr('contact-id');
                 $(this).removeClass('new-data');
@@ -209,45 +313,6 @@
               console.log(result);
             },
           });
-        });
-
-        // Delete contact from validate point of contact phase.
-        $('.con-delete').each(function() {
-          $(this).click(function() {
-            var item_id = $(this).closest('tr').attr('contact-id');
-            $.ajax({
-              url: '/be-cp/delete-contact',
-              method: 'POST',
-              data: {
-                item_id: item_id,
-              },
-              success: function(result){
-                console.log(result);
-                if (result == 'success') {
-                  $('tr[contact-id="' + item_id + '"]').remove();
-                }
-              },
-            });
-          });
-        });
-
-        $('#add-contact').click(function() {
-          var random_num = Math.floor((Math.random() * 10000000) + 1);
-          var name_td = '<td><input type="text" class="con-name" value=""></td>';
-          var position_td = '<td><input type="text" class="con-position" value=""></td>';
-          var phone_td = '<td><input type="text" class="con-phone" value=""></td>';
-          var email_td = '<td><input type="text" class="con-email" value=""></td>';
-          var delete_td = '<td><button type="button" class="con-delete-new">Delete</button></td>';
-          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + name_td + position_td + phone_td + email_td + delete_td + '</tr>';
-          $('table.table-vc tbody').append(tr);
-
-          $('tr[tr-num="' + random_num + '"] button.con-delete-new').click(function() {
-            $(this).closest('tr').remove();
-          });
-        });
-
-        $('.con-delete-new').click(function() {
-          $(this).closest('tr').remove();
         });
 
       });
