@@ -1,6 +1,8 @@
 <?php
 
-// For updating the lead verification field.
+/**
+ * For updating the lead verification field.
+ */
 function be_cp_lead_verify() {
 
   $nid = $_POST['nid'];
@@ -14,7 +16,9 @@ function be_cp_lead_verify() {
   drupal_json_output($wrapper);
 }
 
-// For updating the plan to work under sca/dbra field.
+/**
+ * For updating the plan to work under sca/dbra field.
+ */
 function be_cp_plan_to_work_sca_dbra() {
 
   $nid = $_POST['nid'];
@@ -30,17 +34,54 @@ function be_cp_plan_to_work_sca_dbra() {
   drupal_json_output($wrapper);
 }
 
+/**
+ * For updating the account status to vpc.
+ * Also for saving the tags.
+ */
 function be_cp_lead_validate_point_of_contact() {
 
   $nid = $_POST['nid'];
+  $tags_value = $_POST['tags_value'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_action_status->set('validate_point_of_contact');
+
+  $tags = explode(',', $tags_value);
+  $tids = array();
+
+  if (!empty($tags_value)) {
+    foreach ($tags as $key => $value) {
+      $tag = trim($value);
+      $tags[$key] = $tag;
+
+      $result = db_query('SELECT t.tid FROM {taxonomy_term_data} t WHERE t.name = :name AND t.vid = 1', array(':name' => $tag));
+      $record = $result->fetchAssoc();
+
+      if (!empty($record)) {
+        $tids[] = $record['tid'];
+      }
+      else {
+        $term = new stdClass();
+        $term->name = $tag;
+        $term->vid = 1;
+        taxonomy_term_save($term);
+        $tids[] = $term->tid;
+      }
+
+    }
+    $wrapper->field_tags->set($tids);
+  }
+  else {
+    $wrapper->field_tags->set(array());
+  }
   $wrapper->save();
 
-  drupal_json_output($wrapper);
+  drupal_json_output($tids);
 }
 
+/**
+ * Delete the contact from vpc.
+ */
 function be_cp_delete_contact() {
   $item_id = $_POST['item_id'];
 
@@ -49,6 +90,10 @@ function be_cp_delete_contact() {
   drupal_json_output('success');
 }
 
+/**
+ * Setting the status to set priority.
+ * Also saving the contacts to field collection.
+ */
 function be_cp_lead_set_priority() {
 
   $nid = $_POST['nid'];
@@ -83,6 +128,9 @@ function be_cp_lead_set_priority() {
   drupal_json_output($item_ids);
 }
 
+/**
+ * Setting the workflow status to prospect.
+ */
 function be_cp_convert_to_prospect() {
 
   $nid = $_POST['nid'];
@@ -94,6 +142,9 @@ function be_cp_convert_to_prospect() {
   drupal_json_output($wrapper);
 }
 
+/**
+ * Setting the action status to receive feedback.
+ */
 function be_cp_receive_feedback() {
 
   $nid = $_POST['nid'];
@@ -105,6 +156,9 @@ function be_cp_receive_feedback() {
   drupal_json_output($wrapper);
 }
 
+/**
+ * Setting the workflow status to convert to opportunity.
+ */
 function be_cp_convert_to_opportunity() {
 
   $nid = $_POST['nid'];
