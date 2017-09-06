@@ -37,12 +37,12 @@ class AttachmentEmail {
    **/
   public function send() {
     if (!empty($this->attachments)) {
-      $mailto = $this -> to;
-      $from_mail = $this -> from;
-      $from_name = $this -> from_name;
-      $replyto = $this -> reply_to;
-      $subject = $this -> subject;
-      $message = $this -> message;
+      $mailto = $this->to;
+      $from_mail = $this->from;
+      $from_name = $this->from_name;
+      $replyto = $this->reply_to;
+      $subject = $this->subject;
+      $message = $this->message;
       $mime_boundary = "==Multipart_Boundary_x". md5(mt_rand()) ."x";
       $uid = md5(uniqid(time()));
       $header = "From: " . $from_mail . "\r\n";
@@ -77,10 +77,10 @@ class AttachmentEmail {
       }
     }
     else {
-      $header = "From: ".($this -> from_name)." <".($this -> from).">\r\n";
-      $header .= "Reply-To: ".($this -> reply_to)."\r\n";
+      $header = "From: ".($this->from_name)." <".($this->from).">\r\n";
+      $header .= "Reply-To: ".($this->reply_to)."\r\n";
 
-      if (mail($this -> to, $this -> subject, $this -> message, $header)) {
+      if (mail($this->to, $this->subject, $this->message, $header)) {
         return TRUE;
       }
       else {
