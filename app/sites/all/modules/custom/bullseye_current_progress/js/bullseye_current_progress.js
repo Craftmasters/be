@@ -204,7 +204,7 @@
           var position_td = '<td><input type="text" class="con-position" value=""></td>';
           var phone_td = '<td><input type="text" class="con-phone" value=""></td>';
           var email_td = '<td><input type="text" class="con-email" value=""></td>';
-          var delete_td = '<td><button type="button" class="con-delete-new">Delete</button></td>';
+          var delete_td = '<td><button type="button" class="con-delete-new"><i class="fa fa-times" aria-hidden="true"></i></button></td>';
           var tr = '<tr class="new-data" tr-num="' + random_num + '">' + name_td + position_td + phone_td + email_td + delete_td + '</tr>';
           $('table.table-vc tbody').append(tr);
 

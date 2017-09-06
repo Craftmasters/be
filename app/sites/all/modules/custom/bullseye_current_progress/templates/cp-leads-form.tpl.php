@@ -290,7 +290,7 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
 		      			<div class="add-contact-container">
-		      				<button type="button" id="add-contact">Add</button>
+		      				
 		      			</div>
 		      			<table class="table-vc">
 		      				<thead>
@@ -299,7 +299,11 @@
 			      					<th><?php print t('Position'); ?></th>
 			      					<th><?php print t('Contact Number'); ?></th>
 			      					<th><?php print t('Email Address'); ?></th>
-			      					<th></th>
+			      					<th>
+				      					<button type="button" id="add-contact">
+			      							<i class="fa fa-plus" aria-hidden="true"></i>
+			      						</button>
+			      					</th>
 			      				</tr>
 		      				</thead>
 		      				<tbody>
@@ -310,7 +314,11 @@
 			      							<td><input type="text" class="con-position" value="<?php print $value['position']; ?>"></td>
 			      							<td><input type="text" class="con-phone" value="<?php print $value['phone']; ?>"></td>
 			      							<td><input type="text" class="con-email" value="<?php print $value['email']; ?>"></td>
-			      							<td><button type="button" class="con-delete">Delete</button></td>
+			      							<td>
+			      								<button type="button" class="con-delete-new">
+			      									<i class="fa fa-times" aria-hidden="true"></i>
+			      								</button>
+			      							</td>
 			      						</tr>
 			      					<?php endforeach; ?>
 			      				<?php else: ?>
@@ -319,7 +327,11 @@
 		      							<td><input type="text" class="con-position" value=""></td>
 		      							<td><input type="text" class="con-phone" value=""></td>
 		      							<td><input type="text" class="con-email" value=""></td>
-		      							<td><button type="button" class="con-delete-new">Delete</button></td>
+		      							<td>
+		      								<button type="button" class="con-delete-new">
+		      									<i class="fa fa-times" aria-hidden="true"></i>
+		      								</button>
+		      							</td>
 			      					</tr>
 			      				<?php endif; ?>
 		      				</tbody>

@@ -245,88 +245,36 @@
 		}
 	}
 
-	.field-name-field-contacts {
-		text-align: left;
-		margin-bottom: 30px;
-		button[value="Remove"],
-		.tabledrag-hide,
-		a.tabledrag-toggle-weight,
-		label,
-		.field-multiple-drag {
-			display: none;
-		}
-		tr {
-			background-color: transparent;
-		}
-		th {
-			border-bottom: none;
-		}
-		td {
-			padding: 0px;
-			border-top: none;
-		}
-		.field-type-text {
-			width: 25%;
-			vertical-align: top;
-			display: inline-block;
-			padding: 0px 5px 0px;
-			input[type="text"] {
-				border-bottom: none;
-				font-size: 14px;
-				padding: 0px 5px;
-				&:focus,
-				&:active {
-					background-color: #fff - 5;
-				}
-			}
-		}
-		.form-group {
-			margin-bottom: 0px;
-		}
-		tr {
-			&.draggable {
-				&:last-child {
-					.field-type-text {
-						input[type="text"] {
-							border-bottom: 2px solid @textfield_bottom_border_color;
-							&:focus,
-							&:active {
-								border-bottom: 2px solid @orange;
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		div[id*="field-contacts-add-more-wrapper"] {
-			position: relative;
-		}
-		.field-add-more-submit {
-			border: none;
-			position: absolute;
-			top: -38px;
-			right: 0px;
-			margin: 0px;
-			padding: 0px;
-			background-color: transparent;
-			cursor: pointer;
-			font-size: 30px;
-			color: @green;
-		}
-	}
-
-	table.table-header-vc {
+	table.table-vc {
 		margin-top: 20px;
 		width: 100%;
-		border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+		thead {
+			tr {
+				border-bottom: 2px solid #A2A2A2;
+			}
+		}
 		th {
-			width: 25%;
 			color: @blue_gray;
 			text-transform: uppercase;
 			font-family: 'Proximanova-Medium';
 			font-size: 14px;
-			padding: 0px 10px 5px;
+		}
+		td, th {
+			padding: 0px 5px 5px;
+		}
+		td {
+			padding: 9px 5px 0px;
+			input[type="text"] {
+				max-width: initial;
+    		width: 100%;
+			}
+		}
+		tbody {
+			tr:first-child {
+				td {
+					padding: 15px 5px 0px;
+				}
+			}
 		}
 	}
 
@@ -342,11 +290,25 @@
 		
 }
 
-.add-contact-container {
-	text-align: right;
-	position: relative;
-	button {
-		
+#add-contact {
+	border: none;
+	background-color: transparent;
+	background: none;
+	i {
+		color: @green;
+		font-size: 20px;
+	}
+}
+
+.con-delete-new,
+.con-delete {
+	border: none;
+	background-color: transparent;
+	background: none;
+	i {
+		color: red;
+		opacity: 0.5;
+		font-size: 20px;
 	}
 }
 
