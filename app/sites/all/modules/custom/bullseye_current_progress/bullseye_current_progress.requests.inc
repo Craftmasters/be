@@ -80,6 +80,40 @@ function be_cp_lead_validate_point_of_contact() {
 }
 
 /**
+ * For updating the account status to vpc.
+ * Also for saving the tags.
+ */
+function be_cp_save_exit_vpc() {
+
+  $nid = $_POST['nid'];
+  $contacts = $_POST['contacts'];
+
+  $node = node_load($nid);
+  $item_ids = array();
+
+  foreach ($contacts as $key => $value) {
+
+    // Create the collection entity and set it's "host".
+    $collection = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
+    $collection->setHostEntity('node', $node);
+
+    // Now define the collection parameters.
+    $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    $cwrapper->field_contact_name->set($value['name']);
+    $cwrapper->field_position->set($value['position']);
+    $cwrapper->field_phone_number->set($value['phone']);
+    $cwrapper->field_email->set($value['email']);
+
+    // Save the field collection entity.
+    $cwrapper->save();
+
+    $item_ids[] = $collection->item_id;
+  }
+
+  drupal_json_output($item_ids);
+}
+
+/**
  * Delete the contact from vpc.
  */
 function be_cp_delete_contact() {

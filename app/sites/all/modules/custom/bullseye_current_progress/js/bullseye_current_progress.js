@@ -161,6 +161,62 @@
           $(this).closest('tr').remove();
         });
 
+        // Lead - Verification - VPC - save and exit
+        $('#btn-save-exit-vpc').click(function() {
+          // Get the contacts data.
+          var contacts = [];
+          $('.table-vc .new-data').each(function() {
+            var obj = {
+              'name': $(this).find('.con-name').val(),
+              'position' : $(this).find('.con-position').val(),
+              'phone' : $(this).find('.con-phone').val(),
+              'email' : $(this).find('.con-email').val(),
+            };
+            contacts.push(obj);
+          });
+
+          // Saving the contacts.
+          $.ajax({
+            url: '/be-cp/save-exit-vpc',
+            method: 'POST',
+            data: {
+              nid: nid,
+              contacts: contacts,
+            },
+            success: function(result){
+              console.log(result);
+              $.each(result, function(i, item) {
+                $('tr.new-data').eq(i).attr('contact-id', item);
+                $('tr.new-data').eq(i).addClass('old-data');
+                $('tr.new-data').eq(i).removeAttr('tr-num');
+              });
+
+              // Binding delete event to newly added elements.
+              $('tr.old-data').each(function() {
+                var item_id = $(this).attr('contact-id');
+                $(this).removeClass('new-data');
+                $(this).find('button.con-delete-new').addClass('con-delete');
+                $(this).find('button.con-delete').removeClass('con-delete-new');
+                $(this).find('button.con-delete').click(function() {
+                  $.ajax({
+                    url: '/be-cp/delete-contact',
+                    method: 'POST',
+                    data: {
+                      item_id: item_id,
+                    },
+                    success: function(result){
+                      console.log(result);
+                      if (result == 'success') {
+                        $('tr[contact-id="' + item_id + '"]').remove();
+                      }
+                    },
+                  });
+                });
+              });
+            },
+          });
+        });
+
         // Lead - Verification - Set Priority
         $('#btn-set-priority').click(function() {
           // Get the contacts data.
