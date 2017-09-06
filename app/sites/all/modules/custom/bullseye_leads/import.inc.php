@@ -79,7 +79,8 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
         }
         else {
           drupal_set_message('The CSV is invalid.');
-          exit();
+          header("Refresh:0; url=/accounts");
+          break;
         }
       }
     }
@@ -91,5 +92,5 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
     bullseye_leads_import($rows);
     //drupal_goto('/');
   }
-  
+
 }
