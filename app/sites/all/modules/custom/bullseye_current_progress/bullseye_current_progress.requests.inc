@@ -9,8 +9,18 @@ function be_cp_lead_verify() {
   $sca_dbra = $_POST['sca_dbra'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_action_status->set('classify_to_group');
   $wrapper->field_work_sca_dbra->set($sca_dbra);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($sca_dbra == 'yes_sca' || $sca_dbra == 'yes_dbra' || $sca_dbra == 'yes_both') {
+    if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
+      $wrapper->field_action_status->set('classify_to_group');
+    }
+  }
+
   $wrapper->save();
 
   drupal_json_output($wrapper);
@@ -25,8 +35,14 @@ function be_cp_plan_to_work_sca_dbra() {
   $plan_to_work_sca_dbra = $_POST['plan_to_work_sca_dbra'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
   if ($plan_to_work_sca_dbra == 'yes') {
-    $wrapper->field_action_status->set('classify_to_group');
+    if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
+      $wrapper->field_action_status->set('classify_to_group');
+    }
   }
   $wrapper->field_plan_work_under_sca_dbra->set($plan_to_work_sca_dbra);
   $wrapper->save();
@@ -87,7 +103,13 @@ function be_cp_lead_validate_point_of_contact() {
   $tags_value = $_POST['tags_value'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_action_status->set('validate_point_of_contact');
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'classify_to_group') {
+    $wrapper->field_action_status->set('validate_point_of_contact');
+  }
 
   $tags = explode(',', $tags_value);
   $tids = array();
@@ -188,7 +210,14 @@ function be_cp_lead_set_priority() {
   $old_contacts = $_POST['old_contacts'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_action_status->set('set_priority');
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'validate_point_of_contact') {
+    $wrapper->field_action_status->set('set_priority');
+  }
+  
   $wrapper->save();
 
   $node = node_load($nid);
@@ -250,8 +279,16 @@ function be_cp_convert_to_prospect() {
   $priority = $_POST['priority'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_workflow_status->set('convert_to_prospect');
   $wrapper->field_set_priority->set($priority);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'set_priority') {
+    $wrapper->field_workflow_status->set('convert_to_prospect');
+  }
+
   $wrapper->save();
 
   drupal_json_output($wrapper);
@@ -284,3 +321,94 @@ function be_cp_convert_to_opportunity() {
 
   drupal_json_output($wrapper);
 }
+
+/**
+ * Make new set of classes for the current progress block.
+ */
+function be_cp_refresh_classes() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_set_priority->set($priority);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  $vars['class_verification'] = 'gray-check';
+  $vars['class_convert_to_prospect'] = 'no-check';
+
+  $vars['class_verify_sca_dbra'] = 'current-step';
+  $vars['class_classify_to_group'] = '';
+  $vars['class_validate_point_of_contact'] = '';
+  $vars['class_set_priority'] = '';
+
+  $vars['modal_access_vsd'] = '';
+  $vars['modal_access_ctg'] = '';
+  $vars['modal_access_vpc'] = '';
+  $vars['modal_access_sp'] = '';
+  $vars['modal_access_ctp'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'verify_sca_dbra') {
+    $vars['class_verify_sca_dbra'] = 'current-step';
+    $vars['modal_access_vsd'] = 'modal';
+  }
+  elseif ($action_status == 'classify_to_group') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = 'modal';
+  }
+  elseif ($action_status == 'validate_point_of_contact') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = 'modal';
+  }
+  elseif ($action_status == 'set_priority') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = '';
+    $vars['modal_access_sp'] = 'modal';
+    if ($workflow_status == 'convert_to_prospect') {
+      $vars['class_set_priority'] = 'done-step';
+      $vars['modal_access_sp'] = '';
+      $vars['modal_access_ctp'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'verification') {
+    $vars['class_verification'] = 'gray-check';
+    $vars['class_convert_to_prospect'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_prospect') {
+    $vars['class_verification'] = 'green-check';
+    $vars['class_convert_to_prospect'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'prospect' ||
+      $vars['account_status'] == 'opportunity' ||
+      $vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_verify_sca_dbra'] = 'done-step';
+    $vars['class_classify_to_group'] = 'done-step';
+    $vars['class_validate_point_of_contact'] = 'done-step';
+    $vars['class_set_priority'] = 'done-step';
+    $vars['class_convert_to_prospect'] = 'green-check';
+  }
+
+  drupal_json_output($vars);
+  
+}
+
+
+

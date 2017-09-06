@@ -85,6 +85,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes'] = array(
+    'page callback' => 'be_cp_refresh_classes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -258,26 +265,44 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $vars['class_validate_point_of_contact'] = '';
   $vars['class_set_priority'] = '';
 
+  $vars['modal_access_vsd'] = '';
+  $vars['modal_access_ctg'] = '';
+  $vars['modal_access_vpc'] = '';
+  $vars['modal_access_sp'] = '';
+  $vars['modal_access_ctp'] = '';
+
   // Determine classes for each step.
   if ($action_status == 'verify_sca_dbra') {
     $vars['class_verify_sca_dbra'] = 'current-step';
+    $vars['modal_access_vsd'] = 'modal';
   }
   elseif ($action_status == 'classify_to_group') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = 'modal';
   }
   elseif ($action_status == 'validate_point_of_contact') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = 'modal';
   }
   elseif ($action_status == 'set_priority') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'done-step';
     $vars['class_set_priority'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = '';
+    $vars['modal_access_sp'] = 'modal';
     if ($workflow_status == 'convert_to_prospect') {
       $vars['class_set_priority'] = 'done-step';
+      $vars['modal_access_sp'] = '';
+      $vars['modal_access_ctp'] = 'modal';
     }
   }
 

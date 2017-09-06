@@ -190,6 +190,18 @@
             contacts.push(obj);
           });
 
+          var old_contacts = [];
+          $('.table-vc .old-data').each(function() {
+            var obj = {
+              'name': $(this).find('.con-name').val(),
+              'position' : $(this).find('.con-position').val(),
+              'phone' : $(this).find('.con-phone').val(),
+              'email' : $(this).find('.con-email').val(),
+              'id': $(this).attr('contact-id'),
+            };
+            old_contacts.push(obj);
+          });
+
           // Saving the contacts.
           $.ajax({
             url: '/be-cp/save-exit-vpc',
@@ -357,6 +369,39 @@
             },
             success: function(result){
               console.log(result);
+            },
+          });
+        });
+
+        $('.be-bs-modal').on('hidden.bs.modal', function () {
+          $.ajax({
+            url: '/be-cp/refresh-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log();
+              $('#div-verification').removeClass('gray-check no-check green-check');
+              $('#div-vsd').removeClass('current-step done-step');
+              $('#div-ctg').removeClass('current-step done-step');
+              $('#div-vpc').removeClass('current-step done-step');
+              $('#div-sp').removeClass('current-step done-step');
+              $('#div-ctp').removeClass('gray-check no-check green-check');
+
+              $('#div-verification').addClass(result['class_verification']);
+              $('#div-vsd').addClass(result['class_verify_sca_dbra']);
+              $('#div-ctg').addClass(result['class_classify_to_group']);
+              $('#div-vpc').addClass(result['class_validate_point_of_contact']);
+              $('#div-sp').addClass(result['class_set_priority']);
+              $('#div-ctp').addClass(result['class_convert_to_prospect']);
+
+              $('#div-vsd a.cp-link').attr('data-toggle', result['modal_access_vsd']);
+              $('#div-ctg a.cp-link').attr('data-toggle', result['modal_access_ctg']);
+              $('#div-vpc a.cp-link').attr('data-toggle', result['modal_access_vpc']);
+              $('#div-sp a.cp-link').attr('data-toggle', result['modal_access_sp']);
+              $('#div-ctp a.cp-link').attr('data-toggle', result['modal_access_ctp']);
+
             },
           });
         });

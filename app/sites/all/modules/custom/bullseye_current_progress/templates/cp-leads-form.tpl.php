@@ -1,6 +1,6 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
 	
-	<div class="cp-step row <?php print $class_verification; ?>">
+	<div id="div-verification" class="cp-step row <?php print $class_verification; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
 		</div>
@@ -9,51 +9,51 @@
 		</div>
 	</div>
 
-	<div class="cp-step row <?php print $class_verify_sca_dbra; ?>">
+	<div id="div-vsd" class="cp-step row <?php print $class_verify_sca_dbra; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#verify-sca-dbra">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_vsd; ?>" data-target="#verify-sca-dbra">
 				<span><?php print t('Verify if SCA/DBRA'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row <?php print $class_classify_to_group; ?>">
+	<div id="div-ctg" class="cp-step row <?php print $class_classify_to_group; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#classify-to-group">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_ctg; ?>" data-target="#classify-to-group">
 				<span><?php print t('Classify to group'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row <?php print $class_validate_point_of_contact; ?>">
+	<div id="div-vpc" class="cp-step row <?php print $class_validate_point_of_contact; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link gray" data-toggle="modal" data-target="#validate-contacts">
+			<a href="#" class="cp-link gray" data-toggle="<?php print $modal_access_vpc; ?>" data-target="#validate-contacts">
 				<span><?php print t('Validate point of contact'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row <?php print $class_set_priority; ?>">
+	<div id="div-sp" class="cp-step row <?php print $class_set_priority; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#set-priority">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_sp; ?>" data-target="#set-priority">
 				<span><?php print t('Set Priority'); ?></span>	
 			</a>
 		</div>
 	</div>
 
-	<div class="cp-step row <?php print $class_convert_to_prospect; ?>">
+	<div id="div-ctp" class="cp-step row <?php print $class_convert_to_prospect; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
@@ -67,13 +67,12 @@
 					<span><?php print t('Go to Prospect Page'); ?></span>
 				</a>
 			<?php else: ?>
-				<a href="#" class="cp-link big-step" data-toggle="modal" data-target="#convert-to-prospect">
+				<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_ctp; ?>" data-target="#convert-to-prospect">
 					<span><?php print t('Convert to Prospect'); ?></span>
 				</a>
 			<?php endif; ?>
 		</div>
 	</div>
-
 
 	<div id="verify-sca-dbra" class="modal be-bs-modal" role="dialog">
 	  <div class="modal-dialog">
@@ -433,7 +432,5 @@
 	</div>
 
 </div>
-
-	
 
 <?php print drupal_render_children($form); ?>

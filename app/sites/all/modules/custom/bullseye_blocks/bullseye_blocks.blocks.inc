@@ -75,7 +75,9 @@ function bullseye_blocks_render_be_bottom_header() {
     }
   }
   elseif (arg(0) == 'company') {
-    $vars['be_page_title'] = $be->getCompanyNameByAlias('content/' . arg(1));
+    $company_name = $be->getCompanyNameByAlias('content/' . arg(1));
+    $vars['be_page_title'] = $company_name;
+    drupal_set_title($company_name);
   }
   elseif (arg(0) == 'gmail-connector') {
     $vars['be_page_title'] = t('Mailbox');
