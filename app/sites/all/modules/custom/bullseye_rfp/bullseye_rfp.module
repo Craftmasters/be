@@ -1996,12 +1996,18 @@ function generate_rfp_major_medical($form, &$form_state) {
   $values['renewal'] = $form_state['values']['mm_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['mm_waiting_period'];
 
-  // Generate pdf and down it.
-  bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
+  if (isset($_SESSION['add_rfp'])) {
+    $data = $_SESSION['add_rfp'];
+    $account = node_load($data['account_id']);
+    $to = $account->field_email[LANGUAGE_NONE][0]['value'];
 
-  // Send the email.
-  $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+    // Generate pdf and down it.
+    bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
+
+    // Send the email.
+    $be = new Bullseye($user);
+    $be->emailRfp($user->mail, $to, 'This is just a test', 'hello', $attachments);
+  }
 
 }
 
