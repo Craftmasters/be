@@ -80,8 +80,7 @@ function be_cp_lead_validate_point_of_contact() {
 }
 
 /**
- * For updating the account status to vpc.
- * Also for saving the tags.
+ * Saving the contacts to field collection.
  */
 function be_cp_save_exit_vpc() {
 
