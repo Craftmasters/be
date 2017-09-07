@@ -237,6 +237,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'producer-acct',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
+  $items['bullseye_producer_acct_company_form'] = array(
+    'render element' => 'form',
+    'template' => 'producer-acct',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
 
   // pages
   $items['bullseye_producer_acct_select'] = array(
@@ -253,6 +258,10 @@ function bullseye_theme($existing, $type, $theme, $path) {
   );
   $items['bullseye_producer_file_directory'] = array(
     'template' => 'producer-file-directory-tree',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates',
+  );
+  $items['bullseye_producer_file_files_table'] = array(
+    'template' => 'producer-file-table',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates',
   );
   return $items;

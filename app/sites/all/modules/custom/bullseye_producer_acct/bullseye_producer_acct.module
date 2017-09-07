@@ -137,12 +137,14 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
     '#required' => true,
   );
 
+  /*
   $form['read_sca_dba'] = array(
     '#type' => 'checkbox',
     '#title_display' => 'invisible',
     '#title' => t('I have read the SCA and DBA documents.'),
     '#required' => true,
   );
+  */
 
   $form['agree_terms_privacy'] = array(
     '#type' => 'checkbox',
@@ -172,6 +174,8 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
       'class' => array('element-invisible'),
     ),
   );
+
+  $form['#is_individual'] = true;
 
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
@@ -213,17 +217,25 @@ function bullseye_producer_acct_company_form($form, &$form_state) {
   // copy form array from individual form
   $form = bullseye_producer_acct_indiv_form($form, $form_state);
 
-  $form['company_container'] = array(
-    '#type' => 'container',
-  );
-
-  $form['company_container']['contact_company'] = array(
+  $form['producer_company'] = array(
     '#type' => 'textfield',
     '#title' => t('Company Name'),
     '#attributes' => array(
       'placeholder' => t('Add Company'),
     ),
+    '#title_display' => 'invisible',
   );
+
+  $form['producer_website'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Website'),
+    '#attributes' => array(
+      'placeholder' => t('Website'),
+    ),
+    '#title_display' => 'invisible',
+  );
+
+  $form['#is_individual'] = false;
 
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',

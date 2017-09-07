@@ -2,7 +2,11 @@
   <?php print render($form['form_title']); ?>
 
   <div class="row">
+    <?php if($form['#is_individual']): ?>
     <h4 class="producer-title"><?php print t('Individual Account'); ?></h4>
+    <?php else: ?>
+    <h4 class="producer-title"><?php print t('Company Producer Account'); ?></h4>
+    <?php endif; ?>
 
     <div>
       <label>Name</label>
@@ -26,13 +30,27 @@
       </div>
     </div>
   </div>
-  <?php // @todo add if is company page add company fields ?>
+  
+  <?php if(!$form['#is_individual']): ?>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="edit-producer-company">Company Name</label>
+        <?php print render($form['producer_company']); ?>
+      </div>
+      <div class="col-md-6">
+        <label for="edit-producer-website">Website</label>
+        <?php print render($form['producer_website']); ?>
+      </div>
+    </div>
+  <?php endif; ?>
 
-  <?php /* temporary static checkbox placeholder */ ?>
+  <?php /*
   <div class="single-row-check-box">
     <?php print render($form['read_sca_dba']); ?>
     <label for="edit-read-sca-dba">I have read the <a href="#" class="producer-acct-link">SCA</a> and <a href="#" class="producer-acct-link">DBA</a> documents.</label>
   </div>
+  */
+  ?>
   <div class="single-row-check-box">
     <?php print render($form['agree_terms_privacy']); ?>
     <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link">Terms</a> & <a href="#" class="producer-acct-link">Privacy</a> Policy.</label>
