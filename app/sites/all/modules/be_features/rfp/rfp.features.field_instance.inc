@@ -10,6 +10,43 @@
 function rfp_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-rfp-field_benefits'.
+  $field_instances['node-rfp-field_benefits'] = array(
+    'bundle' => 'rfp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_benefits',
+    'label' => 'Benefits',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 6,
+    ),
+  );
+
   // Exported field_instance: 'node-rfp-field_broker_of_record'.
   $field_instances['node-rfp-field_broker_of_record'] = array(
     'bundle' => 'rfp',
@@ -48,7 +85,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 107,
+      'weight' => 13,
     ),
   );
 
@@ -125,7 +162,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 8,
     ),
   );
 
@@ -165,7 +202,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
@@ -205,7 +242,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 7,
     ),
   );
 
@@ -247,7 +284,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 104,
+      'weight' => 10,
     ),
   );
 
@@ -289,7 +326,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 103,
+      'weight' => 9,
     ),
   );
 
@@ -329,7 +366,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 25,
+      'weight' => 17,
     ),
   );
 
@@ -384,7 +421,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 53,
+      'weight' => 18,
     ),
   );
 
@@ -439,7 +476,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 52,
+      'weight' => 17,
     ),
   );
 
@@ -479,7 +516,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 26,
+      'weight' => 18,
     ),
   );
 
@@ -519,7 +556,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 79,
+      'weight' => 29,
     ),
   );
 
@@ -559,7 +596,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 78,
+      'weight' => 28,
     ),
   );
 
@@ -600,7 +637,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 28,
+      'weight' => 20,
     ),
   );
 
@@ -640,7 +677,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 30,
+      'weight' => 22,
     ),
   );
 
@@ -680,7 +717,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 4,
     ),
   );
 
@@ -722,7 +759,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 102,
+      'weight' => 8,
     ),
   );
 
@@ -762,7 +799,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 5,
     ),
   );
 
@@ -802,7 +839,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 9,
     ),
   );
 
@@ -844,7 +881,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 109,
+      'weight' => 15,
     ),
   );
 
@@ -886,7 +923,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 105,
+      'weight' => 11,
     ),
   );
 
@@ -928,7 +965,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 108,
+      'weight' => 14,
     ),
   );
 
@@ -968,7 +1005,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 83,
+      'weight' => 18,
     ),
   );
 
@@ -1008,7 +1045,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 82,
+      'weight' => 17,
     ),
   );
 
@@ -1048,7 +1085,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 33,
+      'weight' => 16,
     ),
   );
 
@@ -1103,7 +1140,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 51,
+      'weight' => 24,
     ),
   );
 
@@ -1158,7 +1195,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 50,
+      'weight' => 23,
     ),
   );
 
@@ -1199,7 +1236,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 36,
+      'weight' => 19,
     ),
   );
 
@@ -1239,7 +1276,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 38,
+      'weight' => 21,
     ),
   );
 
@@ -1279,7 +1316,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 34,
+      'weight' => 17,
     ),
   );
 
@@ -1319,7 +1356,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 73,
+      'weight' => 8,
     ),
   );
 
@@ -1359,7 +1396,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 72,
+      'weight' => 7,
     ),
   );
 
@@ -1399,7 +1436,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 21,
+      'weight' => 8,
     ),
   );
 
@@ -1454,7 +1491,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 22,
+      'weight' => 50,
     ),
   );
 
@@ -1509,7 +1546,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 21,
+      'weight' => 49,
     ),
   );
 
@@ -1546,7 +1583,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 24,
+      'weight' => 11,
     ),
   );
 
@@ -1586,7 +1623,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 26,
+      'weight' => 13,
     ),
   );
 
@@ -1626,7 +1663,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 22,
+      'weight' => 9,
     ),
   );
 
@@ -1666,7 +1703,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 77,
+      'weight' => 16,
     ),
   );
 
@@ -1706,7 +1743,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 76,
+      'weight' => 15,
     ),
   );
 
@@ -1747,7 +1784,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 32,
+      'weight' => 29,
     ),
   );
 
@@ -1787,7 +1824,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 34,
+      'weight' => 31,
     ),
   );
 
@@ -1827,7 +1864,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 29,
+      'weight' => 26,
     ),
   );
 
@@ -1882,7 +1919,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 36,
+      'weight' => 10,
     ),
   );
 
@@ -1937,7 +1974,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 35,
+      'weight' => 8,
     ),
   );
 
@@ -1977,7 +2014,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 30,
+      'weight' => 27,
     ),
   );
 
@@ -2017,7 +2054,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 71,
+      'weight' => 59,
     ),
   );
 
@@ -2057,7 +2094,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 70,
+      'weight' => 58,
     ),
   );
 
@@ -2097,7 +2134,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 8,
     ),
   );
 
@@ -2152,7 +2189,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 30,
+      'weight' => 23,
     ),
   );
 
@@ -2207,7 +2244,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 29,
+      'weight' => 22,
     ),
   );
 
@@ -2248,7 +2285,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 18,
+      'weight' => 11,
     ),
   );
 
@@ -2288,7 +2325,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 20,
+      'weight' => 13,
     ),
   );
 
@@ -2328,7 +2365,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 9,
     ),
   );
 
@@ -2368,7 +2405,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 10,
     ),
   );
 
@@ -2408,7 +2445,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -2448,7 +2485,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 8,
     ),
   );
 
@@ -2488,7 +2525,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -2528,7 +2565,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 5,
     ),
   );
 
@@ -2583,7 +2620,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 7,
+      'weight' => 6,
     ),
   );
 
@@ -2638,7 +2675,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 14,
+      'weight' => 13,
     ),
   );
 
@@ -2678,7 +2715,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 47,
+      'weight' => 19,
     ),
   );
 
@@ -2733,7 +2770,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 55,
+      'weight' => 42,
     ),
   );
 
@@ -2788,7 +2825,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 53,
+      'weight' => 41,
     ),
   );
 
@@ -2828,7 +2865,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 48,
+      'weight' => 20,
     ),
   );
 
@@ -2868,7 +2905,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 87,
+      'weight' => 46,
     ),
   );
 
@@ -2908,7 +2945,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 86,
+      'weight' => 45,
     ),
   );
 
@@ -2949,7 +2986,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 50,
+      'weight' => 23,
     ),
   );
 
@@ -2989,7 +3026,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 52,
+      'weight' => 25,
     ),
   );
 
@@ -3029,7 +3066,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 89,
+      'weight' => 45,
     ),
   );
 
@@ -3069,7 +3106,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 88,
+      'weight' => 43,
     ),
   );
 
@@ -3109,7 +3146,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 66,
+      'weight' => 41,
     ),
   );
 
@@ -3164,7 +3201,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 93,
+      'weight' => 40,
     ),
   );
 
@@ -3219,7 +3256,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 92,
+      'weight' => 38,
     ),
   );
 
@@ -3260,7 +3297,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 69,
+      'weight' => 42,
     ),
   );
 
@@ -3300,7 +3337,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 71,
+      'weight' => 46,
     ),
   );
 
@@ -3340,7 +3377,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 67,
+      'weight' => 44,
     ),
   );
 
@@ -3380,7 +3417,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 85,
+      'weight' => 52,
     ),
   );
 
@@ -3420,7 +3457,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 84,
+      'weight' => 51,
     ),
   );
 
@@ -3461,7 +3498,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 33,
+      'weight' => 21,
     ),
   );
 
@@ -3501,7 +3538,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 35,
+      'weight' => 23,
     ),
   );
 
@@ -3541,7 +3578,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 30,
+      'weight' => 18,
     ),
   );
 
@@ -3596,7 +3633,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 34,
+      'weight' => 19,
     ),
   );
 
@@ -3651,7 +3688,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 33,
+      'weight' => 17,
     ),
   );
 
@@ -3691,7 +3728,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 31,
+      'weight' => 19,
     ),
   );
 
@@ -3733,7 +3770,7 @@ function rfp_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 106,
+      'weight' => 12,
     ),
   );
 
@@ -3773,7 +3810,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 12,
     ),
   );
 
@@ -3813,7 +3850,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 75,
+      'weight' => 48,
     ),
   );
 
@@ -3853,7 +3890,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 74,
+      'weight' => 47,
     ),
   );
 
@@ -3893,7 +3930,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 94,
+      'weight' => 66,
     ),
   );
 
@@ -3948,7 +3985,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 99,
+      'weight' => 69,
     ),
   );
 
@@ -4003,7 +4040,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 98,
+      'weight' => 68,
     ),
   );
 
@@ -4044,7 +4081,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 99,
+      'weight' => 69,
     ),
   );
 
@@ -4084,7 +4121,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 101,
+      'weight' => 71,
     ),
   );
 
@@ -4124,7 +4161,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 95,
+      'weight' => 67,
     ),
   );
 
@@ -4164,7 +4201,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 81,
+      'weight' => 29,
     ),
   );
 
@@ -4204,7 +4241,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 80,
+      'weight' => 28,
     ),
   );
 
@@ -4244,7 +4281,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 35,
+      'weight' => 23,
     ),
   );
 
@@ -4299,7 +4336,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 35,
+      'weight' => 29,
     ),
   );
 
@@ -4354,7 +4391,7 @@ function rfp_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 34,
+      'weight' => 28,
     ),
   );
 
@@ -4395,7 +4432,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 38,
+      'weight' => 26,
     ),
   );
 
@@ -4435,7 +4472,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 40,
+      'weight' => 30,
     ),
   );
 
@@ -4475,7 +4512,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 36,
+      'weight' => 24,
     ),
   );
 
@@ -4515,7 +4552,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 6,
     ),
   );
 
@@ -4555,7 +4592,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 11,
     ),
   );
 
@@ -4595,12 +4632,13 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 10,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Benefits');
   t('Broker of Record');
   t('CENSUS MUST INCLUDE THE FOLLOWING');
   t('City');
