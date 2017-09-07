@@ -70,6 +70,32 @@ function accounts_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_client_interested'.
+  $field_bases['field_client_interested'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_client_interested',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes' => 'Yes',
+        'no' => 'No',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_contact_name'.
   $field_bases['field_contact_name'] = array(
     'active' => 1,

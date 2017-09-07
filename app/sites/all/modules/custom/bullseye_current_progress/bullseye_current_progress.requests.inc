@@ -302,7 +302,16 @@ function be_cp_receive_feedback() {
   $nid = $_POST['nid'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_action_status->set('receive_feedback');
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+  $action_status_condition = ($action_status == 'build_rapport' || $action_status == 'send_email');
+
+  if ($account_status == 'prospect' && $workflow_status == 'engagement' && $action_status_condition) {
+    $wrapper->field_action_status->set('receive_feedback');
+  }
+
   $wrapper->save();
 
   drupal_json_output($wrapper);
@@ -317,6 +326,20 @@ function be_cp_convert_to_opportunity() {
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_workflow_status->set('convert_to_opportunity');
+  $wrapper->field_client_interested->set('yes');
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Updating the client interested field.
+ */
+function be_cp_prospect_interested_no() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_client_interested->set('no');
   $wrapper->save();
 
   drupal_json_output($wrapper);
@@ -395,10 +418,10 @@ function be_cp_refresh_classes() {
     $vars['class_convert_to_prospect'] = 'no-check current-step';
   }
 
-  if ($vars['account_status'] == 'prospect' ||
-      $vars['account_status'] == 'opportunity' ||
-      $vars['account_status'] == 'deal_in_progress' ||
-      $vars['account_status'] == 'closed_deal') {
+  if ($account_status == 'prospect' ||
+      $account_status == 'opportunity' ||
+      $account_status == 'deal_in_progress' ||
+      $account_status == 'closed_deal') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'done-step';
@@ -410,5 +433,70 @@ function be_cp_refresh_classes() {
   
 }
 
+/**
+ * Make new set of classes for the current progress block.
+ */
+function be_cp_refresh_classes_prospects() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_set_priority->set($priority);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  $vars['class_engagement'] = 'gray-check';
+  $vars['class_convert_to_opportunity'] = 'no-check';
+
+  // Skip email campign because mailchimp not yet available.
+  $vars['class_send_email_campaign'] = 'done-step';
+
+  $vars['class_build_rapport'] = 'current-step';
+  $vars['class_receive_feedback'] = '';
+
+  $vars['modal_access_br'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cto'] = '';
+
+  // Determine classes for each step.
+  if ($action_status == 'build_rapport' || $action_status == 'send_email') {
+    $vars['class_build_rapport'] = 'current-step';
+    $vars['modal_access_br'] = 'modal';
+  }
+  elseif ($action_status == 'receive_feedback') {
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'current-step';
+    $vars['modal_access_br'] = '';
+    $vars['modal_access_rf'] = 'modal';
+    if ($workflow_status == 'convert_to_opportunity') {
+      $vars['class_receive_feedback'] = 'done-step';
+      $vars['modal_access_rf'] = '';
+      $vars['modal_access_cto'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'engagement') {
+    $vars['class_engagement'] = 'gray-check';
+    $vars['class_convert_to_opportunity'] = 'no-check';
+  }
+  elseif ($workflow_status == 'convert_to_opportunity') {
+    $vars['class_engagement'] = 'green-check';
+    $vars['class_convert_to_opportunity'] = 'no-check current-step';
+  }
+
+  if ($account_status == 'opportunity' ||
+      $account_status == 'deal_in_progress' ||
+      $account_status == 'closed_deal') {
+    $vars['class_send_email_campaign'] = 'done-step';
+    $vars['class_build_rapport'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_to_opportunity'] = 'green-check';
+  }
+
+  drupal_json_output($vars);
+}
 
 

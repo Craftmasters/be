@@ -105,7 +105,6 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
 		      			<h3><?php print t('Did this lead/company ever work under SCA and/or DBRA?'); ?></h3>
-		      			<?php print render($form['work_sca_dbra']); ?>
 		      		</div>
 		      	</div>
 		      </div>
@@ -153,7 +152,6 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
 		      			<h3><?php print t('Does this lead/company have plans on working under SCA/DBRA in the future?'); ?></h3>
-		      			<?php print render($form['plan_to_work_sca_dbra']); ?>
 		      		</div>
 		      	</div>
 		      </div>
