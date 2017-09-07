@@ -27,7 +27,7 @@
       </div>
       <div class="stat-item">
         <div class="stat-item-inner">
-          <span id="stat-closed-num" data-number="0" class="stat-number">0</span>
+          <span id="stat-closed-num" data-number="<?php print $closed_deals_total; ?>" class="stat-number">0</span>
           <span class="stat-desc"><?php print t('Closed Deals'); ?></span>
         </div>
       </div>

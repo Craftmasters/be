@@ -23,14 +23,14 @@ function rfp_field_group_info() {
     'label' => 'Attachments',
     'weight' => '4',
     'children' => array(
-      0 => 'field_employee_census',
-      1 => 'field_current_summary_of_benefit',
-      2 => 'field_current_bill',
-      3 => 'field_last_renewal_letter_rates',
-      4 => 'field_summary_monthly_claims',
-      5 => 'field_broker_of_record',
+      0 => 'field_broker_of_record',
+      1 => 'field_current_bill',
+      2 => 'field_current_summary_of_benefit',
+      3 => 'field_employee_census',
+      4 => 'field_large_claims_report',
+      5 => 'field_last_renewal_letter_rates',
       6 => 'field_letter_of_authorization',
-      7 => 'field_large_claims_report',
+      7 => 'field_summary_monthly_claims',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -94,10 +94,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_dental';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '27',
+    'weight' => '19',
     'children' => array(
-      0 => 'field_den_plan_start',
-      1 => 'field_den_plan_end',
+      0 => 'field_den_plan_end',
+      1 => 'field_den_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -123,7 +123,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Dental',
-    'weight' => '21',
+    'weight' => '9',
     'children' => array(
       0 => 'field_den_current_carrier',
       1 => 'field_den_years_current_carrier',
@@ -134,14 +134,13 @@ function rfp_field_group_info() {
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Dental',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-dental field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-dental field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -157,10 +156,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_dental';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '29',
+    'weight' => '21',
     'children' => array(
-      0 => 'field_dn_contrib_single',
-      1 => 'field_dn_contrib_family',
+      0 => 'field_dn_contrib_family',
+      1 => 'field_dn_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -188,25 +187,24 @@ function rfp_field_group_info() {
     'label' => 'Group Information',
     'weight' => '1',
     'children' => array(
-      0 => 'field_company',
-      1 => 'field_email',
-      2 => 'field_phone_number',
-      3 => 'field_website',
-      4 => 'field_company_street_address',
-      5 => 'field_city',
-      6 => 'field_frp_state',
+      0 => 'field_city',
+      1 => 'field_company',
+      2 => 'field_email',
+      3 => 'field_company_street_address',
+      4 => 'field_frp_state',
+      5 => 'field_phone_number',
+      6 => 'field_website',
       7 => 'field_zip_code',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Group Information',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-info field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-info field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -222,10 +220,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_life';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '37',
+    'weight' => '20',
     'children' => array(
-      0 => 'field_lf_contrib_single',
-      1 => 'field_lf_contrib_family',
+      0 => 'field_lf_contrib_family',
+      1 => 'field_lf_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -251,10 +249,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_life';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '35',
+    'weight' => '18',
     'children' => array(
-      0 => 'field_lf_plan_start',
-      1 => 'field_lf_plan_end',
+      0 => 'field_lf_plan_end',
+      1 => 'field_lf_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -280,25 +278,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Life',
-    'weight' => '23',
+    'weight' => '10',
     'children' => array(
       0 => 'field_lf_current_carrier',
-      1 => 'field_lf_years_current_carrier',
-      2 => 'field_lf_renewal_current_plan_be',
-      3 => 'field_lf_waiting_period',
+      1 => 'field_lf_renewal_current_plan_be',
+      2 => 'field_lf_waiting_period',
+      3 => 'field_lf_years_current_carrier',
       4 => 'group_lf_year_to_quote',
       5 => 'group_lf_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Life',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-life field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-life field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -314,25 +311,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Limited Medical',
-    'weight' => '18',
+    'weight' => '6',
     'children' => array(
       0 => 'field_lm_current_carrier',
-      1 => 'field_lm_years_current_carrier',
-      2 => 'field_lm_renewal_current_plan_be',
-      3 => 'field_lm_waiting_period',
+      1 => 'field_lm_renewal_current_plan_be',
+      2 => 'field_lm_waiting_period',
+      3 => 'field_lm_years_current_carrier',
       4 => 'group_lm_year_to_quote',
       5 => 'group_lm_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Limited Medical',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-limited-medical field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-limited-medical field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -348,10 +344,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_limited_medical';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '25',
+    'weight' => '12',
     'children' => array(
-      0 => 'field_lm_contrib_single',
-      1 => 'field_lm_contrib_family',
+      0 => 'field_lm_contrib_family',
+      1 => 'field_lm_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -377,10 +373,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_limited_medical';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '23',
+    'weight' => '10',
     'children' => array(
-      0 => 'field_lm_plan_start',
-      1 => 'field_lm_plan_end',
+      0 => 'field_lm_plan_end',
+      1 => 'field_lm_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -406,25 +402,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Major Medical',
-    'weight' => '17',
+    'weight' => '5',
     'children' => array(
       0 => 'field_mm_current_carrier',
-      1 => 'field_mm_years_current_carrier',
-      2 => 'field_mm_renewal_current_plan_be',
-      3 => 'field_mm_waiting_period',
+      1 => 'field_mm_renewal_current_plan_be',
+      2 => 'field_mm_waiting_period',
+      3 => 'field_mm_years_current_carrier',
       4 => 'group_mm_year_to_quote',
       5 => 'group_mm_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Major Medical',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-major-medical field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-major-medical field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -440,10 +435,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_mec';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '33',
+    'weight' => '30',
     'children' => array(
-      0 => 'field_mc_contrib_single',
-      1 => 'field_mc_contrib_family',
+      0 => 'field_mc_contrib_family',
+      1 => 'field_mc_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -466,13 +461,13 @@ function rfp_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'rfp';
   $field_group->mode = 'form';
-  $field_group->parent_name = 'group_mec';
+  $field_group->parent_name = 'group_telemedicine';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '31',
+    'weight' => '68',
     'children' => array(
-      0 => 'field_mec_plan_start',
-      1 => 'field_mec_plan_end',
+      0 => 'field_tl_plan_end',
+      1 => 'field_tl_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -498,25 +493,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'MEC',
-    'weight' => '20',
+    'weight' => '8',
     'children' => array(
-      0 => 'field_mec_current_carrier',
-      1 => 'field_mec_years_current_carrier',
-      2 => 'field_mc_renewal_current_plan_be',
-      3 => 'field_mc_waiting_period',
-      4 => 'group_mec_year_to_quote',
+      0 => 'field_mc_renewal_current_plan_be',
+      1 => 'field_mc_waiting_period',
+      2 => 'field_mec_current_carrier',
+      3 => 'field_mec_years_current_carrier',
+      4 => 'group_tl_year_to_quote',
       5 => 'group_mc_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'MEC',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-mec field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-mec field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -532,10 +526,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_major_medical';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '19',
+    'weight' => '12',
     'children' => array(
-      0 => 'field_mm_contrib_single',
-      1 => 'field_mm_contrib_family',
+      0 => 'field_mm_contrib_family',
+      1 => 'field_mm_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -561,10 +555,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_major_medical';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '17',
+    'weight' => '10',
     'children' => array(
-      0 => 'field_mm_plan_start',
-      1 => 'field_mm_plan_end',
+      0 => 'field_mm_plan_end',
+      1 => 'field_mm_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -593,25 +587,24 @@ function rfp_field_group_info() {
     'weight' => '2',
     'children' => array(
       0 => 'field_fringe_rate',
-      1 => 'field_proposed_effective_date',
-      2 => 'field_other_work_locations',
+      1 => 'field_nature_of_business_sic',
+      2 => 'field_number_of_dependents',
       3 => 'field_number_of_employees',
-      4 => 'field_number_of_dependents',
-      5 => 'field_nature_of_business_sic',
-      6 => 'field_years_in_business',
+      4 => 'field_other_work_locations',
+      5 => 'field_proposed_effective_date',
+      6 => 'field_renewal_date',
       7 => 'field_tax_id',
-      8 => 'field_renewal_date',
+      8 => 'field_years_in_business',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Plan Specifications',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-plan-specs field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-plan-specs field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -627,10 +620,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_retirement';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '49',
+    'weight' => '21',
     'children' => array(
-      0 => 'field_ret_plan_start',
-      1 => 'field_ret_plan_end',
+      0 => 'field_ret_plan_end',
+      1 => 'field_ret_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -656,7 +649,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Retirement',
-    'weight' => '25',
+    'weight' => '13',
     'children' => array(
       0 => 'field_ret_current_carrier',
       1 => 'field_ret_years_current_carrier',
@@ -667,14 +660,13 @@ function rfp_field_group_info() {
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Retirement',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-retirement field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-retirement field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -690,10 +682,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_retirement';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '51',
+    'weight' => '24',
     'children' => array(
-      0 => 'field_rt_contrib_single',
-      1 => 'field_rt_contrib_family',
+      0 => 'field_rt_contrib_family',
+      1 => 'field_rt_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -719,10 +711,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_special_benefits';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '70',
+    'weight' => '45',
     'children' => array(
-      0 => 'field_sb_contrib_single',
-      1 => 'field_sb_contrib_family',
+      0 => 'field_sb_contrib_family',
+      1 => 'field_sb_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -748,10 +740,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_special_benefits';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '68',
+    'weight' => '43',
     'children' => array(
-      0 => 'field_sb_plan_start',
-      1 => 'field_sb_plan_end',
+      0 => 'field_sb_plan_end',
+      1 => 'field_sb_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -777,10 +769,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_short_term_disability';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '34',
+    'weight' => '22',
     'children' => array(
-      0 => 'field_sd_contrib_single',
-      1 => 'field_sd_contrib_family',
+      0 => 'field_sd_contrib_family',
+      1 => 'field_sd_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -806,25 +798,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Short Term Disability',
-    'weight' => '24',
+    'weight' => '12',
     'children' => array(
-      0 => 'field_std_current_carrier',
-      1 => 'field_std_years_current_carrier',
-      2 => 'field_sd_renewal_current_plan_be',
-      3 => 'field_sd_waiting_period',
+      0 => 'field_sd_renewal_current_plan_be',
+      1 => 'field_sd_waiting_period',
+      2 => 'field_std_current_carrier',
+      3 => 'field_std_years_current_carrier',
       4 => 'group_std_year_to_quote',
       5 => 'group_sd_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Short Term Disability',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-short-term-disability field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-short-term-disability field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -840,25 +831,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Special Benefits',
-    'weight' => '27',
+    'weight' => '14',
     'children' => array(
       0 => 'field_sb_current_carrier',
-      1 => 'field_sb_years_current_carrier',
-      2 => 'field_sb_renewal_current_plan_be',
-      3 => 'field_sb_waiting_period',
+      1 => 'field_sb_renewal_current_plan_be',
+      2 => 'field_sb_waiting_period',
+      3 => 'field_sb_years_current_carrier',
       4 => 'group_sb_year_to_quote',
       5 => 'group_sb_percentage_contribution',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Special Benefits',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-special-benefits field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-special-benefits field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -874,10 +864,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_short_term_disability';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '32',
+    'weight' => '20',
     'children' => array(
-      0 => 'field_std_plan_start',
-      1 => 'field_std_plan_end',
+      0 => 'field_std_plan_end',
+      1 => 'field_std_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -903,25 +893,24 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Telemedicine',
-    'weight' => '19',
+    'weight' => '7',
     'children' => array(
-      0 => 'field_tl_renewal_current_plan_be',
-      1 => 'field_tl_waiting_period',
-      2 => 'field_tl_current_carrier',
+      0 => 'field_tl_current_carrier',
+      1 => 'field_tl_renewal_current_plan_be',
+      2 => 'field_tl_waiting_period',
       3 => 'field_tl_years_current_carrier',
       4 => 'group_tl_percentage_contribution',
-      5 => 'group_tl_year_to_quote',
+      5 => 'group_mec_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Telemedicine',
+      'formatter' => 'collapsible',
       'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-telemedicine field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
-        'classes' => 'group-telemedicine field-group-fieldset',
-        'description' => '',
       ),
-      'formatter' => 'collapsed',
     ),
   );
   $field_groups[''] = $field_group;
@@ -937,10 +926,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_telemedicine';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '100',
+    'weight' => '70',
     'children' => array(
-      0 => 'field_tl_contrib_single',
-      1 => 'field_tl_contrib_family',
+      0 => 'field_tl_contrib_family',
+      1 => 'field_tl_contrib_single',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -963,13 +952,13 @@ function rfp_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'rfp';
   $field_group->mode = 'form';
-  $field_group->parent_name = 'group_telemedicine';
+  $field_group->parent_name = 'group_mec';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '96',
+    'weight' => '28',
     'children' => array(
-      0 => 'field_tl_plan_start',
-      1 => 'field_tl_plan_end',
+      0 => 'field_mec_plan_end',
+      1 => 'field_mec_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -995,51 +984,22 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_benefits';
   $field_group->data = array(
     'label' => 'Vision',
-    'weight' => '22',
+    'weight' => '11',
     'children' => array(
-      0 => 'field_vs_current_carrier',
-      1 => 'field_vs_years_current_carrier',
-      2 => 'field_vs_renewal_current_plan_be',
-      3 => 'field_vs_waiting_period',
-      4 => 'group_vs_year_to_quote',
-      5 => 'group_vs_percentage_contribution',
-    ),
-    'format_type' => 'fieldset',
-    'format_settings' => array(
-      'label' => 'Vision',
-      'instance_settings' => array(
-        'required_fields' => 1,
-        'id' => '',
-        'classes' => 'group-vision field-group-fieldset',
-        'description' => '',
-      ),
-      'formatter' => 'collapsed',
-    ),
-  );
-  $field_groups[''] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
-  $field_group->identifier = 'group_vs_percentage_contribution|node|rfp|form';
-  $field_group->group_name = 'group_vs_percentage_contribution';
-  $field_group->entity_type = 'node';
-  $field_group->bundle = 'rfp';
-  $field_group->mode = 'form';
-  $field_group->parent_name = 'group_vision';
-  $field_group->data = array(
-    'label' => 'Percentage of Employer Contribution',
-    'weight' => '39',
-    'children' => array(
-      0 => 'field_vs_contrib_single',
-      1 => 'field_vs_contrib_family',
+      0 => 'field_vs_contrib_family',
+      1 => 'field_vs_contrib_single',
+      2 => 'field_vs_current_carrier',
+      3 => 'field_vs_renewal_current_plan_be',
+      4 => 'field_vs_waiting_period',
+      5 => 'field_vs_years_current_carrier',
+      6 => 'group_vs_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
       'formatter' => 'collapsible',
       'instance_settings' => array(
         'description' => '',
-        'classes' => 'group-vs-percentage-contribution field-group-fieldset',
+        'classes' => 'group-vision field-group-fieldset',
         'required_fields' => 1,
         'id' => '',
       ),
@@ -1058,10 +1018,10 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_vision';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '37',
+    'weight' => '25',
     'children' => array(
-      0 => 'field_vs_plan_start',
-      1 => 'field_vs_plan_end',
+      0 => 'field_vs_plan_end',
+      1 => 'field_vs_plan_start',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

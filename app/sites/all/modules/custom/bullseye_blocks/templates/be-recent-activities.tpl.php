@@ -4,7 +4,7 @@
   	<option><?php print t('All Activity'); ?></option>
   </select>
   <div class="be-block-main">
-
+  <!--
   	<div class="be-activity-row row">
   		<div class="col-xs-2 be-activity-icon">
   			<div class="img-wrap"><img src="<?php print $call_icon; ?>"></div>
@@ -84,6 +84,6 @@
   		</div>
   		<div class="col-xs-3 be-activity-date">June 15</div>
   	</div>
-
+  -->
   </div>
 </div>

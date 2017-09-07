@@ -4,6 +4,112 @@
  */
 
 /**
+* Implements hook_menu().
+*/
+function bullseye_current_progress_menu() {
+
+  $items['be-cp/lead/verify'] = array(
+    'page callback' => 'be_cp_lead_verify',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/lead/validate-point-of-contact'] = array(
+    'page callback' => 'be_cp_lead_validate_point_of_contact',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/setpriority'] = array(
+    'page callback' => 'be_cp_lead_set_priority',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/convert-to-prospect'] = array(
+    'page callback' => 'be_cp_convert_to_prospect',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/receive-feedback'] = array(
+    'page callback' => 'be_cp_receive_feedback',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/convert-to-opportunity'] = array(
+    'page callback' => 'be_cp_convert_to_opportunity',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/plan-work-sca-dbra'] = array(
+    'page callback' => 'be_cp_plan_to_work_sca_dbra',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/delete-contact'] = array(
+    'page callback' => 'be_cp_delete_contact',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-exit-vpc'] = array(
+    'page callback' => 'be_cp_save_exit_vpc',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-exit-ctg'] = array(
+    'page callback' => 'be_cp_save_exit_ctg',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-exit-sp'] = array(
+    'page callback' => 'be_cp_save_exit_sp',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/refresh-classes'] = array(
+    'page callback' => 'be_cp_refresh_classes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/refresh-classes-prospects'] = array(
+    'page callback' => 'be_cp_refresh_classes_prospects',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/prospect-interested-no'] = array(
+    'page callback' => 'be_cp_prospect_interested_no',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_form().
  *
  * Current Progress for Leads Form.
@@ -14,45 +120,24 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
   $form['#parents'] = array();
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
   
-  $form['work_sca_dbra'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'yes_sca' => t('Yes, SCA'),
-      'yes_dbra' => t('Yes, DBRA'),
-      'yes_both' => t('Yes, Both'),
-      'no' => t('No'),
-    ),
-  );
-
-  $form['plan_to_work_sca_dbra'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'yes' => t('Yes'),
-      'no' => t('No'),
-    ),
-  );
-
   module_load_include('inc', 'field_collection', 'field_collection.pages');
   module_load_include('inc', 'node', 'node.pages');
-
-  $node_form = new stdClass;
-  $node_form->type = 'accounts';
-  $node_form->language = LANGUAGE_NONE;
-
-  // Getting the field "Contacts" field collection from accounts content type fields.
-  $field = field_info_field('field_contacts');
-  $instance = field_info_instance('node', 'field_contacts', 'accounts');
-  $items = field_get_items('node', $node_form, 'field_contacts');
-  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
-  $form += (array) $my_field;
-  $form['field_contacts'][LANGUAGE_NONE]['add_more']['#value'] = '+';
 
   // Getting the field "Tags" from accounts content type fields.
   $field = field_info_field('field_tags');
   $instance = field_info_instance('node', 'field_tags', 'accounts');
-  $items = field_get_items('node', $node_form, 'field_tags');
-  $my_field = field_default_form('node', $node_form, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $items = field_get_items('node', $node, 'field_tags');
+  $my_field = field_default_form('node', $node, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $my_field;
   $form['field_tags'][LANGUAGE_NONE]['#title'] = '';
   $form['field_tags'][LANGUAGE_NONE]['#attributes'] = array(
@@ -63,27 +148,25 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#type' => 'select',
     '#options' => array(
       'low' => t('Low'),
-      'yes_dbra' => t('Medium'),
-      'yes_both' => t('High'),
+      'medium' => t('Medium'),
+      'high' => t('High'),
     ),
+    '#default_value' => $node->field_set_priority[LANGUAGE_NONE][0]['value'],
   );
 
-  $form['convert_to_prospect'] = array(
+  $form['submit'] = array(
     '#type' => 'submit',
+    '#submit' => array('convert_to_prospect'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Yes'),
   );
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_leads.js',
   );
-
 
   return $form;
 }
@@ -91,38 +174,62 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
 /**
  * Form submit for current progress leads form.
  */
-function bullseye_current_progress_leads_form_submit($form, &$form_state) {
-  foreach ($form_state['values']['field_contacts'][LANGUAGE_NONE] as $key => $value) {
-    if (is_numeric($key)) {
-      $fc = 'field_contacts';
-      $v = 'values';
-      $lang = LANGUAGE_NONE;
-      $name = $form_state[$v][$fc][$lang][$key]['field_contact_name'][$lang][0]['value'];
-      $email = $form_state[$v][$fc][$lang][$key]['field_email'][$lang][0]['value'];
-      $phone = $form_state[$v][$fc][$lang][$key]['field_phone_number'][$lang][0]['value'];
-      $position = $form_state[$v][$fc][$lang][$key]['field_position'][$lang][0]['value'];
-      $empty_condition = ($name == '' && $email == '' && $phone == '' && $position == '');
+function convert_to_prospect($form, &$form_state) {
 
-      // Since field collection remove button is buggy when programmatically attached to custom form,
-      // temporary workaround is let the user just empty the row fields of the item they want
-      // to remove and, here on the submit handler we just unset the empty rows on form_state['values'].
-      if ($empty_condition) {
-        unset($form_state[$v][$fc][$lang][$key]);
-      }
-    }
-  }
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('build_rapport');
+  $wrapper->field_workflow_status->set('engagement');
+  $wrapper->field_account_status->set('prospect');
+  //$wrapper->field_tags->set($tag_tids);
+  $wrapper->save();
+
+  // Clear the leads and prospects listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('leads_accounts_listing', 'cache');
+  cache_clear_all('count_leads_accounts_listing', 'cache');
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
 }
 
 /**
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_leads_form(&$vars) {
-  $alias  = 'content/' . arg(1);
-  $path = drupal_lookup_path('source', $alias);
-  $node = menu_get_object('node', 1, $path);
-  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
-  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
-  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['contacts'] = array();
+
+  foreach ($wrapper->field_contacts->value() as $key => $value) {
+    $item = array();
+    $item['item_id'] = $value->item_id;
+    $item['name'] = '';
+    $item['email'] = '';
+    $item['phone'] = '';
+    $item['position'] = '';
+    if (isset($value->field_contact_name[LANGUAGE_NONE][0]['value'])) {
+      $item['name'] = $value->field_contact_name[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_email[LANGUAGE_NONE][0]['value'])) {
+      $item['email'] = $value->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_phone_number[LANGUAGE_NONE][0]['value'])) {
+      $item['phone'] = $value->field_phone_number[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_position[LANGUAGE_NONE][0]['value'])) {
+      $item['position'] = $value->field_position[LANGUAGE_NONE][0]['value'];
+    }
+    $vars['contacts'][] = $item;
+  }
 
   $vars['class_verification'] = 'gray-check';
   $vars['class_convert_to_prospect'] = 'no-check';
@@ -132,26 +239,44 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   $vars['class_validate_point_of_contact'] = '';
   $vars['class_set_priority'] = '';
 
+  $vars['modal_access_vsd'] = '';
+  $vars['modal_access_ctg'] = '';
+  $vars['modal_access_vpc'] = '';
+  $vars['modal_access_sp'] = '';
+  $vars['modal_access_ctp'] = '';
+
   // Determine classes for each step.
   if ($action_status == 'verify_sca_dbra') {
     $vars['class_verify_sca_dbra'] = 'current-step';
+    $vars['modal_access_vsd'] = 'modal';
   }
   elseif ($action_status == 'classify_to_group') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = 'modal';
   }
   elseif ($action_status == 'validate_point_of_contact') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = 'modal';
   }
   elseif ($action_status == 'set_priority') {
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'done-step';
     $vars['class_set_priority'] = 'current-step';
+    $vars['modal_access_vsd'] = '';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = '';
+    $vars['modal_access_sp'] = 'modal';
     if ($workflow_status == 'convert_to_prospect') {
       $vars['class_set_priority'] = 'done-step';
+      $vars['modal_access_sp'] = '';
+      $vars['modal_access_ctp'] = 'modal';
     }
   }
 
@@ -168,12 +293,14 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
       $vars['account_status'] == 'opportunity' ||
       $vars['account_status'] == 'deal_in_progress' ||
       $vars['account_status'] == 'closed_deal') {
+    $vars['class_verification'] = 'green-check';
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'done-step';
     $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
+
 }
 
 /**
@@ -188,7 +315,16 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
-  $form['convert_to_opportunity'] = array(
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  $form['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
       'class' => array('green-btn'),
@@ -196,12 +332,9 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
     '#value' => t('Yes'),
   );
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_prospects.js',
   );
 
   return $form;
@@ -211,18 +344,35 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
  * Form submit for current progress prospects form.
  */
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('receive_specifications');
+  $wrapper->field_workflow_status->set('plan_specification');
+  $wrapper->field_account_status->set('opportunity');
+  $wrapper->save();
+
+  // Clear the prospects and opportunities listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing', 'cache');
+  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
 }
 
 /**
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_prospects_form(&$vars) {
-  $alias  = 'content/' . arg(1);
-  $path = drupal_lookup_path('source', $alias);
-  $node = menu_get_object('node', 1, $path);
-  $action_status = $node->field_action_status[LANGUAGE_NONE][0]['value'];
-  $workflow_status = $node->field_workflow_status[LANGUAGE_NONE][0]['value'];
-  $vars['account_status'] = $node->field_account_status[LANGUAGE_NONE][0]['value'];
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
 
   $vars['class_engagement'] = 'gray-check';
   $vars['class_convert_to_opportunity'] = 'no-check';
@@ -233,15 +383,25 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
   $vars['class_build_rapport'] = 'current-step';
   $vars['class_receive_feedback'] = '';
 
+  $vars['modal_access_br'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cto'] = '';
+
   // Determine classes for each step.
-  if ($action_status == 'build_rapport') {
+  if ($action_status == 'build_rapport' || $action_status == 'send_email') {
     $vars['class_build_rapport'] = 'current-step';
+    $vars['modal_access_br'] = 'modal';
+
   }
   elseif ($action_status == 'receive_feedback') {
     $vars['class_build_rapport'] = 'done-step';
     $vars['class_receive_feedback'] = 'current-step';
+    $vars['modal_access_br'] = '';
+    $vars['modal_access_rf'] = 'modal';
     if ($workflow_status == 'convert_to_opportunity') {
       $vars['class_receive_feedback'] = 'done-step';
+      $vars['modal_access_rf'] = '';
+      $vars['modal_access_cto'] = 'modal';
     }
   }
 
@@ -257,11 +417,14 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
   if ($vars['account_status'] == 'opportunity' ||
       $vars['account_status'] == 'deal_in_progress' ||
       $vars['account_status'] == 'closed_deal') {
+    $vars['class_engagement'] = 'green-check';
     $vars['class_send_email_campaign'] = 'done-step';
     $vars['class_build_rapport'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_to_opportunity'] = 'green-check';
-  } 
+  }
+
+
 }
 
 /**
@@ -276,23 +439,49 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
-  /*$form['convert_to_prospect'] = array(
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  $form['submit'] = array(
     '#type' => 'submit',
+    '#submit' => array('convert_to_opportunity'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Yes'),
   );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
-  );
- */
+ 
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function convert_to_opportunity($form, &$form_state) {
+
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('receive_specifications');
+  $wrapper->field_workflow_status->set('plan_specification');
+  $wrapper->field_account_status->set('opportunity');
+  $wrapper->save();
+
+  // Clear the prospects and opportunities listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing', 'cache');
+  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
 }
 
 /**
@@ -316,9 +505,6 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   );
   return $items;
 }
-
-
-
 
 
 

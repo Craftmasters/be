@@ -167,6 +167,7 @@
           $('[id^="message-link-"]').on('click', function() {
             var ifrm = $('#message-iframe-' + $(this).data("lid"))[0].contentWindow.document;
             $('body', ifrm).html(mailBody[$(this).data("lid")]);
+            $('#message-iframe-' + $(this).data("lid")).contents().find('body').css('white-space', 'pre');
           });
         }
       }

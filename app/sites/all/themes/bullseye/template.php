@@ -110,6 +110,14 @@ function bullseye_preprocess_page(&$vars, $hook) {
     }
   }
 
+  // Add datepicker library for create event block.
+  $adminimal_directory = drupal_get_path('theme', 'adminimal');
+
+  // Firefox doesn't support html5 date input.
+  // So we are using jquery datepicker for date fields.
+  drupal_add_library('system', 'ui.datepicker');
+  drupal_add_css($adminimal_directory . '/css/jquery.ui.theme.css');
+
 }
 
 
@@ -301,16 +309,32 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
     $data = $_SESSION['add_rfp'];
     $account = node_load($data['account_id']);
 
-    $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
-    $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
-    $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
-    $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
+    if (isset($account->field_company[LANGUAGE_NONE])) {
+      $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_email[LANGUAGE_NONE][0]['value'])) {
+      $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_work_phone[LANGUAGE_NONE])) {
+      $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_work_website[LANGUAGE_NONE])) {
+      $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
+    }
 
     // Address
-    $vars['street'] = $account->field_street[LANGUAGE_NONE][0]['value'];
-    $vars['city'] = $account->field_city[LANGUAGE_NONE][0]['value'];
-    $vars['state'] = $account->field_state_code[LANGUAGE_NONE][0]['value'];
-    $vars['code'] = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
+    if (isset($account->field_street[LANGUAGE_NONE])) {
+      $vars['street'] = $account->field_street[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_city[LANGUAGE_NONE])) {
+      $vars['city'] = $account->field_city[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_state_code[LANGUAGE_NONE])) {
+      $vars['state'] = $account->field_state_code[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($account->field_postal_code[LANGUAGE_NONE])) {
+      $vars['code'] = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
+    }
   }
 
   $theme_directory = path_to_theme('theme', 'bullseye');

@@ -6,7 +6,7 @@
   <div class="be-block-main">
     <div class="row revenue-top">
     	<div class="col-xs-6">
-    		<span class="revenue-value">$100,012</span>
+    		<span class="revenue-value">$0</span>
     	</div>
     	<div class="col-xs-6 revenue-chart-legend">
 	    	<ul>

@@ -18,7 +18,7 @@ function bullseye_blocks_render_be_top_header() {
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
   $admin = (is_array($user->roles) && in_array('admin', array_values($user->roles)));
-  
+
   $vars = array();
   $vars['username'] = '';
 
@@ -44,6 +44,8 @@ function bullseye_blocks_render_be_top_header() {
  */
 function bullseye_blocks_render_be_bottom_header() {
   global $user;
+
+  $be = new Bullseye($user);
 
   // Condition for roles.
   $administrator = (is_array($user->roles) && in_array('administrator', array_values($user->roles)));
@@ -71,6 +73,14 @@ function bullseye_blocks_render_be_bottom_header() {
       drupal_set_title('Dashboard');
       $vars['be_page_title'] = t('Dashboard');
     }
+  }
+  elseif (arg(0) == 'company') {
+    $company_name = $be->getCompanyNameByAlias('content/' . arg(1));
+    $vars['be_page_title'] = $company_name;
+    drupal_set_title($company_name);
+  }
+  elseif (arg(0) == 'gmail-connector') {
+    $vars['be_page_title'] = t('Mailbox');
   }
 
   $output = theme('be_bottom_header', $vars);
@@ -654,6 +664,7 @@ function bullseye_blocks_render_be_dashboard_statistics() {
   $vars['prospects_total'] = $be->countProspectsAccnt();
   $vars['opportunities_total'] = $be->countOpportunityAccnt();
   $vars['deals_total'] = $be->countDealsAccnt();
+  $vars['closed_deals_total'] = $be->countClosedDeals();
 
   $output = theme('be_dashboard_statistics', $vars);
 

@@ -10,4 +10,4 @@ RFPs {"url":"rfps","options":{"attributes":{"class":["icon","be-checklist"]},"it
 Proposals {"url":"proposals","options":{"attributes":{"class":["icon","be-document"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-46"}
 Producers {"url":"producers","options":{"attributes":{"class":["icon","be-users"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-45"}
 Carriers {"url":"carriers","options":{"attributes":{"class":["icon","be-bag"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}
-Files {"url":"files","options":{"attributes":{"class":["icon","be-folder"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}
+Files {"url":"files","hidden":true,"options":{"attributes":{"class":["icon","be-folder"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}

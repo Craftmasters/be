@@ -15,7 +15,7 @@
 		</div>
 		<div class="col-xs-10">
 			<a href="#" class="cp-link">
-				<span><?php print t('Request specification'); ?></span>
+				<span><?php print t('Request specifications'); ?></span>
 			</a>
 		</div>
 	</div>

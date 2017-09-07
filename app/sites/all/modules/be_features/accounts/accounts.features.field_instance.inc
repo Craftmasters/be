@@ -272,6 +272,43 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_client_interested'.
+  $field_instances['node-accounts-field_client_interested'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 39,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_client_interested',
+    'label' => 'Client Interested?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 39,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_company'.
   $field_instances['node-accounts-field_company'] = array(
     'bundle' => 'accounts',
@@ -799,6 +836,43 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_plan_work_under_sca_dbra'.
+  $field_instances['node-accounts-field_plan_work_under_sca_dbra'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 37,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_plan_work_under_sca_dbra',
+    'label' => 'Plan to Work Under SCA/DBRA',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 37,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_postal_code'.
   $field_instances['node-accounts-field_postal_code'] = array(
     'bundle' => 'accounts',
@@ -955,6 +1029,42 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 30,
+    ),
+  );
+
+  // Exported field_instance: 'node-accounts-field_set_priority'.
+  $field_instances['node-accounts-field_set_priority'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 38,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_set_priority',
+    'label' => 'Set Priority',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 38,
     ),
   );
 
@@ -1438,6 +1548,43 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_work_sca_dbra'.
+  $field_instances['node-accounts-field_work_sca_dbra'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 36,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_work_sca_dbra',
+    'label' => 'Work Under SCA/DBRA',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 36,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_work_website'.
   $field_instances['node-accounts-field_work_website'] = array(
     'bundle' => 'accounts',
@@ -1524,6 +1671,7 @@ function accounts_field_default_field_instances() {
   t('Account Status');
   t('Action Status');
   t('City');
+  t('Client Interested?');
   t('Company');
   t('Contact Number');
   t('Contacts');
@@ -1540,11 +1688,13 @@ function accounts_field_default_field_instances() {
   t('Name');
   t('Owned By');
   t('Personal Website');
+  t('Plan to Work Under SCA/DBRA');
   t('Position');
   t('Postal Code');
   t('Prefix');
   t('Producers');
   t('Referral Partners');
+  t('Set Priority');
   t('Source');
   t('State');
   t('State Code');
@@ -1557,6 +1707,7 @@ function accounts_field_default_field_instances() {
   t('Type of Business');
   t('Value');
   t('Work Phone');
+  t('Work Under SCA/DBRA');
   t('Work Website');
   t('Workflow Status');
 

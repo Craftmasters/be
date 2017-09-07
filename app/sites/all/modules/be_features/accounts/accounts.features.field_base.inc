@@ -61,6 +61,33 @@ function accounts_field_default_field_bases() {
         'send_email' => 'Send email campaign',
         'build_rapport' => 'Build Rapport',
         'receive_feedback' => 'Receive Feedback',
+        'receive_specifications' => 'Receive Specifications',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_client_interested'.
+  $field_bases['field_client_interested'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_client_interested',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes' => 'Yes',
+        'no' => 'No',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
@@ -330,6 +357,32 @@ function accounts_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_plan_work_under_sca_dbra'.
+  $field_bases['field_plan_work_under_sca_dbra'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_plan_work_under_sca_dbra',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes' => 'Yes',
+        'no' => 'No',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_position'.
   $field_bases['field_position'] = array(
     'active' => 1,
@@ -434,6 +487,32 @@ function accounts_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
+  );
+
+  // Exported field_base: 'field_set_priority'.
+  $field_bases['field_set_priority'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_set_priority',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'low' => 'Low',
+        'medium' => 'Medium',
+        'high' => 'High',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_source'.
@@ -699,6 +778,34 @@ function accounts_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_work_sca_dbra'.
+  $field_bases['field_work_sca_dbra'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_work_sca_dbra',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes_sca' => 'Yes, SCA',
+        'yes_dbra' => 'Yes, DBRA',
+        'yes_both' => 'Yes, Both',
+        'no' => 'No',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_work_website'.
   $field_bases['field_work_website'] = array(
     'active' => 1,
@@ -740,6 +847,7 @@ function accounts_field_default_field_bases() {
         'convert_to_prospect' => 'Convert to prospect',
         'engagement' => 'Engagement',
         'convert_to_opportunity' => 'Convert to opportunity',
+        'plan_specification' => 'Plan Specification',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,

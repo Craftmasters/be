@@ -4,7 +4,6 @@
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Leads (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/node/add/accounts?account_status=lead" rel="lightframe"><?php print t('Add New'); ?></a>
-        <a class="be-table-button" href="/admin/content/leads/import" rel="lightframe"><?php print t('Import'); ?></a>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
