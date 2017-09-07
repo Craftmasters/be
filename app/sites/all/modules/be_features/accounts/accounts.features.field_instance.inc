@@ -272,6 +272,43 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_client_interested'.
+  $field_instances['node-accounts-field_client_interested'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 39,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_client_interested',
+    'label' => 'Client Interested?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 39,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_company'.
   $field_instances['node-accounts-field_company'] = array(
     'bundle' => 'accounts',
@@ -1634,6 +1671,7 @@ function accounts_field_default_field_instances() {
   t('Account Status');
   t('Action Status');
   t('City');
+  t('Client Interested?');
   t('Company');
   t('Contact Number');
   t('Contacts');

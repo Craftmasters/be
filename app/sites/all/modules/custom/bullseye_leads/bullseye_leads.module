@@ -198,7 +198,12 @@ function bullseye_leads_import($rows) {
         }
         else {
           $node->field_workflow_status[$node->language][0]['value'] = 'engagement';
-          $node->field_action_status[$node->language][0]['value'] = 'send_email';
+          //$node->field_action_status[$node->language][0]['value'] = 'send_email';
+
+          // Commented out setting prospects action status 'send_email'
+          // due to as per mariel mailchimp not yet available so 
+          // imported prospects statuses are directly 'build_rapport' by default temporarily.
+          $node->field_action_status[$node->language][0]['value'] = 'build_rapport';
         }
 
         $node = node_submit($node);

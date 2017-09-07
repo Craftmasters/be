@@ -92,6 +92,20 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-prospects'] = array(
+    'page callback' => 'be_cp_refresh_classes_prospects',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/prospect-interested-no'] = array(
+    'page callback' => 'be_cp_prospect_interested_no',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -116,26 +130,6 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     '#value' => $node->nid,
   );
   
-  $form['work_sca_dbra'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'yes_sca' => t('Yes, SCA'),
-      'yes_dbra' => t('Yes, DBRA'),
-      'yes_both' => t('Yes, Both'),
-      'no' => t('No'),
-    ),
-    '#default_value' => $node->field_work_sca_dbra[LANGUAGE_NONE][0]['value'],
-  );
-
-  $form['plan_to_work_sca_dbra'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'yes' => t('Yes'),
-      'no' => t('No'),
-    ),
-    '#default_value' => $node->field_plan_work_under_sca_dbra[LANGUAGE_NONE][0]['value'],
-  );
-
   module_load_include('inc', 'field_collection', 'field_collection.pages');
   module_load_include('inc', 'node', 'node.pages');
 
@@ -171,30 +165,10 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
 
   // Attach js for ajax requests
   $form['#attached']['js'] = array(
-    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress.js',
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_leads.js',
   );
 
   return $form;
-}
-
-/**
- * Form submit for current progress leads form.
- */
-function refresh_page($form, &$form_state) {
-  // Refresh the page.
-  drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
-}
-
-/**
- * Form submit for current progress leads form.
- */
-function save_exit_set_priority($form, &$form_state) {
-  $priority = $form_state['values']['priority'];
-
-  // Setting the new statuses of the account.
-  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
-  $wrapper->field_set_priority->set($priority);
-  $wrapper->save();
 }
 
 /**
@@ -319,6 +293,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
       $vars['account_status'] == 'opportunity' ||
       $vars['account_status'] == 'deal_in_progress' ||
       $vars['account_status'] == 'closed_deal') {
+    $vars['class_verification'] = 'green-check';
     $vars['class_verify_sca_dbra'] = 'done-step';
     $vars['class_classify_to_group'] = 'done-step';
     $vars['class_validate_point_of_contact'] = 'done-step';
@@ -359,7 +334,7 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 
   // Attach js for ajax requests
   $form['#attached']['js'] = array(
-    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress.js',
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_prospects.js',
   );
 
   return $form;
@@ -408,15 +383,25 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
   $vars['class_build_rapport'] = 'current-step';
   $vars['class_receive_feedback'] = '';
 
+  $vars['modal_access_br'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cto'] = '';
+
   // Determine classes for each step.
-  if ($action_status == 'build_rapport') {
+  if ($action_status == 'build_rapport' || $action_status == 'send_email') {
     $vars['class_build_rapport'] = 'current-step';
+    $vars['modal_access_br'] = 'modal';
+
   }
   elseif ($action_status == 'receive_feedback') {
     $vars['class_build_rapport'] = 'done-step';
     $vars['class_receive_feedback'] = 'current-step';
+    $vars['modal_access_br'] = '';
+    $vars['modal_access_rf'] = 'modal';
     if ($workflow_status == 'convert_to_opportunity') {
       $vars['class_receive_feedback'] = 'done-step';
+      $vars['modal_access_rf'] = '';
+      $vars['modal_access_cto'] = 'modal';
     }
   }
 
@@ -432,11 +417,14 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
   if ($vars['account_status'] == 'opportunity' ||
       $vars['account_status'] == 'deal_in_progress' ||
       $vars['account_status'] == 'closed_deal') {
+    $vars['class_engagement'] = 'green-check';
     $vars['class_send_email_campaign'] = 'done-step';
     $vars['class_build_rapport'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_to_opportunity'] = 'green-check';
-  } 
+  }
+
+
 }
 
 /**
@@ -451,23 +439,49 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
-  /*$form['convert_to_prospect'] = array(
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  $form['submit'] = array(
     '#type' => 'submit',
+    '#submit' => array('convert_to_opportunity'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Yes'),
   );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('orange-btn'),
-    ),
-    '#value' => t('Save and Exit'),
-  );
- */
+ 
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function convert_to_opportunity($form, &$form_state) {
+
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_action_status->set('receive_specifications');
+  $wrapper->field_workflow_status->set('plan_specification');
+  $wrapper->field_account_status->set('opportunity');
+  $wrapper->save();
+
+  // Clear the prospects and opportunities listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('prospect_accounts_listing', 'cache');
+  cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing', 'cache');
+  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
 }
 
 /**

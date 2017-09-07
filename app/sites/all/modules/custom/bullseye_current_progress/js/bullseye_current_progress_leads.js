@@ -11,8 +11,6 @@
   Drupal.behaviors.bullseye_current_progress = {
     attach: function (context, settings) {
 
-
-
       $(document).ready(function() {
         var nid = $('.current-progress-main').attr('node-id');
 
