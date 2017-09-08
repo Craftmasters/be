@@ -384,6 +384,9 @@ function bullseye_blocks_render_be_producers() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
 
+  // Total number of producers.
+  $vars['total'] = $be->totalProducers();
+
   $output = theme('be_producers', $vars);
 
   return array(
