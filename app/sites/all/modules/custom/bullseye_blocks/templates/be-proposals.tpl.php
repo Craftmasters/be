@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Open Proposals (6)'); ?></span>
+        <span class="account-count"><?php print t('All Open Proposals (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/proposals/add" rel="lightframe"><?php print t('Send New Proposal'); ?></a>
       </div>
       <div class="col-md-6">
@@ -34,7 +34,7 @@
           <th><?php print t('Due Date'); ?></th>
           <th><?php print t('Priority'); ?></th>
           <th><?php print t('Created By'); ?></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < 2; $i++) : ?>
