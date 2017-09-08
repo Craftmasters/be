@@ -379,6 +379,8 @@ function bullseye_blocks_render_be_producers() {
   // Get the producers.
   $vars['producers'] = $be->getProducers();
 
+  $vars['be'] = $be;
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
