@@ -824,4 +824,11 @@ class Bullseye {
       print ucfirst($fname) . ' ' . ucfirst($lname);
     }
   }
+
+  /**
+   * Total revenue.
+   */
+  function revenue() {
+    return $revenue;
+  }
 }
