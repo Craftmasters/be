@@ -39,7 +39,7 @@
             <td><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
             <td><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
             <td><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
-            <td><span class="gray-font">0%</span></td>
+            <td><span class="gray-font"><?php print $be->winRatio($producer); ?>%</span></td>
           </tr>
         <?php endforeach; ?>
       </tbody>

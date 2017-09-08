@@ -131,7 +131,8 @@ class Bullseye {
    *   The producer name.
    */
   function winRatio($producer) {
-    return $win_ratio;
+    $ratio = 4;
+    return $ratio;
   }
 
   /**
