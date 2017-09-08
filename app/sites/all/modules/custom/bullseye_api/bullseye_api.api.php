@@ -882,6 +882,7 @@ class Bullseye {
    * Get total number of deals closed by the producer.
    */
   function dealsClosed($producer) {
+    $deals_closed = 1;
     return $deals_closed;
   }
 }
