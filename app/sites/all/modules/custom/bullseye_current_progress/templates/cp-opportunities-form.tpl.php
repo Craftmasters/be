@@ -1,4 +1,4 @@
-<div class="current-progress-main">
+<div class="current-progress-main" node-id="<?php print $nid; ?>">
 	
 	<div class="cp-step row gray-check">
 		<div class="col-xs-2">
@@ -33,7 +33,7 @@
 
 	<div class="cp-step row gray-check">
 		<div class="col-xs-2">
-			<span class="indicator"></span>
+			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
 			<a href="#" class="cp-link big-step"><span><?php print t('RFP'); ?></span></a>
@@ -75,7 +75,7 @@
 
 	<div class="cp-step row gray-check">
 		<div class="col-xs-2">
-			<span class="indicator"></span>
+			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
 			<a href="#" class="cp-link big-step"><span><?php print t('Plan Presentation'); ?></span></a>
