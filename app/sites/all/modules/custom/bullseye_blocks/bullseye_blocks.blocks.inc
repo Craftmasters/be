@@ -346,16 +346,21 @@ function bullseye_blocks_render_be_closed_deals() {
  * Proposals Block (Table).
  */
 function bullseye_blocks_render_be_proposals() {
-  global $base_url;
+  global $base_url, $user;
+
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
+  $vars['be'] = $be;
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['total'] = $be->countProposals();
 
   $output = theme('be_proposals', $vars);
 
