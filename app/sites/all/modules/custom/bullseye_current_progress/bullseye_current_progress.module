@@ -454,6 +454,11 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     ),
     '#value' => t('Yes'),
   );
+
+  // Attach js for ajax requests.
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_opportunities.js',
+  );
  
   return $form;
 }
@@ -468,6 +473,86 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['class_plan_specs'] = 'gray-check';
+  $vars['class_request_specs'] = '';
+  $vars['class_receive_plan'] = '';
+  $vars['class_rfp'] = 'gray-check';
+  $vars['class_generate_rfp'] = '';
+  $vars['class_recieve_quote'] = '';
+  $vars['class_plan_presentation'] = 'gray-check';
+  $vars['class_request_info'] = '';
+  $vars['class_receive_feedback'] = '';
+  $vars['class_convert_deals'] = 'no-check';
+
+  if ($workflow_status == 'plan_specification') {
+    $vars['class_plan_specs'] = 'gray-check';
+    if ($action_status == 'receive_specifications') {
+      $vars['class_request_specs'] = 'current-step';
+    }
+    if ($action_status == 'receive_plan_details') {
+      $vars['class_request_specs'] = 'done-step';
+      $vars['class_receive_plan'] = 'current-step';
+    }
+  }
+
+  if ($workflow_status == 'rfp') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'gray-check';
+    if ($action_status == 'generate_rfp') {
+      $vars['class_generate_rfp'] = 'current-step';
+    }
+    if ($action_status == 'receive_quote') {
+      $vars['class_generate_rfp'] = 'done-step';
+      $vars['class_recieve_quote'] = 'current-step';
+    }
+  }
+
+  if ($workflow_status == 'plan_presentation') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'gray-check';
+    if ($action_status == 'request_information') {
+      $vars['class_request_info'] = 'current-step';
+    }
+    if ($action_status == 'receive_feedback_opportunity') {
+      $vars['class_request_info'] = 'done-step';
+      $vars['class_receive_feedback'] = 'current-step';
+    }
+  }
+
+  if ($workflow_status == 'convert_to_deals_in_progress') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'no-check current-step';
+  }
+
+  if ($vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'green-check';
+  }
 
 }
 
