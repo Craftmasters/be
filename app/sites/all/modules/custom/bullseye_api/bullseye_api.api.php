@@ -831,4 +831,11 @@ class Bullseye {
   function revenue() {
     return $revenue;
   }
+
+  /**
+   * Average deal size won.
+   */
+  function averageDealsSizeWon() {
+    return;
+  }
 }
