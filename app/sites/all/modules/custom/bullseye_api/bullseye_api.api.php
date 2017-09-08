@@ -911,4 +911,13 @@ class Bullseye {
 
     return $total;
   }
+
+  /**
+   * Sent proposals.
+   */
+  function proposalSent() {
+    $proposals = array();
+
+    return $proposals;
+  }
 }
