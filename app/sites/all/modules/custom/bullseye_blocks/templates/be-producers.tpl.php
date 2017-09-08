@@ -37,7 +37,7 @@
             <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
             <td><span class="gray-font">0</span></td>
-            <td><span class="gray-font">0</span></td>
+            <td><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
             <td><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
             <td><span class="gray-font">0%</span></td>
           </tr>
