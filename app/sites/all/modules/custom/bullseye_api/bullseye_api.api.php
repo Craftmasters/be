@@ -838,4 +838,11 @@ class Bullseye {
   function averageDealsSizeWon() {
     return;
   }
+
+  /**
+   * Sales cycle time.
+   */
+  function salesCycleTime() {
+    return;
+  }
 }
