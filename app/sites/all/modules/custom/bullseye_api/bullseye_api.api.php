@@ -902,4 +902,13 @@ class Bullseye {
     $total = 3;
     return $total;
   }
+
+  /**
+   * Total number of proposals.
+   */
+  function countProposals() {
+    $total = 0;
+
+    return $total;
+  }
 }
