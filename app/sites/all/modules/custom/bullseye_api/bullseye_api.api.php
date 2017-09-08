@@ -852,4 +852,11 @@ class Bullseye {
   function topPerformers() {
     return;
   }
+
+  /**
+   * Total producers.
+   */
+  function totalProducers() {
+    return;
+  }
 }
