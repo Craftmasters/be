@@ -106,6 +106,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-opportunity'] = array(
+    'page callback' => 'be_cp_refresh_classes_opportunity',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -485,14 +492,24 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['class_receive_feedback'] = '';
   $vars['class_convert_deals'] = 'no-check';
 
+  $vars['modal_access_rs'] = '';
+  $vars['modal_access_rp'] = '';
+  $vars['modal_access_gr'] = '';
+  $vars['modal_access_rq'] = '';
+  $vars['modal_access_ri'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cd'] = '';
+
   if ($workflow_status == 'plan_specification') {
     $vars['class_plan_specs'] = 'gray-check';
     if ($action_status == 'receive_specifications') {
       $vars['class_request_specs'] = 'current-step';
+      $vars['modal_access_rs'] = 'modal';
     }
     if ($action_status == 'receive_plan_details') {
       $vars['class_request_specs'] = 'done-step';
       $vars['class_receive_plan'] = 'current-step';
+      $vars['modal_access_rp'] = 'modal';
     }
   }
 
@@ -503,10 +520,12 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_rfp'] = 'gray-check';
     if ($action_status == 'generate_rfp') {
       $vars['class_generate_rfp'] = 'current-step';
+      $vars['modal_access_gr'] = 'modal';
     }
     if ($action_status == 'receive_quote') {
       $vars['class_generate_rfp'] = 'done-step';
       $vars['class_recieve_quote'] = 'current-step';
+      $vars['modal_access_rq'] = 'modal';
     }
   }
 
@@ -520,10 +539,12 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_plan_presentation'] = 'gray-check';
     if ($action_status == 'request_information') {
       $vars['class_request_info'] = 'current-step';
+      $vars['modal_access_ri'] = 'modal';
     }
     if ($action_status == 'receive_feedback_opportunity') {
       $vars['class_request_info'] = 'done-step';
       $vars['class_receive_feedback'] = 'current-step';
+      $vars['modal_access_rf'] = 'modal';
     }
   }
 
@@ -538,6 +559,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_request_info'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'no-check current-step';
+    $vars['modal_access_cd'] = 'modal';
   }
 
   if ($vars['account_status'] == 'deal_in_progress' ||

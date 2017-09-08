@@ -14,7 +14,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#request-specification">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rs; ?>" data-target="#request-specification">
 				<span><?php print t('Request specifications'); ?></span>
 			</a>
 		</div>
@@ -25,7 +25,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#receive-plan-details">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rp; ?>" data-target="#receive-plan-details">
 				<span><?php print t('Receive plan details'); ?></span>
 			</a>
 		</div>
@@ -45,7 +45,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_gr; ?>">
 				<span><?php print t('Generate RFP'); ?></span>
 			</a>
 		</div>
@@ -56,7 +56,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rq; ?>">
 				<span><?php print t('Receive quote'); ?></span>
 			</a>
 		</div>
@@ -76,7 +76,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_ri; ?>">
 				<span><?php print t('Request information'); ?></span>
 			</a>
 		</div>
@@ -87,7 +87,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rf; ?>">
 				<span><?php print t('Receive Feedback'); ?></span>
 			</a>
 		</div>
@@ -98,7 +98,9 @@
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link big-step"><span><?php print t('Convert to Deals in Progress'); ?></span></a>
+			<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_cd; ?>">
+				<span><?php print t('Convert to Deals in Progress'); ?></span>
+			</a>
 		</div>
 	</div>
 

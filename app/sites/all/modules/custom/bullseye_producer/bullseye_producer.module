@@ -56,6 +56,7 @@ function bullseye_producer_form($form, &$form_state) {
       'individual' => 'Individual',
     ),
     '#default_value' => 'Company',
+    '#required' => TRUE,
   );
 
   $form['firstname'] = array(
@@ -158,6 +159,18 @@ function bullseye_producer_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Validation handler for producer form.
+ */
+function bullseye_producer_form_validate($form, &$form_state) {
+  // Require company name field if selected type is company.
+  if ($form_state['values']['type'] == 'company' || $form_state['values']['type'] == 'Company') {
+    if ($form_state['values']['company'] == '') {
+      form_set_error('company', 'Company name is required if selected producer type is company.');
+    }
+  }
 }
 
 /**
