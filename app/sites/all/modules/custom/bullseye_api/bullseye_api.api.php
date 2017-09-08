@@ -893,4 +893,12 @@ class Bullseye {
     $total = 2;
     return $total;
   }
+
+  /**
+   * Get the total number of leads assigned to a producer.
+   */
+  function leadsAssigned($producer) {
+    $total = 3;
+    return $total;
+  }
 }
