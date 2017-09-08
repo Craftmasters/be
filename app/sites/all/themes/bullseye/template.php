@@ -353,9 +353,3 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $vars['bt']['title_retirement'] = 'Retirement';
   $vars['bt']['title_special_benefits'] = 'Special Benefits';
 }
-
-function MODULE_NAME_custom_theme() {
-  if (current_path() == 'system/ajax') {
-    return variable_get('admin_theme');
-  }
-}
