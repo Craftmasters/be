@@ -356,6 +356,9 @@ function bullseye_blocks_render_be_proposals() {
 
   $vars['be'] = $be;
 
+  // Get all the proposals.
+  $vars['proposals'] = $be->proposalSent();
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
