@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Producers (6)'); ?></span>
+        <span class="account-count"><?php print t('All Producers (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/producer/add" rel="lightframe"><?php print t('Add New Producer'); ?></a>
       </div>
       <div class="col-md-6">
