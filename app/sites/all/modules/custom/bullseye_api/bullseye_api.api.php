@@ -857,6 +857,24 @@ class Bullseye {
    * Total producers.
    */
   function totalProducers() {
-    return;
+    if ($cache = cache_get('total_producers')) {
+      $total = $cache->data;
+    }
+    else {
+      $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $total = $query
+        ->fields('u', array('mail'))
+        ->condition('r.name', 'producer', '=')
+        ->condition('u.status', 1, '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('total_producers', $total, 'cache');
+    }
+
+    return $total;
   }
 }
