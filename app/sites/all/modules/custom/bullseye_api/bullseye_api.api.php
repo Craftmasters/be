@@ -845,4 +845,11 @@ class Bullseye {
   function salesCycleTime() {
     return;
   }
+
+  /**
+   * Top performers.
+   */
+  function topPerformers() {
+    return;
+  }
 }
