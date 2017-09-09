@@ -19,6 +19,26 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_plan_specs',
   );
 
+  // Exported permission: 'Producers registration page'.
+  $permissions['Producers registration page'] = array(
+    'name' => 'Producers registration page',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+    ),
+    'module' => 'bullseye_producer_acct',
+  );
+
+  // Exported permission: 'View File browser'.
+  $permissions['View File browser'] = array(
+    'name' => 'View File browser',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'bullseye_producer_file',
+  );
+
   // Exported permission: 'access accounts closed deals page'.
   $permissions['access accounts closed deals page'] = array(
     'name' => 'access accounts closed deals page',
