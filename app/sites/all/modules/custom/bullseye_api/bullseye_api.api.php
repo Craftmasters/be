@@ -131,7 +131,8 @@ class Bullseye {
    *   The producer name.
    */
   function winRatio($producer) {
-    return $win_ratio;
+    $ratio = 4;
+    return $ratio;
   }
 
   /**
@@ -823,5 +824,100 @@ class Bullseye {
     else {
       print ucfirst($fname) . ' ' . ucfirst($lname);
     }
+  }
+
+  /**
+   * Total revenue.
+   */
+  function revenue() {
+    return $revenue;
+  }
+
+  /**
+   * Average deal size won.
+   */
+  function averageDealsSizeWon() {
+    return;
+  }
+
+  /**
+   * Sales cycle time.
+   */
+  function salesCycleTime() {
+    return;
+  }
+
+  /**
+   * Top performers.
+   */
+  function topPerformers() {
+    return;
+  }
+
+  /**
+   * Total producers.
+   */
+  function totalProducers() {
+    if ($cache = cache_get('total_producers')) {
+      $total = $cache->data;
+    }
+    else {
+      $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $total = $query
+        ->fields('u', array('mail'))
+        ->condition('r.name', 'producer', '=')
+        ->condition('u.status', 1, '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('total_producers', $total, 'cache');
+    }
+
+    return $total;
+  }
+
+  /**
+   * Get total number of deals closed by the producer.
+   */
+  function dealsClosed($producer) {
+    $total = 1;
+    return $total;
+  }
+
+  /**
+   * Get the total number of opportunities covered by the producer.
+   */
+  function opportunitiesCovered($producer) {
+    $total = 2;
+    return $total;
+  }
+
+  /**
+   * Get the total number of leads assigned to a producer.
+   */
+  function leadsAssigned($producer) {
+    $total = 3;
+    return $total;
+  }
+
+  /**
+   * Total number of proposals.
+   */
+  function countProposals() {
+    $total = 0;
+
+    return $total;
+  }
+
+  /**
+   * Sent proposals.
+   */
+  function proposalSent() {
+    $proposals = array();
+
+    return $proposals;
   }
 }

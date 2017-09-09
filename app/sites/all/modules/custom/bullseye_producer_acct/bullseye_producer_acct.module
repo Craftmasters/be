@@ -3,7 +3,7 @@
  * Bullseye plan specification module.
  */
 
-// constant access arguments
+// Constant access arguments.
 define('BULLSEYE_PRODUCER_ACCT_ADD', 'Producers registration page');
 
 /**
@@ -58,7 +58,7 @@ function bullseye_producer_acct_permission(){
 }
 
 /**
- * Selection page
+ * Selection page.
  */
 function bullseye_producer_acct_select() {
   global $base_url; //krumo(node_load(5321));
@@ -83,10 +83,9 @@ function bullseye_producer_acct_select() {
 }
 
 /**
- * confirmation page
+ * Confirmation page.
  */
 function bullseye_producer_acct_confirm(){
-
   return theme('bullseye_producer_acct_confirm');
 }
 
@@ -158,7 +157,7 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
   $form['sign_petition'] = array(
     '#markup' => 'https://app.hellosign.com/s/56b2a684'
   );
-  
+
   $form['file_health_life'] = array(
     '#type' => 'file',
     '#title' => t('Browse'),
@@ -200,12 +199,13 @@ function bullseye_producer_acct_email_element_validate($element, &$form_state, $
 }
 
 /**
- * hook_form_submit()
+ * Implements hook_form_submit().
  */
 function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
   // do business logic here
   // then redirect to confirmation page
-
+  krumo($form_state['values']);
+  die();
 }
 
 /**

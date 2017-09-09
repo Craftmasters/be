@@ -201,7 +201,7 @@ function bullseye_leads_import($rows) {
           //$node->field_action_status[$node->language][0]['value'] = 'send_email';
 
           // Commented out setting prospects action status 'send_email'
-          // due to as per mariel mailchimp not yet available so 
+          // due to as per mariel mailchimp not yet available so
           // imported prospects statuses are directly 'build_rapport' by default temporarily.
           $node->field_action_status[$node->language][0]['value'] = 'build_rapport';
         }
@@ -210,10 +210,10 @@ function bullseye_leads_import($rows) {
         node_save($node);
 
         // Notify the user once the import is done.
-        drupal_set_message(t('Import successfully completed.'));
+        drupal_set_message(t('Import successfully completed.'), 'message');
       }
       else {
-        drupal_set_message(t('Account is already in our system.'));
+        drupal_set_message(t('Account is already in our system.'), 'warning');
       }
     }
     catch (Exception $e) {

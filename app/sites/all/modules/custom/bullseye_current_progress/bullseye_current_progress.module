@@ -106,6 +106,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-opportunity'] = array(
+    'page callback' => 'be_cp_refresh_classes_opportunity',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -423,8 +430,6 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_to_opportunity'] = 'green-check';
   }
-
-
 }
 
 /**
@@ -456,32 +461,121 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     ),
     '#value' => t('Yes'),
   );
+
+  // Attach js for ajax requests.
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_opportunities.js',
+  );
  
   return $form;
 }
 
 /**
- * Form submit for current progress prospects form.
+ * Implements theme_preprocess_hook().
  */
-function convert_to_opportunity($form, &$form_state) {
+function bullseye_current_progress_preprocess_bullseye_current_progress_opportunities_form(&$vars) {
 
-  // Setting the new statuses of the account.
-  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
-  $wrapper->field_action_status->set('receive_specifications');
-  $wrapper->field_workflow_status->set('plan_specification');
-  $wrapper->field_account_status->set('opportunity');
-  $wrapper->save();
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
 
-  // Clear the prospects and opportunities listing cache so that
-  // the new account changes will reflect to the 
-  // corresponding list.
-  cache_clear_all('prospect_accounts_listing', 'cache');
-  cache_clear_all('count_prospect_accounts_listing', 'cache');
-  cache_clear_all('opportunity_accounts_listing', 'cache');
-  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+  $vars['class_plan_specs'] = 'gray-check';
+  $vars['class_request_specs'] = '';
+  $vars['class_receive_plan'] = '';
+  $vars['class_rfp'] = 'gray-check';
+  $vars['class_generate_rfp'] = '';
+  $vars['class_recieve_quote'] = '';
+  $vars['class_plan_presentation'] = 'gray-check';
+  $vars['class_request_info'] = '';
+  $vars['class_receive_feedback'] = '';
+  $vars['class_convert_deals'] = 'no-check';
 
-  // Refresh the page.
-  drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
+  $vars['modal_access_rs'] = '';
+  $vars['modal_access_rp'] = '';
+  $vars['modal_access_gr'] = '';
+  $vars['modal_access_rq'] = '';
+  $vars['modal_access_ri'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cd'] = '';
+
+  if ($workflow_status == 'plan_specification') {
+    $vars['class_plan_specs'] = 'gray-check';
+    if ($action_status == 'receive_specifications') {
+      $vars['class_request_specs'] = 'current-step';
+      $vars['modal_access_rs'] = 'modal';
+    }
+    if ($action_status == 'receive_plan_details') {
+      $vars['class_request_specs'] = 'done-step';
+      $vars['class_receive_plan'] = 'current-step';
+      $vars['modal_access_rp'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'rfp') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'gray-check';
+    if ($action_status == 'generate_rfp') {
+      $vars['class_generate_rfp'] = 'current-step';
+      $vars['modal_access_gr'] = 'modal';
+    }
+    if ($action_status == 'receive_quote') {
+      $vars['class_generate_rfp'] = 'done-step';
+      $vars['class_recieve_quote'] = 'current-step';
+      $vars['modal_access_rq'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'plan_presentation') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'gray-check';
+    if ($action_status == 'request_information') {
+      $vars['class_request_info'] = 'current-step';
+      $vars['modal_access_ri'] = 'modal';
+    }
+    if ($action_status == 'receive_feedback_opportunity') {
+      $vars['class_request_info'] = 'done-step';
+      $vars['class_receive_feedback'] = 'current-step';
+      $vars['modal_access_rf'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'convert_to_deals_in_progress') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'no-check current-step';
+    $vars['modal_access_cd'] = 'modal';
+  }
+
+  if ($vars['account_status'] == 'deal_in_progress' ||
+      $vars['account_status'] == 'closed_deal') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'green-check';
+  }
+
 }
 
 /**

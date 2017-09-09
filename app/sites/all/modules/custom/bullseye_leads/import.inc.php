@@ -78,7 +78,8 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
           array_push($rows, $data);
         }
         else {
-          drupal_set_message('The CSV is invalid.');
+          $message = t('ERROR: The CSV is invalid. Please make sure that the csv is compliant to the systems requirements.');
+          drupal_set_message($message, 'error');
           header("Refresh:0; url=/accounts");
           break;
         }

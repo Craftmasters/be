@@ -2905,7 +2905,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 46,
+      'weight' => 27,
     ),
   );
 
@@ -2945,7 +2945,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 45,
+      'weight' => 26,
     ),
   );
 
@@ -2986,7 +2986,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 23,
+      'weight' => 22,
     ),
   );
 
@@ -3026,7 +3026,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 25,
+      'weight' => 24,
     ),
   );
 
@@ -3297,7 +3297,7 @@ function rfp_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 42,
+      'weight' => 44,
     ),
   );
 
@@ -3377,7 +3377,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 44,
+      'weight' => 42,
     ),
   );
 
@@ -3417,7 +3417,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 52,
+      'weight' => 53,
     ),
   );
 
@@ -4472,7 +4472,7 @@ function rfp_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 30,
+      'weight' => 28,
     ),
   );
 

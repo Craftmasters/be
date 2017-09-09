@@ -499,4 +499,115 @@ function be_cp_refresh_classes_prospects() {
   drupal_json_output($vars);
 }
 
+/**
+ * Make new set of classes for the current progress block.
+ */
+function be_cp_refresh_classes_opportunity() {
+  $nid = $_POST['nid'];
 
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_set_priority->set($priority);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  $vars['class_plan_specs'] = 'gray-check';
+  $vars['class_request_specs'] = '';
+  $vars['class_receive_plan'] = '';
+  $vars['class_rfp'] = 'gray-check';
+  $vars['class_generate_rfp'] = '';
+  $vars['class_recieve_quote'] = '';
+  $vars['class_plan_presentation'] = 'gray-check';
+  $vars['class_request_info'] = '';
+  $vars['class_receive_feedback'] = '';
+  $vars['class_convert_deals'] = 'no-check';
+
+  $vars['modal_access_rs'] = '';
+  $vars['modal_access_rp'] = '';
+  $vars['modal_access_gr'] = '';
+  $vars['modal_access_rq'] = '';
+  $vars['modal_access_ri'] = '';
+  $vars['modal_access_rf'] = '';
+  $vars['modal_access_cd'] = '';
+
+  if ($workflow_status == 'plan_specification') {
+    $vars['class_plan_specs'] = 'gray-check';
+    if ($action_status == 'receive_specifications') {
+      $vars['class_request_specs'] = 'current-step';
+      $vars['modal_access_rs'] = 'modal';
+    }
+    if ($action_status == 'receive_plan_details') {
+      $vars['class_request_specs'] = 'done-step';
+      $vars['class_receive_plan'] = 'current-step';
+      $vars['modal_access_rp'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'rfp') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'gray-check';
+    if ($action_status == 'generate_rfp') {
+      $vars['class_generate_rfp'] = 'current-step';
+      $vars['modal_access_gr'] = 'modal';
+    }
+    if ($action_status == 'receive_quote') {
+      $vars['class_generate_rfp'] = 'done-step';
+      $vars['class_recieve_quote'] = 'current-step';
+      $vars['modal_access_rq'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'plan_presentation') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'gray-check';
+    if ($action_status == 'request_information') {
+      $vars['class_request_info'] = 'current-step';
+      $vars['modal_access_ri'] = 'modal';
+    }
+    if ($action_status == 'receive_feedback_opportunity') {
+      $vars['class_request_info'] = 'done-step';
+      $vars['class_receive_feedback'] = 'current-step';
+      $vars['modal_access_rf'] = 'modal';
+    }
+  }
+
+  if ($workflow_status == 'convert_to_deals_in_progress') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'no-check current-step';
+    $vars['modal_access_cd'] = 'modal';
+  }
+
+  if ($account_status == 'deal_in_progress' ||
+      $account_status == 'closed_deal') {
+    $vars['class_plan_specs'] = 'green-check';
+    $vars['class_request_specs'] = 'done-step';
+    $vars['class_receive_plan'] = 'done-step';
+    $vars['class_rfp'] = 'green-check';
+    $vars['class_generate_rfp'] = 'done-step';
+    $vars['class_recieve_quote'] = 'done-step';
+    $vars['class_plan_presentation'] = 'green-check';
+    $vars['class_request_info'] = 'done-step';
+    $vars['class_receive_feedback'] = 'done-step';
+    $vars['class_convert_deals'] = 'green-check';
+  }
+
+  drupal_json_output($vars);
+}

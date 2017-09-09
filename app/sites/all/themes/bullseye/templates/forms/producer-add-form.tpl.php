@@ -2,6 +2,8 @@
 
 <div class="be-form-single"><?php print render($form['type']); ?></div>
 
+<div class="be-form-single"><?php print render($form['company']); ?></div>
+
 <div class="be-form-section">
 	<label class="select-benefit-label"><?php print t('Primary Contact'); ?></label>
 	<div class="row">

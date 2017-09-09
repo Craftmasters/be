@@ -154,6 +154,7 @@ features[field_group][] = group_telemedicine|node|rfp|form
 features[field_group][] = group_tl_percentage_contribution|node|rfp|form
 features[field_group][] = group_tl_year_to_quote|node|rfp|form
 features[field_group][] = group_vision|node|rfp|form
+features[field_group][] = group_vs_percentage_contribution|node|rfp|form
 features[field_group][] = group_vs_year_to_quote|node|rfp|form
 features[field_instance][] = node-rfp-field_benefits
 features[field_instance][] = node-rfp-field_broker_of_record

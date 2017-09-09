@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Producers (6)'); ?></span>
+        <span class="account-count"><?php print t('All Producers (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/producer/add" rel="lightframe"><?php print t('Add New Producer'); ?></a>
       </div>
       <div class="col-md-6">
@@ -36,10 +36,10 @@
             <td><span class="orange-font"><?php print $producer->field_producer_name_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
-            <td><span class="gray-font">0</span></td>
-            <td><span class="gray-font">0</span></td>
-            <td><span class="gray-font">0</span></td>
-            <td><span class="gray-font">0%</span></td>
+            <td><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
+            <td><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
+            <td><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
+            <td><span class="gray-font"><?php print $be->winRatio($producer); ?>%</span></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
