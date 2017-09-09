@@ -43,7 +43,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_attachments|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -81,7 +81,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_benefits|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -110,7 +110,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_den_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -144,7 +144,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_dental|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -173,7 +173,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_dn_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -209,7 +209,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_info|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -238,7 +238,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_lf_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -267,7 +267,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_lf_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -301,7 +301,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_life|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -335,7 +335,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_limited_medical|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -364,7 +364,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_lm_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -393,7 +393,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_lm_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -427,7 +427,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_major_medical|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -456,7 +456,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_mc_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -485,7 +485,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_mec_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -519,7 +519,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_mec|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -548,7 +548,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_mm_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -577,7 +577,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_mm_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -614,7 +614,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_plan_specs|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -643,7 +643,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_ret_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -677,7 +677,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_retirement|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -706,7 +706,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_rt_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -735,7 +735,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_sb_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -764,7 +764,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_sb_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -793,7 +793,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_sd_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -827,7 +827,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_short_term_disability|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -861,7 +861,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_special_benefits|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -890,7 +890,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_std_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -924,7 +924,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_telemedicine|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -953,7 +953,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_tl_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -982,7 +982,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_tl_year_to_quote|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -1016,7 +1016,7 @@ function rfp_field_group_info() {
       'formatter' => 'collapsed',
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_vision|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -1045,7 +1045,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_vs_percentage_contribution|node|rfp|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -1074,7 +1074,7 @@ function rfp_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_vs_year_to_quote|node|rfp|form'] = $field_group;
 
   // Translatables
   // Included for use with string extractors like potx.
