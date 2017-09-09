@@ -34,6 +34,7 @@ function roles_and_permission_user_default_permissions() {
     'name' => 'View File browser',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'bullseye_producer_file',
   );
