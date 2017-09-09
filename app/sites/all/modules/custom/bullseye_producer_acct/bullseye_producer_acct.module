@@ -204,7 +204,8 @@ function bullseye_producer_acct_email_element_validate($element, &$form_state, $
 function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
   // do business logic here
   // then redirect to confirmation page
-
+  krumo($form_state['values']);
+  die();
 }
 
 /**
