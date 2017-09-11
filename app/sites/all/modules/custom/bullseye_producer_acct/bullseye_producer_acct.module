@@ -247,3 +247,18 @@ function bullseye_producer_acct_company_form($form, &$form_state) {
 
   return $form;
 }
+
+/**
+ * Implements hook_FORM_submit().
+ */
+function bullseye_producer_acct_company_form_submit($form, &$form_state) {
+  global $user;
+
+  $be = new Bullseye($user);
+  $data = $form_state['values'];
+
+  // Register the company producer account.
+  $be->addProducer();
+  krumo($form_state['values']);
+  die();
+}
