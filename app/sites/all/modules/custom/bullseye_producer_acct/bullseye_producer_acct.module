@@ -260,9 +260,6 @@ function bullseye_producer_acct_company_form_submit($form, &$form_state) {
   $be = new Bullseye($user);
   $data = $form_state['values'];
 
-  krumo($data);
-  die();
-
   // Register the company producer account.
   $be->addProducer($data);
 }
