@@ -96,7 +96,17 @@ class Bullseye {
   }
 
   /**
-   * Get producers account.
+   * Check if the producer account already exist.
+   *
+   * @param string $email
+   *   The email address of the account.
+   */
+  function producerExist($email) {
+    return user_load_by_mail($mail);
+  }
+
+  /**
+   * Get all the producers account.
    */
   function getProducers() {
     if ($cache = cache_get('producers_listing')) {
@@ -919,5 +929,75 @@ class Bullseye {
     $proposals = array();
 
     return $proposals;
+  }
+
+  /**
+   * Add producer.
+   *
+   * @param array $data
+   */
+  function addProducer($data) {
+    $type = arg(2);
+    // Run if the user doesn't exist.
+    if (!producerExist($data['producer_email'])) {
+      $lang = LANGUAGE_NONE;
+
+      // Producer.
+      $fname = (!empty($data['producer_fname'])) ? $data['producer_fname'] : '';
+      $lname = (!empty($data['producer_lname'])) ? $data['producer_lname'] : '';
+
+      switch ($type) {
+        case 'company':
+          $new_user = array(
+            'name' => strtolower($fname) . '.' . strtolower($lname),
+            'mail' => $data['producer_email'],
+            'pass' => 'ch@ng3m3:' . $data['producer_email'],
+            'status' => 0,
+            'access' => REQUEST_TIME,
+            'roles' => array(
+              DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+              4 => 'producer',
+            ),
+          );
+
+          // Save the user.
+          $user = user_save(NULL, $new_user);
+
+          // Create the profile data.
+          $profile = profile2_create(array('type' => 'producer', 'uid' => $user->uid));
+
+          // Producer name.
+          $profile->field_producer_name = $data['producer_company'];
+
+          // Primary Contact.
+          $profile->field_first_name[$lang][0]['value'] = ucfirst($data['producer_fname']);
+          $profile->field_last_name[$lang][0]['value'] = ucfirst($data['producer_lname']);
+          $profile->field_primary_contact[$lang][0]['value'] = ucfirst($data['producer_fname']) . ' ' . ucfirst($data['producer_lname']);
+
+          // Producer type.
+          $profile->field_producer_type[$lang][0]['value'] = 'company';
+
+          // Phone number.
+          $profile->field_phone_number[$lang][0]['value'] = $data['producer_phone'];
+
+          // Producer website.
+          $profile->field_producer_website[$lang][0]['value'] = $data['producer_website'];
+
+          // Save the profile2 to the user account.
+          profile2_save($profile);
+
+          $message = t('Your account was created successfully and is pending for admin approval.');
+          drupal_set_message($message, 'message');
+          break;
+
+        case 'individual':
+
+          break;
+      }
+    }
+    else {
+      $message = t('The email you are trying to use is already taken.');
+      drupal_set_message($message, 'error');
+    }
   }
 }
