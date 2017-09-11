@@ -983,6 +983,20 @@ class Bullseye {
           // Producer website.
           $profile->field_producer_website[$lang][0]['value'] = $data['producer_website'];
 
+          // Files.
+          if ($data['file_health_life'] != 0) {
+            $hl_file = file_load($data['file_health_life']);
+            $hl_file->display = 1;
+            $hl_file = file_copy($hl_file, 'public://');
+            $profile->field_health_and_life[$lang][0] = (array) $hl_file;
+          }
+          if ($data['file_error_omission_insurance'] != 0) {
+            $feoi_file = file_load($data['file_error_omission_insurance']);
+            $feoi_file->display = 1;
+            $feoi_file = file_copy($feoi_file, 'public://');
+            $profile->field_health_and_life[$lang][0] = (array) $feoi_file;
+          }
+
           // Save the profile2 to the user account.
           profile2_save($profile);
 
@@ -1022,6 +1036,20 @@ class Bullseye {
 
           // Phone number.
           $profile->field_phone_number[$lang][0]['value'] = $data['producer_phone'];
+
+          // Files.
+          if ($data['file_health_life'] != 0) {
+            $hl_file = file_load($data['file_health_life']);
+            $hl_file->display = 1;
+            $hl_file = file_copy($hl_file, 'public://');
+            $profile->field_health_and_life[$lang][0] = (array) $hl_file;
+          }
+          if ($data['file_error_omission_insurance'] != 0) {
+            $feoi_file = file_load($data['file_error_omission_insurance']);
+            $feoi_file->display = 1;
+            $feoi_file = file_copy($feoi_file, 'public://');
+            $profile->field_health_and_life[$lang][0] = (array) $feoi_file;
+          }
 
           // Save the profile2 to the user account.
           profile2_save($profile);
