@@ -967,7 +967,7 @@ class Bullseye {
           $profile = profile2_create(array('type' => 'producer', 'uid' => $user->uid));
 
           // Producer name.
-          $profile->field_producer_name = $data['producer_company'];
+          $profile->field_producer_name[$lang][0]['value'] = $data['producer_company'];
 
           // Primary Contact.
           $profile->field_first_name[$lang][0]['value'] = ucfirst($fname);
