@@ -992,9 +992,9 @@ class Bullseye {
 
         case 'individual':
           $new_user = array(
-            'name' => strtolower($fname) . '.' . strtolower($lname),
+            'name' => $data['producer_email'],
             'mail' => $data['producer_email'],
-            'pass' => 'ch@ng3m3:' . $data['producer_email'],
+            'pass' => 'ch@ng3m3',
             'status' => 0,
             'access' => REQUEST_TIME,
             'roles' => array(
