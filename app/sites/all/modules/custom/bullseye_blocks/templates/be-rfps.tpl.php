@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="be-table-content">
-    <table class="be-tables">
+    <table class="be-tables sortable">
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
