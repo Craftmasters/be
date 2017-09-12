@@ -535,7 +535,7 @@ function be_cp_refresh_classes_opportunity() {
 
   if ($workflow_status == 'plan_specification') {
     $vars['class_plan_specs'] = 'gray-check';
-    if ($action_status == 'receive_specifications') {
+    if ($action_status == 'request_specifications') {
       $vars['class_request_specs'] = 'current-step';
       $vars['modal_access_rs'] = 'modal';
     }
@@ -611,3 +611,51 @@ function be_cp_refresh_classes_opportunity() {
 
   drupal_json_output($vars);
 }
+
+/**
+ * Set action status to receive plan details.
+ */
+function be_cp_receive_details() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'request_specifications') {
+    $wrapper->field_action_status->set('receive_plan_details');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set action status to generate rfp.
+ * and workflow status to RFP.
+ */
+function be_cp_next_generate_rfp() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'receive_plan_details') {
+    $wrapper->field_action_status->set('generate_rfp');
+    $wrapper->field_workflow_status->set('rfp');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+

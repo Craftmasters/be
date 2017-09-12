@@ -28,7 +28,7 @@
               $('#div-request-specs').removeClass('current-step done-step');
               $('#div-receive-plan').removeClass('current-step done-step');
               $('#div-rfp').removeClass('gray-check no-check green-check');
-              $('#div-generate-frp').removeClass('current-step done-step');
+              $('#div-generate-rfp').removeClass('current-step done-step');
               $('#div-receive-quote').removeClass('current-step done-step');
               $('#div-plan-pres').removeClass('gray-check no-check green-check');
               $('#div-request-info').removeClass('current-step done-step');
@@ -39,7 +39,7 @@
               $('#div-request-specs').addClass(result['class_request_specs']);
               $('#div-receive-plan').addClass(result['class_receive_plan']);
               $('#div-rfp').addClass(result['class_rfp']);
-              $('#div-generate-frp').addClass(result['class_generate_rfp']);
+              $('#div-generate-rfp').addClass(result['class_generate_rfp']);
               $('#div-receive-quote').addClass(result['class_recieve_quote']);
               $('#div-plan-pres').addClass(result['class_plan_presentation']);
               $('#div-request-info').addClass(result['class_request_info']);
@@ -48,7 +48,7 @@
 
               $('#div-request-specs a.cp-link').attr('data-toggle', result['modal_access_rs']);
               $('#div-receive-plan a.cp-link').attr('data-toggle', result['modal_access_rp']);
-              $('#div-generate-frp a.cp-link').attr('data-toggle', result['modal_access_gr']);
+              $('#div-generate-rfp a.cp-link').attr('data-toggle', result['modal_access_gr']);
               $('#div-receive-quote a.cp-link').attr('data-toggle', result['modal_access_rq']);
               $('#div-request-info a.cp-link').attr('data-toggle', result['modal_access_ri']);
               $('#div-receive-feedback a.cp-link').attr('data-toggle', result['modal_access_rf']);
@@ -60,6 +60,34 @@
 
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
+        });
+
+        $('#btn-receive-details').click(function() {
+          $.ajax({
+            url: '/be-cp/receive-details',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-next-generate-rfp').click(function() {
+          $.ajax({
+            url: '/be-cp/next-generate-rfp',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
         });
 
       });
