@@ -1154,7 +1154,9 @@ class Bullseye {
     $node = node_submit($node);
     node_save($node);
 
+    // Notify the user that the registration is successfull.
     drupal_set_message(t('Plan specification successfully created.'), 'message');
+
     // Redirect the user to homepage.
     drupal_goto('/');
   }
