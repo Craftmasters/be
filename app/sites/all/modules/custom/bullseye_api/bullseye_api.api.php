@@ -1155,5 +1155,7 @@ class Bullseye {
     node_save($node);
 
     drupal_set_message(t('Plan specification successfully created.'), 'message');
+    // Redirect the user to homepage.
+    drupal_goto('/');
   }
 }
