@@ -1064,4 +1064,96 @@ class Bullseye {
       drupal_set_message($message, 'error');
     }
   }
+
+  /**
+   * Create new plan specs.
+   *
+   * @param array $data
+   *   The data from plan specs form.
+   */
+  function createPlanSpecs($data) {
+    global $user;
+
+    // Map the data to plan specs storage entity.
+    $node = new stdClass();
+
+    $node->title = $data['contact_company'];
+
+    $node->type = "plan-specs";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+
+    // Cons vars.
+    $lang = $node->language;
+    $val = 'value';
+
+    /***************
+     * Company Info
+     ***************/
+    $node->field_primary_contact[$lang][0][$val] = $data['contact'];
+    $node->field_title[$lang][0][$val] = $data['contact_title'];
+    $node->field_contact_number[$lang][0][$val] = $data['contact_number'];
+    $node->field_industry[$lang][0][$val] = $data['contact_industry'];
+    $node->field_complete_address[$lang][0][$val] = $data['contact_address'];
+
+    /***************
+     * Plan Specs
+     ***************/
+    $node->field_fringe_rate[$lang][0][$val] = $data['plan_fringe_rates'];
+    $node->field_proposed_effective_date[$lang][0][$val] = $data['plan_proposed_date'];
+    $node->field_other_work_locations[$lang][0][$val] = $data['plan_other_location'];
+    $node->field_number_of_employees[$lang][0][$val] = $data['plan_num_employees'];
+    $node->field_number_of_dependents[$lang][0][$val] = $data['plan_num_dependents'];
+    $node->field_nature_of_business_sic[$lang][0][$val] = $data['plan_nature_business'];
+    $node->field_years_in_business[$lang][0][$val] = $data['plan_years_business'];
+    $node->field_tax_id[$lang][0][$val] = $data['plan_tax_id'];
+    $node->field_renewal_date[$lang][0][$val] = $data['plan_renewal_date'];
+
+    /***************
+     * Benefits Interested In
+     ***************/
+    if ($data['mm'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'major_medical';
+    }
+    if ($data['lm'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'limited_medical';
+    }
+    if ($data['tm'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'teledoc';
+    }
+    if ($data['mec'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'mec';
+    }
+    if ($data['d'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'dental';
+    }
+    if ($data['v'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'vision';
+    }
+    if ($data['ladd'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'life';
+    }
+    if ($data['std'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'short_term_disability';
+    }
+    if ($data['0'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'special_benefits';
+    }
+    if ($data['r'] != 0) {
+      $node->field_benefits[$lang][][$val] = 'retirement';
+    }
+
+    // Other benefit
+    $node->field_others[$lang][0]['value'] = $data['benefits_in_others'];
+
+    // Save the carrier in the storage.
+    $node = node_submit($node);
+    node_save($node);
+
+    drupal_set_message(t('Plan specification successfully created.'), 'message');
+  }
 }
