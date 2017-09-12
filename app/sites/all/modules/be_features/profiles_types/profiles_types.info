@@ -8,6 +8,7 @@ dependencies[] = field_group
 dependencies[] = profile2
 dependencies[] = rfp
 dependencies[] = text
+features[ctools][] = field_group:field_group:1
 features[features_api][] = api:2
 features[field_base][] = field_errors_omission_insurance
 features[field_base][] = field_first_name
