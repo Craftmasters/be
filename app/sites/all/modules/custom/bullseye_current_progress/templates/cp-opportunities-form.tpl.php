@@ -87,7 +87,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rf; ?>">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rf; ?>" data-target="#receive-feedback">
 				<span><?php print t('Receive Feedback'); ?></span>
 			</a>
 		</div>
@@ -98,9 +98,18 @@
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_cd; ?>">
-				<span><?php print t('Convert to Deals in Progress'); ?></span>
-			</a>
+			<?php if ($account_status != 'prospect' && $account_status != 'lead' && $account_status != 'opportunity') : ?>
+				<a href="#" class="cp-link big-step">
+					<span><?php print t('Converted to Deal in Progress!'); ?></span>
+				</a>
+				<a href="/company/<?php print arg(1); ?>?from=deal-in-progress" class="cp-link orange">
+					<span><?php print t('Go to Deal in Progress Page'); ?></span>
+				</a>
+			<?php else: ?>
+				<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_cd; ?>" data-target="#convert-to-deals">
+					<span><?php print t('Convert to Deals in Progress'); ?></span>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 
@@ -502,7 +511,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-plan-proposal" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button id="btn-send-proposal-email-send" type="button" class="green-btn" data-toggle="modal" data-target="#receive-feedback" data-dismiss="modal"><?php print t('Send'); ?></button>
+		        	<?php print render($form['send_proposal_email']); ?>
 		        </div>
 		      </div>
 		    </div>
@@ -523,7 +532,7 @@
 		        		</div>
 		        		<div class="modal-progress-item">
 		        			<div class="pr-line"><span></span></div>
-		        			<h3><?php print t('Send Plan Proposal'); ?></h3>
+		        			<h3><?php print t('Receive feedback'); ?></h3>
 		        		</div>
 		        		<div class="modal-progress-item">
 		        			<div class="pr-line"><span></span></div>
@@ -585,7 +594,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
-		        	<?php print render($form['submit']); ?>
+		        	<?php print render($form['convert_to_deal']); ?>
 		        </div>
 		      </div>
 		    </div>
@@ -594,3 +603,5 @@
 	</div>
 
 </div>
+
+<?php print drupal_render_children($form); ?>

@@ -506,7 +506,6 @@ function be_cp_refresh_classes_opportunity() {
   $nid = $_POST['nid'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_set_priority->set($priority);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
@@ -681,4 +680,27 @@ function be_cp_send_plan_proposal() {
 
   drupal_json_output($wrapper);
 }
+
+/**
+ * Set workflow status to convert to deal in progress.
+ */
+function be_cp_accept_proposal_yes() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'receive_feedback_opportunity') {
+    $wrapper->field_workflow_status->set('convert_to_deals_in_progress');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
 

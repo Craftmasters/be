@@ -104,6 +104,20 @@
           });
         });
 
+        $('#btn-accept-proposal-yes').click(function() {
+          $.ajax({
+            url: '/be-cp/accept-proposal-yes',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
       });
    
     }
