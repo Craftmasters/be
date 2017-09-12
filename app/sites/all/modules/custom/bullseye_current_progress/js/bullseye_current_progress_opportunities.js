@@ -31,7 +31,7 @@
               $('#div-generate-rfp').removeClass('current-step done-step');
               $('#div-receive-quote').removeClass('current-step done-step');
               $('#div-plan-pres').removeClass('gray-check no-check green-check');
-              $('#div-request-info').removeClass('current-step done-step');
+              $('#div-send-proposal').removeClass('current-step done-step');
               $('#div-receive-feedback').removeClass('current-step done-step');
               $('#div-convert-to-deals').removeClass('gray-check no-check green-check');
 
@@ -42,7 +42,7 @@
               $('#div-generate-rfp').addClass(result['class_generate_rfp']);
               $('#div-receive-quote').addClass(result['class_recieve_quote']);
               $('#div-plan-pres').addClass(result['class_plan_presentation']);
-              $('#div-request-info').addClass(result['class_request_info']);
+              $('#div-send-proposal').addClass(result['class_send_proposal']);
               $('#div-receive-feedback').addClass(result['class_receive_feedback']);
               $('#div-convert-to-deals').addClass(result['class_convert_deals']);
 
@@ -50,7 +50,7 @@
               $('#div-receive-plan a.cp-link').attr('data-toggle', result['modal_access_rp']);
               $('#div-generate-rfp a.cp-link').attr('data-toggle', result['modal_access_gr']);
               $('#div-receive-quote a.cp-link').attr('data-toggle', result['modal_access_rq']);
-              $('#div-request-info a.cp-link').attr('data-toggle', result['modal_access_ri']);
+              $('#div-send-proposal a.cp-link').attr('data-toggle', result['modal_access_sp']);
               $('#div-receive-feedback a.cp-link').attr('data-toggle', result['modal_access_rf']);
               $('#div-convert-to-deals a.cp-link').attr('data-toggle', result['modal_access_cd']);
 
@@ -79,6 +79,20 @@
         $('#btn-next-generate-rfp').click(function() {
           $.ajax({
             url: '/be-cp/next-generate-rfp',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-send-plan-proposal').click(function() {
+          $.ajax({
+            url: '/be-cp/send-plan-proposal',
             method: 'POST',
             data: {
               nid: nid,

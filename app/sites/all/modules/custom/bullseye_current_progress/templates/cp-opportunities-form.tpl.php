@@ -56,7 +56,7 @@
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rq; ?>">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rq; ?>" data-target="#receive-quote">
 				<span><?php print t('Receive quote'); ?></span>
 			</a>
 		</div>
@@ -71,13 +71,13 @@
 		</div>
 	</div>
 
-	<div id="div-request-info" class="cp-step row <?php print $class_request_info; ?>">
+	<div id="div-send-proposal" class="cp-step row <?php print $class_send_proposal; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_ri; ?>">
-				<span><?php print t('Request information'); ?></span>
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_sp; ?>" data-target="#send-plan-proposal">
+				<span><?php print t('Send Plan Proposal'); ?></span>
 			</a>
 		</div>
 	</div>
@@ -335,7 +335,7 @@
 									    <?php if ($key[0] != '#') : ?>
 									      <div class="col-xs-6">
 									        <?php print render($form['bc_second']['benefits'][$key]); ?>
-									        <?php if ($key == 'special_benefits') : ?>
+									        <?php if ($key == 'special_benefits_1') : ?>
 									        	<?php print render($form['special_benefits_text_1']); ?>
 									        <?php endif; ?>
 									      </div>
@@ -351,6 +351,241 @@
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-plan-details" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button id="btn-save-exit-create-rfp" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button type="button" class="green-btn" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="receive-quote" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Receive Quote'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner">
+		      			<h3><?php print t('Quotation received from carrier?'); ?></h3>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#generate-rfp" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-save-exit-recieve-quote" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-send-plan-proposal" type="button" class="green-btn" data-toggle="modal" data-target="#send-plan-proposal" data-dismiss="modal"><?php print t('Next: Send Plan Proposal'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="send-plan-proposal" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Send Plan Proposal'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner be-forms send-proposal">
+		      			<div class="form-title"><h2><?php print t('Send New Proposal'); ?></h2></div>
+		      			<div class="be-form-single">
+		      				<label><?php print t('Select Account'); ?></label>
+				          <input type="text" value="<?php print $account_name; ?>" class="form-control form-text accnt-name-placeholder" readonly>
+		      			</div>
+
+								<div class="be-form-section">
+									<div class="row">
+										<div class="col-xs-6"><?php print render($form['due_date']); ?></div>
+										<div class="col-xs-6"><?php print render($form['priority']); ?></div>
+									</div>
+								</div>
+
+								<div class="be-form-section select-benefits-container">
+									<label class="select-benefit-label"><?php print t('Select Benefits'); ?></label>
+									<div class="row">
+									  <?php foreach ($form['bc_third']['benefits'] as $key => $value) : ?>
+									    <?php if ($key[0] != '#') : ?>
+									      <div class="col-xs-6">
+									        <?php print render($form['bc_third']['benefits'][$key]); ?>
+									        <?php if ($key == 'special_benefits_2') : ?>
+									        	<?php print render($form['special_benefits_text_2']); ?>
+									        <?php endif; ?>
+									      </div>
+									    <?php endif; ?>
+									  <?php endforeach; ?>
+									</div>
+								</div>
+
+								<div class="be-form-single"><?php print render($form['attach_proposal']); ?></div>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-quote" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-save-exit-send-proposal" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-send-proposal-email" type="button" data-toggle="modal" data-target="#send-proposal-email" class="green-btn" data-dismiss="modal"><?php print t('Send Proposal'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="send-proposal-email" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Send Plan Proposal'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner be-forms send-proposal">
+		      			<div class="form-title"><h2><?php print t('Send New Proposal'); ?></h2></div>
+		      			<?php print render($form['subject']); ?>
+		      			<?php print render($form['to']); ?>
+		      			<?php print render($form['show_attachment']); ?>
+		      			<?php print render($form['message']); ?>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-plan-proposal" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-send-proposal-email-send" type="button" class="green-btn" data-toggle="modal" data-target="#receive-feedback" data-dismiss="modal"><?php print t('Send'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="receive-feedback" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Send Plan Proposal'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner">
+		      			<h3><?php print t('Did client accept proposal?'); ?></h3>
+		      			<div class="account-estimate">
+		      				<label><?php print t('Account Estimate Value'); ?></label>
+		      				<input type="text" name="account-estimate">
+		      			</div>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-plan-proposal" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-save-exit-receive-feedback" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-accept-proposal-yes" type="button" class="green-btn" data-toggle="modal" data-target="#convert-to-deals" data-dismiss="modal"><?php print t('Yes'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="convert-to-deals" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Convert to deal in progress'); ?></h3>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner">
+		      			<h3><?php print t('Convert to deal in progress?'); ?></h3>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
+		        	<?php print render($form['submit']); ?>
 		        </div>
 		      </div>
 		    </div>
