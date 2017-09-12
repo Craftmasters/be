@@ -430,7 +430,7 @@ function bullseye_rfp_form($form, &$form_state) {
 
   $form['carrier_name'] = array(
     '#type' => 'textfield',
-    '#title' => t('Carier Name'),
+    '#title' => t('Carrier Name'),
   );
 
   $form['primary_contact_name'] = array(
