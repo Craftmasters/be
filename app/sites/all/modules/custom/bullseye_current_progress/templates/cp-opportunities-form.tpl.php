@@ -107,7 +107,7 @@
 				</a>
 			<?php else: ?>
 				<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_cd; ?>" data-target="#convert-to-deals">
-					<span><?php print t('Convert to Deals in Progress'); ?></span>
+					<span><?php print t('Convert to Deal in Progress'); ?></span>
 				</a>
 			<?php endif; ?>
 		</div>

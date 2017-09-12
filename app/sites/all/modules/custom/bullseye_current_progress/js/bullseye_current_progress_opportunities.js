@@ -58,6 +58,31 @@
           });
         }
 
+        function refreshHeaderClasses(nid) {
+          $.ajax({
+            url: '/be-cp/header-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+              status: 'opportunity',
+            },
+            success: function(result){
+              console.log(result);
+              $('#hp_plan_specification').removeClass('be-blue be-gray be-green');
+              $('#hp_rfp').removeClass('be-blue be-gray be-green');
+              $('#hp_plan_specification').addClass(result['hp_plan_specification']);
+              $('#hp_rfp').addClass(result['hp_rfp']);
+
+              $('#hp_plan_presentation').removeClass('be-blue be-gray be-green');
+              $('#hp_convert_to_deal').removeClass('be-blue be-gray be-green');
+              $('#hp_plan_presentation').addClass(result['hp_plan_presentation']);
+              $('#hp_convert_to_deal').addClass(result['hp_convert_to_deal']);
+            },
+          });
+        }
+
+        refreshHeaderClasses(nid);
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
         });
@@ -86,6 +111,7 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });
@@ -100,6 +126,7 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });
@@ -114,6 +141,7 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });

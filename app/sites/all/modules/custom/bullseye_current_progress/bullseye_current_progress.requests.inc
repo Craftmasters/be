@@ -703,4 +703,106 @@ function be_cp_accept_proposal_yes() {
   drupal_json_output($wrapper);
 }
 
+/**
+ * Refresh classes of header progress block.
+ */
+function be_cp_header_classes() {
+  $nid = $_POST['nid'];
+  $status = $_POST['status'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  if ($status == 'lead') {
+    $vars['hp_verification'] = 'be-gray';
+    $vars['hp_convert_to_prospect'] = 'be-gray';
+    if ($account_status == 'lead') {
+      if ($workflow_status == 'verification') {
+        $vars['hp_verification'] = 'be-blue';
+        $vars['hp_convert_to_prospect'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_prospect') {
+        $vars['hp_verification'] = 'be-green';
+        $vars['hp_convert_to_prospect'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'prospect' || $account_status == 'opportunity' ||
+        $account_status == 'deal_in_progress' || $account_status == 'closed_deal') {
+      $vars['hp_verification'] = 'be-green';
+      $vars['hp_convert_to_prospect'] = 'be-green';
+    }
+    $vars['status'] = 'lead';
+  }
+
+  if ($status == 'prospect') {
+    $vars['hp_engagement'] = 'be-gray';
+    $vars['hp_convert_to_opportunity'] = 'be-gray';
+    if ($account_status == 'prospect') {
+      if ($workflow_status == 'engagement') {
+        $vars['hp_engagement'] = 'be-blue';
+        $vars['hp_convert_to_opportunity'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_opportunity') {
+        $vars['hp_engagement'] = 'be-green';
+        $vars['hp_convert_to_opportunity'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'opportunity' || $account_status == 'deal_in_progress' ||
+        $account_status == 'closed_deal') {
+      $vars['hp_engagement'] = 'be-green';
+      $vars['hp_convert_to_opportunity'] = 'be-green';
+    }
+    $vars['status'] = 'prospect';
+  }
+
+  if ($status == 'opportunity') {
+    $vars['hp_plan_specification'] = 'be-gray';
+    $vars['hp_rfp'] = 'be-gray';
+    $vars['hp_plan_presentation'] = 'be-gray';
+    $vars['hp_convert_to_deal'] = 'be-gray';
+    if ($account_status == 'opportunity') {
+      if ($workflow_status == 'plan_specification') {
+        $vars['hp_plan_specification'] = 'be-blue';
+        $vars['hp_rfp'] = 'be-gray';
+        $vars['hp_plan_presentation'] = 'be-gray';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'rfp') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-blue';
+        $vars['hp_plan_presentation'] = 'be-gray';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'plan_presentation') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-green';
+        $vars['hp_plan_presentation'] = 'be-blue';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_deals_in_progress') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-green';
+        $vars['hp_plan_presentation'] = 'be-green';
+        $vars['hp_convert_to_deal'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'deal_in_progress' || $account_status == 'closed_deal') {
+      $vars['hp_plan_specification'] = 'be-green';
+      $vars['hp_rfp'] = 'be-green';
+      $vars['hp_plan_presentation'] = 'be-green';
+      $vars['hp_convert_to_deal'] = 'be-green';
+    }
+    $vars['status'] = 'deal_in_progress';
+  }
+
+  drupal_json_output($vars);
+
+}
+
+
 
