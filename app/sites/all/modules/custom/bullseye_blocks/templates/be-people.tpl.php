@@ -3,38 +3,18 @@
   <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
   <div class="be-block-main">
 
-  	<div class="be-user-row">
-  		<div class="be-user-img">
-  			<img src="/sites/all/themes/bullseye/images/default-user.png">
-  		</div>
-  		<div class="be-user-name orange-font">Chris Martin</div>
-  		<div class="be-user-position">Chief Executive Officer</div>
-  		<div class="be-user-contact">
-  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">chris@abccompany.com</a>
-  		</div>
-  	</div>
-
-  	<div class="be-user-row">
-  		<div class="be-user-img">
-  			<img src="/sites/all/themes/bullseye/images/default-user.png">
-  		</div>
-  		<div class="be-user-name orange-font">Jack James</div>
-  		<div class="be-user-position">Chief Financial Officer</div>
-  		<div class="be-user-contact">
-  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">jack@abccompany.com</a>
-  		</div>
-  	</div>
-
-  	<div class="be-user-row">
-  		<div class="be-user-img">
-  			<img src="/sites/all/themes/bullseye/images/default-user.png">
-  		</div>
-  		<div class="be-user-name orange-font">Jon Lee</div>
-  		<div class="be-user-position">HR Director</div>
-  		<div class="be-user-contact">
-  			<a href="tel:8808273979" class="phone">(880) 827-3959</a> | <a href="mailto:chris@abccompany.com" class="be-user-email orange-font">jon@abccompany.com</a>
-  		</div>
-  	</div>
+    <?php foreach ($people as $key => $value) : ?>
+      <div class="be-user-row">
+        <div class="be-user-img">
+          <img src="/sites/all/themes/bullseye/images/default-user.png">
+        </div>
+        <div class="be-user-name orange-font"><?php print $value->field_contact_name_value; ?></div>
+        <div class="be-user-position"><?php print $value->field_position_value; ?></div>
+        <div class="be-user-contact">
+          <a href="<?php print $value->field_phone_number_value; ?>" class="phone"><?php print $value->field_phone_number_value; ?></a> | <a href="mailto:<?php print $value->field_email_value; ?>" class="be-user-email orange-font"><?php print $value->field_email_value; ?></a>
+        </div>
+      </div>
+    <?php endforeach; ?>
 
   </div>
 </div>

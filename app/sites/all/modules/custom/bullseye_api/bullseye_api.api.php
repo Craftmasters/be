@@ -1160,4 +1160,52 @@ class Bullseye {
     // Redirect the user to homepage.
     drupal_goto('/');
   }
+
+  /**
+   * Get node id from path alias.
+   */
+  function getNidFromPath($alias) {
+
+    if ($cache = cache_get('nid_from_' . $alias)) {
+      $nid = $cache->data;
+    }
+    else {
+      $alias_path  = 'content/' . $alias;
+      $path = drupal_lookup_path('source', $alias_path);
+      $node = menu_get_object('node', 1, $path);
+      $nid = $node->nid;
+      cache_set('nid_from_' . $alias, $nid, 'cache');
+    }
+
+    return $nid;
+  }
+
+  /**
+   * Get all contacts from an account.
+   */
+  function getAccountPeople($nid) {
+
+    if ($cache = cache_get('contacts_' . $nid)) {
+      $contacts = $cache->data;
+    }
+    else {
+      $query = db_select('field_data_field_contacts', 'con');
+      $query->leftJoin('field_data_field_contact_name', 'name', 'con.field_contacts_value = name.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_phone_number', 'phone', 'con.field_contacts_value = phone.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
+      $contacts = $query
+        ->fields('name', array('field_contact_name_value'))
+        ->fields('pos', array('field_position_value'))
+        ->fields('phone', array('field_phone_number_value'))
+        ->fields('email', array('field_email_value'))
+        ->condition('con.entity_id', $nid, '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('contacts_' . $nid, $contacts, 'cache');
+    }
+
+    return $contacts;
+  }
 }
