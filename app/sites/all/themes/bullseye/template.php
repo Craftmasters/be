@@ -353,3 +353,10 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $vars['bt']['title_retirement'] = 'Retirement';
   $vars['bt']['title_special_benefits'] = 'Special Benefits';
 }
+
+/**
+ * Implements template_preprocess_THEME().
+ */
+function bullseye_preprocess_be_rfps(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
+}
