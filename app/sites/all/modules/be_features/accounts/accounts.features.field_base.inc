@@ -61,7 +61,7 @@ function accounts_field_default_field_bases() {
         'send_email' => 'Send email campaign',
         'build_rapport' => 'Build Rapport',
         'receive_feedback' => 'Receive Feedback (Prospects Phase)',
-        'receive_specifications' => 'Receive Specifications',
+        'request_specifications' => 'Request Specifications',
         'receive_plan_details' => 'Receive Plan Details',
         'generate_rfp' => 'Generate RFP',
         'receive_quote' => 'Receive Quote',
