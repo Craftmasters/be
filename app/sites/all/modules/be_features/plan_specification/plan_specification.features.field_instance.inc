@@ -367,6 +367,46 @@ function plan_specification_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-plan_specs-field_others'.
+  $field_instances['node-plan_specs-field_others'] = array(
+    'bundle' => 'plan_specs',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_others',
+    'label' => 'Others',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-plan_specs-field_primary_contact'.
   $field_instances['node-plan_specs-field_primary_contact'] = array(
     'bundle' => 'plan_specs',
@@ -648,6 +688,7 @@ function plan_specification_field_default_field_instances() {
   t('Number of Dependents');
   t('Number of Employees');
   t('Other Work Locations and Zip Codes');
+  t('Others');
   t('Primary Contact');
   t('Proposed Effective Date');
   t('Renewal Date');
