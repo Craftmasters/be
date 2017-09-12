@@ -1160,4 +1160,11 @@ class Bullseye {
     // Redirect the user to homepage.
     drupal_goto('/');
   }
+
+  /**
+   * Create proposal.
+   */
+  function createProposal($data) {
+    //
+  }
 }
