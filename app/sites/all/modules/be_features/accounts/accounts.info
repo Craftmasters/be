@@ -114,3 +114,6 @@ features[variable][] = menu_parent_accounts
 features[variable][] = node_options_accounts
 features[variable][] = node_preview_accounts
 features[variable][] = node_submitted_accounts
+features[variable][] = pathauto_node_accounts_pattern
+features[variable][] = pathauto_taxonomy_term_states_pattern
+features[variable][] = pathauto_taxonomy_term_tags_pattern

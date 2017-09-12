@@ -61,7 +61,7 @@ function accounts_field_default_field_bases() {
         'send_email' => 'Send email campaign',
         'build_rapport' => 'Build Rapport',
         'receive_feedback' => 'Receive Feedback (Prospects Phase)',
-        'request_specifications' => 'Request Specifications',
+        'receive_specifications' => 'Receive Specifications',
         'receive_plan_details' => 'Receive Plan Details',
         'generate_rfp' => 'Generate RFP',
         'receive_quote' => 'Receive Quote',
@@ -693,6 +693,7 @@ function accounts_field_default_field_bases() {
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'text',
