@@ -1215,4 +1215,11 @@ class Bullseye {
   function createProposal($data) {
     //
   }
+
+  /**
+   * Send proposal.
+   */
+  function sendProposal($data) {
+    //
+  }
 }
