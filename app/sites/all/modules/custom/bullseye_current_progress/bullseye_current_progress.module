@@ -134,6 +134,27 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/proposal-send-email'] = array(
+    'page callback' => 'be_cp_propsal_send_email',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/accept-proposal-yes'] = array(
+    'page callback' => 'be_cp_accept_proposal_yes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/header-classes'] = array(
+    'page callback' => 'be_cp_header_classes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -219,6 +240,7 @@ function convert_to_prospect($form, &$form_state) {
   cache_clear_all('count_leads_accounts_listing', 'cache');
   cache_clear_all('prospect_accounts_listing', 'cache');
   cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('contacts_' . $form_state['values']['nid'], 'cache');
 
   // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
@@ -463,7 +485,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form = array();
 
-  $form['#parents'] = array();
+  //$form['#parents'] = array();
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
@@ -749,7 +771,6 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#date_format' => 'm/d/Y',
     '#default_value' => 'YYYY-MM-DD 00:00:00',
     '#date_year_range' => '0:+3',
-    '#required' => true,
     '#title' => t('Due Date'),
   );
 
@@ -825,12 +846,6 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
-  $form['form_title'] = array(
-    '#prefix' => '<div class="form-title">',
-    '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
-  );
-
   $form['subject'] = array(
     '#type' => 'textfield',
     '#title' => t('Subject:'),
@@ -855,13 +870,24 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     ),
   );
 
-  $form['submit'] = array(
+  $form['send_proposal_email'] = array(
     '#type' => 'submit',
-    '#submit' => array('convert_to_opportunity'),
+    '#submit' => array('send_proposal_email'),
+    '#name' => 'send_proposal_email',
+    '#value' => t('Send'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
+  );
+
+  $form['convert_to_deal'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_deal'),
+    '#name' => 'convert_to_deal',
     '#value' => t('Yes'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   // Attach js for ajax requests.
@@ -870,6 +896,50 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   );
  
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function send_proposal_email($form, &$form_state) {
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'send_plan_proposal') {
+    $wrapper->field_action_status->set('receive_feedback_opportunity');
+  }
+
+  $wrapper->save();
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'opportunity')));
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function convert_to_deal($form, &$form_state) {
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'convert_to_deals_in_progress') {
+    $wrapper->field_action_status->set('draw_documents');
+    $wrapper->field_workflow_status->set('generate_trust_agreement');
+    $wrapper->field_account_status->set('deal_in_progress');
+  }
+
+  $wrapper->save();
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'opportunity')));
 }
 
 /**
@@ -982,6 +1052,57 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
 }
 
 /**
+ * Implements hook_form().
+ *
+ * Current Progress for Deals Form.
+ */
+function bullseye_current_progress_deals_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  /*$form['submit'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_closed_deal'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );*/
+
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_deals.js',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_deals_form(&$vars) {
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
+
+}
+
+/**
  * Implements hook_theme().
  */
 function bullseye_current_progress_theme($existing, $type, $theme, $path) {
@@ -998,6 +1119,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['bullseye_current_progress_opportunities_form'] = array(
     'render element' => 'form',
     'template' => 'cp-opportunities-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['bullseye_current_progress_deals_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
   return $items;

@@ -48,6 +48,26 @@
           });
         }
 
+        function refreshHeaderClasses(nid) {
+          $.ajax({
+            url: '/be-cp/header-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+              status: 'lead',
+            },
+            success: function(result){
+              console.log(result);
+              $('#hp_verification').removeClass('be-blue be-gray be-green');
+              $('#hp_convert_to_prospect').removeClass('be-blue be-gray be-green');
+              $('#hp_verification').addClass(result['hp_verification']);
+              $('#hp_convert_to_prospect').addClass(result['hp_convert_to_prospect']);
+            },
+          });
+        }
+
+        refreshHeaderClasses(nid);
+
         // Lead - Verification - Verify SCA/DBRA - Yes, SCA
         $('#btn-verify-yes-sca').click(function() {
           $.ajax({
@@ -387,6 +407,7 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });

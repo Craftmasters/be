@@ -43,6 +43,26 @@
           });
         }
 
+        function refreshHeaderClasses(nid) {
+          $.ajax({
+            url: '/be-cp/header-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+              status: 'prospect',
+            },
+            success: function(result){
+              console.log(result);
+              $('#hp_engagement').removeClass('be-blue be-gray be-green');
+              $('#hp_convert_to_opportunity').removeClass('be-blue be-gray be-green');
+              $('#hp_engagement').addClass(result['hp_engagement']);
+              $('#hp_convert_to_opportunity').addClass(result['hp_convert_to_opportunity']);
+            },
+          });
+        }
+
+        refreshHeaderClasses(nid);
+
         // Prospect - Engagement - Receive Feedback
         $('#btn-receive-feedback').click(function() {
           $.ajax({
@@ -69,6 +89,7 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });
