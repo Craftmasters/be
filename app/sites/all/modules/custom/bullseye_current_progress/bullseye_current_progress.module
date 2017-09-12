@@ -1044,6 +1044,57 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
 }
 
 /**
+ * Implements hook_form().
+ *
+ * Current Progress for Deals Form.
+ */
+function bullseye_current_progress_deals_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  /*$form['submit'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_closed_deal'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );*/
+
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_deals.js',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_deals_form(&$vars) {
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
+
+}
+
+/**
  * Implements hook_theme().
  */
 function bullseye_current_progress_theme($existing, $type, $theme, $path) {
@@ -1060,6 +1111,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['bullseye_current_progress_opportunities_form'] = array(
     'render element' => 'form',
     'template' => 'cp-opportunities-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['bullseye_current_progress_deals_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
   return $items;
