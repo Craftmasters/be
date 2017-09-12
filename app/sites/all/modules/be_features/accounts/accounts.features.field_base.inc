@@ -65,7 +65,7 @@ function accounts_field_default_field_bases() {
         'receive_plan_details' => 'Receive Plan Details',
         'generate_rfp' => 'Generate RFP',
         'receive_quote' => 'Receive Quote',
-        'request_information' => 'Request Information',
+        'send_plan_proposal' => 'Send Plan Proposal',
         'receive_feedback_opportunity' => 'Receive Feedback (Opportunity Phase)',
       ),
       'allowed_values_function' => '',

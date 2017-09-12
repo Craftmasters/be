@@ -127,6 +127,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/send-plan-proposal'] = array(
+    'page callback' => 'be_cp_send_plan_proposal',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -720,6 +727,134 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#default_value' => $email_temp,
   );
 
+  // The values for the dropdown box.
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+  );
+
+  $form['priority'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#description' => "Select the priority level.",
+    '#options' => $form['type_options']['#value'],
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#date_year_range' => '0:+3',
+    '#required' => true,
+    '#title' => t('Due Date'),
+  );
+
+  $form['bc_third'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['bc_third']['benefits']['major_medical_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+  );
+
+  $form['bc_third']['benefits']['limited_medical_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+  );
+
+  $form['bc_third']['benefits']['teledoc_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+  );
+
+  $form['bc_third']['benefits']['mec_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+  );
+
+  $form['bc_third']['benefits']['life_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+  );
+
+  $form['bc_third']['benefits']['short_term_disability_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Disability'),
+  );
+
+  $form['bc_third']['benefits']['dental_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+  );
+
+  $form['bc_third']['benefits']['vision_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+  );
+
+  $form['bc_third']['benefits']['retirement_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+  );
+
+  $form['bc_third']['benefits']['special_benefits_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+  );
+
+  $form['special_benefits_text_2'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
+  );
+
+  $form['attach_proposal'] = array(
+    '#title' => t('Attach Proposal'),
+    '#type' => 'managed_file',
+  );
+
+  $attachment_filename = 'Proposal.pdf';
+  $attachment_download_path = '/path/to/Proposal.pdf';
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
+  );
+
+  $form['subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject:'),
+    '#default_value' => 'Plan Proposal for ' . $node->field_company[LANGUAGE_NONE][0]['value'],
+  );
+
+  $form['to'] = array(
+    '#type' => 'textfield',
+    '#title' => t('To:'),
+  );
+
+  $form['show_attachment'] = array(
+    '#prefix' => '<div class="show-attachment">',
+    '#suffix' => '</div>',
+    '#markup' => '<span class="label">Attachment:</span> <a href="' . $attachment_download_path . '" class="orange-font">' . $attachment_filename . '</a>',
+  );
+
+  $form['message'] = array(
+    '#type' => 'textarea',
+    '#attributes' => array(
+      'placeholder' => t('Enter message here ..'),
+    ),
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#submit' => array('convert_to_opportunity'),
@@ -756,7 +891,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['class_generate_rfp'] = '';
   $vars['class_recieve_quote'] = '';
   $vars['class_plan_presentation'] = 'gray-check';
-  $vars['class_request_info'] = '';
+  $vars['class_send_proposal'] = '';
   $vars['class_receive_feedback'] = '';
   $vars['class_convert_deals'] = 'no-check';
 
@@ -764,7 +899,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['modal_access_rp'] = '';
   $vars['modal_access_gr'] = '';
   $vars['modal_access_rq'] = '';
-  $vars['modal_access_ri'] = '';
+  $vars['modal_access_sp'] = '';
   $vars['modal_access_rf'] = '';
   $vars['modal_access_cd'] = '';
 
@@ -805,12 +940,12 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'gray-check';
-    if ($action_status == 'request_information') {
-      $vars['class_request_info'] = 'current-step';
-      $vars['modal_access_ri'] = 'modal';
+    if ($action_status == 'send_plan_proposal') {
+      $vars['class_send_proposal'] = 'current-step';
+      $vars['modal_access_sp'] = 'modal';
     }
     if ($action_status == 'receive_feedback_opportunity') {
-      $vars['class_request_info'] = 'done-step';
+      $vars['class_send_proposal'] = 'done-step';
       $vars['class_receive_feedback'] = 'current-step';
       $vars['modal_access_rf'] = 'modal';
     }
@@ -824,7 +959,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'no-check current-step';
     $vars['modal_access_cd'] = 'modal';
@@ -839,7 +974,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'green-check';
   }

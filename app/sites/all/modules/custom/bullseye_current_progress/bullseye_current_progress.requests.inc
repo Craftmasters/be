@@ -521,7 +521,7 @@ function be_cp_refresh_classes_opportunity() {
   $vars['class_generate_rfp'] = '';
   $vars['class_recieve_quote'] = '';
   $vars['class_plan_presentation'] = 'gray-check';
-  $vars['class_request_info'] = '';
+  $vars['class_send_proposal'] = '';
   $vars['class_receive_feedback'] = '';
   $vars['class_convert_deals'] = 'no-check';
 
@@ -529,7 +529,7 @@ function be_cp_refresh_classes_opportunity() {
   $vars['modal_access_rp'] = '';
   $vars['modal_access_gr'] = '';
   $vars['modal_access_rq'] = '';
-  $vars['modal_access_ri'] = '';
+  $vars['modal_access_sp'] = '';
   $vars['modal_access_rf'] = '';
   $vars['modal_access_cd'] = '';
 
@@ -570,12 +570,12 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'gray-check';
-    if ($action_status == 'request_information') {
-      $vars['class_request_info'] = 'current-step';
-      $vars['modal_access_ri'] = 'modal';
+    if ($action_status == 'send_plan_proposal') {
+      $vars['class_send_proposal'] = 'current-step';
+      $vars['modal_access_sp'] = 'modal';
     }
     if ($action_status == 'receive_feedback_opportunity') {
-      $vars['class_request_info'] = 'done-step';
+      $vars['class_send_proposal'] = 'done-step';
       $vars['class_receive_feedback'] = 'current-step';
       $vars['modal_access_rf'] = 'modal';
     }
@@ -589,7 +589,7 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'no-check current-step';
     $vars['modal_access_cd'] = 'modal';
@@ -604,7 +604,7 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'green-check';
   }
@@ -658,4 +658,27 @@ function be_cp_next_generate_rfp() {
   drupal_json_output($wrapper);
 }
 
+/**
+ * Set action status to send plan proposal.
+ * and workflow status to Plan Presentation.
+ */
+function be_cp_send_plan_proposal() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'rfp' && $action_status == 'receive_quote') {
+    $wrapper->field_action_status->set('send_plan_proposal');
+    $wrapper->field_workflow_status->set('plan_presentation');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
 
