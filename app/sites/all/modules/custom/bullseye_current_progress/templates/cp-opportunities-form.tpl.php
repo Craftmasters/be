@@ -102,7 +102,7 @@
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Deal in Progress!'); ?></span>
 				</a>
-				<a href="/company/<?php print arg(1); ?>?from=deal-in-progress" class="cp-link orange">
+				<a href="/company/<?php print arg(1); ?>?from=deal_in_progress" class="cp-link orange">
 					<span><?php print t('Go to Deal in Progress Page'); ?></span>
 				</a>
 			<?php else: ?>
