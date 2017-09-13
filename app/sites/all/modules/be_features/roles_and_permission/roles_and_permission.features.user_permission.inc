@@ -139,6 +139,16 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_blocks',
   );
 
+  // Exported permission: 'access producers pending page'.
+  $permissions['access producers pending page'] = array(
+    'name' => 'access producers pending page',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'bullseye_blocks',
+  );
+
   // Exported permission: 'access proposals page'.
   $permissions['access proposals page'] = array(
     'name' => 'access proposals page',

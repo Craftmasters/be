@@ -50,7 +50,7 @@
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></span></td>
+            <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></td>
           </tr>
         <?php endfor; ?>
         <?php for ($i = 0; $i < 2; $i++) : ?>
@@ -68,7 +68,7 @@
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td><a href="#" class="be-table-button green"><?php print t('Visit Arrow Cloud Page'); ?></a></span></td>
+            <td><a href="#" class="be-table-button green"><?php print t('Visit Arrow Cloud Page'); ?></a></td>
           </tr>
         <?php endfor; ?>
       </tbody>

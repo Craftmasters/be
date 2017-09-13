@@ -46,7 +46,7 @@
 	  </div>
 	</div>
 
-<?php elseif ($_GET['from'] == 'deal-in-progress') : ?>
+<?php elseif ($_GET['from'] == 'deal_in_progress') : ?>
 
 	<div class="be-header-progress">
 	  <div class="be-progress be-start be-green">

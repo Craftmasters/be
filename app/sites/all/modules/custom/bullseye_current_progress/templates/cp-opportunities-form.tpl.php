@@ -299,6 +299,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#request-specification" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button id="btn-save-exit-receive-details" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button id="btn-next-generate-rfp" type="button" data-toggle="modal" data-target="#generate-rfp" class="green-btn" data-dismiss="modal"><?php print t('Next: Generate RFP'); ?></button>
 		        </div>
@@ -359,7 +360,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-plan-details" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button id="btn-save-exit-create-rfp" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<?php print render($form['next_to_rfp']); ?>
 		        </div>
 		      </div>
 		    </div>
