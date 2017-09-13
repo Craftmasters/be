@@ -21,7 +21,7 @@
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
-          <th><?php print t('ID'); ?></th>
+          <th class="be-dot-td"><?php print t('ID'); ?></th>
           <th><?php print t('Carier Name'); ?></th>
           <th><?php print t('Primary Contact'); ?></th>
           <th><?php print t('Email Address'); ?></th>
@@ -41,7 +41,7 @@
         <?php foreach ($carriers as $carrier): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td>
+            <td class="be-dot-td">
               <span class="light-gray-font">
                 <a href="<?php print drupal_get_path_alias('node/' . $carrier['nid']); ?>">
                   <?php print $carrier['nid']; ?>

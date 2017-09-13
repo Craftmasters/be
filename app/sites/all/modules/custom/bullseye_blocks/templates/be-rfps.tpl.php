@@ -32,7 +32,7 @@
           <th class="be-dot-td"><?php print t('Short Term Dissability'); ?></th>
           <th class="be-dot-td"><?php print t('Specialty Benefits'); ?></th>
           <th><?php print t('Due Date'); ?></th>
-          <th><?php print t('Priority'); ?></th>
+          <th class="be-dot-td"><?php print t('Priority'); ?></th>
           <th><?php print t('Created By'); ?></th>
         </tr>
       </thead>

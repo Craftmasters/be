@@ -21,10 +21,10 @@
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
-          <th><?php print t('Priority'); ?></th>
+          <th class="be-dot-td"><?php print t('Priority'); ?></th>
           <th><?php print t('Account'); ?></th>
           <th><?php print t('Contact Person'); ?></th>
-          <th class="be-table-arrow-td"><?php print t('Build Rapport'); ?></th>
+          <th class="be-table-arrow-td"><?php print t('Plan Specification'); ?></th>
           <th class="be-table-arrow-td"><?php print t('RFP'); ?></th>
           <th class="be-table-arrow-td"><?php print t('Plan Presentation'); ?></th>
           <th class="be-table-arrow-td"><?php print t('Convert to Deals in Progress'); ?></th>
@@ -36,7 +36,7 @@
         <?php foreach ($opportunities as $o): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="dot-priority red"></span></td>
+            <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <!-- link "/company/allen-markarian?from=opportunity" where 'allen-markarian' is the alias and 'opportunity' is the status of account -->
             <td>
               <span class="orange-font">
