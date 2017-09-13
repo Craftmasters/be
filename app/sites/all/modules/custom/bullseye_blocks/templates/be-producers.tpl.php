@@ -1,11 +1,12 @@
 <div class="be-table-block">
   <div class="be-table-top-header">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <span class="account-count"><?php print t('All Producers (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/producer/add" rel="lightframe"><?php print t('Add New Producer'); ?></a>
+        <a class="be-table-button" href="/producers/pending"><?php print t('View Pending Requests'); ?></a>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
           <a href="#"><img src="<?php print $single_user_gray; ?>"></a>

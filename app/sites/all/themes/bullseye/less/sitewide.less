@@ -681,6 +681,12 @@
         background-color: @green + 10;
       }
     }
+    &.red {
+      background-color: #ce4a4a;
+      &:hover {
+        background-color: #ce4a4a + 10;
+      }
+    }
   }
 
   .be-table-right-icons {
@@ -749,7 +755,11 @@
         .orange-font {
           color: @orange;
         }
-
+        .email {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
     .be-table-arrow-td {
@@ -771,10 +781,40 @@
     }
   }
 
+  .producer-pending-file {
+    i {
+      color: @orange;
+    }
+  }
+
 /*
  * BE Bootstrap modals.
  */
   .be-bs-modal {
+
+    .be-custom-actions {
+      text-align: center;
+      margin-top: 0px;
+      padding: 0px 0px 35px;
+    }
+    .modal-body {
+      min-height: 200px;
+      display: table;
+      width: 100%;
+      text-align: center;
+    }
+    .modal-body-wrap {
+      vertical-align: middle;
+      display: table-cell;
+    }
+    .modal-body-inner {
+      padding: 0 30px;
+      h3 {
+        font-family: 'Proximanova-Regular';
+        font-size: 20px;
+        color: @field_value_color;
+      }
+    }
 
     .modal-dialog {
       display: table !important;
@@ -802,6 +842,7 @@
     .modal-header {
       background-color: @blue_gray;
       position: relative;
+      min-height: 50px;
       a.close {
         position: absolute;
         top: 13px;

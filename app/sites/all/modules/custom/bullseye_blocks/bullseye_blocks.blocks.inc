@@ -406,6 +406,29 @@ function bullseye_blocks_render_be_producers() {
 }
 
 /**
+ * Producers Pending Block (Table).
+ */
+function bullseye_blocks_render_be_producers_pending() {
+  global $base_url, $user;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $output = theme('be_producers_pending', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
  * Carriers Block (Table).
  */
 function bullseye_blocks_render_be_carriers() {
@@ -467,7 +490,7 @@ function bullseye_blocks_render_be_current_progress() {
       $opportunities_cp_form = drupal_get_form('bullseye_current_progress_opportunities_form');
       $vars['cp_form'] = drupal_render($opportunities_cp_form);
     }
-    elseif ($_GET['from'] == 'deal-in-progress') {
+    elseif ($_GET['from'] == 'deal_in_progress') {
       $deals_cp_form = drupal_get_form('bullseye_current_progress_deals_form');
       $vars['cp_form'] = drupal_render($deals_cp_form);
     }

@@ -82,6 +82,13 @@ function bullseye_blocks_menu() {
     'type' => MENU_CALLBACK
   );
 
+  $items['producers/pending'] = array(
+    'title' => 'Pending Producer Requests',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access producers pending page'),
+    'type' => MENU_CALLBACK
+  );
+
   $items['carriers'] = array(
     'title' => 'Carriers',
     'page callback' => '_empty_page',
@@ -146,6 +153,10 @@ function bullseye_blocks_permission() {
     'access producers page' => array(
       'title' => t('Producers Page'),
       'description' => t('Access the producers page.'),
+    ),
+    'access producers pending page' => array(
+      'title' => t('Producers Page'),
+      'description' => t('Access the producers pending page.'),
     ),
     'access proposals page' => array(
       'title' => t('Proposals Page'),
@@ -276,6 +287,13 @@ function bullseye_blocks_theme() {
     'be_producers' => array(
       'variables' => array(),
       'template' => 'be-producers',
+      'path' => $template_path,
+    ),
+
+    // Producers Pending Table Block.
+    'be_producers_pending' => array(
+      'variables' => array(),
+      'template' => 'be-producers-pending',
       'path' => $template_path,
     ),
 
@@ -460,6 +478,13 @@ function bullseye_blocks_block_info() {
   // Producers Table Block.
   $blocks['be_producers'] = array(
     'info' => t('Producers Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Producers Pending Table Block.
+  $blocks['be_producers_pending'] = array(
+    'info' => t('Producers Pending Block (Table)'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
