@@ -803,9 +803,9 @@ class Bullseye {
   }
 
   /**
-   * Email RFP.
+   * Send email.
    */
-  function sendEmail($from, $to, $subject, $body, $attachments) {
+  function sendEmail($to, $from, $subject, $body, $attachments) {
     $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
     $email->send();
   }
@@ -1296,6 +1296,7 @@ class Bullseye {
    * Send proposal.
    */
   function sendProposal($data) {
-    //
+    $attachments = array();
+    $this->sendEmail('geraldvillorente@gmail.com', 'no-reply@archerjordan.com', 'This is just a test', 'hello', $attachments);
   }
 }
