@@ -106,6 +106,13 @@
           }
         }
 
+        var link_sent = getUrlParameter('link_sent');
+        if (link_sent) {
+          if ($('#div-request-specs').is('.current-step')) {
+            $('#request-specification').modal('show');
+          }
+        }
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
         });

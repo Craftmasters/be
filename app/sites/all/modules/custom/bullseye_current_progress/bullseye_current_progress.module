@@ -876,6 +876,16 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     ),
   );
 
+  $form['send_link_email'] = array(
+    '#type' => 'submit',
+    '#submit' => array('send_link_email'),
+    '#name' => 'send_link_email',
+    '#value' => t('Send'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
   $form['send_proposal_email'] = array(
     '#type' => 'submit',
     '#submit' => array('send_proposal_email'),
@@ -967,6 +977,34 @@ function next_to_rfp($form, &$form_state) {
   );
 
   drupal_goto('rfps/add', $param);
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function send_link_email($form, &$form_state) {
+  global $user;
+
+  $to = $form_state['values']['sl_recipient'];
+  $from = $form_state['values']['sl_sender'];
+  $message = $form_state['values']['sl_content'];
+  $subject = $form_state['values']['sl_subject'];
+  $attachments = array();
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+
+  $param = array(
+    'query' => array(
+      'from' => 'opportunity',
+      'link_sent' => TRUE,
+    )
+  );
+  
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), $param);
+
 }
 
 /**
