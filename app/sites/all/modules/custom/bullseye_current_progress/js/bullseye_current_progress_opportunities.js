@@ -83,6 +83,127 @@
 
         refreshHeaderClasses(nid);
 
+        // for checking other major medical checkboxes.
+        $('input[id*="edit-major-medical"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-major-medical"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-major-medical"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+
+        // for checking other limited medical checkboxes.
+        $('input[id*="edit-limited-medical"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-limited-medical"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-limited-medical"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+
+        // for checking other teledoc checkboxes.
+        $('input[id*="edit-teledoc"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-teledoc"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-teledoc"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+
+        // for checking other mec checkboxes.
+        $('input[id*="edit-mec"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-mec"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-mec"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+        
+        // for checking other life checkboxes.
+        $('input[id*="edit-life"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-life"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-life"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+        
+        // for checking other short term dissability checkboxes.
+        $('input[id*="edit-short-term-disability"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-short-term-disability"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-short-term-disability"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+        
+        // for checking other dental checkboxes.
+        $('input[id*="edit-dental"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-dental"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-dental"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+
+        // for checking other vision checkboxes.
+        $('input[id*="edit-vision"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-vision"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-vision"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+        
+        // for checking other retirement checkboxes.
+        $('input[id*="edit-retirement"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-retirement"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-retirement"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+        
+        // for checking other special benefits checkboxes.
+        $('input[id*="edit-special-benefits"].form-checkbox').each(function() {
+          $(this).change(function() {
+            if ($(this).is(":checked")) {
+              $('input[id*="edit-special-benefits"].form-checkbox').prop('checked', true);
+            }
+            else {
+              $('input[id*="edit-special-benefits"].form-checkbox').prop('checked', false);
+            }
+          });
+        });
+
+        // function to get value of paramater from url.
         var getUrlParameter = function getUrlParameter(sParam) {
           var sPageURL = decodeURIComponent(window.location.search.substring(1)),
               sURLVariables = sPageURL.split('&'),
@@ -106,6 +227,7 @@
           }
         }
 
+        // Check page if it is from sending link then open request specs modal.
         var link_sent = getUrlParameter('link_sent');
         if (link_sent) {
           if ($('#div-request-specs').is('.current-step')) {
