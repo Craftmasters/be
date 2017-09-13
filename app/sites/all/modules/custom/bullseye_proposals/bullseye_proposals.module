@@ -195,9 +195,6 @@ function bullseye_proposals_form_submit($form, &$form_state) {
   $be = new Bullseye($user);
   $data = $form_state['values'];
 
-  krumo($form_state['values']);
-  die();
-
   // Save the proposal to Proposal entity storage.
   $be->createProposal($data);
 

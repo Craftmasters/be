@@ -1240,7 +1240,7 @@ class Bullseye {
     $node->field_priority[$lang][0]['value'] = $data['priority'];
 
     // Account field.
-    $node->field_account[$lang][0]['target_id'] = $data['account']['entity id'];
+    $node->field_account[$lang][0]['target_id'] = $data['account']['entity_id'];
     $node->field_account[$lang][0]['target_type'] = 'node';
 
     // Benefits field.
