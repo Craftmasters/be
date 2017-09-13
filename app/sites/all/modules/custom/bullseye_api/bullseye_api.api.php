@@ -1240,7 +1240,7 @@ class Bullseye {
     $node->field_priority[$lang][0]['value'] = $data['priority'];
 
     // Account field.
-    $node->field_account[$lang][0]['target_id'] = $data['account']['entity_id'];
+    $node->field_account[$lang][0]['nid'] = $data['account']['entity_id'];
     $node->field_account[$lang][0]['target_type'] = 'node';
 
     // Benefits field.
@@ -1290,12 +1290,6 @@ class Bullseye {
     // Save the carrier in the storage.
     $node = node_submit($node);
     node_save($node);
-
-    // Notify the user that the registration is successfull.
-    drupal_set_message(t('Proposal successfully created.'), 'message');
-
-    // Redirect the user to homepage.
-    drupal_goto('/');
   }
 
   /**
