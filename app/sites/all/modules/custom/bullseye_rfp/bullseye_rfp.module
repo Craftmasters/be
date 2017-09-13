@@ -230,7 +230,13 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
   }
 
   // Build the parameter query for benefits array.
-  $benefits_query = http_build_query(array('benefits' => $benefits));
+  $benefits_query = http_build_query(
+    array(
+      'benefits' => $benefits,
+      'from_current_progress' => FALSE,
+      'plan_specs' => FALSE,
+    )
+  );
   $query .= '&' . $benefits_query;
 
   // Close the lightbox and redirect to the next create new RFP page.
@@ -250,6 +256,28 @@ function bullseye_rfp_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
+  $fringe_rates = '';
+  $proposed_effective_date = '';
+  $other_work_locations = '';
+  $number_of_employees = '';
+  $number_of_dependents = '';
+  $nature_of_business = '';
+  $years_in_business = '';
+  $tax_id = '';
+  $renewal_date = '';
+
+  if (isset($_GET['plan_specs']) && $_GET['plan_specs'] && !empty($_GET['plan_specs'])) {
+    $fringe_rates = $_GET['plan_specs']['fringe_rates'];
+    $proposed_effective_date = $_GET['plan_specs']['proposed_effective_date'];
+    $other_work_locations = $_GET['plan_specs']['other_work_locations'];
+    $number_of_employees = $_GET['plan_specs']['number_of_employees'];
+    $number_of_dependents = $_GET['plan_specs']['number_of_dependents'];
+    $nature_of_business = $_GET['plan_specs']['nature_of_business'];
+    $years_in_business = $_GET['plan_specs']['years_in_business'];
+    $tax_id = $_GET['plan_specs']['tax_id'];
+    $renewal_date = $_GET['plan_specs']['renewal_date'];
+  }
+
   // Fringe Rate/s.
   $form['fringe_rates'] = array(
     '#type' => 'textfield',
@@ -257,13 +285,14 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '500',
     ),
+    '#default_value' => $fringe_rates,
   );
 
   // Proposed Effective Date.
   $form['proposed_effective_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD',
+    '#default_value' => date('Y-m-d', strtotime($proposed_effective_date)),
     '#date_year_range' => '0:+3',
     '#title' => t('Proposed Effective Date'),
   );
@@ -275,6 +304,7 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'Dallas 88829, New Jersey 81920',
     ),
+    '#default_value' => $other_work_locations,
   );
 
   // Number of Employees.
@@ -284,6 +314,7 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '100',
     ),
+    '#default_value' => $number_of_employees,
   );
 
   // Number of Dependents.
@@ -293,6 +324,7 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '200',
     ),
+    '#default_value' => $number_of_dependents,
   );
 
   // Nature of Business/SIC.
@@ -302,6 +334,7 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'xxxx',
     ),
+    '#default_value' => $nature_of_business,
   );
 
   // Years in Business.
@@ -311,6 +344,7 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '5',
     ),
+    '#default_value' => $years_in_business,
   );
 
   // Tax ID.
@@ -320,13 +354,14 @@ function bullseye_rfp_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'xxxxxxxxx',
     ),
+    '#default_value' => $tax_id,
   );
 
   // Renewal Date.
   $form['renewal_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD',
+    '#default_value' => date('Y-m-d', strtotime($renewal_date)),
     '#date_year_range' => '0:+3',
     '#title' => t('Renewal Date'),
   );

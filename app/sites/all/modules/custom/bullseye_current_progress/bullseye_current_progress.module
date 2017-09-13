@@ -498,6 +498,11 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#value' => $node->nid,
   );
 
+  $form['company_name'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->field_company[LANGUAGE_NONE][0]['value'],
+  );
+
   // Fringe Rate/s.
   $form['fringe_rates'] = array(
     '#type' => 'textfield',
@@ -880,6 +885,16 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     ),
   );
 
+  $form['next_to_rfp'] = array(
+    '#type' => 'submit',
+    '#submit' => array('next_to_rfp'),
+    '#name' => 'next_to_rfp',
+    '#value' => t('Next'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
   $form['convert_to_deal'] = array(
     '#type' => 'submit',
     '#submit' => array('convert_to_deal'),
@@ -896,6 +911,61 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   );
  
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function next_to_rfp($form, &$form_state) {
+
+  // Clear session first.
+  unset($_SESSION['add_rfp']);
+
+  $benefits = array();
+
+  // Save the data temporarily to session variable.
+  $_SESSION['add_rfp'] = array(
+    'account_id' => $form_state['values']['nid'],
+    'major_medical' => $form_state['values']['major_medical'],
+    'limited_medical' => $form_state['values']['limited_medical'],
+    'teledoc' => $form_state['values']['teledoc'],
+    'mec' => $form_state['values']['mec'],
+    'life' => $form_state['values']['life'],
+    'short_term_disability' => $form_state['values']['short_term_disability'],
+    'dental' => $form_state['values']['dental'],
+    'vision' => $form_state['values']['vision'],
+    'retirement' => $form_state['values']['retirement'],
+    'special_benefits' => $form_state['values']['special_benefits'],
+    'special_benefits_text' => $form_state['values']['special_benefits_text'],
+  );
+
+  // Prepare benefits data before passing to url parameter.
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if ($key[0] != '#') {
+      $benefits[$key] = $value['#value'];
+    }
+  }
+
+  $param = array(
+    'query' => array(
+      'account_name' => $form_state['values']['company_name'],
+      'benefits' => $benefits,
+      'from_current_progress' => TRUE,
+      'plan_specs' => array(
+        'fringe_rates' => $form_state['values']['fringe_rates'],
+        'proposed_effective_date' => $form_state['values']['proposed_effective_date'],
+        'other_work_locations' => $form_state['values']['other_work_locations'],
+        'number_of_employees' => $form_state['values']['number_of_employees'],
+        'number_of_dependents' => $form_state['values']['number_of_dependents'],
+        'nature_of_business' => $form_state['values']['nature_of_business'],
+        'years_in_business' => $form_state['values']['years_in_business'],
+        'tax_id' => $form_state['values']['tax_id'],
+        'renewal_date' => $form_state['values']['renewal_date'],
+      ),
+    )
+  );
+
+  drupal_goto('rfps/add', $param);
 }
 
 /**
