@@ -235,6 +235,14 @@
           }
         }
 
+        // Check page if it is from sending link then open request specs modal.
+        var proposal_sent = getUrlParameter('proposal_sent');
+        if (proposal_sent) {
+          if ($('#div-send-proposal').is('.current-step')) {
+            $('#send-plan-proposal').modal('show');
+          }
+        }
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
         });
@@ -279,6 +287,20 @@
               console.log(result);
               refreshClasses(nid);
               refreshHeaderClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-receive-feedback-opportunity').click(function() {
+          $.ajax({
+            url: '/be-cp/receive-feedback-op',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
             },
           });
         });

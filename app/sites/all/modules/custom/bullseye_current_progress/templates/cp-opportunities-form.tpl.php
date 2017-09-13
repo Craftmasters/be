@@ -442,6 +442,12 @@
 		        	</div>
 		        </div>
 		      </div>
+		      <?php if (isset($_GET['proposal_sent']) && $_GET['proposal_sent'] == 1) : ?>
+		      	<div class="alert alert-success alert-dismissable" style="text-align: left;">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						  <?php print t('Email containing proposal sent to client.'); ?>
+						</div>
+		      <?php endif; ?>
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner be-forms send-proposal">
@@ -481,8 +487,8 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-quote" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button id="btn-save-exit-send-proposal" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button id="btn-send-proposal-email" type="button" data-toggle="modal" data-target="#send-proposal-email" class="green-btn" data-dismiss="modal"><?php print t('Send Proposal'); ?></button>
+		        	<button id="btn-send-proposal-email" type="button" data-toggle="modal" data-target="#send-proposal-email" class="orange-btn" data-dismiss="modal"><?php print t('Send Proposal'); ?></button>
+		        	<button id="btn-receive-feedback-opportunity" type="button" data-toggle="modal" data-target="#receive-feedback" class="green-btn" data-dismiss="modal"><?php print t('Next: Receive Feedback'); ?></button>
 		        </div>
 		      </div>
 		    </div>
