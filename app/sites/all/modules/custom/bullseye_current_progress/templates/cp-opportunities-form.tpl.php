@@ -565,8 +565,7 @@
 		      		<div class="modal-body-inner">
 		      			<h3><?php print t('Did client accept proposal?'); ?></h3>
 		      			<div class="account-estimate">
-		      				<label><?php print t('Account Estimate Value'); ?></label>
-		      				<input type="text" name="account-estimate">
+		      				<?php print render($form['account_estimate_value']); ?>
 		      			</div>
 		      		</div>
 		      	</div>

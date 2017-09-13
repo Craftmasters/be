@@ -326,6 +326,26 @@
       padding-right: 21px;
     }
   }
+  .account-estimate {
+  	margin-top: 20px;
+  	label, input {
+  		display: inline-block;
+  		vertical-align: middle;
+  		position: relative;
+  	}
+  	label {
+  		&::after {
+  			content: '$';
+  			position: absolute;
+  			right: -15px;
+  		}
+  	}
+  	input {
+  		width: 150px;
+  		background-color: transparent;
+  		padding-left: 17px;
+  	}
+  }
 }
 
 #add-contact {

@@ -243,6 +243,11 @@
           }
         }
 
+        // Copy filename of attached proposal file to email form.
+        $('input#edit-attach-proposal-upload').change(function() {
+          $('.show-attachment a').html($(this).val().replace(/.*[\/\\]/, ''));
+        });
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
         });
@@ -306,11 +311,13 @@
         });
 
         $('#btn-accept-proposal-yes').click(function() {
+          var account_estimate_value = $('#edit-account-estimate-value').val();
           $.ajax({
             url: '/be-cp/accept-proposal-yes',
             method: 'POST',
             data: {
               nid: nid,
+              account_estimate_value: account_estimate_value,
             },
             success: function(result){
               console.log(result);

@@ -687,8 +687,10 @@ function be_cp_send_plan_proposal() {
 function be_cp_accept_proposal_yes() {
 
   $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();

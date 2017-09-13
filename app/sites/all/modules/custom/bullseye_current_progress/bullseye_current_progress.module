@@ -858,9 +858,6 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#type' => 'managed_file',
   );
 
-  $attachment_filename = 'Proposal.pdf';
-  $attachment_download_path = '/path/to/Proposal.pdf';
-
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
   $form['subject'] = array(
@@ -878,7 +875,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['show_attachment'] = array(
     '#prefix' => '<div class="show-attachment">',
     '#suffix' => '</div>',
-    '#markup' => '<span class="label">Attachment:</span> <a href="' . $attachment_download_path . '" class="orange-font">' . $attachment_filename . '</a>',
+    '#markup' => '<span class="label">Attachment:</span> <a href="#" class="orange-font"></a>',
   );
 
   $form['message'] = array(
@@ -886,6 +883,11 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter message here ..'),
     ),
+  );
+
+  $form['account_estimate_value'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Account Estimate Value'),
   );
 
   $form['send_link_email'] = array(
