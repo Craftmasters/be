@@ -1274,7 +1274,18 @@ class Bullseye {
     if ($data['special_benefits'] == 1) {
       $node->field_benefits[$lang][]['value'] = 'special_benefits';
     }
-    $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
+    // Other benefit.
+    if (!empty($data['special_benefits_text'])) {
+      $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
+    }
+
+    // Attched proposal.
+    if ($data['attach_proposal'] != 0) {
+      $proposal_file = file_load($data['attach_proposal']);
+      $proposal_file->display = 1;
+      $proposal_file = file_copy($proposal_file, 'public://');
+      $node->field_attached_proposal[$lang][0] = (array) $proposal_file;
+    }
 
     // Save the carrier in the storage.
     $node = node_submit($node);
