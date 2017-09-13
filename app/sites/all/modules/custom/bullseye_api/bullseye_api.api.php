@@ -1233,6 +1233,9 @@ class Bullseye {
 
     $lang = $node->language;
 
+    // Due date.
+    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
+
     // Priority field.
     $node->field_priority[$lang][0]['value'] = $data['priority'];
 
@@ -1241,7 +1244,37 @@ class Bullseye {
     $node->field_account[$lang][0]['target_type'] = 'node';
 
     // Benefits field.
-    $node->field_benefits[$lang][]['value'] = 'major_medical';
+    if ($data['major_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'major_medical';
+    }
+    if ($data['limited_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'limited_medical';
+    }
+    if ($data['teledoc'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'teledoc';
+    }
+    if ($data['mec'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'mec';
+    }
+    if ($data['dental'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'dental';
+    }
+    if ($data['vision'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'vision';
+    }
+    if ($data['life'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'life';
+    }
+    if ($data['short_term_disability'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'short_term_disability';
+    }
+    if ($data['retirement'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'retirement';
+    }
+    if ($data['special_benefits'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'special_benefits';
+    }
+    $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
 
     // Save the carrier in the storage.
     $node = node_submit($node);
