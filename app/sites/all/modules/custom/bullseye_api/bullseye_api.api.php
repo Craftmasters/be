@@ -1213,7 +1213,30 @@ class Bullseye {
    * Create proposal.
    */
   function createProposal($data) {
-    //
+    global $user;
+
+    // Map the data to plan specs storage entity.
+    $node = new stdClass();
+
+    $node->title = $data['contact_company'];
+
+    $node->type = "proposal";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+
+    // Save the carrier in the storage.
+    $node = node_submit($node);
+    node_save($node);
+
+    // Notify the user that the registration is successfull.
+    drupal_set_message(t('Proposal successfully created.'), 'message');
+
+    // Redirect the user to homepage.
+    drupal_goto('/');
   }
 
   /**
