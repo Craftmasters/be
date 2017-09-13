@@ -860,6 +860,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['to'] = array(
     '#type' => 'textfield',
     '#title' => t('To:'),
+    '#default_value' => $node->field_email[LANGUAGE_NONE][0]['value'],
   );
 
   $form['show_attachment'] = array(

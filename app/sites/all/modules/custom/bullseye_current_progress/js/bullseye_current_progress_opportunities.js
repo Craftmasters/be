@@ -83,6 +83,29 @@
 
         refreshHeaderClasses(nid);
 
+        var getUrlParameter = function getUrlParameter(sParam) {
+          var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+              sURLVariables = sPageURL.split('&'),
+              sParameterName,
+              i;
+
+          for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+          }
+        };
+
+        // Check page if it is from creating RFP then open receive quote modal.
+        var from_rfp = getUrlParameter('from_rfp');
+        if (from_rfp) {
+          if ($('#div-receive-quote').is('.current-step')) {
+            $('#receive-quote').modal('show');
+          }
+        }
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
         });

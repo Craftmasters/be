@@ -389,9 +389,16 @@
 		        	</div>
 		        </div>
 		      </div>
+		      <?php if (isset($_GET['from_rfp']) && $_GET['from_rfp'] == 1) : ?>
+		      	<div class="alert alert-success alert-dismissable" style="text-align: left;">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						  <?php print t('RFP successfully added.'); ?>
+						</div>
+		      <?php endif; ?>
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
+		      			
 		      			<h3><?php print t('Quotation received from carrier?'); ?></h3>
 		      		</div>
 		      	</div>
