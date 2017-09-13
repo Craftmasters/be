@@ -2006,7 +2006,7 @@ function generate_rfp_major_medical($form, &$form_state) {
 
     // Send the email.
     $be = new Bullseye($user);
-    $be->emailRfp($to, $user->mail, 'This is just a test', 'hello', $attachments);
+    $be->sendEmail($to, $user->mail, 'This is just a test', 'hello', $attachments);
   }
 
 }
