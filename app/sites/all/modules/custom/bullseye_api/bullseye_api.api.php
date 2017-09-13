@@ -1215,10 +1215,13 @@ class Bullseye {
   function createProposal($data) {
     global $user;
 
+    $account = node_load($data['account']['entity_id']);
+    $company = $account->field_company[LANGUAGE_NONE][0]['value'];
+
     // Map the data to plan specs storage entity.
     $node = new stdClass();
 
-    $node->title = $data['contact_company'];
+    $node->title = $company;
 
     $node->type = "proposal";
     node_object_prepare($node);
@@ -1227,6 +1230,18 @@ class Bullseye {
     $node->status = 1;
     $node->promote = 0;
     $node->comment = 0;
+
+    $lang = $node->language;
+
+    // Priority field.
+    $node->field_priority[$lang][0]['value'] = $data['priority'];
+
+    // Account field.
+    $node->field_account[$lang][0]['target_id'] = $data['account']['entity id'];
+    $node->field_account[$lang][0]['target_type'] = 'node';
+
+    // Benefits field.
+    $node->field_benefits[$lang][]['value'] = 'major_medical';
 
     // Save the carrier in the storage.
     $node = node_submit($node);
