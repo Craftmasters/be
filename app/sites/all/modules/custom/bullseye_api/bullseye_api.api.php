@@ -1215,10 +1215,13 @@ class Bullseye {
   function createProposal($data) {
     global $user;
 
+    $account = node_load($data['account']['entity_id']);
+    $company = $account->field_company[LANGUAGE_NONE][0]['value'];
+
     // Map the data to plan specs storage entity.
     $node = new stdClass();
 
-    $node->title = $data['contact_company'];
+    $node->title = $company;
 
     $node->type = "proposal";
     node_object_prepare($node);
@@ -1228,15 +1231,65 @@ class Bullseye {
     $node->promote = 0;
     $node->comment = 0;
 
+    $lang = $node->language;
+
+    // Due date.
+    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
+
+    // Priority field.
+    $node->field_priority[$lang][0]['value'] = $data['priority'];
+
+    // Account field.
+    $node->field_account[$lang][0]['nid'] = $data['account']['entity_id'];
+    $node->field_account[$lang][0]['target_type'] = 'node';
+
+    // Benefits field.
+    if ($data['major_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'major_medical';
+    }
+    if ($data['limited_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'limited_medical';
+    }
+    if ($data['teledoc'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'teledoc';
+    }
+    if ($data['mec'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'mec';
+    }
+    if ($data['dental'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'dental';
+    }
+    if ($data['vision'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'vision';
+    }
+    if ($data['life'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'life';
+    }
+    if ($data['short_term_disability'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'short_term_disability';
+    }
+    if ($data['retirement'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'retirement';
+    }
+    if ($data['special_benefits'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'special_benefits';
+    }
+    // Other benefit.
+    if (!empty($data['special_benefits_text'])) {
+      $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
+    }
+
+    // Attched proposal.
+    if ($data['attach_proposal'] != 0) {
+      $proposal_file = file_load($data['attach_proposal']);
+      $proposal_file->display = 1;
+      $proposal_file = file_copy($proposal_file, 'public://');
+      $node->field_attached_proposal[$lang][0] = (array) $proposal_file;
+    }
+
     // Save the carrier in the storage.
     $node = node_submit($node);
     node_save($node);
-
-    // Notify the user that the registration is successfull.
-    drupal_set_message(t('Proposal successfully created.'), 'message');
-
-    // Redirect the user to homepage.
-    drupal_goto('/');
   }
 
   /**
