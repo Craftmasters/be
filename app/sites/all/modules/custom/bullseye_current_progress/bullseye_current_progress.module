@@ -162,6 +162,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/save-exit-rf-op'] = array(
+    'page callback' => 'be_cp_save_exit_rf_op',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -499,6 +506,10 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $alias  = 'content/' . arg(1);
   $path = drupal_lookup_path('source', $alias);
   $node = menu_get_object('node', 1, $path);
+  $account_estimate_value = '';
+  if (isset($node->field_account_estimate_value[LANGUAGE_NONE][0]['value'])) {
+    $account_estimate_value = $node->field_account_estimate_value[LANGUAGE_NONE][0]['value'];
+  }
 
   $form['nid'] = array(
     '#type' => 'hidden',
@@ -888,6 +899,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['account_estimate_value'] = array(
     '#type' => 'textfield',
     '#title' => t('Account Estimate Value'),
+    '#default_value' => $account_estimate_value,
   );
 
   $form['send_link_email'] = array(

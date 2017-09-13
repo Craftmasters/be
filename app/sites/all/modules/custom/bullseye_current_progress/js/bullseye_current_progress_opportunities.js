@@ -310,6 +310,23 @@
           });
         });
 
+        $('#btn-save-exit-receive-feedback').click(function() {
+          var account_estimate_value = $('#edit-account-estimate-value').val();
+          $.ajax({
+            url: '/be-cp/save-exit-rf-op',
+            method: 'POST',
+            data: {
+              nid: nid,
+              account_estimate_value: account_estimate_value,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
+            },
+          });
+        });
+
         $('#btn-accept-proposal-yes').click(function() {
           var account_estimate_value = $('#edit-account-estimate-value').val();
           $.ajax({

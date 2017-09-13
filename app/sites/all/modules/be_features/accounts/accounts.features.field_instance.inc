@@ -150,6 +150,46 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_account_estimate_value'.
+  $field_instances['node-accounts-field_account_estimate_value'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 40,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_account_estimate_value',
+    'label' => 'Account Estimate Value',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 40,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_account_status'.
   $field_instances['node-accounts-field_account_status'] = array(
     'bundle' => 'accounts',
@@ -1668,6 +1708,7 @@ function accounts_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Account Estimate Value');
   t('Account Status');
   t('Action Status');
   t('City');

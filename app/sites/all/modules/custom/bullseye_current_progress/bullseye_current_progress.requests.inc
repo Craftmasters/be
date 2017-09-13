@@ -826,3 +826,19 @@ function be_cp_receive_feedback_opportunity() {
   $wrapper->save();
 }
 
+/**
+ * Save the account estimate value field.
+ */
+function be_cp_save_exit_rf_op() {
+
+  $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+
+}
