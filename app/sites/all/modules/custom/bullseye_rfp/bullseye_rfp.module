@@ -1920,13 +1920,47 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $node = node_submit($node);
   node_save($node);
 
-  drupal_set_message(t('Successfully added RFP.'));
-
   // Invalidate the existing cache to make sure that
   // the newly added one will get indexed too.
   cache_clear_all('rfp_listing', 'cache');
-  // Reroute the page to the listing page.
-  drupal_goto('/rfps');
+    
+
+  if ($_GET['from_current_progress'] == 1) {
+
+    // Set the account status to receive quote if
+    // the link is form current progress.
+    $wrapper = entity_metadata_wrapper('node', $data['account_id']);
+
+    $action_status = $wrapper->field_action_status->value();
+    $workflow_status = $wrapper->field_workflow_status->value();
+    $account_status = $wrapper->field_account_status->value();
+
+    if ($account_status == 'opportunity' && $workflow_status == 'rfp' && $action_status == 'generate_rfp') {
+      $wrapper->field_action_status->set('receive_quote');
+    }
+
+    $wrapper->save();
+
+    $alias = drupal_get_path_alias('node/' . $data['account_id']);
+    $alias = substr($alias, 8);
+
+    $param = array(
+      'query' => array(
+        'from' => 'opportunity',
+        'from_rfp' => TRUE,
+      )
+    );
+
+    // Redirect to company page to continue current progress activity.
+    drupal_goto('company/' . $alias, $param);
+  }
+  else {
+    // Reroute the page to the listing page.
+    drupal_set_message(t('Successfully added RFP.'));
+    drupal_goto('/rfps');
+  }
+
+  
 }
 
 /**

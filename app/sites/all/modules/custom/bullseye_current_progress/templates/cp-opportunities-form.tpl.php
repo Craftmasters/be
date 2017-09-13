@@ -134,6 +134,12 @@
 		        	</div>
 		        </div>
 		      </div>
+		      <?php if (isset($_GET['link_sent']) && $_GET['link_sent'] == 1) : ?>
+		      	<div class="alert alert-success alert-dismissable" style="text-align: left;">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						  <?php print t('Email containing link sent to client.'); ?>
+						</div>
+		      <?php endif; ?>
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
@@ -203,7 +209,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#request-specification" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button id="btn-send-link-email" type="button" class="green-btn"><?php print t('Send'); ?></button>
+		        	<?php print render($form['send_link_email']); ?>
 		        </div>
 		      </div>
 		    </div>
@@ -389,9 +395,16 @@
 		        	</div>
 		        </div>
 		      </div>
+		      <?php if (isset($_GET['from_rfp']) && $_GET['from_rfp'] == 1) : ?>
+		      	<div class="alert alert-success alert-dismissable" style="text-align: left;">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						  <?php print t('RFP successfully added.'); ?>
+						</div>
+		      <?php endif; ?>
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
+		      			
 		      			<h3><?php print t('Quotation received from carrier?'); ?></h3>
 		      		</div>
 		      	</div>
