@@ -118,6 +118,9 @@ function bullseye_preprocess_page(&$vars, $hook) {
   drupal_add_library('system', 'ui.datepicker');
   drupal_add_css($adminimal_directory . '/css/jquery.ui.theme.css');
 
+  // For suggestion box image.
+  $vars['suggestion_box_img'] = $base_url . '/' . $theme_directory . '/images/suggestion-box.svg';
+
 }
 
 

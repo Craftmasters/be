@@ -110,6 +110,13 @@ function bullseye_blocks_menu() {
     'type' => MENU_CALLBACK
   );
 
+  $items['suggestion-box'] = array(
+    'title' => 'Company',
+    'page callback' => 'suggestion_box_send',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+
   return $items;
 }
 
@@ -198,7 +205,6 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
   if (in_array($form_id, $default_close_lightbox_forms)) {
     $form['actions']['submit']['#submit'][] = '_close_lightbox';
   }
-
 }
 
 /**
@@ -650,7 +656,6 @@ function bullseye_blocks_preprocess_block(&$variables) {
       }
     }
   }
-  
 }
 
 /**
@@ -659,4 +664,28 @@ function bullseye_blocks_preprocess_block(&$variables) {
 function _empty_page() {
   $empty = ' ';
   return $empty;
+}
+
+/**
+ * Callback for suggestion box sending.
+ */
+function suggestion_box_send() {
+  global $user;
+
+  $name = $_POST['name'];
+  $content_subject = $_POST['content_subject'];
+  $details = $_POST['details'];
+
+  $to = 'support@archerjordan.com';
+  $from = $user->mail;
+  $subject = 'BullsEye Submitted Suggestion';
+  $message = "From: " . $from . "\r\nName: " . $name . "\r\n\r\nSubject: " . $content_subject . "\r\n\r\nDetails:\r\n" . $details;
+  $attachments = array();
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+
+  drupal_json_output('success');
+
 }
