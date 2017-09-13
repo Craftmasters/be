@@ -805,7 +805,7 @@ class Bullseye {
   /**
    * Email RFP.
    */
-  function emailRfp($from, $to, $subject, $body, $attachments) {
+  function sendEmail($from, $to, $subject, $body, $attachments) {
     $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
     $email->send();
   }
