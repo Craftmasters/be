@@ -686,6 +686,6 @@ function suggestion_box_send() {
   $be = new Bullseye($user);
   $be->sendEmail($to, $from, $subject ,$message, $attachments);
 
-  drupal_json_output('success' . $to . $from . $subject . $message);
+  drupal_json_output('success');
 
 }
