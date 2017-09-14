@@ -93,7 +93,7 @@
         <?php print render($form['benefits']['benefits_in']['r']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['0']); ?>
+        <?php print render($form['benefits']['benefits_in']['sb']); ?>
       </div>
       <div class="col-md-6">
         <?php print render($form['benefits']['benefits_in_others']); ?>

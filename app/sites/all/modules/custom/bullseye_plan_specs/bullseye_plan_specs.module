@@ -40,6 +40,22 @@ function bullseye_plan_specs_permission(){
  * Add plan specifciation form
  */
 function bullseye_plan_specs_form($form, &$form_state) {
+
+  $company_name = '';
+  $primary_contact = '';
+  $title = '';
+  $contact_number = '';
+
+  if (isset($_GET['company_nid']) && !empty($_GET['company_nid'])) {
+    $nid = $_GET['company_nid'];
+    $node = node_load($nid);
+    kpr($node);
+    $company_name = $node->field_company[LANGUAGE_NONE][0]['value'];
+    $primary_contact = $node->field_email[LANGUAGE_NONE][0]['value'];
+    $title = $node->field_title[LANGUAGE_NONE][0]['value'];
+    $contact_number = $node->field_work_phone[LANGUAGE_NONE][0]['value'];
+  }
+
   $form = array();
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
@@ -54,6 +70,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Company'),
     ),
+    '#default_value' => $company_name,
   );
 
   $form['company_container']['contact'] = array(
@@ -62,6 +79,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Contact'),
     ),
+    '#default_value' => $primary_contact,
   );
 
   $form['company_container']['contact_title'] = array(
@@ -70,6 +88,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Title'),
     ),
+    '#default_value' => $title,
   );
 
   $form['company_container']['contact_number'] = array(
@@ -78,6 +97,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Phone Number'),
     ),
+    '#default_value' => $contact_number,
   );
 
   $form['company_container']['contact_industry'] = array(
@@ -206,7 +226,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
       'v' => t('Vision'),
       'r' => t('Retirement'),
       // @todo: add js handler for Specialty Benefits text field
-      '0' => t('Specialty Benefits'),
+      'sb' => t('Specialty Benefits'),
     ),
   );
 

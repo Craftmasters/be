@@ -1127,34 +1127,34 @@ class Bullseye {
     /***************
      * Benefits Interested In
      ***************/
-    if ($data['benefits_in']['mm'] != 0) {
+    if ($data['benefits_in']['mm'] != '0') {
       $node->field_benefits[$lang][][$val] = 'major_medical';
     }
-    if ($data['benefits_in']['lm'] != 0) {
+    if ($data['benefits_in']['lm'] != '0') {
       $node->field_benefits[$lang][][$val] = 'limited_medical';
     }
-    if ($data['benefits_in']['tm'] != 0) {
+    if ($data['benefits_in']['tm'] != '0') {
       $node->field_benefits[$lang][][$val] = 'teledoc';
     }
-    if ($data['benefits_in']['mec'] != 0) {
+    if ($data['benefits_in']['mec'] != '0') {
       $node->field_benefits[$lang][][$val] = 'mec';
     }
-    if ($data['benefits_in']['d'] != 0) {
+    if ($data['benefits_in']['d'] != '0') {
       $node->field_benefits[$lang][][$val] = 'dental';
     }
-    if ($data['benefits_in']['v'] != 0) {
+    if ($data['benefits_in']['v'] != '0') {
       $node->field_benefits[$lang][][$val] = 'vision';
     }
-    if ($data['benefits_in']['ladd'] != 0) {
+    if ($data['benefits_in']['ladd'] != '0') {
       $node->field_benefits[$lang][][$val] = 'life';
     }
-    if ($data['benefits_in']['std'] != 0) {
+    if ($data['benefits_in']['std'] != '0') {
       $node->field_benefits[$lang][][$val] = 'short_term_disability';
     }
-    if ($data['benefits_in']['0'] != 0) {
+    if ($data['benefits_in']['sb'] != '0') {
       $node->field_benefits[$lang][][$val] = 'special_benefits';
     }
-    if ($data['benefits_in']['r'] != 0) {
+    if ($data['benefits_in']['r'] != '0') {
       $node->field_benefits[$lang][][$val] = 'retirement';
     }
 
