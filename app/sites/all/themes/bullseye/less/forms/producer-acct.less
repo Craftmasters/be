@@ -154,6 +154,75 @@ body.page-producer-registration{
         margin-bottom: 10px;
       }
     }
+
+    #producer-acct-terms-link{
+      .modal-dialog{
+        .modal-content{
+          background: #e7e6e6;
+
+          .body-tabs-container{
+            background: #fff;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+
+            .nav.nav-tabs{
+              border-radius: 5px;
+              margin: 0;
+
+              > li{
+                width: 50%;
+                text-align: center;
+                  
+                > a{
+                  border: 0;
+                  border-right: 1px solid #e7e7e7;
+                  border-bottom: 1px solid #e7e7e7;
+                  margin: 0;
+                  background: #ededed;
+                }
+              }
+              > li.active > a{
+                color: #3b3838;
+                background: #fff;
+              }
+            }
+
+            .tab-content{
+              > .tab-pane{
+                max-height: 300px;
+                overflow: auto;
+                padding: 10px 15px;
+
+                > ol > li{
+                  font-size: 13px;
+                  margin-bottom: 1em;
+                }
+              }
+            }
+          }
+        }
+        .modal-footer{
+          text-align: center;
+
+          button.orange-btn, button.gray-btn{
+            border-radius: 30px;
+            padding: 10px 90px;
+            text-transform: uppercase;
+            color: #fff;
+            border: 0;
+            font-size: 16px;
+          }
+          
+          button.orange-btn{
+            background: #F58A3E;
+          }
+
+          button.gray-btn{
+            background: #b0abab;
+          }
+        }
+      }
+    }
   }
 }
 
