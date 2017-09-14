@@ -1923,7 +1923,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // Invalidate the existing cache to make sure that
   // the newly added one will get indexed too.
   cache_clear_all('rfp_listing', 'cache');
-    
+
 
   if ($_GET['from_current_progress'] == 1) {
 
@@ -1960,7 +1960,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
     drupal_goto('/rfps');
   }
 
-  
+
 }
 
 /**
@@ -2100,7 +2100,7 @@ function generate_rfp_limited_medical($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2123,7 +2123,7 @@ function generate_rfp_teledoc($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2146,7 +2146,7 @@ function generate_rfp_mec($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2169,7 +2169,7 @@ function generate_rfp_dental($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2192,7 +2192,7 @@ function generate_rfp_vision($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2215,7 +2215,7 @@ function generate_rfp_life($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2238,7 +2238,7 @@ function generate_rfp_short_term_disability($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2261,7 +2261,7 @@ function generate_rfp_retirement($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
 
 /**
@@ -2284,5 +2284,5 @@ function generate_rfp_special_benefits($form, &$form_state) {
 
   // Send the email.
   $be = new Bullseye($user);
-  $be->emailRfp($from, $to, $subject, $body, $attachments);
+  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
 }
