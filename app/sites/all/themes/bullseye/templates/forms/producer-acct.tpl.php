@@ -53,7 +53,7 @@
   ?>
   <div class="single-row-check-box">
     <?php print render($form['agree_terms_privacy']); ?>
-    <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Terms</a> & <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-privacy-link">Privacy</a> Policy.</label>
+    <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Terms</a> & <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Privacy</a> Policy.</label>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="producer-acct-terms-link" role="dialog">
