@@ -69,8 +69,13 @@
 <p>Please read the Terms of Use and Privacy Policy of Bullseye marketing Platform by Archer Jordan. IF YOU DO NOT AGREE TO THESE TERMS, YOU SHOULD IMMEDIATELY DISCONTINUE YOUR USE OF THIS WEBSITE.</p>
   
           <div class="body-tabs-container">
-            
-            <div class="terms-tab" style="max-height: 500px; overflow: auto;">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#terms" aria-controls="terms" role="tab" data-toggle="tab">Terms of Use</a></li>
+              <li role="presentation"><a href="#privacy" aria-controls="privacy" role="tab" data-toggle="tab">Privacy Policy</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="terms">
 <p><strong>Archer Jordan Insurance Agency, Inc. (AJIA)</strong> and its parent company ("<strong>AJIA Group</strong>") made the <strong>BULLSEYE MARKETING PLATFORM</strong> site (the "Web Site") available. All content, information and software provided on and through the Web Site ("Content") may be used solely under the following terms and conditions ("Terms of Use").
 <strong>BY CHECKING “I AGREE TO BULLSEYE TERMS OF USE AND PRIVACY POLICY”  CONSTITUTES YOUR ACCEPTANCE OF THE WEB SITE TERMS AND CONDITIONS. IF YOU DO NOT AGREE TO THESE TERMS, YOU SHOULD IMMEDIATELY DISCONTINUE YOUR USE OF THIS WEB SITE.</strong></p>
 
@@ -95,9 +100,8 @@ By submitting content to a forum or any other portion of the Web Site, you autom
 </ol>
 
 <p>No part of this site may be reproduced or transmitted in any form or by any means, electronic or mechanical, which includes but is not limited to facsimile transmission, photocopying, recording, rekeying or using any information storage or retrieval system, without express written permission from the copyright owner. Requests for permission or further information should be directed to the Webmaster at: <a href="mailto:info@archerjordan.com" target="_blank">info@archerjordan.com</a></p>
-            </div>
-
-            <div class="privacy-tab" style="max-height: 500px; overflow: auto;">
+              </div>
+              <div role="tabpanel" class="tab-pane" id="privacy">
 <p><strong>Archer Jordan Insurance Agency, Inc. (AJIA)</strong> and its parent company ("<strong>AJIA GROUP</strong>", "we", "our", "us") are committed to protecting the privacy of the users ("you", "your") of the <strong>BULLSEYE MARKETING PLATFORM</strong> site ("Web Site"). We collect personally identifiable information about you only with your permission.</p>
 <p><strong>Collection of personal information</strong>: In some cases, such as to participate in surveys, apply for employment or to contact us through our Web Site, we ask you for personal information. The information collected is related to the purpose, and includes your name, contact information, and (if applying for employment), relevant information about your qualifications.</p>
 <p><strong>Security</strong>: We will use appropriate, commercially reasonable safeguards to maintain the confidentiality of your personal information. We will take appropriate technical and organizational measures to protect your personal information against (a) accidental or unlawful destruction, (b) accidental loss and (c) unauthorized alteration, disclosure or access. Any data we collect may be transferred internationally throughout <strong>AJIA</strong> for the purposes for which it was collected.</p>
@@ -117,14 +121,19 @@ By submitting content to a forum or any other portion of the Web Site, you autom
 Santa Barbara, CA 93108<br/>
 USA</p>
 <p>E-mail: <a href="mailto:info@archerjordan.com">info@archerjordan.com</a></p>
+              </div>
+            </div>
 
+            <!-- <div class="terms-tab" style="max-height: 500px; overflow: auto;"></div> -->
+
+            <div class="privacy-tab" style="max-height: 500px; overflow: auto;">
             </div>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">I Agree</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">No Thanks</button>
+          <button type="button" class="btn btn-default orange-btn" data-dismiss="modal">I Agree</button>
+          <button type="button" class="btn btn-default gray-btn" data-dismiss="modal">No Thanks</button>
         </div>
       </div>
       
@@ -243,13 +252,13 @@ omission.change(function (e){
 
 var form = $('#bullseye-producer-acct-indiv-form');
 form.submit(function(e) {
-  if(hasAgreed && hasHealthLife && hasOmission){
-    return true;
-  }
-  else{
-    e.preventDefault();
-    alert('Please see the link to the agreement and upload necessary documents.');
-  }
+  return true;
+  // if(hasAgreed && hasHealthLife && hasOmission){
+  // }
+  // else{
+  //   e.preventDefault();
+  //   alert('Please see the link to the agreement and upload necessary documents.');
+  // }
 });
 
 });  
