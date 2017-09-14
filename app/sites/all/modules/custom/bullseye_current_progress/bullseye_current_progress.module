@@ -169,6 +169,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/save-planspecs'] = array(
+    'page callback' => 'be_cp_save_plan_specs',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1222,6 +1229,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['account_name'] = $wrapper->field_company->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+  $vars['plan_specs_nid'] = $vars['form']['plan_specs_nid']['#value'];
 
   $vars['class_plan_specs'] = 'gray-check';
   $vars['class_request_specs'] = '';

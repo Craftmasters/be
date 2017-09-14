@@ -1,4 +1,4 @@
-<div class="current-progress-main" node-id="<?php print $nid; ?>">
+<div class="current-progress-main" node-id="<?php print $nid; ?>" plan-specs-nid="<?php print $plan_specs_nid; ?>">
 	
 	<div id="div-plan-specs" class="cp-step row <?php print $class_plan_specs; ?>">
 		<div class="col-xs-2">

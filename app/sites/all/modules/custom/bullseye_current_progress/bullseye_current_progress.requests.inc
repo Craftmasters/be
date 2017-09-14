@@ -842,3 +842,10 @@ function be_cp_save_exit_rf_op() {
   drupal_json_output($wrapper);
 
 }
+
+/**
+ * Save the plan specs.
+ */
+function be_cp_save_plan_specs() {
+  drupal_json_output($_POST);
+}

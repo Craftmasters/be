@@ -13,6 +13,7 @@
 
       $(document).ready(function() {
         var nid = $('.current-progress-main').attr('node-id');
+        var plan_specs_nid = $('.current-progress-main').attr('plan-specs-nid');
 
         // Refresh classes of current progress block.
         function refreshClasses(nid) {
@@ -262,6 +263,49 @@
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+            },
+          });
+        });
+
+        function checkboxValue(id) {
+          if ($('#' + id).is(":checked")) {
+            return 1;
+          }
+          else {
+            return 0;
+          }
+        }
+
+        $('#btn-save-exit-receive-details').click(function() {
+          $.ajax({
+            url: '/be-cp/save-planspecs',
+            method: 'POST',
+            data: {
+              nid: nid,
+              plan_specs_nid: plan_specs_nid,
+              fringe_rates: $('#edit-fringe-rates').val(),
+              proposed_effective_date: $('#edit-proposed-effective-date-datepicker-popup-0').val(),
+              other_work_locations: $('#edit-other-work-locations').val(),
+              number_of_employees: $('#edit-number-of-employees').val(),
+              number_of_dependents: $('#edit-number-of-dependents').val(),
+              nature_of_business: $('#edit-nature-of-business').val(),
+              years_in_business: $('#edit-years-in-business').val(),
+              tax_id: $('#edit-tax-id').val(),
+              renewal_date: $('#edit-renewal-date-datepicker-popup-0').val(),
+              major_medical: checkboxValue('edit-major-medical'),
+              limited_medical: checkboxValue('id'),
+              teledoc: checkboxValue('edit-teledoc'),
+              mec: checkboxValue('edit-mec'),
+              life: checkboxValue('edit-life'),
+              short_term_disability: checkboxValue('edit-short-term-disability'),
+              dental: checkboxValue('edit-dental'),
+              vision: checkboxValue('edit-vision'),
+              retirement: checkboxValue('edit-retirement'),
+              special_benefits: checkboxValue('edit-special-benefits'),
+              special_benefits_text: $('#edit-special-benefits-text').val(),
+            },
+            success: function(result){
+              console.log(result);
             },
           });
         });
