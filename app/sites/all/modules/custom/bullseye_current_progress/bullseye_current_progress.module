@@ -113,6 +113,62 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/receive-details'] = array(
+    'page callback' => 'be_cp_receive_details',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/next-generate-rfp'] = array(
+    'page callback' => 'be_cp_next_generate_rfp',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/send-plan-proposal'] = array(
+    'page callback' => 'be_cp_send_plan_proposal',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/proposal-send-email'] = array(
+    'page callback' => 'be_cp_propsal_send_email',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/accept-proposal-yes'] = array(
+    'page callback' => 'be_cp_accept_proposal_yes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/header-classes'] = array(
+    'page callback' => 'be_cp_header_classes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/receive-feedback-op'] = array(
+    'page callback' => 'be_cp_receive_feedback_opportunity',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-exit-rf-op'] = array(
+    'page callback' => 'be_cp_save_exit_rf_op',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -198,6 +254,7 @@ function convert_to_prospect($form, &$form_state) {
   cache_clear_all('count_leads_accounts_listing', 'cache');
   cache_clear_all('prospect_accounts_listing', 'cache');
   cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('contacts_' . $form_state['values']['nid'], 'cache');
 
   // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
@@ -307,7 +364,6 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
-
 }
 
 /**
@@ -353,7 +409,7 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   // Setting the new statuses of the account.
   $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
-  $wrapper->field_action_status->set('receive_specifications');
+  $wrapper->field_action_status->set('request_specifications');
   $wrapper->field_workflow_status->set('plan_specification');
   $wrapper->field_account_status->set('opportunity');
   $wrapper->save();
@@ -438,28 +494,569 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
  * Current Progress for Opportunities Form.
  */
 function bullseye_current_progress_opportunities_form($form, &$form_state) {
+  global $base_url;
+  global $user;
+
+  $be = new Bullseye($user);
+
   $form = array();
 
-  $form['#parents'] = array();
+  //$form['#parents'] = array();
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
   $alias  = 'content/' . arg(1);
   $path = drupal_lookup_path('source', $alias);
   $node = menu_get_object('node', 1, $path);
+  $account_estimate_value = '';
+  if (isset($node->field_account_estimate_value[LANGUAGE_NONE][0]['value'])) {
+    $account_estimate_value = $node->field_account_estimate_value[LANGUAGE_NONE][0]['value'];
+  }
+
+  // Check for submitted plan specs.
+  $plan_specs = $be->getLatestPlanSpecsByNid($node->nid);
+  $plan_specs_nid = '';
+  $fringe_rates = '';
+  $proposed_effective_date = '';
+  $other_work_locations = '';
+  $number_of_employees = '';
+  $number_of_dependents = '';
+  $nature_of_business = '';
+  $years_in_business = '';
+  $tax_id = '';
+  $renewal_date = '';
+  $major_medical = 0;
+  $teledoc = 0;
+  $life = 0;
+  $dental = 0;
+  $retirement = 0;
+  $limited_medical = 0;
+  $mec = 0;
+  $short_term_disability = 0;
+  $vision = 0;
+  $special_benefits = 0;
+  $special_benefits_text = '';
+
+  if (!empty($plan_specs)) {
+    $plan_specs_nid = $plan_specs['nid'];
+    $fringe_rates = $plan_specs['field_fringe_rate_value'];
+    $proposed_effective_date = $plan_specs['field_proposed_effective_date_value'];
+    $other_work_locations = $plan_specs['field_other_work_locations_value'];
+    $number_of_employees = $plan_specs['field_number_of_employees_value'];
+    $number_of_dependents = $plan_specs['field_number_of_dependents_value'];
+    $nature_of_business = $plan_specs['field_nature_of_business_sic_value'];
+    $years_in_business = $plan_specs['field_years_in_business_value'];
+    $tax_id = $plan_specs['field_tax_id_value'];
+    $renewal_date = $plan_specs['field_renewal_date_value'];
+    $special_benefits_text = $plan_specs['field_others_value'];
+    if (in_array('major_medical', $plan_specs['benefits'])) {
+      $major_medical = 1;
+    }
+    if (in_array('teledoc', $plan_specs['benefits'])) {
+      $teledoc = 1;
+    }
+    if (in_array('life', $plan_specs['benefits'])) {
+      $life = 1;
+    }
+    if (in_array('dental', $plan_specs['benefits'])) {
+      $dental = 1;
+    }
+    if (in_array('retirement', $plan_specs['benefits'])) {
+      $retirement = 1;
+    }
+    if (in_array('mec', $plan_specs['benefits'])) {
+      $mec = 1;
+    }
+    if (in_array('short_term_disability', $plan_specs['benefits'])) {
+      $short_term_disability = 1;
+    }
+    if (in_array('vision', $plan_specs['benefits'])) {
+      $vision = 1;
+    }
+    if (in_array('special_benefits', $plan_specs['benefits'])) {
+      $special_benefits = 1;
+    }
+    if (in_array('limited_medical', $plan_specs['benefits'])) {
+      $limited_medical = 1;
+    }
+  }
 
   $form['nid'] = array(
     '#type' => 'hidden',
     '#value' => $node->nid,
   );
 
-  $form['submit'] = array(
+  $form['plan_specs_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $plan_specs['nid'],
+  );
+
+  $form['account_title'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->title,
+  );
+
+  $form['company_name'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->field_company[LANGUAGE_NONE][0]['value'],
+  );
+
+  // Fringe Rate/s.
+  $form['fringe_rates'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Fringe Rate/s'),
+    '#attributes' => array(
+      'placeholder' => '500',
+    ),
+    '#default_value' => $fringe_rates,
+  );
+
+  // Proposed Effective Date.
+  $form['proposed_effective_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => $proposed_effective_date,
+    '#date_year_range' => '0:+3',
+    '#title' => t('Proposed Effective Date'),
+  );
+
+
+
+  // Other Work Locations and Zip Codes.
+  $form['other_work_locations'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Other Work Locations and Zip Codes'),
+    '#attributes' => array(
+      'placeholder' => 'Dallas 88829, New Jersey 81920',
+    ),
+    '#default_value' => $other_work_locations,
+  );
+
+  // Number of Employees.
+  $form['number_of_employees'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Employees'),
+    '#attributes' => array(
+      'placeholder' => '100',
+    ),
+    '#default_value' => $number_of_employees,
+  );
+
+  // Number of Dependents.
+  $form['number_of_dependents'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of Dependents'),
+    '#attributes' => array(
+      'placeholder' => '200',
+    ),
+    '#default_value' => $number_of_dependents,
+  );
+
+  // Nature of Business/SIC.
+  $form['nature_of_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nature of Business/SIC'),
+    '#attributes' => array(
+      'placeholder' => 'xxxx',
+    ),
+    '#default_value' => $nature_of_business,
+  );
+
+  // Years in Business.
+  $form['years_in_business'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Years in Business'),
+    '#attributes' => array(
+      'placeholder' => '5',
+    ),
+    '#default_value' => $years_in_business,
+  );
+
+  // Tax ID.
+  $form['tax_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tax ID'),
+    '#attributes' => array(
+      'placeholder' => 'xxxxxxxxx',
+    ),
+    '#default_value' => $tax_id,
+  );
+
+  // Renewal Date.
+  $form['renewal_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => $renewal_date,
+    '#date_year_range' => '0:+3',
+    '#title' => t('Renewal Date'),
+  );
+
+  $form['benefits_container'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['benefits_container']['benefits']['major_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
+  );
+
+  $form['benefits_container']['benefits']['limited_medical'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
+  );
+
+  $form['benefits_container']['benefits']['teledoc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
+  );
+
+  $form['benefits_container']['benefits']['mec'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+    '#default_value' => $mec,
+  );
+
+  $form['benefits_container']['benefits']['life'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
+  );
+
+  $form['benefits_container']['benefits']['short_term_disability'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
+  );
+
+  $form['benefits_container']['benefits']['dental'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+    '#default_value' => $dental,
+  );
+
+  $form['benefits_container']['benefits']['vision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+    '#default_value' => $vision,
+  );
+
+  $form['benefits_container']['benefits']['retirement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+    '#default_value' => $retirement,
+  );
+
+  $form['benefits_container']['benefits']['special_benefits'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
+  );
+
+  $form['special_benefits_text'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
+    '#default_value' => $special_benefits_text,
+  );
+
+  $form['bc_second'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['bc_second']['benefits']['major_medical_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
+  );
+
+  $form['bc_second']['benefits']['limited_medical_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
+  );
+
+  $form['bc_second']['benefits']['teledoc_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
+  );
+
+  $form['bc_second']['benefits']['mec_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+    '#default_value' => $mec,
+  );
+
+  $form['bc_second']['benefits']['life_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
+  );
+
+  $form['bc_second']['benefits']['short_term_disability_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
+  );
+
+  $form['bc_second']['benefits']['dental_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+    '#default_value' => $dental,
+  );
+
+  $form['bc_second']['benefits']['vision_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+    '#default_value' => $vision,
+  );
+
+  $form['bc_second']['benefits']['retirement_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+    '#default_value' => $retirement,
+  );
+
+  $form['bc_second']['benefits']['special_benefits_1'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
+  );
+
+  $form['special_benefits_text_1'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
+    '#default_value' => $special_benefits_text,
+  );
+
+  // Send Link Date.
+  $form['sl_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => date('Y-m-d'),
+    '#date_year_range' => '0:+3',
+    '#title' => t('Date'),
+    '#attributes' => array(
+      'readonly' => TRUE,
+    ),
+  );
+
+  // Send Link Subject.
+  $form['sl_subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => t('Plan Specification Details from Archer Jordan'),
+  );
+
+  // Send Link Sender.
+  $form['sl_sender'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Sender'),
+    '#default_value' => 'bullseye@archerjordan.com',
+  );
+
+  // Send Link Recipient.
+  $form['sl_recipient'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Recipient'),
+    '#default_value' => $node->field_email[LANGUAGE_NONE][0]['value'],
+  );
+
+  $plan_specs_link = $base_url . '/plan_specs?company_nid=' . $node->nid;
+  $email_temp = "Good day!\r\n\r\nPlease specify the following information so we could present the best benefit package to fit your needs:\r\n\r\n" . $plan_specs_link . "\r\n\r\nThank you for your interest in Archer Jordan.\r\n\r\nKind Regards,\r\nArcher Jordan Admin";
+
+  // Send Link Content.
+  $form['sl_content'] = array(
+    '#type' => 'textarea',
+    '#title' => t(''),
+    '#attributes' => array(
+      'placeholder' => '',
+    ),
+    '#default_value' => $email_temp,
+  );
+
+  // The values for the dropdown box.
+  $form['type_options'] = array(
+    '#type' => 'value',
+    '#value' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+  );
+
+  $form['priority'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#description' => "Select the priority level.",
+    '#options' => $form['type_options']['#value'],
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#date_year_range' => '0:+3',
+    '#title' => t('Due Date'),
+  );
+
+  $form['bc_third'] = array(
+    '#type' => 'container',
+    'benefits' => array(),
+  );
+
+  $form['bc_third']['benefits']['major_medical_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
+  );
+
+  $form['bc_third']['benefits']['limited_medical_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
+  );
+
+  $form['bc_third']['benefits']['teledoc_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
+  );
+
+  $form['bc_third']['benefits']['mec_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('MEC'),
+    '#default_value' => $mec,
+  );
+
+  $form['bc_third']['benefits']['life_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
+  );
+
+  $form['bc_third']['benefits']['short_term_disability_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
+  );
+
+  $form['bc_third']['benefits']['dental_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dental'),
+    '#default_value' => $dental,
+  );
+
+  $form['bc_third']['benefits']['vision_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Vision'),
+    '#default_value' => $vision,
+  );
+
+  $form['bc_third']['benefits']['retirement_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Retirement'),
+    '#default_value' => $retirement,
+  );
+
+  $form['bc_third']['benefits']['special_benefits_2'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
+  );
+
+  $form['special_benefits_text_2'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Enter special benefit'),
+    ),
+    '#default_value' => $special_benefits_text,
+  );
+
+  $form['attach_proposal'] = array(
+    '#title' => t('Attach Proposal'),
+    '#type' => 'managed_file',
+  );
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject:'),
+    '#default_value' => 'Plan Proposal for ' . $node->field_company[LANGUAGE_NONE][0]['value'],
+  );
+
+  $form['to'] = array(
+    '#type' => 'textfield',
+    '#title' => t('To:'),
+    '#default_value' => $node->field_email[LANGUAGE_NONE][0]['value'],
+  );
+
+  $form['show_attachment'] = array(
+    '#prefix' => '<div class="show-attachment">',
+    '#suffix' => '</div>',
+    '#markup' => '<span class="label">Attachment:</span> <a href="#" class="orange-font"></a>',
+  );
+
+  $form['message'] = array(
+    '#type' => 'textarea',
+    '#attributes' => array(
+      'placeholder' => t('Enter message here ..'),
+    ),
+  );
+
+  $form['account_estimate_value'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Account Estimate Value'),
+    '#default_value' => $account_estimate_value,
+  );
+
+  $form['send_link_email'] = array(
     '#type' => 'submit',
-    '#submit' => array('convert_to_opportunity'),
+    '#submit' => array('send_link_email'),
+    '#name' => 'send_link_email',
+    '#value' => t('Send'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
+  );
+
+  $form['send_proposal_email'] = array(
+    '#type' => 'submit',
+    '#submit' => array('send_proposal_email'),
+    '#name' => 'send_proposal_email',
+    '#value' => t('Send'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['next_to_rfp'] = array(
+    '#type' => 'submit',
+    '#submit' => array('next_to_rfp'),
+    '#name' => 'next_to_rfp',
+    '#value' => t('Next'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['convert_to_deal'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_deal'),
+    '#name' => 'convert_to_deal',
     '#value' => t('Yes'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
   );
 
   // Attach js for ajax requests.
@@ -471,6 +1068,150 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 }
 
 /**
+ * Form submit for current progress prospects form.
+ */
+function next_to_rfp($form, &$form_state) {
+
+  // Clear session first.
+  unset($_SESSION['add_rfp']);
+
+  $benefits = array();
+
+  // Save the data temporarily to session variable.
+  $_SESSION['add_rfp'] = array(
+    'account_id' => $form_state['values']['nid'],
+    'major_medical' => $form_state['values']['major_medical'],
+    'limited_medical' => $form_state['values']['limited_medical'],
+    'teledoc' => $form_state['values']['teledoc'],
+    'mec' => $form_state['values']['mec'],
+    'life' => $form_state['values']['life'],
+    'short_term_disability' => $form_state['values']['short_term_disability'],
+    'dental' => $form_state['values']['dental'],
+    'vision' => $form_state['values']['vision'],
+    'retirement' => $form_state['values']['retirement'],
+    'special_benefits' => $form_state['values']['special_benefits'],
+    'special_benefits_text' => $form_state['values']['special_benefits_text'],
+  );
+
+  // Prepare benefits data before passing to url parameter.
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if ($key[0] != '#') {
+      $benefits[$key] = $value['#value'];
+    }
+  }
+
+  $param = array(
+    'query' => array(
+      'account_name' => $form_state['values']['company_name'],
+      'benefits' => $benefits,
+      'from_current_progress' => TRUE,
+      'plan_specs' => array(
+        'fringe_rates' => $form_state['values']['fringe_rates'],
+        'proposed_effective_date' => $form_state['values']['proposed_effective_date'],
+        'other_work_locations' => $form_state['values']['other_work_locations'],
+        'number_of_employees' => $form_state['values']['number_of_employees'],
+        'number_of_dependents' => $form_state['values']['number_of_dependents'],
+        'nature_of_business' => $form_state['values']['nature_of_business'],
+        'years_in_business' => $form_state['values']['years_in_business'],
+        'tax_id' => $form_state['values']['tax_id'],
+        'renewal_date' => $form_state['values']['renewal_date'],
+      ),
+    )
+  );
+
+  drupal_goto('rfps/add', $param);
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function send_link_email($form, &$form_state) {
+  global $user;
+
+  $to = $form_state['values']['sl_recipient'];
+  $from = $form_state['values']['sl_sender'];
+  $message = $form_state['values']['sl_content'];
+  $subject = $form_state['values']['sl_subject'];
+  $attachments = array();
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+
+  $param = array(
+    'query' => array(
+      'from' => 'opportunity',
+      'link_sent' => TRUE,
+    )
+  );
+  
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), $param);
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function send_proposal_email($form, &$form_state) {
+
+  global $user;
+
+  $form_state['values']['account'] = array(
+    'entity_id' => $form_state['values']['nid'],
+    'entity_label' => $form_state['values']['account_title'],
+    'entity_type' => 'node',
+    'entity_bundle' => 'accounts',
+  );
+
+  $data = $form_state['values'];
+
+  $to = $form_state['values']['to'];
+  $from = 'bullseye@archerjordan.com';
+  $message = $form_state['values']['message'];
+  $subject = $form_state['values']['subject'];
+  $attachments = array();
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+  // Save the proposal to Proposal entity storage.
+  $be->createProposal($data);
+
+  $param = array(
+    'query' => array(
+      'from' => 'opportunity',
+      'proposal_sent' => TRUE,
+    )
+  );
+  
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), $param);
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function convert_to_deal($form, &$form_state) {
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'convert_to_deals_in_progress') {
+    $wrapper->field_action_status->set('draw_documents');
+    $wrapper->field_workflow_status->set('generate_trust_agreement');
+    $wrapper->field_account_status->set('deal_in_progress');
+  }
+
+  $wrapper->save();
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'opportunity')));
+}
+
+/**
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_opportunities_form(&$vars) {
@@ -479,6 +1220,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['account_name'] = $wrapper->field_company->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
 
   $vars['class_plan_specs'] = 'gray-check';
@@ -488,7 +1230,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['class_generate_rfp'] = '';
   $vars['class_recieve_quote'] = '';
   $vars['class_plan_presentation'] = 'gray-check';
-  $vars['class_request_info'] = '';
+  $vars['class_send_proposal'] = '';
   $vars['class_receive_feedback'] = '';
   $vars['class_convert_deals'] = 'no-check';
 
@@ -496,13 +1238,13 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['modal_access_rp'] = '';
   $vars['modal_access_gr'] = '';
   $vars['modal_access_rq'] = '';
-  $vars['modal_access_ri'] = '';
+  $vars['modal_access_sp'] = '';
   $vars['modal_access_rf'] = '';
   $vars['modal_access_cd'] = '';
 
   if ($workflow_status == 'plan_specification') {
     $vars['class_plan_specs'] = 'gray-check';
-    if ($action_status == 'receive_specifications') {
+    if ($action_status == 'request_specifications') {
       $vars['class_request_specs'] = 'current-step';
       $vars['modal_access_rs'] = 'modal';
     }
@@ -537,12 +1279,12 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'gray-check';
-    if ($action_status == 'request_information') {
-      $vars['class_request_info'] = 'current-step';
-      $vars['modal_access_ri'] = 'modal';
+    if ($action_status == 'send_plan_proposal') {
+      $vars['class_send_proposal'] = 'current-step';
+      $vars['modal_access_sp'] = 'modal';
     }
     if ($action_status == 'receive_feedback_opportunity') {
-      $vars['class_request_info'] = 'done-step';
+      $vars['class_send_proposal'] = 'done-step';
       $vars['class_receive_feedback'] = 'current-step';
       $vars['modal_access_rf'] = 'modal';
     }
@@ -556,7 +1298,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'no-check current-step';
     $vars['modal_access_cd'] = 'modal';
@@ -571,10 +1313,61 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'green-check';
   }
+
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Deals Form.
+ */
+function bullseye_current_progress_deals_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  /*$form['submit'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_closed_deal'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );*/
+
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_deals.js',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_deals_form(&$vars) {
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
 
 }
 
@@ -595,6 +1388,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['bullseye_current_progress_opportunities_form'] = array(
     'render element' => 'form',
     'template' => 'cp-opportunities-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['bullseye_current_progress_deals_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
   return $items;

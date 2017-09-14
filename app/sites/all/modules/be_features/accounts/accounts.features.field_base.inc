@@ -10,6 +10,28 @@
 function accounts_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_account_estimate_value'.
+  $field_bases['field_account_estimate_value'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_account_estimate_value',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'field_account_status'.
   $field_bases['field_account_status'] = array(
     'active' => 1,
@@ -61,12 +83,13 @@ function accounts_field_default_field_bases() {
         'send_email' => 'Send email campaign',
         'build_rapport' => 'Build Rapport',
         'receive_feedback' => 'Receive Feedback (Prospects Phase)',
-        'receive_specifications' => 'Receive Specifications',
+        'request_specifications' => 'Request Specifications',
         'receive_plan_details' => 'Receive Plan Details',
         'generate_rfp' => 'Generate RFP',
         'receive_quote' => 'Receive Quote',
-        'request_information' => 'Request Information',
+        'send_plan_proposal' => 'Send Plan Proposal',
         'receive_feedback_opportunity' => 'Receive Feedback (Opportunity Phase)',
+        'draw_documents' => 'Draw Documents',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
@@ -693,6 +716,7 @@ function accounts_field_default_field_bases() {
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'text',
@@ -856,6 +880,7 @@ function accounts_field_default_field_bases() {
         'rfp' => 'RFP',
         'plan_presentation' => 'Plan Presentation',
         'convert_to_deals_in_progress' => 'Convert to Deals in Progress',
+        'generate_trust_agreement' => 'Generate Trust Agreement',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,

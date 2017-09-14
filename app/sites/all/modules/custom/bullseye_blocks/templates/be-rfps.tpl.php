@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="be-table-content">
-    <table class="be-tables">
+    <table class="be-tables sortable">
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
@@ -32,7 +32,7 @@
           <th class="be-dot-td"><?php print t('Short Term Dissability'); ?></th>
           <th class="be-dot-td"><?php print t('Specialty Benefits'); ?></th>
           <th><?php print t('Due Date'); ?></th>
-          <th><?php print t('Priority'); ?></th>
+          <th class="be-dot-td"><?php print t('Priority'); ?></th>
           <th><?php print t('Created By'); ?></th>
         </tr>
       </thead>

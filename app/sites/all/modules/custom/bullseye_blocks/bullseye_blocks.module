@@ -82,6 +82,13 @@ function bullseye_blocks_menu() {
     'type' => MENU_CALLBACK
   );
 
+  $items['producers/pending'] = array(
+    'title' => 'Pending Producer Requests',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access producers pending page'),
+    'type' => MENU_CALLBACK
+  );
+
   $items['carriers'] = array(
     'title' => 'Carriers',
     'page callback' => '_empty_page',
@@ -100,6 +107,13 @@ function bullseye_blocks_menu() {
     'title' => 'Company',
     'page callback' => '_empty_page',
     'access arguments' => array('access files page'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['suggestion-box'] = array(
+    'title' => 'Company',
+    'page callback' => 'suggestion_box_send',
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK
   );
 
@@ -147,6 +161,10 @@ function bullseye_blocks_permission() {
       'title' => t('Producers Page'),
       'description' => t('Access the producers page.'),
     ),
+    'access producers pending page' => array(
+      'title' => t('Producers Page'),
+      'description' => t('Access the producers pending page.'),
+    ),
     'access proposals page' => array(
       'title' => t('Proposals Page'),
       'description' => t('Access the proposals page.'),
@@ -187,7 +205,6 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
   if (in_array($form_id, $default_close_lightbox_forms)) {
     $form['actions']['submit']['#submit'][] = '_close_lightbox';
   }
-
 }
 
 /**
@@ -276,6 +293,13 @@ function bullseye_blocks_theme() {
     'be_producers' => array(
       'variables' => array(),
       'template' => 'be-producers',
+      'path' => $template_path,
+    ),
+
+    // Producers Pending Table Block.
+    'be_producers_pending' => array(
+      'variables' => array(),
+      'template' => 'be-producers-pending',
       'path' => $template_path,
     ),
 
@@ -464,6 +488,13 @@ function bullseye_blocks_block_info() {
     'status' => 0,
   );
 
+  // Producers Pending Table Block.
+  $blocks['be_producers_pending'] = array(
+    'info' => t('Producers Pending Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
   // Carriers Table Block.
   $blocks['be_carriers'] = array(
     'info' => t('Carriers Block (Table)'),
@@ -625,7 +656,6 @@ function bullseye_blocks_preprocess_block(&$variables) {
       }
     }
   }
-  
 }
 
 /**
@@ -634,4 +664,28 @@ function bullseye_blocks_preprocess_block(&$variables) {
 function _empty_page() {
   $empty = ' ';
   return $empty;
+}
+
+/**
+ * Callback for suggestion box sending.
+ */
+function suggestion_box_send() {
+  global $user;
+
+  $name = $_POST['name'];
+  $content_subject = $_POST['content_subject'];
+  $details = $_POST['details'];
+
+  $to = 'support@archerjordan.com';
+  $from = $user->mail;
+  $subject = 'BULLSEYE USER FEEDBACK - ' . date('F d, Y');
+  $message = "\r\nName: " . $name . "\r\nEmail: " . $from . "\r\nDate: " . date('F d, Y') . "\r\n\r\nSubject: " . $content_subject . "\r\n\r\nComment/Suggestion:\r\n" . $details;
+  $attachments = array();
+
+  // Send the email.
+  $be = new Bullseye($user);
+  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+
+  drupal_json_output('success');
+
 }

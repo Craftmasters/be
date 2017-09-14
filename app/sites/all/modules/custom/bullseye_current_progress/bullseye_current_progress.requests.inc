@@ -506,7 +506,6 @@ function be_cp_refresh_classes_opportunity() {
   $nid = $_POST['nid'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_set_priority->set($priority);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
@@ -521,7 +520,7 @@ function be_cp_refresh_classes_opportunity() {
   $vars['class_generate_rfp'] = '';
   $vars['class_recieve_quote'] = '';
   $vars['class_plan_presentation'] = 'gray-check';
-  $vars['class_request_info'] = '';
+  $vars['class_send_proposal'] = '';
   $vars['class_receive_feedback'] = '';
   $vars['class_convert_deals'] = 'no-check';
 
@@ -529,13 +528,13 @@ function be_cp_refresh_classes_opportunity() {
   $vars['modal_access_rp'] = '';
   $vars['modal_access_gr'] = '';
   $vars['modal_access_rq'] = '';
-  $vars['modal_access_ri'] = '';
+  $vars['modal_access_sp'] = '';
   $vars['modal_access_rf'] = '';
   $vars['modal_access_cd'] = '';
 
   if ($workflow_status == 'plan_specification') {
     $vars['class_plan_specs'] = 'gray-check';
-    if ($action_status == 'receive_specifications') {
+    if ($action_status == 'request_specifications') {
       $vars['class_request_specs'] = 'current-step';
       $vars['modal_access_rs'] = 'modal';
     }
@@ -570,12 +569,12 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'gray-check';
-    if ($action_status == 'request_information') {
-      $vars['class_request_info'] = 'current-step';
-      $vars['modal_access_ri'] = 'modal';
+    if ($action_status == 'send_plan_proposal') {
+      $vars['class_send_proposal'] = 'current-step';
+      $vars['modal_access_sp'] = 'modal';
     }
     if ($action_status == 'receive_feedback_opportunity') {
-      $vars['class_request_info'] = 'done-step';
+      $vars['class_send_proposal'] = 'done-step';
       $vars['class_receive_feedback'] = 'current-step';
       $vars['modal_access_rf'] = 'modal';
     }
@@ -589,7 +588,7 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'no-check current-step';
     $vars['modal_access_cd'] = 'modal';
@@ -604,10 +603,242 @@ function be_cp_refresh_classes_opportunity() {
     $vars['class_generate_rfp'] = 'done-step';
     $vars['class_recieve_quote'] = 'done-step';
     $vars['class_plan_presentation'] = 'green-check';
-    $vars['class_request_info'] = 'done-step';
+    $vars['class_send_proposal'] = 'done-step';
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'green-check';
   }
 
   drupal_json_output($vars);
+}
+
+/**
+ * Set action status to receive plan details.
+ */
+function be_cp_receive_details() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'request_specifications') {
+    $wrapper->field_action_status->set('receive_plan_details');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set action status to generate rfp.
+ * and workflow status to RFP.
+ */
+function be_cp_next_generate_rfp() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'receive_plan_details') {
+    $wrapper->field_action_status->set('generate_rfp');
+    $wrapper->field_workflow_status->set('rfp');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set action status to send plan proposal.
+ * and workflow status to Plan Presentation.
+ */
+function be_cp_send_plan_proposal() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'rfp' && $action_status == 'receive_quote') {
+    $wrapper->field_action_status->set('send_plan_proposal');
+    $wrapper->field_workflow_status->set('plan_presentation');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set workflow status to convert to deal in progress.
+ */
+function be_cp_accept_proposal_yes() {
+
+  $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'receive_feedback_opportunity') {
+    $wrapper->field_workflow_status->set('convert_to_deals_in_progress');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Refresh classes of header progress block.
+ */
+function be_cp_header_classes() {
+  $nid = $_POST['nid'];
+  $status = $_POST['status'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  if ($status == 'lead') {
+    $vars['hp_verification'] = 'be-gray';
+    $vars['hp_convert_to_prospect'] = 'be-gray';
+    if ($account_status == 'lead') {
+      if ($workflow_status == 'verification') {
+        $vars['hp_verification'] = 'be-blue';
+        $vars['hp_convert_to_prospect'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_prospect') {
+        $vars['hp_verification'] = 'be-green';
+        $vars['hp_convert_to_prospect'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'prospect' || $account_status == 'opportunity' ||
+        $account_status == 'deal_in_progress' || $account_status == 'closed_deal') {
+      $vars['hp_verification'] = 'be-green';
+      $vars['hp_convert_to_prospect'] = 'be-green';
+    }
+    $vars['status'] = 'lead';
+  }
+
+  if ($status == 'prospect') {
+    $vars['hp_engagement'] = 'be-gray';
+    $vars['hp_convert_to_opportunity'] = 'be-gray';
+    if ($account_status == 'prospect') {
+      if ($workflow_status == 'engagement') {
+        $vars['hp_engagement'] = 'be-blue';
+        $vars['hp_convert_to_opportunity'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_opportunity') {
+        $vars['hp_engagement'] = 'be-green';
+        $vars['hp_convert_to_opportunity'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'opportunity' || $account_status == 'deal_in_progress' ||
+        $account_status == 'closed_deal') {
+      $vars['hp_engagement'] = 'be-green';
+      $vars['hp_convert_to_opportunity'] = 'be-green';
+    }
+    $vars['status'] = 'prospect';
+  }
+
+  if ($status == 'opportunity') {
+    $vars['hp_plan_specification'] = 'be-gray';
+    $vars['hp_rfp'] = 'be-gray';
+    $vars['hp_plan_presentation'] = 'be-gray';
+    $vars['hp_convert_to_deal'] = 'be-gray';
+    if ($account_status == 'opportunity') {
+      if ($workflow_status == 'plan_specification') {
+        $vars['hp_plan_specification'] = 'be-blue';
+        $vars['hp_rfp'] = 'be-gray';
+        $vars['hp_plan_presentation'] = 'be-gray';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'rfp') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-blue';
+        $vars['hp_plan_presentation'] = 'be-gray';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'plan_presentation') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-green';
+        $vars['hp_plan_presentation'] = 'be-blue';
+        $vars['hp_convert_to_deal'] = 'be-gray';
+      }
+      if ($workflow_status == 'convert_to_deals_in_progress') {
+        $vars['hp_plan_specification'] = 'be-green';
+        $vars['hp_rfp'] = 'be-green';
+        $vars['hp_plan_presentation'] = 'be-green';
+        $vars['hp_convert_to_deal'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'deal_in_progress' || $account_status == 'closed_deal') {
+      $vars['hp_plan_specification'] = 'be-green';
+      $vars['hp_rfp'] = 'be-green';
+      $vars['hp_plan_presentation'] = 'be-green';
+      $vars['hp_convert_to_deal'] = 'be-green';
+    }
+    $vars['status'] = 'deal_in_progress';
+  }
+
+  drupal_json_output($vars);
+
+}
+
+/**
+ * Set action status to receive feedback in opportunity.
+ */
+function be_cp_receive_feedback_opportunity() {
+
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'send_plan_proposal') {
+    $wrapper->field_action_status->set('receive_feedback_opportunity');
+  }
+
+  $wrapper->save();
+}
+
+/**
+ * Save the account estimate value field.
+ */
+function be_cp_save_exit_rf_op() {
+
+  $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+
 }

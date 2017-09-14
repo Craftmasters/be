@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Plan Specification feature.
+ */
+
+include_once 'plan_specification.features.inc';

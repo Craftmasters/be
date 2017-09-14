@@ -803,11 +803,25 @@ class Bullseye {
   }
 
   /**
-   * Email RFP.
+   * Send email.
+   *
+   * @param string $to
+   *   The recipient email.
+   * @param string $from
+   *   The sender email.
+   * @param string $subject
+   *   The email subject.
+   * @param string $body
+   *   The email body.
+   * @param array $attachments
+   *   An array containing attachment file name and path.
+   *   array(
+   *    'filename' => 'attachment.pdf',
+   *    'uri' => '/tmp/attachment.pdf',
+   *   )
    */
-  function emailRfp($from, $to, $subject, $body, $attachments) {
-    $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
-    $email->send();
+  function sendEmail($to, $from, $params) {
+    drupal_mail('bullseye_proposals', 'bullseye', $to, LANGUAGE_NONE, $params, $from);
   }
 
   /**
@@ -1063,5 +1077,319 @@ class Bullseye {
       $message = t('The email you are trying to use is already taken.');
       drupal_set_message($message, 'error');
     }
+  }
+
+  /**
+   * Create new plan specs.
+   *
+   * @param array $data
+   *   The data from plan specs form.
+   */
+  function createPlanSpecs($data) {
+    global $user;
+
+    // Map the data to plan specs storage entity.
+    $node = new stdClass();
+
+    $node->title = $data['contact_company'];
+
+    $node->type = "plan_specs";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+
+    // Cons vars.
+    $lang = $node->language;
+    $val = 'value';
+
+    /***************
+     * Company Info
+     ***************/
+    $node->field_primary_contact[$lang][0][$val] = $data['contact'];
+    $node->field_title[$lang][0][$val] = $data['contact_title'];
+    $node->field_contact_number[$lang][0][$val] = $data['contact_number'];
+    $node->field_industry[$lang][0][$val] = $data['contact_industry'];
+    $node->field_complete_address[$lang][0][$val] = $data['contact_address'];
+
+    /***************
+     * Plan Specs
+     ***************/
+    $node->field_fringe_rate[$lang][0][$val] = $data['plan_fringe_rates'];
+    $node->field_proposed_effective_date[$lang][0][$val] = $data['plan_proposed_date'];
+    $node->field_other_work_locations[$lang][0][$val] = $data['plan_other_location'];
+    $node->field_number_of_employees[$lang][0][$val] = $data['plan_num_employees'];
+    $node->field_number_of_dependents[$lang][0][$val] = $data['plan_num_dependents'];
+    $node->field_nature_of_business_sic[$lang][0][$val] = $data['plan_nature_business'];
+    $node->field_years_in_business[$lang][0][$val] = $data['plan_years_business'];
+    $node->field_tax_id[$lang][0][$val] = $data['plan_tax_id'];
+    $node->field_renewal_date[$lang][0][$val] = $data['plan_renewal_date'];
+
+    /***************
+     * Benefits Interested In
+     ***************/
+    if ($data['benefits_in']['mm'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'major_medical';
+    }
+    if ($data['benefits_in']['lm'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'limited_medical';
+    }
+    if ($data['benefits_in']['tm'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'teledoc';
+    }
+    if ($data['benefits_in']['mec'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'mec';
+    }
+    if ($data['benefits_in']['d'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'dental';
+    }
+    if ($data['benefits_in']['v'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'vision';
+    }
+    if ($data['benefits_in']['ladd'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'life';
+    }
+    if ($data['benefits_in']['std'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'short_term_disability';
+    }
+    if ($data['benefits_in']['sb'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'special_benefits';
+    }
+    if ($data['benefits_in']['r'] != '0') {
+      $node->field_benefits[$lang][][$val] = 'retirement';
+    }
+
+    // Check if plan specs is for exisiting company.
+    if ($data['nid'] != '') {
+      $node->field_account[$lang][]['nid'] = $data['nid'];
+      $param = array(
+        'query' => array(
+          'company_nid' => $data['nid'],
+        )
+      );
+    }
+    else {
+      $param = array();
+    }
+
+    // Other benefit
+    $node->field_others[$lang][0]['value'] = $data['benefits_in_others'];
+
+    // Save the carrier in the storage.
+    $node = node_submit($node);
+    node_save($node);
+
+    // Notify the user that the registration is successfull.
+    drupal_set_message(t('Plan specification submitted.'), 'status');
+
+    // Refresh the page.
+    drupal_goto('plan_specs', $param);
+
+  }
+
+  /**
+   * Get node id from path alias.
+   */
+  function getNidFromPath($alias) {
+
+    if ($cache = cache_get('nid_from_' . $alias)) {
+      $nid = $cache->data;
+    }
+    else {
+      $alias_path  = 'content/' . $alias;
+      $path = drupal_lookup_path('source', $alias_path);
+      $node = menu_get_object('node', 1, $path);
+      $nid = $node->nid;
+      cache_set('nid_from_' . $alias, $nid, 'cache');
+    }
+
+    return $nid;
+  }
+
+  /**
+   * Get all contacts from an account.
+   */
+  function getAccountPeople($nid) {
+
+    if ($cache = cache_get('contacts_' . $nid)) {
+      $contacts = $cache->data;
+    }
+    else {
+      $query = db_select('field_data_field_contacts', 'con');
+      $query->leftJoin('field_data_field_contact_name', 'name', 'con.field_contacts_value = name.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_phone_number', 'phone', 'con.field_contacts_value = phone.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
+      $contacts = $query
+        ->fields('name', array('field_contact_name_value'))
+        ->fields('pos', array('field_position_value'))
+        ->fields('phone', array('field_phone_number_value'))
+        ->fields('email', array('field_email_value'))
+        ->condition('con.entity_id', $nid, '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('contacts_' . $nid, $contacts, 'cache');
+    }
+
+    return $contacts;
+  }
+
+  /**
+   * Get the latest submitted plan specs
+   * of an existing company by nid.
+   */
+  function getLatestPlanSpecsByNid($nid) {
+
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+    $query->leftJoin('field_data_field_proposed_effective_date', 'ped', 'n.nid = ped.entity_id');
+    $query->leftJoin('field_data_field_other_work_locations', 'owl', 'n.nid = owl.entity_id');
+    $query->leftJoin('field_data_field_number_of_employees', 'noe', 'n.nid = noe.entity_id');
+    $query->leftJoin('field_data_field_number_of_dependents', 'nod', 'n.nid = nod.entity_id');
+    $query->leftJoin('field_data_field_nature_of_business_sic', 'nob', 'n.nid = nob.entity_id');
+    $query->leftJoin('field_data_field_years_in_business', 'yib', 'n.nid = yib.entity_id');
+    $query->leftJoin('field_data_field_tax_id', 'ti', 'n.nid = ti.entity_id');
+    $query->leftJoin('field_data_field_renewal_date', 'rd', 'n.nid = rd.entity_id');
+    $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+    $query->leftJoin('field_data_field_others', 'o', 'n.nid = o.entity_id');
+    $accounts = $query
+      ->fields('n', array('nid', 'type', 'created'))
+      ->fields('fr', array('field_fringe_rate_value'))
+      ->fields('ped', array('field_proposed_effective_date_value'))
+      ->fields('owl', array('field_other_work_locations_value'))
+      ->fields('noe', array('field_number_of_employees_value'))
+      ->fields('nod', array('field_number_of_dependents_value'))
+      ->fields('nob', array('field_nature_of_business_sic_value'))
+      ->fields('yib', array('field_years_in_business_value'))
+      ->fields('ti', array('field_tax_id_value'))
+      ->fields('rd', array('field_renewal_date_value'))
+      ->fields('a', array('field_account_nid'))
+      ->fields('o', array('field_others_value'))
+      ->condition('n.type', 'plan_specs', '=')
+      ->condition('a.field_account_nid', $nid, '=')
+      ->orderBy('n.created', 'DESC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchAssoc();
+
+    if (!empty($accounts)) {
+      $query = db_select('field_data_field_benefits', 'b');
+      $benefits = $query
+        ->fields('b', array('field_benefits_value'))
+        ->condition('b.entity_id', $accounts['nid'], '=')
+        ->execute()
+        ->fetchCol();
+
+      $accounts['benefits'] = $benefits;
+    }
+
+    return $accounts;
+
+  }
+
+  /**
+   * Create proposal.
+   */
+  function createProposal($data) {
+    global $user;
+
+    $account = node_load($data['account']['entity_id']);
+    $company = $account->field_company[LANGUAGE_NONE][0]['value'];
+
+    // Map the data to plan specs storage entity.
+    $node = new stdClass();
+
+    $node->title = $company;
+
+    $node->type = "proposal";
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+
+    $lang = $node->language;
+
+    // Due date.
+    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
+
+    // Priority field.
+    $node->field_priority[$lang][0]['value'] = $data['priority'];
+
+    // Account field.
+    $node->field_account[$lang][0]['nid'] = $data['account']['entity_id'];
+    $node->field_account[$lang][0]['target_type'] = 'node';
+
+    // Benefits field.
+    if ($data['major_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'major_medical';
+    }
+    if ($data['limited_medical'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'limited_medical';
+    }
+    if ($data['teledoc'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'teledoc';
+    }
+    if ($data['mec'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'mec';
+    }
+    if ($data['dental'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'dental';
+    }
+    if ($data['vision'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'vision';
+    }
+    if ($data['life'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'life';
+    }
+    if ($data['short_term_disability'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'short_term_disability';
+    }
+    if ($data['retirement'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'retirement';
+    }
+    if ($data['special_benefits'] == 1) {
+      $node->field_benefits[$lang][]['value'] = 'special_benefits';
+    }
+    // Other benefit.
+    if (!empty($data['special_benefits_text'])) {
+      $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
+    }
+
+    // Attched proposal.
+    if ($data['attach_proposal'] != 0) {
+      $proposal_file = file_load($data['attach_proposal']);
+      $proposal_file->display = 1;
+      $proposal_file = file_copy($proposal_file, 'public://');
+      $node->field_attached_proposal[$lang][0] = (array) $proposal_file;
+    }
+
+    // Save the carrier in the storage.
+    $node = node_submit($node);
+    node_save($node);
+
+    return $node->nid;
+  }
+
+  /**
+   * Send proposal.
+   */
+  function sendProposal($data) {
+    $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $data['from'],
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $attachment,
+    );
+
+    $this->sendEmail($data['to'], $data['from'], $params);
   }
 }

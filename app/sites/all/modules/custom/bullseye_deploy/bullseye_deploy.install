@@ -380,3 +380,17 @@ function bullseye_deploy_update_7033() {
 function bullseye_deploy_update_7034() {
   module_enable(array('field_collection_table'), TRUE);
 }
+
+/**
+ * Install plan_specification module.
+ */
+function bullseye_deploy_update_7035() {
+  module_enable(array('plan_specification'), TRUE);
+}
+
+/**
+ * Install mailsystem and mimemail modules.
+ */
+function bullseye_deploy_update_7036() {
+  module_enable(array('mailsystem', 'mimemail'), TRUE);
+}

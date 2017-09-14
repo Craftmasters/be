@@ -513,7 +513,7 @@ function context_layout_context_default_contexts() {
           'module' => 'bullseye_blocks',
           'delta' => 'be_header_progress',
           'region' => 'bottom_header',
-          'weight' => '-27',
+          'weight' => '27',
         ),
         'bullseye_blocks-be_current_progress' => array(
           'module' => 'bullseye_blocks',
@@ -731,6 +731,61 @@ function context_layout_context_default_contexts() {
   t('All pages that needs to have the BullsEye theme to be put here.');
   t('Theme');
   $export['pages_with_bullseye_theme'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'producer_pending_blocks';
+  $context->description = 'All block from producer pending page to be put here.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'producer_pending_page' => 'producer_pending_page',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_producers_pending' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_producers_pending',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('All block from producer pending page to be put here.');
+  t('Blocks');
+  $export['producer_pending_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'producer_pending_page';
+  $context->description = 'Page for pending producer requests.';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'producers/pending' => 'producers/pending',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  t('Page for pending producer requests.');
+  $export['producer_pending_page'] = $context;
 
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
