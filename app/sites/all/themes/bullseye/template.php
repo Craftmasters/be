@@ -121,6 +121,8 @@ function bullseye_preprocess_page(&$vars, $hook) {
   // For suggestion box image.
   $vars['suggestion_box_img'] = $base_url . '/' . $theme_directory . '/images/suggestion-box.svg';
 
+  // Add Vuejs library.
+  drupal_add_js('https://unpkg.com/vue@2.4.4/dist/vue.js', 'external');
 }
 
 
@@ -361,5 +363,12 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
  * Implements template_preprocess_THEME().
  */
 function bullseye_preprocess_be_rfps(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
+}
+
+/**
+ * Implements template_preprocess_THEME().
+ */
+function bullseye_preprocess_be_prospects(&$vars) {
   drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
 }
