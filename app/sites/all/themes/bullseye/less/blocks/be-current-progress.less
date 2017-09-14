@@ -277,7 +277,8 @@
 		}
 	}
 
-	#edit-sl-content {
+	#edit-sl-content,
+	#edit-message {
 		background-color: #fff - 8;
 		padding: 20px;
 		resize: none;
@@ -287,6 +288,64 @@
 	.accnt-name-placeholder {
 		background-color: #fff;
 	}
+	.modal-body-inner.be-forms.send-proposal {
+		.form-item-priority {
+			text-align: left;
+			#edit-priority {
+				width: 100%;
+				margin-top: 00px;
+			}
+		}
+		#edit-attach-proposal-upload {
+			color: #000 + 50;
+		}
+	}
+	.show-attachment {
+    border-bottom: 1px solid @textfield_bottom_border_color;
+    padding: 7px 0px;
+    margin-bottom: 15px;
+    span, a {
+      color: @label_color;
+      font-family: 'Proximanova-Regular';
+      font-size: 15px;
+      padding: 0px;
+      width: 20%;
+      display: inline-block;
+      margin-right: -4px;
+      vertical-align: middle;
+      text-align: left;
+    }
+    a.orange-font {
+      color: @orange;
+      font-family: 'Proximanova-Semibold';
+      background: url(../../images/icons/be_paperclip.svg);
+      background-position: right center;
+      background-repeat: no-repeat;
+      background-size: 15px;
+      width: auto;
+      padding-right: 21px;
+    }
+  }
+  .account-estimate {
+  	margin-top: 20px;
+  	label, input {
+  		display: inline-block;
+  		vertical-align: middle;
+  		position: relative;
+  	}
+  	label {
+  		&::after {
+  			content: '$';
+  			position: absolute;
+  			right: -15px;
+  		}
+  	}
+  	input {
+  		width: 150px;
+  		background-color: transparent;
+  		padding-left: 17px;
+  	}
+  }
 }
 
 #add-contact {

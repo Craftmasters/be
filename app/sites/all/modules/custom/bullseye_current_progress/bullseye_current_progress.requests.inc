@@ -687,8 +687,10 @@ function be_cp_send_plan_proposal() {
 function be_cp_accept_proposal_yes() {
 
   $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
@@ -804,5 +806,39 @@ function be_cp_header_classes() {
 
 }
 
+/**
+ * Set action status to receive feedback in opportunity.
+ */
+function be_cp_receive_feedback_opportunity() {
 
+  $nid = $_POST['nid'];
 
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'send_plan_proposal') {
+    $wrapper->field_action_status->set('receive_feedback_opportunity');
+  }
+
+  $wrapper->save();
+}
+
+/**
+ * Save the account estimate value field.
+ */
+function be_cp_save_exit_rf_op() {
+
+  $nid = $_POST['nid'];
+  $account_estimate_value = $_POST['account_estimate_value'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_estimate_value->set($account_estimate_value);
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+
+}

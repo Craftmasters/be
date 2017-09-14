@@ -473,6 +473,27 @@
           });
         }
 
+        // For sending the suggestion form.
+        if ($('#btn-submit-suggestion').length) {
+          $('#btn-submit-suggestion').click(function() {
+            $.ajax({
+              url: '/suggestion-box',
+              method: 'POST',
+              data: {
+                content_subject: $('#suggestion-subject').val(),
+                name: $('#suggestion-name').val(),
+                details: $('#suggestion-details').val(),
+              },
+              success: function(result){
+                console.log(result);
+                if (result == 'success') {
+                  $('#suggestion-box-success').modal('show');
+                }
+              },
+            });
+          });
+        }
+
       });
 
       $(window).load(function() {

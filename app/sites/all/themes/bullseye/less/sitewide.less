@@ -928,3 +928,43 @@
     border: 1px solid #000;
     color: #FFF;
   }
+
+/*
+ * Suggestion Box.
+ */
+  .suggestion-box-container {
+    display: inline-block;
+    position: fixed;
+    bottom: 6vh;
+    right: 35px;
+    a {
+      display: inline-block;
+      background-color: @orange;
+      padding: 12px 17px;
+      border-radius: 5px;
+      -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+      &:active, &:focus {
+        outline: none;
+      }
+      img {
+        color: #fff;
+        width: 23px;
+      }
+    }
+  }
+  .suggestion-form {
+    text-align: left;
+    #suggestion-details {
+      background-color: #fff - 8;
+      padding: 20px;
+      resize: none;
+      height: 200px;
+    }
+  }
+  .be-lightbox {
+    .suggestion-box-container {
+      display: none;
+    }
+  }

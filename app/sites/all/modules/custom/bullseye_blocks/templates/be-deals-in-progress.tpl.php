@@ -21,7 +21,7 @@
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
-          <th><?php print t('Priority'); ?></th>
+          <th class="be-dot-td"><?php print t('Priority'); ?></th>
           <th><?php print t('Account'); ?></th>
           <th><?php print t('Contact Person'); ?></th>
           <th class="be-table-arrow-td"><?php print t('Generate Trust Agreement'); ?></th>
@@ -34,7 +34,7 @@
         <?php foreach ($deals as $d): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="dot-priority red"></span></td>
+            <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <!-- link "/company/allen-markarian?from=deal-in-progress" where 'allen-markarian' is the alias and 'deal-in-progress' is the status of account -->
             <td>
               <span class="orange-font">
