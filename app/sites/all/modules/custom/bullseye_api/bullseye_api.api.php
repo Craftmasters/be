@@ -1445,7 +1445,7 @@ class Bullseye {
       'no-reply@archerjordan.com',
       $data['subject'],
       $data['message'],
-      array()
+      $_SESSION['proposal_recipient']['attachments']
     );
   }
 }
