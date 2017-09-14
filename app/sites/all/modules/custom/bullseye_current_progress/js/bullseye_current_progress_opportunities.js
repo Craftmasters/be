@@ -13,7 +13,6 @@
 
       $(document).ready(function() {
         var nid = $('.current-progress-main').attr('node-id');
-        var plan_specs_nid = $('.current-progress-main').attr('plan-specs-nid');
 
         // Refresh classes of current progress block.
         function refreshClasses(nid) {
@@ -277,12 +276,14 @@
         }
 
         $('#btn-save-exit-receive-details').click(function() {
+          var plan_specs_nid = $('.current-progress-main').attr('plan-specs-nid');
           $.ajax({
             url: '/be-cp/save-planspecs',
             method: 'POST',
             data: {
               nid: nid,
               plan_specs_nid: plan_specs_nid,
+              company_name: $('.accnt-name-placeholder').val(),
               fringe_rates: $('#edit-fringe-rates').val(),
               proposed_effective_date: $('#edit-proposed-effective-date-datepicker-popup-0').val(),
               other_work_locations: $('#edit-other-work-locations').val(),
@@ -293,7 +294,7 @@
               tax_id: $('#edit-tax-id').val(),
               renewal_date: $('#edit-renewal-date-datepicker-popup-0').val(),
               major_medical: checkboxValue('edit-major-medical'),
-              limited_medical: checkboxValue('id'),
+              limited_medical: checkboxValue('edit-limited-medical'),
               teledoc: checkboxValue('edit-teledoc'),
               mec: checkboxValue('edit-mec'),
               life: checkboxValue('edit-life'),
@@ -306,6 +307,7 @@
             },
             success: function(result){
               console.log(result);
+              $('.current-progress-main').attr('plan-specs-nid', result);
             },
           });
         });

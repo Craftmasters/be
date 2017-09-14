@@ -847,5 +847,99 @@ function be_cp_save_exit_rf_op() {
  * Save the plan specs.
  */
 function be_cp_save_plan_specs() {
-  drupal_json_output($_POST);
+  
+  global $user;
+
+  $nid = $_POST['nid'];
+  $plan_specs_nid = $_POST['plan_specs_nid'];
+  $fringe_rates = $_POST['fringe_rates'];
+  $proposed_effective_date = $_POST['proposed_effective_date'];
+  $other_work_locations = $_POST['other_work_locations'];
+  $number_of_employees = $_POST['number_of_employees'];
+  $number_of_dependents = $_POST['number_of_dependents'];
+  $nature_of_business = $_POST['nature_of_business'];
+  $years_in_business = $_POST['years_in_business'];
+  $tax_id = $_POST['tax_id'];
+  $renewal_date = $_POST['renewal_date'];
+  $major_medical = $_POST['major_medical'];
+  $limited_medical = $_POST['limited_medical'];
+  $teledoc = $_POST['teledoc'];
+  $mec = $_POST['mec'];
+  $life = $_POST['life'];
+  $short_term_disability = $_POST['short_term_disability'];
+  $dental = $_POST['dental'];
+  $vision = $_POST['vision'];
+  $retirement = $_POST['retirement'];
+  $special_benefits = $_POST['special_benefits'];
+  $special_benefits_text = $_POST['special_benefits_text'];
+  $company_name = $_POST['company_name'];
+  $benefits = array();
+
+  if ($major_medical == 1) {
+    $benefits[] = 'major_medical';
+  }
+  if ($limited_medical == 1) {
+    $benefits[] = 'limited_medical';
+  }
+  if ($teledoc == 1) {
+    $benefits[] = 'teledoc';
+  }
+  if ($mec == 1) {
+    $benefits[] = 'mec';
+  }
+  if ($life == 1) {
+    $benefits[] = 'life';
+  }
+  if ($short_term_disability == 1) {
+    $benefits[] = 'short_term_disability';
+  }
+  if ($dental == 1) {
+    $benefits[] = 'dental';
+  }
+  if ($vision == 1) {
+    $benefits[] = 'vision';
+  }
+  if ($retirement == 1) {
+    $benefits[] = 'retirement';
+  }
+  if ($special_benefits == 1) {
+    $benefits[] = 'special_benefits';
+  }
+
+  // Add plan specs if no existing yet.
+  if ($_POST['plan_specs_nid'] == '') {
+    $node = entity_create('node', array('type' => 'plan_specs'));
+    $node->uid = $user->uid;
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $plan_specs_nid = $node->nid;
+  }
+  else {
+    // if existing just update data.
+    $wrapper = entity_metadata_wrapper('node', $_POST['plan_specs_nid']);
+  }
+
+  $wrapper->title = $company_name;
+  $wrapper->field_fringe_rate->set($fringe_rates);
+  $wrapper->field_proposed_effective_date->set(NULL);
+  if ($proposed_effective_date != '') {
+    $wrapper->field_proposed_effective_date->set(strtotime($proposed_effective_date));
+  }
+  $wrapper->field_other_work_locations->set($other_work_locations);
+  $wrapper->field_number_of_employees->set($number_of_employees);
+  $wrapper->field_number_of_dependents->set($number_of_dependents);
+  $wrapper->field_nature_of_business_sic->set($nature_of_business);
+  $wrapper->field_years_in_business->set($years_in_business);
+  $wrapper->field_tax_id->set($tax_id);
+  $wrapper->field_renewal_date->set(NULL);
+  if ($renewal_date != '') {
+    $wrapper->field_renewal_date->set(strtotime($renewal_date));
+  }
+  $wrapper->field_others->set($special_benefits_text);
+  $wrapper->field_benefits->set($benefits);
+  $wrapper->field_account->set($nid);
+  $wrapper->save();
+
+  drupal_json_output($plan_specs_nid);
+
 }
+
