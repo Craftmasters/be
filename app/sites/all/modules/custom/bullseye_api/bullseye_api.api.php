@@ -1165,6 +1165,14 @@ class Bullseye {
     // Check if plan specs is for exisiting company.
     if ($data['nid'] != '') {
       $node->field_account[$lang][]['nid'] = $data['nid'];
+      $param = array(
+        'query' => array(
+          'company_nid' => $data['nid'],
+        )
+      );
+    }
+    else {
+      $param = array();
     }
 
     // Other benefit
@@ -1177,8 +1185,9 @@ class Bullseye {
     // Notify the user that the registration is successfull.
     drupal_set_message(t('Plan specification submitted.'), 'status');
 
-    // Redirect the user to plan specs page.
-    drupal_goto('/plan_specs');
+    // Refresh the page.
+    drupal_goto('plan_specs', $param);
+
   }
 
   /**
@@ -1227,6 +1236,59 @@ class Bullseye {
     }
 
     return $contacts;
+  }
+
+  /**
+   * Get the latest submitted plan specs
+   * of an existing company by nid.
+   */
+  function getLatestPlanSpecsByNid($nid) {
+
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+    $query->leftJoin('field_data_field_proposed_effective_date', 'ped', 'n.nid = ped.entity_id');
+    $query->leftJoin('field_data_field_other_work_locations', 'owl', 'n.nid = owl.entity_id');
+    $query->leftJoin('field_data_field_number_of_employees', 'noe', 'n.nid = noe.entity_id');
+    $query->leftJoin('field_data_field_number_of_dependents', 'nod', 'n.nid = nod.entity_id');
+    $query->leftJoin('field_data_field_nature_of_business_sic', 'nob', 'n.nid = nob.entity_id');
+    $query->leftJoin('field_data_field_years_in_business', 'yib', 'n.nid = yib.entity_id');
+    $query->leftJoin('field_data_field_tax_id', 'ti', 'n.nid = ti.entity_id');
+    $query->leftJoin('field_data_field_renewal_date', 'rd', 'n.nid = rd.entity_id');
+    $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+    $query->leftJoin('field_data_field_others', 'o', 'n.nid = o.entity_id');
+    $accounts = $query
+      ->fields('n', array('nid', 'type', 'created'))
+      ->fields('fr', array('field_fringe_rate_value'))
+      ->fields('ped', array('field_proposed_effective_date_value'))
+      ->fields('owl', array('field_other_work_locations_value'))
+      ->fields('noe', array('field_number_of_employees_value'))
+      ->fields('nod', array('field_number_of_dependents_value'))
+      ->fields('nob', array('field_nature_of_business_sic_value'))
+      ->fields('yib', array('field_years_in_business_value'))
+      ->fields('ti', array('field_tax_id_value'))
+      ->fields('rd', array('field_renewal_date_value'))
+      ->fields('a', array('field_account_nid'))
+      ->fields('o', array('field_others_value'))
+      ->condition('n.type', 'plan_specs', '=')
+      ->condition('a.field_account_nid', $nid, '=')
+      ->orderBy('n.created', 'DESC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchAssoc();
+
+    if (!empty($accounts)) {
+      $query = db_select('field_data_field_benefits', 'b');
+      $benefits = $query
+        ->fields('b', array('field_benefits_value'))
+        ->condition('b.entity_id', $accounts['nid'], '=')
+        ->execute()
+        ->fetchCol();
+
+      $accounts['benefits'] = $benefits;
+    }
+
+    return $accounts;
+
   }
 
   /**

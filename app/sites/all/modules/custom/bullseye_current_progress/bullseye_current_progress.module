@@ -364,7 +364,6 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
-
 }
 
 /**
@@ -496,6 +495,9 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_prospect
  */
 function bullseye_current_progress_opportunities_form($form, &$form_state) {
   global $base_url;
+  global $user;
+
+  $be = new Bullseye($user);
 
   $form = array();
 
@@ -511,9 +513,82 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     $account_estimate_value = $node->field_account_estimate_value[LANGUAGE_NONE][0]['value'];
   }
 
+  // Check for submitted plan specs.
+  $plan_specs = $be->getLatestPlanSpecsByNid($node->nid);
+  $plan_specs_nid = '';
+  $fringe_rates = '';
+  $proposed_effective_date = '';
+  $other_work_locations = '';
+  $number_of_employees = '';
+  $number_of_dependents = '';
+  $nature_of_business = '';
+  $years_in_business = '';
+  $tax_id = '';
+  $renewal_date = '';
+  $major_medical = 0;
+  $teledoc = 0;
+  $life = 0;
+  $dental = 0;
+  $retirement = 0;
+  $limited_medical = 0;
+  $mec = 0;
+  $short_term_disability = 0;
+  $vision = 0;
+  $special_benefits = 0;
+  $special_benefits_text = '';
+
+  if (!empty($plan_specs)) {
+    $plan_specs_nid = $plan_specs['nid'];
+    $fringe_rates = $plan_specs['field_fringe_rate_value'];
+    $proposed_effective_date = $plan_specs['field_proposed_effective_date_value'];
+    $other_work_locations = $plan_specs['field_other_work_locations_value'];
+    $number_of_employees = $plan_specs['field_number_of_employees_value'];
+    $number_of_dependents = $plan_specs['field_number_of_dependents_value'];
+    $nature_of_business = $plan_specs['field_nature_of_business_sic_value'];
+    $years_in_business = $plan_specs['field_years_in_business_value'];
+    $tax_id = $plan_specs['field_tax_id_value'];
+    $renewal_date = $plan_specs['field_renewal_date_value'];
+    $special_benefits_text = $plan_specs['field_others_value'];
+    if (in_array('major_medical', $plan_specs['benefits'])) {
+      $major_medical = 1;
+    }
+    if (in_array('teledoc', $plan_specs['benefits'])) {
+      $teledoc = 1;
+    }
+    if (in_array('life', $plan_specs['benefits'])) {
+      $life = 1;
+    }
+    if (in_array('dental', $plan_specs['benefits'])) {
+      $dental = 1;
+    }
+    if (in_array('retirement', $plan_specs['benefits'])) {
+      $retirement = 1;
+    }
+    if (in_array('mec', $plan_specs['benefits'])) {
+      $mec = 1;
+    }
+    if (in_array('short_term_disability', $plan_specs['benefits'])) {
+      $short_term_disability = 1;
+    }
+    if (in_array('vision', $plan_specs['benefits'])) {
+      $vision = 1;
+    }
+    if (in_array('special_benefits', $plan_specs['benefits'])) {
+      $special_benefits = 1;
+    }
+    if (in_array('limited_medical', $plan_specs['benefits'])) {
+      $limited_medical = 1;
+    }
+  }
+
   $form['nid'] = array(
     '#type' => 'hidden',
     '#value' => $node->nid,
+  );
+
+  $form['plan_specs_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $plan_specs['nid'],
   );
 
   $form['account_title'] = array(
@@ -533,16 +608,19 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '500',
     ),
+    '#default_value' => $fringe_rates,
   );
 
   // Proposed Effective Date.
   $form['proposed_effective_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD',
+    '#default_value' => $proposed_effective_date,
     '#date_year_range' => '0:+3',
     '#title' => t('Proposed Effective Date'),
   );
+
+
 
   // Other Work Locations and Zip Codes.
   $form['other_work_locations'] = array(
@@ -551,6 +629,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'Dallas 88829, New Jersey 81920',
     ),
+    '#default_value' => $other_work_locations,
   );
 
   // Number of Employees.
@@ -560,6 +639,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '100',
     ),
+    '#default_value' => $number_of_employees,
   );
 
   // Number of Dependents.
@@ -569,6 +649,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '200',
     ),
+    '#default_value' => $number_of_dependents,
   );
 
   // Nature of Business/SIC.
@@ -578,6 +659,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'xxxx',
     ),
+    '#default_value' => $nature_of_business,
   );
 
   // Years in Business.
@@ -587,6 +669,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => '5',
     ),
+    '#default_value' => $years_in_business,
   );
 
   // Tax ID.
@@ -596,13 +679,14 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => 'xxxxxxxxx',
     ),
+    '#default_value' => $tax_id,
   );
 
   // Renewal Date.
   $form['renewal_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD',
+    '#default_value' => $renewal_date,
     '#date_year_range' => '0:+3',
     '#title' => t('Renewal Date'),
   );
@@ -615,51 +699,61 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['benefits_container']['benefits']['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
   );
 
   $form['benefits_container']['benefits']['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
   );
 
   $form['benefits_container']['benefits']['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
   );
 
   $form['benefits_container']['benefits']['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $mec,
   );
 
   $form['benefits_container']['benefits']['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
   );
 
   $form['benefits_container']['benefits']['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
   );
 
   $form['benefits_container']['benefits']['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $dental,
   );
 
   $form['benefits_container']['benefits']['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $vision,
   );
 
   $form['benefits_container']['benefits']['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $retirement,
   );
 
   $form['benefits_container']['benefits']['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
   );
 
   $form['special_benefits_text'] = array(
@@ -667,6 +761,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter special benefit'),
     ),
+    '#default_value' => $special_benefits_text,
   );
 
   $form['bc_second'] = array(
@@ -677,51 +772,61 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['bc_second']['benefits']['major_medical_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
   );
 
   $form['bc_second']['benefits']['limited_medical_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
   );
 
   $form['bc_second']['benefits']['teledoc_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
   );
 
   $form['bc_second']['benefits']['mec_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $mec,
   );
 
   $form['bc_second']['benefits']['life_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
   );
 
   $form['bc_second']['benefits']['short_term_disability_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
   );
 
   $form['bc_second']['benefits']['dental_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $dental,
   );
 
   $form['bc_second']['benefits']['vision_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $vision,
   );
 
   $form['bc_second']['benefits']['retirement_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $retirement,
   );
 
   $form['bc_second']['benefits']['special_benefits_1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
   );
 
   $form['special_benefits_text_1'] = array(
@@ -729,6 +834,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter special benefit'),
     ),
+    '#default_value' => $special_benefits_text,
   );
 
   // Send Link Date.
@@ -810,51 +916,61 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['bc_third']['benefits']['major_medical_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
   );
 
   $form['bc_third']['benefits']['limited_medical_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
   );
 
   $form['bc_third']['benefits']['teledoc_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
   );
 
   $form['bc_third']['benefits']['mec_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $mec,
   );
 
   $form['bc_third']['benefits']['life_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
   );
 
   $form['bc_third']['benefits']['short_term_disability_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
   );
 
   $form['bc_third']['benefits']['dental_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $dental,
   );
 
   $form['bc_third']['benefits']['vision_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $vision,
   );
 
   $form['bc_third']['benefits']['retirement_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $retirement,
   );
 
   $form['bc_third']['benefits']['special_benefits_2'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
   );
 
   $form['special_benefits_text_2'] = array(
@@ -862,6 +978,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter special benefit'),
     ),
+    '#default_value' => $special_benefits_text,
   );
 
   $form['attach_proposal'] = array(
