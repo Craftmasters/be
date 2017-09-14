@@ -1484,16 +1484,25 @@ class Bullseye {
   function sendPlanSpecsLink($data) {
     global $user;
 
-    $params = array(
+    /*$params = array(
       'key' => 'bullseye',
       'to' => $data['to'],
       'from' => $data['from'],
       'subject' => $data['subject'],
       'body' => $data['message'],
       'attachment' => $data['attachments'],
+    );*/
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => 'ruthieborces@outlook.com',
+      'from' => 'mrborces@gmail.com',
+      'subject' => 'Test email from BE',
+      'body' => 'Test email from BE',
+      'attachment' => array(),
     );
 
-    $this->sendEmail($data['to'], $data['from'], $params);
+    $this->sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
   }
 
   /**
