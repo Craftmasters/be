@@ -904,6 +904,29 @@ class Bullseye {
   }
 
   /**
+   * Get the total number of open RFPs.
+   */
+  function totalRfps() {
+    if ($cache = cache_get('total_rfps')) {
+      $total = $cache->data;
+    }
+    else {
+      $query = db_select('node' , 'n');
+      $total = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'rfp', '=')
+        ->condition('n.status', 1, '=')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+
+      cache_set('total_rfps', $total, 'cache');
+    }
+
+    return $total;
+  }
+
+  /**
    * Get total number of deals closed by the producer.
    */
   function dealsClosed($producer) {
