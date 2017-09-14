@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Prospects (6)'); ?></span>
+        <span class="account-count"><?php print t('All Prospects (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/node/add/accounts?account_status=prospect" rel="lightframe"><?php print t('Add New'); ?></a>
       </div>
       <div class="col-md-6">
