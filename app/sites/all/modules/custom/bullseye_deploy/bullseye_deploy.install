@@ -387,3 +387,10 @@ function bullseye_deploy_update_7034() {
 function bullseye_deploy_update_7035() {
   module_enable(array('plan_specification'), TRUE);
 }
+
+/**
+ * Install mailsystem and mimemail modules.
+ */
+function bullseye_deploy_update_7036() {
+  module_enable(array('mailsystem', 'mimemail'), TRUE);
+}

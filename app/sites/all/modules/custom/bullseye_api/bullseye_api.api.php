@@ -820,9 +820,8 @@ class Bullseye {
    *    'uri' => '/tmp/attachment.pdf',
    *   )
    */
-  function sendEmail($to, $from, $subject, $body, $attachments) {
-    $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
-    $email->send();
+  function sendEmail($to, $from, $params) {
+    drupal_mail('bullseye_proposals', 'bullseye', $to, LANGUAGE_NONE, $params, $from);
   }
 
   /**
@@ -1440,12 +1439,19 @@ class Bullseye {
    * Send proposal.
    */
   function sendProposal($data) {
-    $this->sendEmail(
-      $data['to'],
-      'no-reply@archerjordan.com',
-      $data['subject'],
-      $data['message'],
-      $_SESSION['proposal_recipient']['attachments']
+    global $user;
+
+    $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $user->mail,
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $attachment,
     );
+
+    $this->sendEmail($data['to'], $user->mail, $params);
   }
 }
