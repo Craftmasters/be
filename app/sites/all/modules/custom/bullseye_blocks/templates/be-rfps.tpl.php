@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Open RFP\'s (6)'); ?></span>
+        <span class="account-count"><?php print t('All Open RFP\'s (' . $total . ')'); ?></span>
         <a class="be-table-button" href="/rfps/initial-add" rel="lightframe"><?php print t('Create New RFP'); ?></a>
       </div>
       <div class="col-md-6">

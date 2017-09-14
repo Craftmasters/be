@@ -53,7 +53,7 @@
   ?>
   <div class="single-row-check-box">
     <?php print render($form['agree_terms_privacy']); ?>
-    <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Terms</a> & <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-privacy-link">Privacy</a> Policy.</label>
+    <label for="edit-agree-terms-privacy">I agree to Bullseye <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Terms</a> & <a href="#" class="producer-acct-link" data-toggle="modal" data-target="#producer-acct-terms-link">Privacy</a> Policy.</label>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="producer-acct-terms-link" role="dialog">
@@ -132,7 +132,7 @@ USA</p>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default orange-btn" data-dismiss="modal">I Agree</button>
+          <button id="agree-btn" type="button" class="btn btn-default orange-btn" data-dismiss="modal">I Agree</button>
           <button type="button" class="btn btn-default gray-btn" data-dismiss="modal">No Thanks</button>
         </div>
       </div>
@@ -217,6 +217,12 @@ var hasHealthLife = false;
 var hasOmission = false;
 var agreements = $('#producer-acct-petition');
 var agreementCheck = $('.producer-acct-check.producer-acct-aggreement');
+
+var agreeBtn = $('#agree-btn');
+agreeBtn.click(function(e){
+  $('#edit-agree-terms-privacy').prop('checked', true);
+})
+
 agreements.click(function(e){
   agreementCheck.children('.check-icon-gray').removeClass('check-icon-gray').addClass('check-icon-green');
   hasAgreed = true;
