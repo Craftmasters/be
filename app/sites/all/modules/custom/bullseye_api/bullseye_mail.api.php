@@ -56,12 +56,20 @@ class AttachmentEmail {
       $header .= "--".$uid."\r\n";
 
       foreach ($this->attachments as $attachment) {
+        krumo($attachment);
         $filename = empty($attachment['filename']) ? basename($attachment['uri']) : $attachment['filename'];
+        krumo($filename);
         $path = dirname($attachment['uri']);
-        $part = file_get_contents($path);
+        krumo($path);
+        $file = file_create_url($attachment['uri']);
+        krumo($file);
+        $part = file_get_contents($file);
+        krumo($part);
         $content = chunk_split(base64_encode($part));
+        krumo($content);
+        //die();
         $header .= "--".$uid."\r\n";
-        $header .= "Content-Type: application/octet-stream; name=\"".$filename."\"\r\n"; // use diff. tyoes here
+        $header .= "Content-Type: application/octet-stream; name=\"".$filename."\"\r\n";
         $header .= "Content-Transfer-Encoding: base64\r\n";
         $header .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n\r\n";
         $header .= $content ."\r\n\r\n";

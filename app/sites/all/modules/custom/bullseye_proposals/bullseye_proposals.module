@@ -222,9 +222,9 @@ function bullseye_proposals_form_submit($form, &$form_state) {
   $_SESSION['proposal_recipient'] = array(
     'company' => $company,
     'attachments' => array(
-      0 => array(
+      array(
         'filename' => $node->field_attached_proposal[$lang][0]['filename'],
-        'uri' => $path,
+        'uri' => $node->field_attached_proposal[$lang][0]['uri'],
       ),
     ),
     'to' => $recipient,
@@ -317,6 +317,32 @@ function bullseye_proposals_email_form_submit($form, &$form_state) {
   global $user;
   $data = $form_state['values'];
 
-  $be = new Bullseye($user);
-  $be->sendProposal($data);
+  $attachment = file_load($fid);
+
+  $params = array(
+    'key' => 'test',
+    'to' => 'gerald@vielsoft.com',
+    'from' => 'no-reply@archerjordan.com',
+    'subject' => 'Test email',
+    'body' => 'test',
+    'attachment' => $attachment
+  );
+
+  drupal_mail('bullseye_proposals', 'test', $data['to'], LANGUAGE_NONE, $params, $from);
+
+  // $be = new Bullseye($user);
+  // $be->sendProposal($data);
+}
+
+/**
+ * Implements hook_mail().
+ */
+function bullseye_proposals_mail($key, &$message, $params) {
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $params['body'];
+
+  // Add attachment when available.
+  if (isset($params['attachment'])) {
+    $message['params']['attachments'][] = $params['attachment'];
+  }
 }
