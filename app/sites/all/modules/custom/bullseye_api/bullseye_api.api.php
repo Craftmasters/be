@@ -1379,17 +1379,19 @@ class Bullseye {
    * Send proposal.
    */
   function sendProposal($data) {
+    global $user;
+
     $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
 
     $params = array(
       'key' => 'bullseye',
       'to' => $data['to'],
-      'from' => $data['from'],
+      'from' => $user->mail,
       'subject' => $data['subject'],
       'body' => $data['message'],
       'attachment' => $attachment,
     );
 
-    $this->sendEmail($data['to'], $data['from'], $params);
+    $this->sendEmail($data['to'], $user->mail, $params);
   }
 }
