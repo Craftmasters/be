@@ -10,6 +10,43 @@
 function plan_specification_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-plan_specs-field_account'.
+  $field_instances['node-plan_specs-field_account'] = array(
+    'bundle' => 'plan_specs',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'node_reference',
+        'settings' => array(),
+        'type' => 'node_reference_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_account',
+    'label' => 'Account',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 17,
+    ),
+  );
+
   // Exported field_instance: 'node-plan_specs-field_benefits'.
   $field_instances['node-plan_specs-field_benefits'] = array(
     'bundle' => 'plan_specs',
@@ -679,6 +716,7 @@ function plan_specification_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Account');
   t('Benefits');
   t('Complete Address');
   t('Contact Number');

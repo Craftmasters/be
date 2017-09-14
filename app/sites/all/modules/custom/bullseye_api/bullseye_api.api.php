@@ -1158,6 +1158,11 @@ class Bullseye {
       $node->field_benefits[$lang][][$val] = 'retirement';
     }
 
+    // Check if plan specs is for exisiting company.
+    if ($data['nid'] != '') {
+      $node->field_account[$lang][]['nid'] = $data['nid'];
+    }
+
     // Other benefit
     $node->field_others[$lang][0]['value'] = $data['benefits_in_others'];
 
