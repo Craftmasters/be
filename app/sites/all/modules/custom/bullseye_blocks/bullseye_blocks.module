@@ -678,8 +678,8 @@ function suggestion_box_send() {
 
   $to = 'support@archerjordan.com';
   $from = $user->mail;
-  $subject = 'BullsEye Submitted Suggestion';
-  $message = "From: " . $from . "\r\nName: " . $name . "\r\n\r\nSubject: " . $content_subject . "\r\n\r\nDetails:\r\n" . $details;
+  $subject = 'BULLSEYE USER FEEDBACK - ' . date('F d, Y');
+  $message = "\r\nName: " . $name . "\r\nEmail: " . $from . "\r\nDate: " . date('F d, Y') . "\r\n\r\nSubject: " . $content_subject . "\r\n\r\nComment/Suggestion:\r\n" . $details;
   $attachments = array();
 
   // Send the email.
