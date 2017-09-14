@@ -813,7 +813,8 @@ class Bullseye {
    *   The email subject.
    * @param string $body
    *   The email body.
-   * @param array $
+   * @param array $attachments
+   *   Attachement files.
    */
   function sendEmail($to, $from, $subject, $body, $attachments) {
     $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
