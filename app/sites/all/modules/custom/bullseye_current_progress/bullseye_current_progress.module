@@ -120,13 +120,6 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
-  $items['be-cp/next-generate-rfp'] = array(
-    'page callback' => 'be_cp_next_generate_rfp',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'bullseye_current_progress.requests.inc',
-  );
-
   $items['be-cp/send-plan-proposal'] = array(
     'page callback' => 'be_cp_send_plan_proposal',
     'access arguments' => array('access content'),

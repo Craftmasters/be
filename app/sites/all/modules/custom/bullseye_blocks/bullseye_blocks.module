@@ -682,9 +682,17 @@ function suggestion_box_send() {
   $message = "\r\nName: " . $name . "\r\nEmail: " . $from . "\r\nDate: " . date('F d, Y') . "\r\n\r\nSubject: " . $content_subject . "\r\n\r\nComment/Suggestion:\r\n" . $details;
   $attachments = array();
 
+  $data = array();
+
+  $data['to'] = $to;
+  $data['from'] = $from;
+  $data['message'] = $message;
+  $data['subject'] = $subject;
+  $data['attachments'] = $attachments;
+
   // Send the email.
   $be = new Bullseye($user);
-  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+  $be->sendSuggestion($data);
 
   drupal_json_output('success');
 

@@ -1477,4 +1477,40 @@ class Bullseye {
 
     $this->sendEmail($data['to'], $user->mail, $params);
   }
+
+  /**
+   * Send Plan Specs Link to client.
+   */
+  function sendPlanSpecsLink($data) {
+    global $user;
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $data['from'],
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $data['attachments'],
+    );
+
+    $this->sendEmail($data['to'], $data['from'], $params);
+  }
+
+  /**
+   * Send Suggestion to archerjordan support.
+   */
+  function sendSuggestion($data) {
+    global $user;
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $data['from'],
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $data['attachments'],
+    );
+
+    $this->sendEmail($data['to'], $data['from'], $params);
+  }
 }

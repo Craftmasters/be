@@ -281,6 +281,7 @@
             url: '/be-cp/save-planspecs',
             method: 'POST',
             data: {
+              from_button: 'save_and_exit',
               nid: nid,
               plan_specs_nid: plan_specs_nid,
               company_name: $('.accnt-name-placeholder').val(),
@@ -313,14 +314,39 @@
         });
 
         $('#btn-next-generate-rfp').click(function() {
+          var plan_specs_nid = $('.current-progress-main').attr('plan-specs-nid');
           $.ajax({
-            url: '/be-cp/next-generate-rfp',
+            url: '/be-cp/save-planspecs',
             method: 'POST',
             data: {
+              from_button: 'next_generate_rfp',
               nid: nid,
+              plan_specs_nid: plan_specs_nid,
+              company_name: $('.accnt-name-placeholder').val(),
+              fringe_rates: $('#edit-fringe-rates').val(),
+              proposed_effective_date: $('#edit-proposed-effective-date-datepicker-popup-0').val(),
+              other_work_locations: $('#edit-other-work-locations').val(),
+              number_of_employees: $('#edit-number-of-employees').val(),
+              number_of_dependents: $('#edit-number-of-dependents').val(),
+              nature_of_business: $('#edit-nature-of-business').val(),
+              years_in_business: $('#edit-years-in-business').val(),
+              tax_id: $('#edit-tax-id').val(),
+              renewal_date: $('#edit-renewal-date-datepicker-popup-0').val(),
+              major_medical: checkboxValue('edit-major-medical'),
+              limited_medical: checkboxValue('edit-limited-medical'),
+              teledoc: checkboxValue('edit-teledoc'),
+              mec: checkboxValue('edit-mec'),
+              life: checkboxValue('edit-life'),
+              short_term_disability: checkboxValue('edit-short-term-disability'),
+              dental: checkboxValue('edit-dental'),
+              vision: checkboxValue('edit-vision'),
+              retirement: checkboxValue('edit-retirement'),
+              special_benefits: checkboxValue('edit-special-benefits'),
+              special_benefits_text: $('#edit-special-benefits-text').val(),
             },
             success: function(result){
               console.log(result);
+              $('.current-progress-main').attr('plan-specs-nid', result);
               refreshClasses(nid);
               refreshHeaderClasses(nid);
             },

@@ -634,30 +634,6 @@ function be_cp_receive_details() {
 }
 
 /**
- * Set action status to generate rfp.
- * and workflow status to RFP.
- */
-function be_cp_next_generate_rfp() {
-
-  $nid = $_POST['nid'];
-
-  $wrapper = entity_metadata_wrapper('node', $nid);
-
-  $action_status = $wrapper->field_action_status->value();
-  $workflow_status = $wrapper->field_workflow_status->value();
-  $account_status = $wrapper->field_account_status->value();
-
-  if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'receive_plan_details') {
-    $wrapper->field_action_status->set('generate_rfp');
-    $wrapper->field_workflow_status->set('rfp');
-  }
-
-  $wrapper->save();
-
-  drupal_json_output($wrapper);
-}
-
-/**
  * Set action status to send plan proposal.
  * and workflow status to Plan Presentation.
  */
@@ -938,6 +914,22 @@ function be_cp_save_plan_specs() {
   $wrapper->field_benefits->set($benefits);
   $wrapper->field_account->set($nid);
   $wrapper->save();
+
+  if ($_POST['from_button'] == 'next_generate_rfp') {
+
+    $wrapper = entity_metadata_wrapper('node', $nid);
+
+    $action_status = $wrapper->field_action_status->value();
+    $workflow_status = $wrapper->field_workflow_status->value();
+    $account_status = $wrapper->field_account_status->value();
+
+    if ($account_status == 'opportunity' && $workflow_status == 'plan_specification' && $action_status == 'receive_plan_details') {
+      $wrapper->field_action_status->set('generate_rfp');
+      $wrapper->field_workflow_status->set('rfp');
+    }
+
+    $wrapper->save();
+  }
 
   drupal_json_output($plan_specs_nid);
 
