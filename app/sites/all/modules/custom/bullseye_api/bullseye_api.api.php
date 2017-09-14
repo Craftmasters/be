@@ -1090,7 +1090,7 @@ class Bullseye {
 
     $node->title = $data['contact_company'];
 
-    $node->type = "plan-specs";
+    $node->type = "plan_specs";
     node_object_prepare($node);
     $node->language = LANGUAGE_NONE;
     $node->uid = $user->uid;
@@ -1127,34 +1127,34 @@ class Bullseye {
     /***************
      * Benefits Interested In
      ***************/
-    if ($data['mm'] != 0) {
+    if ($data['benefits_in']['mm'] != 0) {
       $node->field_benefits[$lang][][$val] = 'major_medical';
     }
-    if ($data['lm'] != 0) {
+    if ($data['benefits_in']['lm'] != 0) {
       $node->field_benefits[$lang][][$val] = 'limited_medical';
     }
-    if ($data['tm'] != 0) {
+    if ($data['benefits_in']['tm'] != 0) {
       $node->field_benefits[$lang][][$val] = 'teledoc';
     }
-    if ($data['mec'] != 0) {
+    if ($data['benefits_in']['mec'] != 0) {
       $node->field_benefits[$lang][][$val] = 'mec';
     }
-    if ($data['d'] != 0) {
+    if ($data['benefits_in']['d'] != 0) {
       $node->field_benefits[$lang][][$val] = 'dental';
     }
-    if ($data['v'] != 0) {
+    if ($data['benefits_in']['v'] != 0) {
       $node->field_benefits[$lang][][$val] = 'vision';
     }
-    if ($data['ladd'] != 0) {
+    if ($data['benefits_in']['ladd'] != 0) {
       $node->field_benefits[$lang][][$val] = 'life';
     }
-    if ($data['std'] != 0) {
+    if ($data['benefits_in']['std'] != 0) {
       $node->field_benefits[$lang][][$val] = 'short_term_disability';
     }
-    if ($data['0'] != 0) {
+    if ($data['benefits_in']['0'] != 0) {
       $node->field_benefits[$lang][][$val] = 'special_benefits';
     }
-    if ($data['r'] != 0) {
+    if ($data['benefits_in']['r'] != 0) {
       $node->field_benefits[$lang][][$val] = 'retirement';
     }
 
@@ -1166,10 +1166,10 @@ class Bullseye {
     node_save($node);
 
     // Notify the user that the registration is successfull.
-    drupal_set_message(t('Plan specification successfully created.'), 'message');
+    drupal_set_message(t('Plan specification submitted.'), 'status');
 
-    // Redirect the user to homepage.
-    drupal_goto('/');
+    // Redirect the user to plan specs page.
+    drupal_goto('/plan_specs');
   }
 
   /**
