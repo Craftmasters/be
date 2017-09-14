@@ -814,7 +814,11 @@ class Bullseye {
    * @param string $body
    *   The email body.
    * @param array $attachments
-   *   Attachement files.
+   *   An array containing attachment file name and path.
+   *   array(
+   *    'filename' => 'attachment.pdf',
+   *    'uri' => '/tmp/attachment.pdf',
+   *   )
    */
   function sendEmail($to, $from, $subject, $body, $attachments) {
     $email = new AttachmentEmail($to, $from, $subject, $body, $attachments);
@@ -1301,13 +1305,20 @@ class Bullseye {
     // Save the carrier in the storage.
     $node = node_submit($node);
     node_save($node);
+
+    return $node->nid;
   }
 
   /**
    * Send proposal.
    */
   function sendProposal($data) {
-    $attachments = array();
-    $this->sendEmail('geraldvillorente@gmail.com', 'no-reply@archerjordan.com', 'This is just a test', 'hello', $attachments);
+    $this->sendEmail(
+      $data['to'],
+      'no-reply@archerjordan.com',
+      $data['subject'],
+      $data['message'],
+      array()
+    );
   }
 }
