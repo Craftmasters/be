@@ -612,8 +612,8 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
-		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        	<?php print render($form['convert_to_deal']); ?>
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        </div>
 		      </div>
 		    </div>

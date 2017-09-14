@@ -63,8 +63,19 @@
 	  </div>
 	</div>
 
-<?php elseif ($_GET['from'] == 'closed-deal') : ?>
+<?php elseif ($_GET['from'] == 'closed_deal') : ?>
 
+	<div class="be-header-progress">
+	  <div class="be-progress be-start be-green">
+	    <?php print t('Closed Deal'); ?>
+	  </div>
+	  <div class="be-progress be-end be-blue">
+	    <?php print t('Setup Account'); ?>
+	  </div>
+	  <div class="be-progress be-end be-gray">
+	    <?php print t('Migrate to Arrow Cloud'); ?>
+	  </div>
+	</div>
 
 
 <?php endif;?>
