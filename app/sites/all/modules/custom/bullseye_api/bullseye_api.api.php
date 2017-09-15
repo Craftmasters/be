@@ -306,7 +306,7 @@ class Bullseye {
   /**
    * Count all the carriers.
    */
-  function countCarriers() {
+  static function countCarriers() {
     return db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
   }
 
