@@ -2212,8 +2212,8 @@ function generate_rfp_life($form, &$form_state) {
   bullseye_rfp_pdf_generate('Life & AD&D', $values, $form_state['values']);
 
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
