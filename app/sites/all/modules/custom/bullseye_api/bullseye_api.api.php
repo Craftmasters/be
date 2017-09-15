@@ -712,7 +712,7 @@ class Bullseye {
   }
 
   /**
-   * Get the workflow status of an opportunity account.
+   * Get the workflow status of an account.
    */
   function getWorkflowStatusByNid($nid) {
     if ($cache = cache_get('workflow_status_' . $nid)) {
@@ -725,7 +725,6 @@ class Bullseye {
       $status = $query
         ->fields('w', array('field_workflow_status_value'))
         ->condition('n.nid', $nid, '=')
-        ->condition('type.field_account_status_value', 'opportunity', '=')
         ->execute()
         ->fetchField();
 
