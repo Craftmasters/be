@@ -1710,10 +1710,15 @@ class Bullseye {
 
     if (in_array('admin', $account->roles) || in_array('administrator', $account->roles)) {
       $profile = profile2_load_by_user($uid, 'admin');
-      print $profile->field_first_name[$lang][0]['value'] . ' ' . $profile->field_last_name[$lang][0]['value'];
+      if (isset($profile->field_first_name[$lang][0]) || isset($profile->field_last_name[$lang][0]['value'])) {
+        print $profile->field_first_name[$lang][0]['value'] . ' ' . $profile->field_last_name[$lang][0]['value'];
+      }
+      else {
+        print "";
+      }
     }
     else {
-      echo "No Author";
+      print "";
     }
   }
 
