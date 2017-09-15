@@ -419,7 +419,7 @@ class Bullseye {
   /**
    * Count all leads account.
    */
-  function countLeadsAccnt() {
+  static function countLeadsAccnt() {
     if ($cache = cache_get('count_leads_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -486,7 +486,7 @@ class Bullseye {
   /**
    * Count all prospects account.
    */
-  function countProspectsAccnt() {
+  static function countProspectsAccnt() {
     if ($cache = cache_get('count_prospect_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -620,7 +620,7 @@ class Bullseye {
   /**
    * Count all deals account.
    */
-  function countDealsAccnt() {
+  static function countDealsAccnt() {
     if ($cache = cache_get('count_deals_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -687,7 +687,7 @@ class Bullseye {
   /**
    * Count all closed deals account.
    */
-  function countClosedDeals() {
+  static function countClosedDeals() {
     if ($cache = cache_get('count_closed_deals_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -792,7 +792,7 @@ class Bullseye {
    * @return string $rand_string
    *   The generated random string.
    */
-  function randChars($length = 4) {
+  static function randChars($length = 4) {
     $chars = (string) time();
     $chars_length = strlen($chars);
     $rand_string = '';
@@ -820,7 +820,7 @@ class Bullseye {
    *    'uri' => '/tmp/attachment.pdf',
    *   )
    */
-  function sendEmail($to, $from, $params) {
+  static function sendEmail($to, $from, $params) {
     drupal_mail('bullseye_proposals', 'bullseye', $to, LANGUAGE_NONE, $params, $from);
   }
 
