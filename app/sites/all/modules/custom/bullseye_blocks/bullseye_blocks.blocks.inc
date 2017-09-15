@@ -246,6 +246,38 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['be'] = $be;
   $vars['opportunities'] = $be->getOpportunityAccounts();
   $vars['total'] = $be->countOpportunityAccnt();
+  
+  foreach ($vars['opportunities'] as $key1 => $value1) {
+    $workflow_status = $be->getWorkflowStatusByNid($value1->nid);
+    $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_gray'];
+    $vars['opportunities'][$key1]->rfp_td = $vars['arrow_gray'];
+    $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_gray'];
+    $vars['opportunities'][$key1]->convert_td = $vars['arrow_gray'];
+    if ($workflow_status == 'plan_specification') {
+      $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_orange'];
+      $vars['opportunities'][$key1]->rfp_td = $vars['arrow_gray'];
+      $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_gray'];
+      $vars['opportunities'][$key1]->convert_td = $vars['arrow_gray'];
+    }
+    if ($workflow_status == 'rfp') {
+      $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->rfp_td = $vars['arrow_orange'];
+      $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_gray'];
+      $vars['opportunities'][$key1]->convert_td = $vars['arrow_gray'];
+    }
+    if ($workflow_status == 'plan_presentation') {
+      $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->rfp_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_orange'];
+      $vars['opportunities'][$key1]->convert_td = $vars['arrow_gray'];
+    }
+    if ($workflow_status == 'convert_to_deals_in_progress') {
+      $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->rfp_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_green'];
+      $vars['opportunities'][$key1]->convert_td = $vars['arrow_orange'];
+    }
+  }
 
   $vars['aliases'] = array();
 

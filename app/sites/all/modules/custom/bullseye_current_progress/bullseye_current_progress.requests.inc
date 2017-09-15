@@ -650,6 +650,7 @@ function be_cp_send_plan_proposal() {
   if ($account_status == 'opportunity' && $workflow_status == 'rfp' && $action_status == 'receive_quote') {
     $wrapper->field_action_status->set('send_plan_proposal');
     $wrapper->field_workflow_status->set('plan_presentation');
+    cache_clear_all('workflow_status_' . $nid, 'cache');
   }
 
   $wrapper->save();
@@ -674,6 +675,7 @@ function be_cp_accept_proposal_yes() {
 
   if ($account_status == 'opportunity' && $workflow_status == 'plan_presentation' && $action_status == 'receive_feedback_opportunity') {
     $wrapper->field_workflow_status->set('convert_to_deals_in_progress');
+    cache_clear_all('workflow_status_' . $nid, 'cache');
   }
 
   $wrapper->save();
@@ -927,6 +929,8 @@ function be_cp_save_plan_specs() {
       $wrapper->field_action_status->set('generate_rfp');
       $wrapper->field_workflow_status->set('rfp');
     }
+
+    cache_clear_all('workflow_status_' . $nid, 'cache');
 
     $wrapper->save();
   }

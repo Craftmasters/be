@@ -50,10 +50,18 @@
                 <?php $be->buildAccountName($o->field_firstname_value, $o->field_middle_name_value, $o->field_lastname_value); ?>
               </span>
             </td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_orange; ?>"></td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_gray; ?>"></td>
+            <td class="be-table-arrow-td">
+              <img src="<?php print $o->plan_specs_td; ?>">
+            </td>
+            <td class="be-table-arrow-td">
+              <img src="<?php print $o->rfp_td; ?>">
+            </td>
+            <td class="be-table-arrow-td">
+              <img src="<?php print $o->plan_pres_td; ?>">
+            </td>
+            <td class="be-table-arrow-td">
+              <img src="<?php print $o->convert_td; ?>">
+            </td>
             <td><span class="light-gray-font">RFP389910</span></td>
             <td><span class="light-gray-font">389910</span></td>
           </tr>
