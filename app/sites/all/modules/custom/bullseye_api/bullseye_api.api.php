@@ -830,7 +830,7 @@ class Bullseye {
    * Classes for RFP account by row on listing page.
    */
   function isActive($param) {
-    if (!is_null($param)) {
+    if (!empty($param)) {
       print "dot-priority green";
     }
     else {
