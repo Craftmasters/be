@@ -346,6 +346,143 @@
   		padding-left: 17px;
   	}
   }
+
+  .be-forms.setup-fee {
+  	table {
+  		width: 100%;
+  		th {
+  			text-align: center;
+  			padding-bottom: 10px;
+  			color: #929292;
+  			text-transform: uppercase;
+  			font-family: 'Proximanova-Semibold';
+  		}
+  		td {
+  			padding: 5px 20px 0px;
+  			input {
+  				width: 100%;
+  				text-align: center;
+  			}
+  		}
+  	}
+  	.form-item-invoice-due-date,
+  	.form-item-invoice-notes {
+  		margin-right: 0px;
+  		label,
+  		.date-padding,
+  		#edit-invoice-notes {
+  			display: inline-block;
+  			vertical-align: middle;
+  			label {
+  				display: none;
+  			}
+  		}
+  		label {
+  			width: 70px;
+  		}
+  		.date-padding,
+  		#edit-invoice-notes {
+  			width: 300px;
+  		}
+  	}
+  }
+
+  .setup-fee-add-container {
+  	padding: 20px 20px;
+  	a {
+  		color: @orange;
+  	}
+  }
+
+  .pdf-dummy-preview {
+  	text-align: left;
+  	h1, h2 {
+  		text-align: left;
+  	}
+  }
+
+  .send-document-pdf {
+  	h1 {
+  		border-bottom: 2px solid #000 + 100;
+  		padding-bottom: 10px;
+  		color: #000 + 150;
+  		text-transform: uppercase;
+  		font-family: 'Proximanova-Light';
+  	}
+  	table {
+  		margin-top: 60px;
+  		margin-bottom: 80px;
+  		width: 100%;
+  		th {
+  			text-transform: uppercase;
+  			border-bottom: 2px solid @orange;
+  		}
+  		th, td {
+  			font-size: 13px;
+  			padding: 10px;
+  		}
+  		td {
+  			background-color: #fff - 10;
+  		}
+  		tbody {
+  			tr:first-child {
+  				td {
+  					background-color: #fff;
+  				}
+  			}
+  			tr:last-child {
+  				td:first-child {
+  					background-color: #fff;
+  					h2 {
+  						color: @orange;
+  						font-size: 14px;
+  						padding-top: 0px;
+  					}
+  					p {
+  						color: #000 + 80;
+  					}
+  				}
+  				td {
+  					background-color: @orange;
+  					color: #fff;
+  					padding: 5px 10px;
+  				}
+  			}
+  		}
+  	}
+  	.company-info {
+  		margin-top: 25px;
+  		div {
+  			color: #000 + 80;
+  			font-family: 'Proximanova-Regular';
+  			font-size: 13px;
+  		}
+  	}
+  	.other-info {
+  		div {
+  			text-align: right;
+  			span {
+  				width: 100px;
+  				text-align: left;
+  				display: inline-block;
+  				text-transform: uppercase;
+
+  			}
+  			span:first-child {
+  				color: @orange;
+  				position: relative;
+  				&::after {
+  					content: ':';
+  					position: absolute;
+  					right: 0px;
+  				}
+  			}
+  			span:last-child {
+  				text-align: right;
+  			}
+  		}
+  	}
+  }
 }
 
 #add-contact {
@@ -369,4 +506,5 @@
 		font-size: 20px;
 	}
 }
+
 

@@ -1,4 +1,4 @@
-<div class="current-progress-main" node-id="<?php print $nid; ?>">
+<div class="current-progress-main" node-id="<?php print $nid; ?>" plan-specs-nid="<?php print $plan_specs_nid; ?>">
 	
 	<div id="div-plan-specs" class="cp-step row <?php print $class_plan_specs; ?>">
 		<div class="col-xs-2">
@@ -612,8 +612,8 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
-		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        	<?php print render($form['convert_to_deal']); ?>
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        </div>
 		      </div>
 		    </div>

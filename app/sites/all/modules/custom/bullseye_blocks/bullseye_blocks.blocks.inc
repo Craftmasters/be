@@ -494,6 +494,10 @@ function bullseye_blocks_render_be_current_progress() {
       $deals_cp_form = drupal_get_form('bullseye_current_progress_deals_form');
       $vars['cp_form'] = drupal_render($deals_cp_form);
     }
+    elseif ($_GET['from'] == 'closed_deal') {
+      $closed_deals_cp_form = drupal_get_form('bullseye_current_progress_closed_deals_form');
+      $vars['cp_form'] = drupal_render($closed_deals_cp_form);
+    }
   }
 
   $output = theme('be_current_progress', $vars);

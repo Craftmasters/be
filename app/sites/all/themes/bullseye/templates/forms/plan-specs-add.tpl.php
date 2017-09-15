@@ -66,34 +66,34 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['mm']); ?>
+        <?php print render($form['benefits']['benefits_in']['major_medical']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['tm']); ?>
+        <?php print render($form['benefits']['benefits_in']['teledoc']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['ladd']); ?>
+        <?php print render($form['benefits']['benefits_in']['life']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['d']); ?>
+        <?php print render($form['benefits']['benefits_in']['dental']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['lm']); ?>
+        <?php print render($form['benefits']['benefits_in']['limited_medical']); ?>
       </div>
       <div class="col-md-3">
         <?php print render($form['benefits']['benefits_in']['mec']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['std']); ?>
+        <?php print render($form['benefits']['benefits_in']['short_term_disability']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['v']); ?>
+        <?php print render($form['benefits']['benefits_in']['vision']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['r']); ?>
+        <?php print render($form['benefits']['benefits_in']['retirement']); ?>
       </div>
       <div class="col-md-3">
-        <?php print render($form['benefits']['benefits_in']['sb']); ?>
+        <?php print render($form['benefits']['benefits_in']['special_benefits']); ?>
       </div>
       <div class="col-md-6">
         <?php print render($form['benefits']['benefits_in_others']); ?>

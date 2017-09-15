@@ -120,13 +120,6 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
-  $items['be-cp/next-generate-rfp'] = array(
-    'page callback' => 'be_cp_next_generate_rfp',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'bullseye_current_progress.requests.inc',
-  );
-
   $items['be-cp/send-plan-proposal'] = array(
     'page callback' => 'be_cp_send_plan_proposal',
     'access arguments' => array('access content'),
@@ -164,6 +157,13 @@ function bullseye_current_progress_menu() {
 
   $items['be-cp/save-exit-rf-op'] = array(
     'page callback' => 'be_cp_save_exit_rf_op',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-planspecs'] = array(
+    'page callback' => 'be_cp_save_plan_specs',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
     'file' => 'bullseye_current_progress.requests.inc',
@@ -1222,6 +1222,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['account_name'] = $wrapper->field_company->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+  $vars['plan_specs_nid'] = $vars['form']['plan_specs_nid']['#value'];
 
   $vars['class_plan_specs'] = 'gray-check';
   $vars['class_request_specs'] = '';
@@ -1341,6 +1342,21 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     '#value' => $node->nid,
   );
 
+  $form['invoice_due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#title' => t('Due Date'),
+  );
+
+  $form['invoice_notes'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Notes'),
+    '#attributes' => array(
+      'placeholder' => t('Thank you for your business.'),
+    ),
+  );
+
   /*$form['submit'] = array(
     '#type' => 'submit',
     '#submit' => array('convert_to_closed_deal'),
@@ -1362,6 +1378,60 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
  * Implements theme_preprocess_hook().
  */
 function bullseye_current_progress_preprocess_bullseye_current_progress_deals_form(&$vars) {
+  global $base_url;
+  $theme_directory = drupal_get_path('theme', 'bullseye');
+
+  $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_status'] = $wrapper->field_account_status->value();
+  $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Current Progress for Closed Deals Form.
+ */
+function bullseye_current_progress_closed_deals_form($form, &$form_state) {
+  $form = array();
+
+  $form['#parents'] = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-cp-form';
+
+  $alias  = 'content/' . arg(1);
+  $path = drupal_lookup_path('source', $alias);
+  $node = menu_get_object('node', 1, $path);
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  /*$form['submit'] = array(
+    '#type' => 'submit',
+    '#submit' => array('convert_to_closed_deal'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Yes'),
+  );*/
+
+  // Attach js for ajax requests
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'bullseye_current_progress') . '/js/bullseye_current_progress_closed_deals.js',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements theme_preprocess_hook().
+ */
+function bullseye_current_progress_preprocess_bullseye_current_progress_closed_deals_form(&$vars) {
 
   $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
   $action_status = $wrapper->field_action_status->value();
@@ -1370,6 +1440,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $vars['nid'] = $vars['form']['nid']['#value'];
 
 }
+
 
 /**
  * Implements hook_theme().
@@ -1393,6 +1464,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['bullseye_current_progress_deals_form'] = array(
     'render element' => 'form',
     'template' => 'cp-deals-form',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['bullseye_current_progress_closed_deals_form'] = array(
+    'render element' => 'form',
+    'template' => 'cp-closed-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
   return $items;

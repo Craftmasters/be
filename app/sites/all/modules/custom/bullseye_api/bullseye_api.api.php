@@ -1153,34 +1153,34 @@ class Bullseye {
     /***************
      * Benefits Interested In
      ***************/
-    if ($data['benefits_in']['mm'] != '0') {
+    if ($data['benefits_in']['major_medical'] != '0') {
       $node->field_benefits[$lang][][$val] = 'major_medical';
     }
-    if ($data['benefits_in']['lm'] != '0') {
+    if ($data['benefits_in']['limited_medical'] != '0') {
       $node->field_benefits[$lang][][$val] = 'limited_medical';
     }
-    if ($data['benefits_in']['tm'] != '0') {
+    if ($data['benefits_in']['teledoc'] != '0') {
       $node->field_benefits[$lang][][$val] = 'teledoc';
     }
     if ($data['benefits_in']['mec'] != '0') {
       $node->field_benefits[$lang][][$val] = 'mec';
     }
-    if ($data['benefits_in']['d'] != '0') {
+    if ($data['benefits_in']['dental'] != '0') {
       $node->field_benefits[$lang][][$val] = 'dental';
     }
-    if ($data['benefits_in']['v'] != '0') {
+    if ($data['benefits_in']['vision'] != '0') {
       $node->field_benefits[$lang][][$val] = 'vision';
     }
-    if ($data['benefits_in']['ladd'] != '0') {
+    if ($data['benefits_in']['life'] != '0') {
       $node->field_benefits[$lang][][$val] = 'life';
     }
-    if ($data['benefits_in']['std'] != '0') {
+    if ($data['benefits_in']['short_term_disability'] != '0') {
       $node->field_benefits[$lang][][$val] = 'short_term_disability';
     }
-    if ($data['benefits_in']['sb'] != '0') {
+    if ($data['benefits_in']['special_benefits'] != '0') {
       $node->field_benefits[$lang][][$val] = 'special_benefits';
     }
-    if ($data['benefits_in']['r'] != '0') {
+    if ($data['benefits_in']['retirement'] != '0') {
       $node->field_benefits[$lang][][$val] = 'retirement';
     }
 
@@ -1203,6 +1203,66 @@ class Bullseye {
     // Save the carrier in the storage.
     $node = node_submit($node);
     node_save($node);
+
+    // Notify the user that the registration is successfull.
+    drupal_set_message(t('Plan specification submitted.'), 'status');
+
+    // Refresh the page.
+    drupal_goto('plan_specs', $param);
+
+  }
+
+  /**
+   * Update existing plan specs.
+   *
+   * @param array $data
+   *   The data from plan specs form.
+   */
+  function updatePlanSpecs($data) {
+    global $user;
+
+    $plan_specs_nid = $data['plan_specs_nid'];
+
+    $benefits = array();
+
+    foreach ($data['benefits_in'] as $key => $value) {
+      if ($value) {
+        $benefits[] = $value;
+      }
+    }
+
+    $wrapper = entity_metadata_wrapper('node', $plan_specs_nid);
+    $wrapper->title->set($data['contact_company']);
+    $wrapper->field_primary_contact->set($data['contact']);
+    $wrapper->field_title->set($data['contact_title']);
+    $wrapper->field_contact_number->set($data['contact_number']);
+    $wrapper->field_industry->set($data['contact_industry']);
+    $wrapper->field_complete_address->set($data['contact_address']);
+    $wrapper->field_fringe_rate->set($data['plan_fringe_rates']);
+    $wrapper->field_proposed_effective_date->set(strtotime($data['plan_proposed_date']));
+    $wrapper->field_other_work_locations->set($data['plan_other_location']);
+    $wrapper->field_number_of_employees->set($data['plan_num_employees']);
+    $wrapper->field_number_of_dependents->set($data['plan_num_dependents']);
+    $wrapper->field_nature_of_business_sic->set($data['plan_nature_business']);
+    $wrapper->field_years_in_business->set($data['plan_years_business']);
+    $wrapper->field_tax_id->set($data['plan_tax_id']);
+    $wrapper->field_renewal_date->set(strtotime($data['plan_renewal_date']));
+    $wrapper->field_others->set($data['benefits_in_others']);
+    $wrapper->field_benefits->set($benefits);
+
+    $wrapper->save();
+
+    // Check if plan specs is for exisiting company.
+    if ($data['nid'] != '') {
+      $param = array(
+        'query' => array(
+          'company_nid' => $data['nid'],
+        )
+      );
+    }
+    else {
+      $param = array();
+    }
 
     // Notify the user that the registration is successfull.
     drupal_set_message(t('Plan specification submitted.'), 'status');
@@ -1416,5 +1476,50 @@ class Bullseye {
     );
 
     $this->sendEmail($data['to'], $user->mail, $params);
+  }
+
+  /**
+   * Send Plan Specs Link to client.
+   */
+  function sendPlanSpecsLink($data) {
+    global $user;
+
+    /*$params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $data['from'],
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $data['attachments'],
+    );*/
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => 'ruthieborces@outlook.com',
+      'from' => 'mrborces@gmail.com',
+      'subject' => 'Test email from BE',
+      'body' => 'Test email from BE',
+      'attachment' => array(),
+    );
+
+    $this->sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  }
+
+  /**
+   * Send Suggestion to archerjordan support.
+   */
+  function sendSuggestion($data) {
+    global $user;
+
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $data['to'],
+      'from' => $data['from'],
+      'subject' => $data['subject'],
+      'body' => $data['message'],
+      'attachment' => $data['attachments'],
+    );
+
+    $this->sendEmail($data['to'], $data['from'], $params);
   }
 }

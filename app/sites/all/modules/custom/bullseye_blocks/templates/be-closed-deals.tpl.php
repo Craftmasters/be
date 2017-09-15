@@ -35,42 +35,37 @@
         </tr> 
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
-            <!-- link "/company/allen-markarian?from=closed-deal" where 'allen-markarian' is the alias and 'closed-deal' is the status of account -->
-            <td><span class="orange-font"><a href="/company?from=closed-deal" class="orange-font">ABC Company</a></span></td>
-            <td><span class="gray-font">Chris Devon</span></td>
-            <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></td>
-          </tr>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <tr>
-            <td class="cell-check"><input type="checkbox"></td>
-            <!-- link "/company/allen-markarian?from=closed-deal" where 'allen-markarian' is the alias and 'closed-deal' is the status of account -->
-            <td><span class="orange-font"><a href="/company?from=closed-deal" class="orange-font">ABC Company</a></span></td>
-            <td><span class="gray-font">Chris Devon</span></td>
-            <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td><a href="#" class="be-table-button green"><?php print t('Visit Arrow Cloud Page'); ?></a></td>
-          </tr>
-        <?php endfor; ?>
+      <!--
+        <tr>
+          <td class="cell-check"><input type="checkbox"></td>
+          <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
+          <td><span class="gray-font">Chris Devon</span></td>
+          <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></td>
+        </tr>
+        <tr>
+          <td class="cell-check"><input type="checkbox"></td>
+          <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
+          <td><span class="gray-font">Chris Devon</span></td>
+          <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority green"></td>
+          <td class="be-dot-td"><span class="dot-priority gray"></td>
+          <td><a href="#" class="be-table-button green"><?php print t('Visit Arrow Cloud Page'); ?></a></td>
+        </tr>-->
       </tbody>
     </table>
   </div>
