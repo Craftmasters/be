@@ -1180,7 +1180,27 @@ function send_proposal_email($form, &$form_state) {
   $from = 'bullseye@archerjordan.com';
   $message = $form_state['values']['message'];
   $subject = $form_state['values']['subject'];
-  $attachments = array();
+  
+  
+  // Save the proposal to Proposal entity storage.
+  $nid = $be->createProposal($data);
+
+  // Load the proposal entity.
+  $node = node_load($nid);
+  $lang = $node->language;
+  $path = '';
+  // Get the attachements.
+  if (isset($node->field_attached_proposal[$lang][0])) {
+    if ($wrapper = file_stream_wrapper_get_instance_by_uri($node->field_attached_proposal[$lang][0]['uri'])) {
+      $path = $wrapper->realpath();
+    }
+  }
+
+  $attachments = array(
+    'filename' => $node->field_attached_proposal[$lang][0]['filename'],
+    'uri' => $node->field_attached_proposal[$lang][0]['uri'],
+    'fid' => $node->field_attached_proposal[$lang][0]['fid'],
+  );
 
   // Send the proposal via email.
   $params = array(
@@ -1192,9 +1212,6 @@ function send_proposal_email($form, &$form_state) {
     'attachment' => $attachments,
   );
   Bullseye::sendEmail($to, $from, $params);
-  
-  // Save the proposal to Proposal entity storage.
-  $be->createProposal($data);
 
   $param = array(
     'query' => array(
