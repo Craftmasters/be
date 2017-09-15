@@ -246,7 +246,7 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['be'] = $be;
   $vars['opportunities'] = $be->getOpportunityAccounts();
   $vars['total'] = $be->countOpportunityAccnt();
-  
+
   foreach ($vars['opportunities'] as $key1 => $value1) {
     $workflow_status = $be->getWorkflowStatusByNid($value1->nid);
     $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_gray'];
@@ -606,17 +606,12 @@ function bullseye_blocks_render_be_people() {
   global $user;
 
   $be = new Bullseye($user);
-
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
-
   $nid = $be->getNidFromPath(arg(1));
-
   $vars['people'] = $be->getAccountPeople($nid);
-
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
-
   $output = theme('be_people', $vars);
 
   return array(
