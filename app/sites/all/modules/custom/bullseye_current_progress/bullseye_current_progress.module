@@ -1138,9 +1138,16 @@ function send_link_email($form, &$form_state) {
   $subject = $form_state['values']['sl_subject'];
   $attachments = array();
 
-  // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+  // Send the proposal via email.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => 'ruthieborces@outlook.com',
+    'from' => 'mrborces@gmail.com',
+    'subject' => 'Test email from BE'),
+    'body' => 'Test email from BE',
+    'attachment' => $attachments,
+  );
+  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
 
   $param = array(
     'query' => array(
