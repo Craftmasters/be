@@ -1205,6 +1205,14 @@ function convert_to_deal($form, &$form_state) {
     $wrapper->field_account_status->set('deal_in_progress');
   }
 
+  // Clear the opportunities and deals in progress listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('opportunity_accounts_listing', 'cache');
+  cache_clear_all('count_opportunity_accounts_listing', 'cache');
+  cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+  cache_clear_all('count_deals_accounts_listing', 'cache');
+
   $wrapper->save();
 
   // Refresh the page.

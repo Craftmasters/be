@@ -308,6 +308,8 @@
             },
             success: function(result){
               console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
               $('.current-progress-main').attr('plan-specs-nid', result);
             },
           });
