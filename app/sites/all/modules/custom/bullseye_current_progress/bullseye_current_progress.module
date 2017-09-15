@@ -1141,13 +1141,13 @@ function send_link_email($form, &$form_state) {
   // Send the proposal via email.
   $params = array(
     'key' => 'bullseye',
-    'to' => 'ruthieborces@outlook.com',
-    'from' => 'mrborces@gmail.com',
-    'subject' => 'Test email from BE',
-    'body' => 'Test email from BE',
+    'to' => $form_state['values']['sl_recipient'],
+    'from' => $form_state['values']['sl_sender'],
+    'subject' => $form_state['values']['sl_subject'],
+    'body' => $form_state['values']['sl_content'],
     'attachment' => $attachments,
   );
-  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  Bullseye::sendEmail($form_state['values']['sl_recipient'], $form_state['values']['sl_sender'], $params);
 
   $param = array(
     'query' => array(
@@ -1182,9 +1182,17 @@ function send_proposal_email($form, &$form_state) {
   $subject = $form_state['values']['subject'];
   $attachments = array();
 
-  // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+  // Send the proposal via email.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => $to,
+    'from' => $from,
+    'subject' => $subject,
+    'body' => $message,
+    'attachment' => $attachments,
+  );
+  Bullseye::sendEmail($to, $from, $params);
+  
   // Save the proposal to Proposal entity storage.
   $be->createProposal($data);
 
