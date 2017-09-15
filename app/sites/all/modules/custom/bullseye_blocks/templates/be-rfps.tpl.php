@@ -41,19 +41,51 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
-            <td><span class="gray-font"><?php print $rfp->field_company_value; ?></span></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_mm_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_lm_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_tl_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_mec_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_den_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_vs_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_lf_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_std_current_carrier_value); ?>"></td>
-            <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_sb_current_carrier_value); ?>"></td>
-            <td><span class="light-gray-font">8/30/2017</span></td>
-            <td class="be-dot-td"><span class="dot-priority red"></span></td>
-            <td><span class="light-gray-font"><?php $be->getAuthor($rfp->uid); ?></span></td>
+            <td>
+              <span class="gray-font">
+                <?php print $rfp->field_company_value; ?>
+              </span>
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_mm_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_lm_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_tl_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_mec_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_den_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_vs_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_lf_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_std_current_carrier_value); ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php Bullseye::isActive($rfp->field_sb_current_carrier_value); ?>">
+            </td>
+            <td>
+              <span class="light-gray-font">
+                8/30/2017
+              </span>
+            </td>
+            <td class="be-dot-td">
+              <span class="dot-priority <?php Bullseye::priorityClass(); ?>"></span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php Bullseye::getAuthor($rfp->uid); ?>
+              </span>
+            </td>
           </tr>
         <?php endforeach; ?>
       </tbody>
