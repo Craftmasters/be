@@ -684,15 +684,17 @@ function suggestion_box_send() {
 
   $data = array();
 
-  $data['to'] = $to;
-  $data['from'] = $from;
-  $data['message'] = $message;
-  $data['subject'] = $subject;
-  $data['attachments'] = $attachments;
-
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendSuggestion($data);
+  // Send the proposal via email.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => $to,
+    'from' => $from,
+    'subject' => $subject,
+    'body' => $message,
+    'attachment' => $attachments,
+  );
+  Bullseye::sendEmail($to, $from, $params);
 
   drupal_json_output('success');
 

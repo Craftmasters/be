@@ -1141,13 +1141,13 @@ function send_link_email($form, &$form_state) {
   // Send the proposal via email.
   $params = array(
     'key' => 'bullseye',
-    'to' => 'ruthieborces@outlook.com',
-    'from' => 'mrborces@gmail.com',
-    'subject' => 'Test email from BE',
-    'body' => 'Test email from BE',
+    'to' => $form_state['values']['sl_recipient'],
+    'from' => $form_state['values']['sl_sender'],
+    'subject' => $form_state['values']['sl_subject'],
+    'body' => $form_state['values']['sl_content'],
     'attachment' => $attachments,
   );
-  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  Bullseye::sendEmail($form_state['values']['sl_recipient'], $form_state['values']['sl_sender'], $params);
 
   $param = array(
     'query' => array(
@@ -1166,6 +1166,7 @@ function send_link_email($form, &$form_state) {
 function send_proposal_email($form, &$form_state) {
 
   global $user;
+  $be = new Bullseye($user);
 
   $form_state['values']['account'] = array(
     'entity_id' => $form_state['values']['nid'],
@@ -1180,13 +1181,38 @@ function send_proposal_email($form, &$form_state) {
   $from = 'bullseye@archerjordan.com';
   $message = $form_state['values']['message'];
   $subject = $form_state['values']['subject'];
-  $attachments = array();
-
-  // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $from, $subject ,$message, $attachments);
+  
+  
   // Save the proposal to Proposal entity storage.
-  $be->createProposal($data);
+  $nid = $be->createProposal($data);
+
+  // Load the proposal entity.
+  $node = node_load($nid);
+  $lang = $node->language;
+  $path = '';
+  // Get the attachements.
+  if (isset($node->field_attached_proposal[$lang][0])) {
+    if ($wrapper = file_stream_wrapper_get_instance_by_uri($node->field_attached_proposal[$lang][0]['uri'])) {
+      $path = $wrapper->realpath();
+    }
+  }
+
+  $attachments = array(
+    'filename' => $node->field_attached_proposal[$lang][0]['filename'],
+    'uri' => $node->field_attached_proposal[$lang][0]['uri'],
+    'fid' => $node->field_attached_proposal[$lang][0]['fid'],
+  );
+
+  // Send the proposal via email.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => $to,
+    'from' => $from,
+    'subject' => $subject,
+    'body' => $message,
+    'attachment' => $attachments,
+  );
+  Bullseye::sendEmail($to, $from, $params);
 
   $param = array(
     'query' => array(
