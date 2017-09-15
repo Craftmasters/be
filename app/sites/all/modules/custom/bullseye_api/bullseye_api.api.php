@@ -730,7 +730,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
       $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
       $rfps = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('cmp', array('field_company_value'))
         ->fields('mmcc', array('field_mm_current_carrier_value'))
         ->fields('lmcc', array('field_lm_current_carrier_value'))
@@ -1521,5 +1521,24 @@ class Bullseye {
     );
 
     $this->sendEmail($data['to'], $data['from'], $params);
+  }
+
+  /**
+   * Get author name.
+   */
+  function getAuhtor($uid) {
+    $account = user_load($uid);
+    if (in_array_r(array('admin', 'administrator'), $account->roles)) {
+      echo "Found";
+    }
+  }
+
+  function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+      if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+        return true;
+      }
+    }
+    return false;
   }
 }
