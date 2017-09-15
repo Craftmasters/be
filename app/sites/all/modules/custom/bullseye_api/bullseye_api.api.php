@@ -60,6 +60,159 @@ class Bullseye {
   }
 
   /**
+   * Get Company name by nid.
+   */
+  function getCompanyNameByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_company', 'company', 'n.nid = company.entity_id');
+    $company_name = $query
+      ->fields('company', array('field_company_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $company_name;
+  }
+
+  /**
+   * Get Primary email address by nid.
+   */
+  function getPrimaryEmailByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
+    $email = $query
+      ->fields('email', array('field_email_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $email;
+  }
+
+  /**
+   * Get Phone Number by nid.
+   */
+  function getPhoneNumberByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_work_phone', 'phone', 'n.nid = phone.entity_id');
+    $phone = $query
+      ->fields('phone', array('field_work_phone_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $phone;
+  }
+
+  /**
+   * Get Website by nid.
+   */
+  function getWebsiteByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_work_website', 'website', 'n.nid = website.entity_id');
+    $website = $query
+      ->fields('website', array('field_work_website_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $website;
+  }
+
+  /**
+   * Get Street Address by nid.
+   */
+  function getStreetAddressByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_street', 'street', 'n.nid = street.entity_id');
+    $street = $query
+      ->fields('street', array('field_street_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $street;
+  }
+
+  /**
+   * Get City by nid.
+   */
+  function getCityByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_city', 'city', 'n.nid = city.entity_id');
+    $city = $query
+      ->fields('city', array('field_city_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $city;
+  }
+
+  /**
+   * Get State by nid.
+   */
+  function getStateByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_states', 'states', 'n.nid = states.entity_id');
+    $states = $query
+      ->fields('states', array('field_states_tid'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    $state = taxonomy_term_load($states);
+    $state = $state->name;
+
+    return $state;
+  }
+
+  /**
+   * Get Zip Code by nid.
+   */
+  function getZipCodeByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_postal_code', 'zip_code', 'n.nid = zip_code.entity_id');
+    $zip_code = $query
+      ->fields('zip_code', array('field_postal_code_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $zip_code;
+  }
+
+  /**
+   * Get Business type by nid.
+   */
+  function getBusinessTypeByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_type_of_business', 'bt', 'n.nid = bt.entity_id');
+    $bt = $query
+      ->fields('bt', array('field_type_of_business_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $bt;
+  }
+
+  /**
+   * Get tags by nid.
+   */
+  function getTagsByNid($nid) {
+    $query = db_select('field_data_field_tags', 'tags');
+    $query->join('taxonomy_term_data', 'tx', 'tags.field_tags_tid = tx.tid');
+    $tags = $query
+      ->fields('tx', array('name'))
+      ->condition('tags.entity_id', $nid, '=')
+      ->execute()
+      ->fetchAll();
+
+    return $tags;
+  }
+
+  /**
    * Get the state tid by name.
    *
    * @param string $state

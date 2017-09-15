@@ -582,11 +582,37 @@ function bullseye_blocks_render_be_recent_activities() {
  * Account Details Block.
  */
 function bullseye_blocks_render_be_account_details() {
-  global $base_url;
+  global $base_url, $user;
+  $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars = array();
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+  
+
+  $nid = $be->getNidFromPath(arg(1));
+
+  $vars['company_name'] = $be->getCompanyNameByNid($nid);
+  $vars['primary_email'] = $be->getPrimaryEmailByNid($nid);
+  $vars['phone_number'] = $be->getPhoneNumberByNid($nid);
+  $vars['website'] = $be->getWebsiteByNid($nid);
+  $vars['street_address'] = $be->getStreetAddressByNid($nid);
+  $vars['city'] = $be->getCityByNid($nid);
+  $vars['state'] = $be->getStateByNid($nid);
+  $vars['zip_code'] = $be->getZipCodeByNid($nid);
+  $vars['business_type'] = $be->getBusinessTypeByNid($nid);
+  $tags = $be->getTagsByNid($nid);
+  $vars['tags'] = '';
+
+  foreach ($tags as $key => $value) {
+    if ($key == 0) {
+      $vars['tags'] .= trim($value->name);
+    }
+    else {
+      $vars['tags'] .= ', ' . trim($value->name);
+    }
+  }
+
   $output = theme('be_account_details', $vars);
 
   return array(
