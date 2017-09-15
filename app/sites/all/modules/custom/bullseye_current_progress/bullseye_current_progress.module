@@ -1166,6 +1166,7 @@ function send_link_email($form, &$form_state) {
 function send_proposal_email($form, &$form_state) {
 
   global $user;
+  $be = new Bullseye($user);
 
   $form_state['values']['account'] = array(
     'entity_id' => $form_state['values']['nid'],
