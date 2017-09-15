@@ -538,6 +538,32 @@ function bullseye_rfp_form($form, &$form_state) {
     '#default_value' => $_GET['benefits']['retirement'],
   );
 
+  $autocomplete_carriers_1 = array(
+    '#required' => FALSE,
+    '#type' => 'entityreference',
+    '#era_entity_type' => 'node',
+    '#era_bundles' => array('carrier'),
+    '#era_cardinality' => 1,
+    '#era_query_settings' => array(
+      'limit' => 15, // Default is 50.
+      'property_conditions' => array(
+        array('status', 1, '='),
+      ),
+      'field_conditions' => array(),
+    ),
+    '#attributes' => array(
+      'placeholder' => t('Carrier 1'),
+    ),
+  );
+  $autocomplete_carriers_2 = $autocomplete_carriers_1;
+  $autocomplete_carriers_2['#attributes']['placeholder'] = t('Carrier 2');
+  $autocomplete_carriers_3 = $autocomplete_carriers_1;
+  $autocomplete_carriers_3['#attributes']['placeholder'] = t('Carrier 3');
+  $autocomplete_carriers_4 = $autocomplete_carriers_1;
+  $autocomplete_carriers_4['#attributes']['placeholder'] = t('Carrier 4');
+  $autocomplete_carriers_5 = $autocomplete_carriers_1;
+  $autocomplete_carriers_5['#attributes']['placeholder'] = t('Carrier 5');
+
   // Major Medical.
   $form['major_medical_fields'] = array(
     '#type' => 'container',
@@ -628,6 +654,13 @@ function bullseye_rfp_form($form, &$form_state) {
     'major_medical_attach_lcr' => array(
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
+    ),
+    'mm_carriers_to_send' => array(
+      'mm_carrier_to_send_1' => $autocomplete_carriers_1,
+      'mm_carrier_to_send_2' => $autocomplete_carriers_2,
+      'mm_carrier_to_send_3' => $autocomplete_carriers_3,
+      'mm_carrier_to_send_4' => $autocomplete_carriers_4,
+      'mm_carrier_to_send_5' => $autocomplete_carriers_5,
     ),
   );
 
@@ -722,6 +755,13 @@ function bullseye_rfp_form($form, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
     ),
+    'lm_carriers_to_send' => array(
+      'lm_carrier_to_send_1' => $autocomplete_carriers_1,
+      'lm_carrier_to_send_2' => $autocomplete_carriers_2,
+      'lm_carrier_to_send_3' => $autocomplete_carriers_3,
+      'lm_carrier_to_send_4' => $autocomplete_carriers_4,
+      'lm_carrier_to_send_5' => $autocomplete_carriers_5,
+    ),
   );
 
   // Telemedicine.
@@ -814,6 +854,13 @@ function bullseye_rfp_form($form, &$form_state) {
     'teledoc_attach_lcr' => array(
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
+    ),
+    'tel_carriers_to_send' => array(
+      'tel_carrier_to_send_1' => $autocomplete_carriers_1,
+      'tel_carrier_to_send_2' => $autocomplete_carriers_2,
+      'tel_carrier_to_send_3' => $autocomplete_carriers_3,
+      'tel_carrier_to_send_4' => $autocomplete_carriers_4,
+      'tel_carrier_to_send_5' => $autocomplete_carriers_5,
     ),
   );
 
@@ -908,6 +955,13 @@ function bullseye_rfp_form($form, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
     ),
+    'mec_carriers_to_send' => array(
+      'mec_carrier_to_send_1' => $autocomplete_carriers_1,
+      'mec_carrier_to_send_2' => $autocomplete_carriers_2,
+      'mec_carrier_to_send_3' => $autocomplete_carriers_3,
+      'mec_carrier_to_send_4' => $autocomplete_carriers_4,
+      'mec_carrier_to_send_5' => $autocomplete_carriers_5,
+    ),
   );
 
   // Dental.
@@ -1000,6 +1054,13 @@ function bullseye_rfp_form($form, &$form_state) {
     'dental_attach_lcr' => array(
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
+    ),
+    'den_carriers_to_send' => array(
+      'den_carrier_to_send_1' => $autocomplete_carriers_1,
+      'den_carrier_to_send_2' => $autocomplete_carriers_2,
+      'den_carrier_to_send_3' => $autocomplete_carriers_3,
+      'den_carrier_to_send_4' => $autocomplete_carriers_4,
+      'den_carrier_to_send_5' => $autocomplete_carriers_5,
     ),
   );
 
@@ -1094,6 +1155,13 @@ function bullseye_rfp_form($form, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
     ),
+    'vs_carriers_to_send' => array(
+      'vs_carrier_to_send_1' => $autocomplete_carriers_1,
+      'vs_carrier_to_send_2' => $autocomplete_carriers_2,
+      'vs_carrier_to_send_3' => $autocomplete_carriers_3,
+      'vs_carrier_to_send_4' => $autocomplete_carriers_4,
+      'vs_carrier_to_send_5' => $autocomplete_carriers_5,
+    ),
   );
 
   // Life.
@@ -1186,6 +1254,13 @@ function bullseye_rfp_form($form, &$form_state) {
     'life_attach_lcr' => array(
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
+    ),
+    'lf_carriers_to_send' => array(
+      'lf_carrier_to_send_1' => $autocomplete_carriers_1,
+      'lf_carrier_to_send_2' => $autocomplete_carriers_2,
+      'lf_carrier_to_send_3' => $autocomplete_carriers_3,
+      'lf_carrier_to_send_4' => $autocomplete_carriers_4,
+      'lf_carrier_to_send_5' => $autocomplete_carriers_5,
     ),
   );
 
@@ -1280,6 +1355,13 @@ function bullseye_rfp_form($form, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
     ),
+    'std_carriers_to_send' => array(
+      'std_carrier_to_send_1' => $autocomplete_carriers_1,
+      'std_carrier_to_send_2' => $autocomplete_carriers_2,
+      'std_carrier_to_send_3' => $autocomplete_carriers_3,
+      'std_carrier_to_send_4' => $autocomplete_carriers_4,
+      'std_carrier_to_send_5' => $autocomplete_carriers_5,
+    ),
   );
 
   // Retirement.
@@ -1373,6 +1455,13 @@ function bullseye_rfp_form($form, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
     ),
+    'ret_carriers_to_send' => array(
+      'ret_carrier_to_send_1' => $autocomplete_carriers_1,
+      'ret_carrier_to_send_2' => $autocomplete_carriers_2,
+      'ret_carrier_to_send_3' => $autocomplete_carriers_3,
+      'ret_carrier_to_send_4' => $autocomplete_carriers_4,
+      'ret_carrier_to_send_5' => $autocomplete_carriers_5,
+    ),
   );
 
   // Special Benefits.
@@ -1465,6 +1554,13 @@ function bullseye_rfp_form($form, &$form_state) {
     'special_benefits_attach_lcr' => array(
       '#type' => 'checkbox',
       '#title' => t('Large Claims Report'),
+    ),
+    'sb_carriers_to_send' => array(
+      'sb_carrier_to_send_1' => $autocomplete_carriers_1,
+      'sb_carrier_to_send_2' => $autocomplete_carriers_2,
+      'sb_carrier_to_send_3' => $autocomplete_carriers_3,
+      'sb_carrier_to_send_4' => $autocomplete_carriers_4,
+      'sb_carrier_to_send_5' => $autocomplete_carriers_5,
     ),
   );
 
