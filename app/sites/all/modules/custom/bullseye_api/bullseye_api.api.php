@@ -712,7 +712,7 @@ class Bullseye {
   /**
    * Get RFPs.
    */
-  function getRfps() {
+  static function getRfps() {
     if ($cache = cache_get('rfp_listing')) {
       $rfps = $cache->data;
     }
@@ -829,7 +829,7 @@ class Bullseye {
    *
    * Classes for RFP account by row on listing page.
    */
-  function isActive($param) {
+  static function isActive($param) {
     if (!empty($param)) {
       print "dot-priority green";
     }
@@ -906,7 +906,7 @@ class Bullseye {
   /**
    * Get the total number of open RFPs.
    */
-  function totalRfps() {
+  static function totalRfps() {
     if ($cache = cache_get('total_rfps')) {
       $total = $cache->data;
     }
@@ -1526,7 +1526,7 @@ class Bullseye {
   /**
    * Get author name.
    */
-  function getAuthor($uid) {
+  static function getAuthor($uid) {
     $account = user_load($uid);
     $lang = LANGUAGE_NONE;
 
@@ -1549,5 +1549,32 @@ class Bullseye {
       }
     }
     return false;
+  }
+
+  /**
+   * Class for priority.
+   *
+   * @param string $account
+   *   The account node id.
+   */
+  static function priorityClass($param = NULL) {
+    switch ($param) {
+      case 'high':
+        print 'red';
+        break;
+      case 'normal':
+      case 'medium':
+        print 'green';
+        break;
+      case 'low':
+        print "blue";
+        break;
+      default:
+        print 'green';
+    }
+  }
+
+  public static function test() {
+    print "Success";
   }
 }
