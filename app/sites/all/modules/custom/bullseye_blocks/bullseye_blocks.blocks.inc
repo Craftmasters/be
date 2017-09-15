@@ -464,16 +464,14 @@ function bullseye_blocks_render_be_producers_pending() {
  * Carriers Block (Table).
  */
 function bullseye_blocks_render_be_carriers() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
   // Get the producers.
-  $vars['carriers'] = $be->getCarriers();
-  $vars['total_carriers'] = $be->countCarriers();
+  $vars['carriers'] = Bullseye::getCarriers();
+  $vars['total_carriers'] = Bullseye::countCarriers();
 
   // Shortened variables.
   $vars['mm'] = 'major_medical';
