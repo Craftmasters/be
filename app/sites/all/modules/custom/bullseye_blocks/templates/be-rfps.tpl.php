@@ -38,7 +38,6 @@
       </thead>
       <tbody>
         <?php foreach($rfps as $rfp): ?>
-          <?php krumo($rfp); ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
@@ -54,7 +53,7 @@
             <td class="be-dot-td"><span class="<?php $be->isActive($rfp->field_sb_current_carrier_value); ?>"></td>
             <td><span class="light-gray-font">8/30/2017</span></td>
             <td class="be-dot-td"><span class="dot-priority red"></span></td>
-            <td><span class="light-gray-font"><?php $be->getAuhtor($rfp->uid); ?></span></td>
+            <td><span class="light-gray-font"><?php $be->getAuthor($rfp->uid); ?></span></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
