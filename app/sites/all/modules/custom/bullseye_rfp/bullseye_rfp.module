@@ -2164,12 +2164,23 @@ function generate_rfp_major_medical($form, &$form_state) {
     $account = node_load($data['account_id']);
     $to = $account->field_email[LANGUAGE_NONE][0]['value'];
 
-    // Generate pdf and down it.
+    krumo($form_state);
+
+    $attachment = array();
+
+    // Send the proposal via email.
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $to,
+      'from' => $user->mail,
+      'subject' => Bullseye::getRfpSubject(),
+      'body' => Bullseye::getRfpBody(),
+      'attachment' => $attachment,
+    );
+    Bullseye::sendEmail($to, $user->mail, $params);
+
+    // Generate pdf and download it.
     bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
-    krumo($form_state['values']);
-    // Send the email.
-    $be = new Bullseye($user);
-    $be->sendEmail($to, $user->mail, 'This is just a test', 'hello', $attachments);
   }
 
 }
@@ -2192,9 +2203,12 @@ function generate_rfp_limited_medical($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Limited Medical', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2215,9 +2229,12 @@ function generate_rfp_teledoc($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Telemedicine', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2238,9 +2255,12 @@ function generate_rfp_mec($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('MEC', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2261,9 +2281,12 @@ function generate_rfp_dental($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Dental', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2284,9 +2307,12 @@ function generate_rfp_vision($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Vision', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2307,9 +2333,12 @@ function generate_rfp_life($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Life & AD&D', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2330,9 +2359,12 @@ function generate_rfp_short_term_disability($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Short Term Disability', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**
@@ -2353,9 +2385,12 @@ function generate_rfp_retirement($form, &$form_state) {
   // Generate pdf and down it.
   bullseye_rfp_pdf_generate('Retirement', $values, $form_state['values']);
 
+  krumo($form_state['values']);
+  die();
+
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $params = array();
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
 
 /**

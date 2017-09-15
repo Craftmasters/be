@@ -708,7 +708,7 @@ class Bullseye {
   /**
    * Count all opportunity account.
    */
-  function countOpportunityAccnt() {
+  static function countOpportunityAccnt() {
     if ($cache = cache_get('count_opportunity_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -1752,7 +1752,34 @@ class Bullseye {
     }
   }
 
-  public static function test() {
-    print "Success";
+  /**
+   * Get the RFP subject.
+   */
+  static function getRfpSubject() {
+    if ($cache = cache_get('rfp_subject')) {
+      $data = $cache->data;
+    }
+    else {
+      $data = variable_get('rfp_subject');
+      cache_set('rfp_subject', $data, 'cache');
+    }
+
+    return $data;
+  }
+
+  /**
+   * Get RFP email body.
+   */
+  static function getRfpBody() {
+    if ($cache = cache_get('rfp_body')) {
+      $data = $cache->data;
+    }
+    else {
+      $body = variable_get('rfp_body');
+      $data = $body['value'];
+      cache_set('rfp_body', $data, 'cache');
+    }
+
+    return $data;
   }
 }
