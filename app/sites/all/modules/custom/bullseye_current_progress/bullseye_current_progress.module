@@ -1182,7 +1182,6 @@ function send_proposal_email($form, &$form_state) {
   $message = $form_state['values']['message'];
   $subject = $form_state['values']['subject'];
   
-  
   // Save the proposal to Proposal entity storage.
   $nid = $be->createProposal($data);
 
