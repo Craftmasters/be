@@ -1612,12 +1612,10 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   $account = node_load($data['account_id']);
   $value = $form_state['values'];
 
-  $be = new Bullseye($user);
-
   // Map the data to RFP storage entity.
   $node = new stdClass();
 
-  $node->title = 'RFP' . $be->randChars(6);
+  $node->title = 'RFP' . Bullseye::randChars(6);
 
   $node->type = "rfp";
   node_object_prepare($node);
@@ -2072,7 +2070,7 @@ function generate_rfp_major_medical($form, &$form_state) {
 
     // Generate pdf and down it.
     bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
-
+    krumo($form_state['values']);
     // Send the email.
     $be = new Bullseye($user);
     $be->sendEmail($to, $user->mail, 'This is just a test', 'hello', $attachments);
@@ -2279,10 +2277,23 @@ function generate_rfp_special_benefits($form, &$form_state) {
   $values['renewal'] = $form_state['values']['sb_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['sb_waiting_period'];
 
-  // Generate pdf and down it.
+  // Generate pdf and download it.
   bullseye_rfp_pdf_generate('Special Benefits', $values, $form_state['values']);
 
   // Send the email.
-  $be = new Bullseye($user);
-  $be->sendEmail($to, $user->mail, $subject, $body, $attachments);
+  $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+
+  krumo($form_state['values']);
+  die();
+
+  $params = array(
+    'key' => 'bullseye',
+    'to' => $data['to'],
+    'from' => $user->mail,
+    'subject' => $data['subject'],
+    'body' => $data['message'],
+    'attachment' => $attachment,
+  );
+
+  Bullseye::sendEmail($to, $user->mail, $params);
 }
