@@ -1143,7 +1143,7 @@ function send_link_email($form, &$form_state) {
     'key' => 'bullseye',
     'to' => 'ruthieborces@outlook.com',
     'from' => 'mrborces@gmail.com',
-    'subject' => 'Test email from BE'),
+    'subject' => 'Test email from BE',
     'body' => 'Test email from BE',
     'attachment' => $attachments,
   );
