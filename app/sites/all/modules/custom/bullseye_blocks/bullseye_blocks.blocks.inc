@@ -703,17 +703,15 @@ function bullseye_blocks_render_be_tasks() {
  * Dashboard Statistics Block.
  */
 function bullseye_blocks_render_be_dashboard_statistics() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $vars = array();
 
-  $vars['leads_total'] = $be->countLeadsAccnt();
-  $vars['prospects_total'] = $be->countProspectsAccnt();
-  $vars['opportunities_total'] = $be->countOpportunityAccnt();
-  $vars['deals_total'] = $be->countDealsAccnt();
-  $vars['closed_deals_total'] = $be->countClosedDeals();
+  $vars['leads_total'] = Bullseye::countLeadsAccnt();
+  $vars['prospects_total'] = Bullseye::countProspectsAccnt();
+  $vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
+  $vars['deals_total'] = Bullseye::countDealsAccnt();
+  $vars['closed_deals_total'] = Bullseye::countClosedDeals();
 
   $output = theme('be_dashboard_statistics', $vars);
 
