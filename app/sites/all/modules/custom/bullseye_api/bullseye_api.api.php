@@ -708,7 +708,7 @@ class Bullseye {
   /**
    * Count all opportunity account.
    */
-  function countOpportunityAccnt() {
+  static function countOpportunityAccnt() {
     if ($cache = cache_get('count_opportunity_accounts_listing')) {
       $accounts = $cache->data;
     }
