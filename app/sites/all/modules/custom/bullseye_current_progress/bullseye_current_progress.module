@@ -207,6 +207,10 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
     'placeholder' => t('+ Enter groups separated by commas ...'),
   );
 
+  $priority = 'low';
+  if (isset($node->field_set_priority[LANGUAGE_NONE][0]['value'])) {
+    $priority = $node->field_set_priority[LANGUAGE_NONE][0]['value'];
+  }
   $form['priority'] = array(
     '#type' => 'select',
     '#options' => array(
@@ -214,7 +218,7 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
       'medium' => t('Medium'),
       'high' => t('High'),
     ),
-    '#default_value' => $node->field_set_priority[LANGUAGE_NONE][0]['value'],
+    '#default_value' => $priority,
   );
 
   $form['submit'] = array(

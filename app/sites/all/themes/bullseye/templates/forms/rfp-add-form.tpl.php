@@ -203,6 +203,11 @@
                     <?php print render($form['major_medical_fields']['mm_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <label><?php print t('Carriers to send RFP'); ?></label>
+                    <?php print render($form['major_medical_fields']['mm_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -256,6 +261,10 @@
 
                   <div class="be-form-single renewal-plan">
                     <?php print render($form['limited_medical_fields']['lm_renewal_of_current_plan']); ?>
+                  </div>
+
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['limited_medical_fields']['lm_carriers_to_send']); ?>
                   </div>
 
                   <div class="be-form-section">
@@ -314,6 +323,10 @@
                     <?php print render($form['teledoc_fields']['tel_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['teledoc_fields']['tel_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -367,6 +380,10 @@
 
                   <div class="be-form-single renewal-plan">
                     <?php print render($form['mec_fields']['mec_renewal_of_current_plan']); ?>
+                  </div>
+
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['mec_fields']['mec_carriers_to_send']); ?>
                   </div>
 
                   <div class="be-form-section">
@@ -424,6 +441,10 @@
                     <?php print render($form['dental_fields']['den_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['dental_fields']['den_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -479,6 +500,10 @@
                     <?php print render($form['vision_fields']['vs_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['vision_fields']['vs_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -528,6 +553,10 @@
                         <?php print render($form['life_fields']['lf_plan_year_to_quote_end']); ?>
                       </div>
                     </div>
+                  </div>
+
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['life_fields']['lf_carriers_to_send']); ?>
                   </div>
 
                   <div class="be-form-single renewal-plan">
@@ -589,6 +618,10 @@
                     <?php print render($form['short_term_disability_fields']['std_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['short_term_disability_fields']['std_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -644,6 +677,10 @@
                     <?php print render($form['retirement_fields']['ret_renewal_of_current_plan']); ?>
                   </div>
 
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['retirement_fields']['ret_carriers_to_send']); ?>
+                  </div>
+
                   <div class="be-form-section">
                     <label>
                       <?php print t('Percentage of Employer Contribution'); ?>
@@ -696,6 +733,10 @@
 
                   <div class="be-form-single renewal-plan">
                     <?php print render($form['special_benefits_fields']['sb_renewal_of_current_plan']); ?>
+                  </div>
+
+                  <div class="be-form-single carriers-to-send">
+                    <?php print render($form['special_benefits_fields']['sb_carriers_to_send']); ?>
                   </div>
 
                   <div class="be-form-section">
