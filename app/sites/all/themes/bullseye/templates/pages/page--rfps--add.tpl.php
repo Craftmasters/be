@@ -123,3 +123,68 @@
     </div>
   </div>
 </div>
+
+<div class="suggestion-box-container">
+    <a href="#" data-toggle="modal" data-target="#suggestion-box"><img src="<?php print $suggestion_box_img; ?>"></a>
+  </div>
+
+  <div id="suggestion-box" class="modal be-bs-modal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-inner">
+          <div class="modal-header">
+            <a href="#" class="close" data-dismiss="modal">&times;</a>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body-wrap">
+              <div class="modal-body-inner be-forms suggestion-form">
+                <div class="form-title"><h2><?php print t('Suggestions'); ?></h2></div>
+                <div class="be-form-single">
+                  <label><?php print t('Subject'); ?></label>
+                  <input type="text" class="form-control" id="suggestion-subject">
+                </div>
+                <div class="be-form-single">
+                  <label><?php print t('Name'); ?></label>
+                  <input type="text" class="form-control" id="suggestion-name">
+                </div>
+                <div class="be-form-single">
+                  <label><?php print t('Details'); ?></label>
+                  <textarea rows="4" class="form-control" id="suggestion-details"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="be-custom-actions">
+              <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Cancel'); ?></button>
+              <button id="btn-submit-suggestion" type="button" class="green-btn" data-dismiss="modal"><?php print t('Send'); ?></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="suggestion-box-success" class="modal be-bs-modal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-inner">
+          <div class="modal-header">
+            <a href="#" class="close" data-dismiss="modal">&times;</a>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body-wrap">
+              <div class="modal-body-inner">
+                <h3><?php print t('Your message has been sent.'); ?></h3>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="be-custom-actions">
+              <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Exit'); ?></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
