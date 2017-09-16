@@ -5,7 +5,7 @@
 <div class="be-form-single"><?php print render($form['company']); ?></div>
 
 <div class="be-form-section">
-	<label class="select-benefit-label"><?php print t('Primary Contact'); ?></label>
+	<label class="select-benefit-label"><?php print t('Primary Contact'); ?><span class="form-required" title="This field is required.">*</span></label>
 	<div class="row">
 		<div class="col-xs-6"><?php print render($form['firstname']); ?></div>
 		<div class="col-xs-6"><?php print render($form['lastname']); ?></div>

@@ -274,10 +274,16 @@ class Bullseye {
       $query->join('role', 'r', 'r.rid = ur.rid');
       $query->join('profile', 'p', 'p.uid = u.uid');
       $query->join('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
+      $query->join('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
+      $query->join('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
+      $query->join('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
       $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
       $producers = $query
-        ->fields('u', array('mail'))
+        ->fields('u', array('mail', 'uid'))
+        ->fields('ptype', array('field_producer_type_value'))
         ->fields('producer', array('field_producer_name_value'))
+        ->fields('fname', array('field_first_name_value'))
+        ->fields('lname', array('field_last_name_value'))
         ->fields('contact', array('field_primary_contact_value'))
         ->condition('r.name', 'producer', '=')
         ->condition('u.status', 1, '=')
@@ -288,6 +294,46 @@ class Bullseye {
     }
 
     return $producers;
+  }
+
+  /**
+   * Get the producers details.
+   */
+  function getProducerDetails($uid) {
+    if ($cache = cache_get('producer_detail_' . $uid)) {
+      $producer = $cache->data;
+    }
+    else {
+      $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $query->join('profile', 'p', 'p.uid = u.uid');
+      $query->join('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
+      $query->join('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
+      $query->join('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
+      $query->join('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
+      $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
+      $query->join('field_data_field_producer_website', 'wb', 'wb.entity_id = p.pid');
+      $query->join('field_data_field_phone_number', 'pn', 'pn.entity_id = p.pid');
+      $producer = $query
+        ->fields('u', array('mail', 'uid'))
+        ->fields('ptype', array('field_producer_type_value'))
+        ->fields('producer', array('field_producer_name_value'))
+        ->fields('fname', array('field_first_name_value'))
+        ->fields('lname', array('field_last_name_value'))
+        ->fields('contact', array('field_primary_contact_value'))
+        ->fields('wb', array('field_producer_website_value'))
+        ->fields('pn', array('field_phone_number_value'))
+        ->condition('r.name', 'producer', '=')
+        ->condition('u.status', 1, '=')
+        ->condition('u.uid', $uid, '=')
+        ->execute()
+        ->fetchAssoc();
+
+      cache_set('producer_detail_' . $uid, $producer, 'cache');
+    }
+
+    return $producer;
   }
 
   /**

@@ -17,6 +17,14 @@ function bullseye_producer_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producer/edit'] = array(
+    'title' => 'Producer Details',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_producer_form'),
+    'access arguments' => array('add producer'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -39,13 +47,37 @@ function bullseye_producer_permission() {
  */
 function bullseye_producer_form($form, &$form_state) {
   $form = array();
+  global $user;
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $type = 'company';
+  $company = '';
+  $firstname = '';
+  $lastname = '';
+  $email = '';
+  $phone = '';
+  $website = '';
+
+  $form_title = t('Add New Producer');
+  if (arg(1) == 'edit') {
+    $form_title = t('Producer Details');
+    $be = new Bullseye($user);
+    $producer = $be->getProducerDetails(arg(2));
+    kpr($producer);
+    $type = $producer['field_producer_type_value'];
+    $company = $producer['field_producer_name_value'];
+    $firstname = $producer['field_first_name_value'];
+    $lastname = $producer['field_last_name_value'];
+    $email = $producer['mail'];
+    $phone = $producer['field_phone_number_value'];
+    $website = $producer['field_producer_website_value'];
+  }
 
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Add New Producer') . '</h2>',
+    '#markup' => '<h2>' . $form_title . '</h2>',
   );
 
   $form['type'] = array(
@@ -55,22 +87,26 @@ function bullseye_producer_form($form, &$form_state) {
       'company' => 'Company',
       'individual' => 'Individual',
     ),
-    '#default_value' => 'Company',
+    '#default_value' => $type,
     '#required' => TRUE,
   );
 
   $form['firstname'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#attributes' => array(
       'placeholder' => t('Enter First Name'),
     ),
+    '#default_value' => $firstname,
   );
 
   $form['lastname'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#attributes' => array(
       'placeholder' => t('Enter Last Name'),
     ),
+    '#default_value' => $lastname,
   );
 
   $form['producer_name'] = array(
@@ -92,9 +128,11 @@ function bullseye_producer_form($form, &$form_state) {
   $form['primary_contact_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email Address'),
+    '#required' => TRUE,
     '#attributes' => array(
       'placeholder' => t('Enter Email Address'),
     ),
+    '#default_value' => $email,
   );
 
   $form['phone'] = array(
@@ -103,6 +141,7 @@ function bullseye_producer_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter Phone Number'),
     ),
+    '#default_value' => $phone,
   );
 
   $form['company'] = array(
@@ -111,6 +150,7 @@ function bullseye_producer_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Required if producer type is company'),
     ),
+    '#default_value' => $company,
   );
 
   $form['website'] = array(
@@ -119,6 +159,7 @@ function bullseye_producer_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter Website'),
     ),
+    '#default_value' => $website,
   );
 
   // Attachments.
@@ -181,43 +222,61 @@ function bullseye_producer_form_submit($form, &$form_state) {
   $be = new Bullseye($user);
 
   // Set the producer name.
-  $producer_name = $form_state['values']['producer_name'];
-  $contact_name = $form_state['values']['primary_contact_name'];
+  $producer_name = $form_state['values']['company'];
+  $firstname = $form_state['values']['firstname'];
+  $lastname = $form_state['values']['lastname'];
+  $contact_name = $firstname . ' ' . $lastname;
   $contact_email = trim($form_state['values']['primary_contact_email']);
+  $type = $form_state['values']['type'];
+  $phone = $form_state['values']['phone'];
+  $website = $form_state['values']['website'];
 
-  // Check if the account already exist.
-  if (!$be->accountExist($contact_email)) {
-    // Build the username.
-    $username = str_replace(' ', '.', strtolower(trim($contact_name)));
+  // Handler for adding new producer.
+  if (arg(0) == 'producer'  && arg(1) == 'add') {
+    // Check if the account already exist.
+    if (!$be->accountExist($contact_email)) {
+      // Build the username.
+      $username = str_replace(' ', '.', strtolower(trim($contact_name)));
 
-    $new_user = array(
-      'name' => $username,
-      'mail' => $contact_email,
-      'pass' => 'be@' . $username,
-      'status' => 1,
-      'access' => REQUEST_TIME,
-      'roles' => array(
-        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-        4 => 'producer',
-      ),
-    );
+      $new_user = array(
+        'name' => $username,
+        'mail' => $contact_email,
+        'pass' => 'be@' . $username,
+        'status' => 1,
+        'access' => REQUEST_TIME,
+        'roles' => array(
+          DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+          4 => 'producer',
+        ),
+      );
 
-    // Create new user.
-    $create_user = user_save(NULL, $new_user);
+      // Create new user.
+      $create_user = user_save(NULL, $new_user);
 
-    $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
-    $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
-    $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+      $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
+      $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
+      $profile->field_first_name[LANGUAGE_NONE][0]['value'] = $firstname;
+      $profile->field_last_name[LANGUAGE_NONE][0]['value'] = $lastname;
+      $profile->field_producer_type[LANGUAGE_NONE][0]['value'] = $type;
+      $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+      $profile->field_producer_website[LANGUAGE_NONE][0]['value'] = $website;
+      $profile->field_phone_number[LANGUAGE_NONE][0]['value'] = $phone;
 
-    // Save the profile2 to the user account.
-    profile2_save($profile);
+      // Save the profile2 to the user account.
+      profile2_save($profile);
 
-    drupal_set_message(t('Successfully added new producer account.'));
-
-    // Invalidate the existing cache to make sure that
-    // the newly added one will get indexed too.
-    cache_clear_all('producers_listing', 'cache');
-    // Reroute the page to the listing page.
-    //drupal_goto('/producers');
+      drupal_set_message(t('Successfully added new producer account.'));
+      
+    }
   }
+  else {
+    // Handler for updating/editing existing producers.
+  }
+
+  // Invalidate the existing cache to make sure that
+  // the newly added one will get indexed too.
+  cache_clear_all('producers_listing', 'cache');
+  // Reroute the page to the listing page.
+  //drupal_goto('/producers');
+    
 }

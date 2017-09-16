@@ -34,7 +34,15 @@
         <?php foreach ($producers as $producer): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font"><?php print $producer->field_producer_name_value; ?></span></td>
+            <td>
+              <a class="orange-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe">
+                <?php if ($producer->field_producer_type_value == 'individual') : ?>
+                  <?php print $producer->field_first_name_value . ' ' . $producer->field_last_name_value; ?>
+                <?php else: ?>
+                  <?php print $producer->field_producer_name_value; ?>
+                <?php endif; ?>
+              </a>
+            </td>
             <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
             <td><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
