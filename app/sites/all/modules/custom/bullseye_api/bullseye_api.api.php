@@ -1482,14 +1482,18 @@ class Bullseye {
     }
     else {
       $query = db_select('field_data_field_contacts', 'con');
-      $query->leftJoin('field_data_field_contact_name', 'name', 'con.field_contacts_value = name.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'con.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'con.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
       $query->leftJoin('field_data_field_phone_number', 'phone', 'con.field_contacts_value = phone.entity_id');
+      $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
       $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
       $contacts = $query
-        ->fields('name', array('field_contact_name_value'))
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('lname', array('field_lastname_value'))
         ->fields('pos', array('field_position_value'))
         ->fields('phone', array('field_phone_number_value'))
+        ->fields('mphone', array('field_mobile_phone_value'))
         ->fields('email', array('field_email_value'))
         ->condition('con.entity_id', $nid, '=')
         ->execute()
@@ -1499,6 +1503,41 @@ class Bullseye {
     }
 
     return $contacts;
+  }
+
+  /**
+   * Get the primary contact of an account.
+   */
+  function getAccountPrimaryContact($nid) {
+
+    if ($cache = cache_get('primary_contact_' . $nid)) {
+      $contact = $cache->data;
+    }
+    else {
+      $query = db_select('field_data_field_contacts', 'con');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'con.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'con.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_phone_number', 'phone', 'con.field_contacts_value = phone.entity_id');
+      $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
+      $query->leftJoin('field_data_field_if_primary_contact', 'pc', 'con.field_contacts_value = pc.entity_id');
+      $contact = $query
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('pos', array('field_position_value'))
+        ->fields('phone', array('field_phone_number_value'))
+        ->fields('mphone', array('field_mobile_phone_value'))
+        ->fields('email', array('field_email_value'))
+        ->condition('con.entity_id', $nid, '=')
+        ->condition('pc.field_if_primary_contact_value', 'yes', '=')
+        ->execute()
+        ->fetchAssoc();
+
+      cache_set('primary_contact_' . $nid, $contact, 'cache');
+    }
+
+    return $contact;
   }
 
   /**

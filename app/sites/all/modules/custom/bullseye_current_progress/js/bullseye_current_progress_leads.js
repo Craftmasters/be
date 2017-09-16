@@ -66,6 +66,23 @@
           });
         }
 
+        function refreshCheckboxEvents() {
+          $('table.table-vc input[type="checkbox"]').each(function() {
+            $(this).change(function() {
+              if ($(this).is(':checked')) {
+                $('table.table-vc input[type="checkbox"]').val('no');
+                $('table.table-vc input[type="checkbox"]').prop('checked', false);
+                $(this).prop('checked', true);
+                $(this).val('yes');
+              }
+              else {
+                $(this).val('no');
+              }
+            });
+          });
+        } 
+
+        refreshCheckboxEvents();
         refreshHeaderClasses(nid);
 
         // Lead - Verification - Verify SCA/DBRA - Yes, SCA
@@ -210,6 +227,7 @@
                 if (result == 'success') {
                   $('tr[contact-id="' + item_id + '"]').remove();
                 }
+                refreshCheckboxEvents();
               },
             });
           });
@@ -218,17 +236,20 @@
         // Add button for validate point of contact phase.
         $('#add-contact').click(function() {
           var random_num = Math.floor((Math.random() * 10000000) + 1);
-          var name_td = '<td><input type="text" class="con-name" value=""></td>';
+          var checkbox_td = '<td><input type="checkbox" class="con-pc" value="no"></td>';
+          var lastname_td = '<td><input type="text" class="con-lastname" value=""></td>';
+          var firstname_td = '<td><input type="text" class="con-firstname" value=""></td>';
           var position_td = '<td><input type="text" class="con-position" value=""></td>';
           var phone_td = '<td><input type="text" class="con-phone" value=""></td>';
           var email_td = '<td><input type="text" class="con-email" value=""></td>';
           var delete_td = '<td><button type="button" class="con-delete-new"><i class="fa fa-times" aria-hidden="true"></i></button></td>';
-          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + name_td + position_td + phone_td + email_td + delete_td + '</tr>';
+          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + checkbox_td + firstname_td + lastname_td + position_td + phone_td + email_td + delete_td + '</tr>';
           $('table.table-vc tbody').append(tr);
 
           $('tr[tr-num="' + random_num + '"] button.con-delete-new').click(function() {
             $(this).closest('tr').remove();
           });
+          refreshCheckboxEvents();
         });
 
         // Delete event for delete button in validate point of contact phase.
@@ -242,7 +263,9 @@
           var contacts = [];
           $('.table-vc .new-data').each(function() {
             var obj = {
-              'name': $(this).find('.con-name').val(),
+              'primary_contact': $(this).find('.con-pc').val(),
+              'firstname': $(this).find('.con-firstname').val(),
+              'lastname': $(this).find('.con-lastname').val(),
               'position' : $(this).find('.con-position').val(),
               'phone' : $(this).find('.con-phone').val(),
               'email' : $(this).find('.con-email').val(),
@@ -253,7 +276,9 @@
           var old_contacts = [];
           $('.table-vc .old-data').each(function() {
             var obj = {
-              'name': $(this).find('.con-name').val(),
+              'primary_contact': $(this).find('.con-pc').val(),
+              'firstname': $(this).find('.con-firstname').val(),
+              'lastname': $(this).find('.con-lastname').val(),
               'position' : $(this).find('.con-position').val(),
               'phone' : $(this).find('.con-phone').val(),
               'email' : $(this).find('.con-email').val(),
@@ -269,6 +294,7 @@
             data: {
               nid: nid,
               contacts: contacts,
+              old_contacts: old_contacts,
             },
             success: function(result){
               console.log(result);
@@ -301,6 +327,7 @@
                 });
               });
 
+              refreshCheckboxEvents();
               refreshClasses(nid);
             },
           });
@@ -312,7 +339,9 @@
           var contacts = [];
           $('.table-vc .new-data').each(function() {
             var obj = {
-              'name': $(this).find('.con-name').val(),
+              'primary_contact': $(this).find('.con-pc').val(),
+              'firstname': $(this).find('.con-firstname').val(),
+              'lastname': $(this).find('.con-lastname').val(),
               'position' : $(this).find('.con-position').val(),
               'phone' : $(this).find('.con-phone').val(),
               'email' : $(this).find('.con-email').val(),
@@ -323,7 +352,9 @@
           var old_contacts = [];
           $('.table-vc .old-data').each(function() {
             var obj = {
-              'name': $(this).find('.con-name').val(),
+              'primary_contact': $(this).find('.con-pc').val(),
+              'firstname': $(this).find('.con-firstname').val(),
+              'lastname': $(this).find('.con-lastname').val(),
               'position' : $(this).find('.con-position').val(),
               'phone' : $(this).find('.con-phone').val(),
               'email' : $(this).find('.con-email').val(),
@@ -372,6 +403,7 @@
                 });
               });
 
+              refreshCheckboxEvents();
               refreshClasses(nid);
             },
           });

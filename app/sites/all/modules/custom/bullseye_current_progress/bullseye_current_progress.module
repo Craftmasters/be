@@ -280,21 +280,34 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
   foreach ($wrapper->field_contacts->value() as $key => $value) {
     $item = array();
     $item['item_id'] = $value->item_id;
-    $item['name'] = '';
+    $item['firstname'] = '';
+    $item['lastname'] = '';
     $item['email'] = '';
     $item['phone'] = '';
     $item['position'] = '';
-    if (isset($value->field_contact_name[LANGUAGE_NONE][0]['value'])) {
-      $item['name'] = $value->field_contact_name[LANGUAGE_NONE][0]['value'];
+    $item['primary_contact'] = 'no';
+    $item['checked'] = '';
+    if (isset($value->field_firstname[LANGUAGE_NONE][0]['value'])) {
+      $item['firstname'] = $value->field_firstname[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_lastname[LANGUAGE_NONE][0]['value'])) {
+      $item['lastname'] = $value->field_lastname[LANGUAGE_NONE][0]['value'];
     }
     if (isset($value->field_email[LANGUAGE_NONE][0]['value'])) {
       $item['email'] = $value->field_email[LANGUAGE_NONE][0]['value'];
     }
-    if (isset($value->field_phone_number[LANGUAGE_NONE][0]['value'])) {
-      $item['phone'] = $value->field_phone_number[LANGUAGE_NONE][0]['value'];
+    if (isset($value->field_mobile_phone[LANGUAGE_NONE][0]['value'])) {
+      $item['phone'] = $value->field_mobile_phone[LANGUAGE_NONE][0]['value'];
     }
     if (isset($value->field_position[LANGUAGE_NONE][0]['value'])) {
       $item['position'] = $value->field_position[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_if_primary_contact[LANGUAGE_NONE][0]['value'])) {
+      $pc = $value->field_if_primary_contact[LANGUAGE_NONE][0]['value'];
+      if ($pc == 'yes') {
+        $item['primary_contact'] = 'yes';
+        $item['checked'] = 'checked';
+      }
     }
     $vars['contacts'][] = $item;
   }

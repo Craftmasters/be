@@ -293,7 +293,9 @@
 		      			<table class="table-vc">
 		      				<thead>
 		      					<tr>
-			      					<th><?php print t('Name'); ?></th>
+			      					<th><?php print t('Primary Contact'); ?></th>
+			      					<th><?php print t('Firstname'); ?></th>
+			      					<th><?php print t('Lastname'); ?></th>
 			      					<th><?php print t('Position'); ?></th>
 			      					<th><?php print t('Contact Number'); ?></th>
 			      					<th><?php print t('Email Address'); ?></th>
@@ -308,12 +310,14 @@
 			      				<?php if (!empty($contacts)) : ?>
 			      					<?php foreach ($contacts as $key => $value) : ?>
 			      						<tr contact-id="<?php print $value['item_id']; ?>" class="old-data">
-			      							<td><input type="text" class="con-name" value="<?php print $value['name']; ?>"></td>
+			      							<td><input type="checkbox" class="con-pc" <?php print $value['checked']; ?> value="<?php print $value['primary_contact']; ?>"></td>
+			      							<td><input type="text" class="con-firstname" value="<?php print $value['firstname']; ?>"></td>
+			      							<td><input type="text" class="con-lastname" value="<?php print $value['lastname']; ?>"></td>
 			      							<td><input type="text" class="con-position" value="<?php print $value['position']; ?>"></td>
 			      							<td><input type="text" class="con-phone" value="<?php print $value['phone']; ?>"></td>
 			      							<td><input type="text" class="con-email" value="<?php print $value['email']; ?>"></td>
 			      							<td>
-			      								<button type="button" class="con-delete-new">
+			      								<button type="button" class="con-delete">
 			      									<i class="fa fa-times" aria-hidden="true"></i>
 			      								</button>
 			      							</td>
@@ -321,7 +325,9 @@
 			      					<?php endforeach; ?>
 			      				<?php else: ?>
 			      					<tr class="new-data">
-			      						<td><input type="text" class="con-name" value=""></td>
+			      						<td><input type="checkbox" class="con-pc" value="no"></td>
+			      						<td><input type="text" class="con-firstname" value=""></td>
+			      						<td><input type="text" class="con-lastname" value=""></td>
 		      							<td><input type="text" class="con-position" value=""></td>
 		      							<td><input type="text" class="con-phone" value=""></td>
 		      							<td><input type="text" class="con-email" value=""></td>

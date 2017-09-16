@@ -164,9 +164,12 @@ function be_cp_save_exit_vpc() {
 
     // Now define the collection parameters.
     $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
-    $cwrapper->field_contact_name->set($value['name']);
+    $cwrapper->field_firstname->set($value['firstname']);
+    $cwrapper->field_lastname->set($value['lastname']);
+    $cwrapper->field_if_primary_contact->set($value['primary_contact']);
     $cwrapper->field_position->set($value['position']);
     $cwrapper->field_phone_number->set($value['phone']);
+    $cwrapper->field_mobile_phone->set($value['phone']);
     $cwrapper->field_email->set($value['email']);
 
     // Save the field collection entity.
@@ -178,14 +181,19 @@ function be_cp_save_exit_vpc() {
   foreach ($old_contacts as $key1 => $value1) {
     $collection = field_collection_item_load($value1['id']);
     $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
-    $wrapper->field_contact_name->set($value1['name']);
+    $wrapper->field_firstname->set($value1['firstname']);
+    $wrapper->field_lastname->set($value1['lastname']);
+    $wrapper->field_if_primary_contact->set($value1['primary_contact']);
     $wrapper->field_position->set($value1['position']);
     $wrapper->field_phone_number->set($value1['phone']);
+    $wrapper->field_mobile_phone->set($value1['phone']);
     $wrapper->field_email->set($value1['email']);
     $wrapper->save();
   }
 
-  drupal_json_output($item_ids);
+  cache_clear_all('primary_contact_' . $nid, 'cache');
+
+  drupal_json_output($_POST);
 }
 
 /**
@@ -231,9 +239,12 @@ function be_cp_lead_set_priority() {
 
     // Now define the collection parameters.
     $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
-    $cwrapper->field_contact_name->set($value['name']);
+    $cwrapper->field_firstname->set($value['firstname']);
+    $cwrapper->field_lastname->set($value['lastname']);
+    $cwrapper->field_if_primary_contact->set($value['primary_contact']);
     $cwrapper->field_position->set($value['position']);
     $cwrapper->field_phone_number->set($value['phone']);
+    $cwrapper->field_mobile_phone->set($value['phone']);
     $cwrapper->field_email->set($value['email']);
 
     // Save the field collection entity.
@@ -245,14 +256,19 @@ function be_cp_lead_set_priority() {
   foreach ($old_contacts as $key1 => $value1) {
     $collection = field_collection_item_load($value1['id']);
     $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
-    $wrapper->field_contact_name->set($value1['name']);
+    $wrapper->field_firstname->set($value1['firstname']);
+    $wrapper->field_lastname->set($value1['lastname']);
+    $wrapper->field_if_primary_contact->set($value1['primary_contact']);
     $wrapper->field_position->set($value1['position']);
     $wrapper->field_phone_number->set($value1['phone']);
+    $wrapper->field_mobile_phone->set($value1['phone']);
     $wrapper->field_email->set($value1['email']);
     $wrapper->save();
   }
 
-  drupal_json_output($item_ids);
+  cache_clear_all('primary_contact_' . $nid, 'cache');
+
+  drupal_json_output($_POST);
 }
 
 /**

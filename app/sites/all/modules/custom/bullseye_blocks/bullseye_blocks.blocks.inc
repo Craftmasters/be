@@ -593,7 +593,14 @@ function bullseye_blocks_render_be_account_details() {
   $nid = $be->getNidFromPath(arg(1));
 
   $vars['company_name'] = $be->getCompanyNameByNid($nid);
-  $vars['primary_email'] = $be->getPrimaryEmailByNid($nid);
+  $vars['primary_email'] = 'No primary contact selected yet';
+  $primary_contact = $be->getAccountPrimaryContact($nid);
+  if (!empty($primary_contact)) {
+    $vars['primary_email'] = $primary_contact['field_email_value'];
+    if (empty($vars['primary_email']) || $vars['primary_email'] == '') {
+      $vars['primary_email'] = 'Primary contact has no email address';
+    }
+  }
   $vars['phone_number'] = $be->getPhoneNumberByNid($nid);
   $vars['website'] = $be->getWebsiteByNid($nid);
   $vars['street_address'] = $be->getStreetAddressByNid($nid);
