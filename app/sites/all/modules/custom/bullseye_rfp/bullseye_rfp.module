@@ -278,6 +278,13 @@ function bullseye_rfp_form($form, &$form_state) {
     $renewal_date = $_GET['plan_specs']['renewal_date'];
   }
 
+  // RFP Due Date.
+  $form['rfp_due_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#date_year_range' => '0:+3',
+  );
+
   // Fringe Rate/s.
   $form['fringe_rates'] = array(
     '#type' => 'textfield',

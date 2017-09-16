@@ -99,6 +99,15 @@
 
         </div>
 
+        <div class="be-view-field">
+          <div class="be-view-label">
+            <?php print t('Due Date'); ?>
+          </div>
+          <div class="be-view-value" id="gi-address">
+            <?php print render($form['rfp_due_date']); ?>
+          </div>
+        </div>
+
       </div>
     </div>
 
