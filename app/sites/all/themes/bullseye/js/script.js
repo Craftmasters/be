@@ -321,6 +321,7 @@
               s = s.replace(/\)/g, '');
               var numbersArray = s.split('.');
               var carrier_nid = '';
+              var email_input = current_element.closest('.carriers-to-send').find('input.carrier-email-' + number);
               $.each(numbersArray, function(i, item) {
                 carrier_nid = item;
               });
@@ -332,9 +333,39 @@
                 },
                 success: function(result){
                   console.log(result);
-                  current_element.closest('.carriers-to-send').find('input.carrier-email-' + number).val(result);
+                  email_input.attr('value', result);email_input.attr('value', result);
+                  email_input.attr('value', result);
+                  email_input.val(result).change();
+                  email_input.prop('readonly', true);
                 },
+              }).fail(function(jqXHR, textStatus) {
+                email_input.val('No email address').change();
               });
+
+            });
+          });
+
+          // for adding another carriers to send email.
+          $('.add-carriers-to-send-link').each(function() {
+            $(this).click(function(e) {
+              var b_section = $(this).closest('.accordion_in').attr('data-benefit');
+              var c_count = 0; 
+              $('div[data-benefit="' + b_section + '"] div[class*="-carrier-to-send-"] input[type="text"]').each(function () {
+                var number = $(this).attr('id');
+                var number = number[number.length -1];
+                if (!$(this).closest('.form-type-entityreference').is(':visible')) {
+                  if (c_count == 0) {
+                    $(this).closest('.form-type-entityreference').show();
+                    $(this).closest('.carriers-to-send').find('input.carrier-email-' + number).show();
+                    c_count = 1;
+                  }
+                }
+              });
+              c_count = 0;
+              if ($(this).closest('.carriers-to-send').find('input.carrier-email-5').is(':visible')) {
+                $(this).hide();
+              }
+              e.preventDefault();
             });
           });
         }
@@ -347,8 +378,8 @@
           });
         }
 
-        // For Current Progress Leads.
-        if ($('#bullseye-current-progress-leads-form').length) {
+        // For current progress pages.
+        if ($('#block-bullseye-blocks-be-current-progress').length) {
           $(window).keydown(function(event){
             
             if(event.keyCode == 13) {
@@ -379,6 +410,12 @@
 
           $('#btn-plan-sca-dbra-no').click(function() {
             $('#edit-plan-to-work-sca-dbra-no').prop('checked', true);
+          });
+
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'taxonomy_field_widget_form()') {
+              $(this).closest('.alert').remove();
+            }
           });
         }
 

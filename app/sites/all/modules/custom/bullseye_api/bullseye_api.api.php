@@ -153,6 +153,7 @@ class Bullseye {
    * Get State by nid.
    */
   function getStateByNid($nid) {
+    $state = '';
     $query = db_select('node', 'n');
     $query->join('field_data_field_states', 'states', 'n.nid = states.entity_id');
     $states = $query
@@ -161,8 +162,10 @@ class Bullseye {
       ->execute()
       ->fetchField();
 
-    $state = taxonomy_term_load($states);
-    $state = $state->name;
+    if ($states != '') {
+      $state = taxonomy_term_load($states);
+      $state = $state->name;
+    }
 
     return $state;
   }
