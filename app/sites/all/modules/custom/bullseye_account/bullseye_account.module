@@ -5,9 +5,13 @@
 
 /**
  * Implements hook_node_update().
+ *
+ * Clear the cache after updat
  */
-function bullseye_account_node_update($node){
+function bullseye_account_node_update($node) {
   if ($node->type == 'account' && $node->field_account_status[LANGUAGE_NONE][0]['value'] == 'prospect') {
+    // Update the node.
+    node_save($node);
     // Invalidate the existing cache to make sure that
     // the newly added one will get indexed too.
     cache_clear_all('prospect_accounts_listing', 'cache');
@@ -18,7 +22,9 @@ function bullseye_account_node_update($node){
  * Implements hook_node_insert().
  */
 function bullseye_account_node_insert($node) {
-  if ($node->type == 'account' && $node->field_account_status[LANGUAGE_NONE][0]['value'] == 'prospect'){
+  if ($node->type == 'account' && $node->field_account_status[LANGUAGE_NONE][0]['value'] == 'prospect') {
+    // Update the node.
+    node_save($node);
     // Invalidate the existing cache to make sure that
     // the newly added one will get indexed too.
     cache_clear_all('prospect_accounts_listing', 'cache');
