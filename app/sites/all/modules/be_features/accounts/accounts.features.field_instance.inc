@@ -186,6 +186,37 @@ function accounts_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'field_collection_item-field_contacts-field_if_primary_contact'.
+  $field_instances['field_collection_item-field_contacts-field_if_primary_contact'] = array(
+    'bundle' => 'field_contacts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 13,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_if_primary_contact',
+    'label' => 'If Primary Contact',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 15,
+    ),
+  );
+
+  // Exported field_instance:
   // 'field_collection_item-field_contacts-field_lastname'.
   $field_instances['field_collection_item-field_contacts-field_lastname'] = array(
     'bundle' => 'field_contacts',
@@ -2036,6 +2067,7 @@ function accounts_field_default_field_instances() {
   t('Email Address');
   t('Facebook Personal');
   t('Firstname');
+  t('If Primary Contact');
   t('Lastname');
   t('LinkedIn Personal');
   t('Mandate Category');
