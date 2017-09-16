@@ -394,3 +394,10 @@ function bullseye_deploy_update_7035() {
 function bullseye_deploy_update_7036() {
   module_enable(array('mailsystem', 'mimemail'), TRUE);
 }
+
+/**
+ * Install bullseye_account module.
+ */
+function bullseye_deploy_update_7037() {
+  module_enable(array('bullseye_account'), TRUE);
+}
