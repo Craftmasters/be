@@ -1,0 +1,5 @@
+name = Bullseye Account
+description = Handles functionality related to accounts.
+package = BullsEye
+core = 7.x
+version = 7.x-1.0
