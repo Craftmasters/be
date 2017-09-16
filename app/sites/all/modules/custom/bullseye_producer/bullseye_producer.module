@@ -64,7 +64,6 @@ function bullseye_producer_form($form, &$form_state) {
     $form_title = t('Producer Details');
     $be = new Bullseye($user);
     $producer = $be->getProducerDetails(arg(2));
-    kpr($producer);
     $type = $producer['field_producer_type_value'];
     $company = $producer['field_producer_name_value'];
     $firstname = $producer['field_first_name_value'];
