@@ -417,7 +417,6 @@
               $(this).closest('.alert').remove();
             }
           });
-          $('.page-company .alert').show();
         }
 
         // For dashboard revenue chart.
