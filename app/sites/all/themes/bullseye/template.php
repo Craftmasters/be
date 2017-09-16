@@ -153,6 +153,7 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
       break;
     case 'accounts_node_form':
+      $lang = LANGUAGE_NONE;
       $form['#attributes']['class'][] = 'be-forms be-forms-default';
       $form_title = t('Add Account');
       if (isset($_GET['account_status'])) {
@@ -172,21 +173,25 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
         '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
       );
 
+      if (isset($_GET['account_status']) && $_GET['account_status'] == 'prospect') {
+        $form['field_account_status'][$lang]['#default_value'][0] = 'prospect';
+      }
+
       $form['title']['#required'] = FALSE;
-      $form['field_firstname'][LANGUAGE_NONE][0]['value']['#title'] = '';
-      $form['field_firstname'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('First Name');
-      $form['field_middle_name'][LANGUAGE_NONE][0]['value']['#title'] = '';
-      $form['field_middle_name'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Middle Name');
-      $form['field_lastname'][LANGUAGE_NONE][0]['value']['#title'] = '';
-      $form['field_lastname'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Last Name');
-      $form['field_company'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Company');
-      $form['field_title'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Title');
-      $form['field_owned_by'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Owner');
-      $form['field_email'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Email');
-      $form['field_work_phone'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Phone');
-      $form['field_personal_website'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Website');
-      $form['field_linkedin_personal'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Social');
-      $form['field_facebook_personal'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = t('Add Social');
+      $form['field_firstname'][$lang][0]['value']['#title'] = '';
+      $form['field_firstname'][$lang][0]['value']['#attributes']['placeholder'] = t('First Name');
+      $form['field_middle_name'][$lang][0]['value']['#title'] = '';
+      $form['field_middle_name'][$lang][0]['value']['#attributes']['placeholder'] = t('Middle Name');
+      $form['field_lastname'][$lang][0]['value']['#title'] = '';
+      $form['field_lastname'][$lang][0]['value']['#attributes']['placeholder'] = t('Last Name');
+      $form['field_company'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Company');
+      $form['field_title'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Title');
+      $form['field_owned_by'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Owner');
+      $form['field_email'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Email');
+      $form['field_work_phone'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Phone');
+      $form['field_personal_website'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Website');
+      $form['field_linkedin_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
+      $form['field_facebook_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
       $form['#validate'][] = '_make_title_from_person_name';
       break;
     case 'bullseye_rfp_initial_add_form':
