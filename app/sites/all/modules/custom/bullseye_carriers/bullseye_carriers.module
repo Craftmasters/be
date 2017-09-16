@@ -17,6 +17,12 @@ function bullseye_carriers_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['get-carrier-email'] = array(
+    'page callback' => 'bullseye_carriers_get_email',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -195,7 +201,6 @@ function bullseye_carriers_form($form, &$form_state) {
   return $form;
 }
 
-
 /**
  * Form submit for carrier form.
  */
@@ -305,4 +310,16 @@ function bullseye_carriers_form_submit($form, &$form_state) {
   else {
     drupal_set_message(t('Carrier already exist.'));
   }
+}
+
+/**
+ * Get the email for carrier.
+ */
+function bullseye_carriers_get_email() {
+  $carrier_nid = $_POST['carrier_nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $carrier_nid);
+  $email = $wrapper->field_email->value();
+
+  drupal_json_output($email);
 }

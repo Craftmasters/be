@@ -159,12 +159,28 @@
               var renewal = '<span class="label">Renewal:</span><span class="value">' + renewal_value + '</span>';
               var renewal = '<div class="ben-detail-row">' + renewal + '</div>';
 
+              // Carriers to send RFP.
+              var carriers_input = '';
+              $(this).find('input[type="text"][id*="-carrier-to-send-"]').each(function() {
+                var text = $(this).val();
+                var carrier_trimmed = text.replace(/\s+\(.+?\)/g, '');
+                var number = $(this).attr('id');
+                var number = number[number.length -1];
+                var car_email = $(this).closest('.carriers-to-send').find('input.carrier-email-' + number).val();
+                if (car_email != '') {
+                  carriers_input = carriers_input + '<span>' + carrier_trimmed + ', ' + car_email + '</span>';
+                }
+                
+              });
+              var carriers_send = '<span class="label">Carriers to send RFP:</span><span class="value">' + carriers_input + '</span>';
+              var carriers_send = '<div class="ben-detail-row">' + carriers_send + '</div>';
+
               // Waiting Period.
               var waiting = $(this).find('.waiting-period').find('input[type="text"]').val();
               var waiting = '<span class="label">Waiting Period:</span><span class="value">' + waiting + '</span>';
               var waiting = '<div class="ben-detail-row">' + waiting + '</div>';
 
-              var div = '<div class="benefit-summary-row">' + benefit_name + generate_rfp + carrier + quote + renewal + waiting + '</div>';
+              var div = '<div class="benefit-summary-row">' + benefit_name + generate_rfp + carrier + quote + renewal + carriers_send + waiting + '</div>';
               $('.benefits-summary').append(div);
 
               // Putting values to pdf preview.
@@ -294,6 +310,33 @@
             }
           });
 
+          // For carriers to send email.
+          $('div[class*="-carrier-to-send-"] input[type="text"]').each(function() {
+            $(this, context).bind('autocompleteSelect', function() {
+              var current_element = $(this);
+              var carrier = $(this).val();
+              var number = $(this).attr('id');
+              var number = number[number.length -1];
+              var s = carrier.replace(/\(/g, '.');
+              s = s.replace(/\)/g, '');
+              var numbersArray = s.split('.');
+              var carrier_nid = '';
+              $.each(numbersArray, function(i, item) {
+                carrier_nid = item;
+              });
+              $.ajax({
+                url: '/get-carrier-email',
+                method: 'POST',
+                data: {
+                  carrier_nid: carrier_nid,
+                },
+                success: function(result){
+                  console.log(result);
+                  current_element.closest('.carriers-to-send').find('input.carrier-email-' + number).val(result);
+                },
+              });
+            });
+          });
         }
 
         // For Calendar page (Activities).
