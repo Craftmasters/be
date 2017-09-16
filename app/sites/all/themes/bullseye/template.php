@@ -166,7 +166,7 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
         '#markup' => '<h2>' . $form_title . '</h2>',
         '#weight' => -100,
       );
-      hide($form['additional_settings']);
+      //hide($form['additional_settings']);
       hide($form['actions']['preview']);
       $form['actions']['cancel'] = array(
         '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',

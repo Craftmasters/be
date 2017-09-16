@@ -195,7 +195,7 @@ function accounts_field_default_field_instances() {
     'bundle' => 'accounts',
     'default_value' => array(
       0 => array(
-        'value' => 'leads',
+        'value' => 'lead',
       ),
     ),
     'deleted' => 0,

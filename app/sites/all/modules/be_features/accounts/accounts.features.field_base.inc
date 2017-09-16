@@ -55,6 +55,7 @@ function accounts_field_default_field_bases() {
         'closed_deal' => 'Closed Deal',
       ),
       'allowed_values_function' => '',
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'list_text',
