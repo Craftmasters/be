@@ -28,6 +28,7 @@ features[context][] = company_blocks
 features[context][] = company_page
 features[context][] = dashboard_admin_blocks
 features[context][] = dashboard_admin_page
+features[context][] = edit_producer_page
 features[context][] = files_blocks
 features[context][] = files_page
 features[context][] = pages_with_bullseye_theme

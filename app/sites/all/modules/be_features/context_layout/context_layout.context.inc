@@ -664,6 +664,30 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'edit_producer_page';
+  $context->description = '';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'producer/edit' => 'producer/edit',
+        'producer/edit/*' => 'producer/edit/*',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'template_suggestions' => 'page',
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  $export['edit_producer_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'files_blocks';
   $context->description = 'All blocks from the files page to be put here.';
   $context->tag = 'Blocks';

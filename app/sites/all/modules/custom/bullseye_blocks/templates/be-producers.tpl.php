@@ -24,10 +24,10 @@
           <th><?php print t('Producer Name'); ?></th>
           <th><?php print t('Primary Contact'); ?></th>
           <th><?php print t('Email Address'); ?></th>
-          <th><?php print t('Leads Assigned'); ?></th>
-          <th><?php print t('Opportunities Covered'); ?></th>
-          <th><?php print t('Deals Closed'); ?></th>
-          <th><?php print t('Win Ratio'); ?></th>
+          <th class="td-width-80px"><?php print t('Leads Assigned'); ?></th>
+          <th class="td-width-80px"><?php print t('Opportunities Covered'); ?></th>
+          <th class="td-width-80px"><?php print t('Deals Closed'); ?></th>
+          <th class="td-width-80px"><?php print t('Win Ratio'); ?></th>
         </tr>
       </thead>
       <tbody>
@@ -45,10 +45,10 @@
             </td>
             <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
             <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
-            <td><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
-            <td><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
-            <td><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
-            <td><span class="gray-font"><?php print $be->winRatio($producer); ?>%</span></td>
+            <td class="td-width-80px"><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
+            <td class="td-width-80px"><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
+            <td class="td-width-80px"><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
+            <td class="td-width-80px"><span class="gray-font"><?php print $be->winRatio($producer); ?>%</span></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
