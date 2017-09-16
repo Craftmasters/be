@@ -598,6 +598,15 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     }
   }
 
+  // Get the primary contact for recipient.
+  $primary_contact = $be->getAccountPrimaryContact($node->nid);
+  $recipient_email = '';
+  if (!empty($primary_contact)) {
+    if ($primary_contact['field_email_value'] != '') {
+      $recipient_email = $primary_contact['field_email_value'];
+    }
+  }
+
   $form['nid'] = array(
     '#type' => 'hidden',
     '#value' => $node->nid,
@@ -880,11 +889,20 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#default_value' => 'bullseye@archerjordan.com',
   );
 
+  $sl_description = '';
+  if ($recipient_email == '') {
+    $sl_description = t('No email address available for recipient. Please set the primary contact for this account or manually enter the recipient of the email above.');
+  }
+
   // Send Link Recipient.
   $form['sl_recipient'] = array(
     '#type' => 'textfield',
     '#title' => t('Recipient'),
-    '#default_value' => $node->field_email[LANGUAGE_NONE][0]['value'],
+    '#default_value' => $recipient_email,
+    '#description' => $sl_description,
+    '#attributes' => array(
+      'placeholder' => t('Enter email address'),
+    ),
   );
 
   $plan_specs_link = $base_url . '/plan_specs?company_nid=' . $node->nid;
@@ -1014,7 +1032,11 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['to'] = array(
     '#type' => 'textfield',
     '#title' => t('To:'),
-    '#default_value' => $node->field_email[LANGUAGE_NONE][0]['value'],
+    '#default_value' => $recipient_email,
+    '#description' => $sl_description,
+    '#attributes' => array(
+      'placeholder' => t('Enter email address'),
+    ),
   );
 
   $form['show_attachment'] = array(
