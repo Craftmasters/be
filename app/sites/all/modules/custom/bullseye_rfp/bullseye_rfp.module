@@ -2178,6 +2178,8 @@ function generate_rfp_major_medical($form, &$form_state) {
     Bullseye::sendEmail($to, $user->mail, $params);
 
     // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
     bullseye_rfp_pdf_generate('Major Medical', $values, $form_state['values']);
   }
 
