@@ -49,12 +49,22 @@
           	<div class="col-xs-4">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
-		          		<?php print t('Assigned To'); ?>
+		          		<?php print t('Contact'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<select>
-		          			<option value="1">James J.</option>
-		          		</select>
+                  <?php if (arg(0) == 'company') : ?>
+                    <select>
+                      <?php foreach ($people as $key => $value) : ?>
+                        <option value="<?php print $value->field_contacts_value;?>">
+                          <?php print $value->field_firstname_value . ' ' . $value->field_lastname_value; ?>
+                        </option>
+                      <?php endforeach; ?>
+                    </select>
+                  <?php else: ?>
+                    <select>
+                      <option value="1">James J.</option>
+                    </select>
+                  <?php endif; ?>
 		          	</div>
 		          </div>
           	</div>
@@ -105,13 +115,23 @@
           	<div class="col-xs-4">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
-		          		<?php print t('Assigned To'); ?>
+		          		<?php print t('Contact'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<select>
-		          			<option value="1">James Jordan</option>
-		          		</select>
-		          	</div>
+                  <?php if (arg(0) == 'company') : ?>
+                    <select>
+                      <?php foreach ($people as $key => $value) : ?>
+                        <option value="<?php print $value->field_contacts_value;?>">
+                          <?php print $value->field_firstname_value . ' ' . $value->field_lastname_value; ?>
+                        </option>
+                      <?php endforeach; ?>
+                    </select>
+                  <?php else: ?>
+                    <select>
+                      <option value="1">James J.</option>
+                    </select>
+                  <?php endif; ?>
+                </div>
 		          </div>
           	</div>
 

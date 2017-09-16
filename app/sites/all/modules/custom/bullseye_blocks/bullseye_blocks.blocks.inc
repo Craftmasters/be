@@ -545,7 +545,16 @@ function bullseye_blocks_render_be_current_progress() {
  */
 function bullseye_blocks_render_be_create_event() {
 
+  global $user;
+
+  $be = new Bullseye($user);
+
   $vars = array();
+
+  if (arg(0) == 'company') {
+    $nid = $be->getNidFromPath(arg(1));
+    $vars['people'] = $be->getAccountPeople($nid);
+  }
 
   $output = theme('be_create_event', $vars);
 

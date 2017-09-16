@@ -1489,6 +1489,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
       $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
       $contacts = $query
+        ->fields('con', array('field_contacts_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('lname', array('field_lastname_value'))
         ->fields('pos', array('field_position_value'))
