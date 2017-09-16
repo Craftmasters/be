@@ -208,11 +208,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['major_medical_fields']['mm_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -277,11 +282,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['limited_medical_fields']['lm_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -347,11 +357,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['teledoc_fields']['tel_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -416,11 +431,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['mec_fields']['mec_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -485,11 +505,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['dental_fields']['den_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -554,11 +579,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['vision_fields']['vs_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -623,11 +653,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['life_fields']['lf_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -692,11 +727,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['short_term_disability_fields']['std_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -761,11 +801,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['retirement_fields']['ret_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -829,11 +874,16 @@
                     <div class="row">
                       <div class="col-xs-6"><?php print render($form['special_benefits_fields']['sb_carriers_to_send']); ?></div>
                       <div class="col-xs-6 carrier-emails">
-                        <input type="text" class="carrier-email-1" readonly>
-                        <input type="text" class="carrier-email-2" readonly>
-                        <input type="text" class="carrier-email-3" readonly>
-                        <input type="text" class="carrier-email-4" readonly>
-                        <input type="text" class="carrier-email-5" readonly>
+                        <input type="text" class="carrier-email-1" readonly value="">
+                        <input type="text" class="carrier-email-2" readonly value="">
+                        <input type="text" class="carrier-email-3" readonly value="">
+                        <input type="text" class="carrier-email-4" readonly value="">
+                        <input type="text" class="carrier-email-5" readonly value="">
+                      </div>
+                      <div class="col-xs-12">
+                        <a href="#" class="add-carriers-to-send-link">
+                          <i class="fa fa-plus" aria-hidden="true"></i><?php print t('Add another Carrier'); ?>
+                        </a>
                       </div>
                     </div>
                   </div>
