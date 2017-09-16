@@ -347,8 +347,8 @@
           });
         }
 
-        // For Current Progress Leads.
-        if ($('#bullseye-current-progress-leads-form').length) {
+        // For current progress pages.
+        if ($('#block-bullseye-blocks-be-current-progress').length) {
           $(window).keydown(function(event){
             
             if(event.keyCode == 13) {
@@ -380,6 +380,13 @@
           $('#btn-plan-sca-dbra-no').click(function() {
             $('#edit-plan-to-work-sca-dbra-no').prop('checked', true);
           });
+
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'taxonomy_field_widget_form()') {
+              $(this).closest('.alert').remove();
+            }
+          });
+          $('.page-company .alert').show();
         }
 
         // For dashboard revenue chart.
