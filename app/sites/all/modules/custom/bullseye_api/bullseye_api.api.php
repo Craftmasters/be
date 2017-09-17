@@ -221,7 +221,7 @@ class Bullseye {
    * @param string $state
    *   The state name.
    */
-  function getTermId($voc, $term) {
+  static function getTermId($voc, $term) {
     $tid = db_select('taxonomy_term_data', 'td');
     $tid->join('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
     $tid = $tid->fields('td',array('tid'))
@@ -239,7 +239,7 @@ class Bullseye {
    * @param string $email
    *   The email address of the account.
    */
-  function accountExist($email) {
+  static function accountExist($email) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_email', 'email', 'email.entity_id = n.nid');
     $email = $query
