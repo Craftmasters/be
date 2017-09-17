@@ -660,46 +660,6 @@ function accounts_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-accounts-field_company'.
-  $field_instances['node-accounts-field_company'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_company',
-    'label' => 'Company',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 11,
-    ),
-  );
-
   // Exported field_instance: 'node-accounts-field_contacts'.
   $field_instances['node-accounts-field_contacts'] = array(
     'bundle' => 'accounts',
@@ -1544,7 +1504,6 @@ function accounts_field_default_field_instances() {
   t('Action Status');
   t('City');
   t('Client Interested?');
-  t('Company');
   t('Contacts');
   t('Details');
   t('Email Address');

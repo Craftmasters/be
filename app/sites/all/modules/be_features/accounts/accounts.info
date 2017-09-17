@@ -72,7 +72,6 @@ features[field_instance][] = node-accounts-field_account_status
 features[field_instance][] = node-accounts-field_action_status
 features[field_instance][] = node-accounts-field_city
 features[field_instance][] = node-accounts-field_client_interested
-features[field_instance][] = node-accounts-field_company
 features[field_instance][] = node-accounts-field_contacts
 features[field_instance][] = node-accounts-field_mandate_category
 features[field_instance][] = node-accounts-field_owned_by
