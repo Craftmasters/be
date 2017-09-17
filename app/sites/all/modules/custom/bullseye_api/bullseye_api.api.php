@@ -236,19 +236,18 @@ class Bullseye {
   /**
    * Check if the account already exist.
    *
-   * @param string $email
+   * @param string $company
    *   The email address of the account.
    */
-  static function accountExist($email) {
+  static function accountExist($company) {
     $query = db_select('node', 'n');
-    $query->join('field_data_field_email', 'email', 'email.entity_id = n.nid');
-    $email = $query
-      ->fields('email', array('field_email_value'))
-      ->condition('email.field_email_value', $email, '=')
+    $company = $query
+      ->fields('n', array('title'))
+      ->condition('n.title', $company, '=')
       ->execute()
       ->fetchField();
 
-    return $email;
+    return $company;
   }
 
   /**

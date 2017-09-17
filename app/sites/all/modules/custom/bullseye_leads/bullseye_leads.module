@@ -233,7 +233,7 @@ function _import_account($data) {
 
   foreach ($data as $row) {
     // Only create if the account doesn't exist.
-    if (!Bullseye::accountExist(trim($row[22]))) {
+    if (!Bullseye::accountExist(trim($row[10]))) {
       $node = entity_create('node', array('type' => 'accounts'));
       $node->uid = $user->uid;
       $node->status = 1;
