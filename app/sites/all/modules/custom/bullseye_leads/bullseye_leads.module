@@ -13,7 +13,7 @@ function bullseye_leads_menu() {
     'title' => 'Import Leads',
     'description' => 'Import leads from CSV file.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('_import_account'),
+    'page arguments' => array('bullseye_leads_import_leads'),
     'access arguments' => array('import leads'),
     'file' => 'import.inc.php',
     'type' => MENU_LOCAL_TASK,
@@ -225,8 +225,14 @@ function bullseye_leads_import($rows) {
 
 /**
  * Import accounts from a csv.
+ *
+ * @param array $data
+ *   The data from the CSV.
+ *
+ * @param string $type
+ *   Either leads or prospect.
  */
-function _import_account($data) {
+function _import_account($data, $type) {
   global $user;
 
   $data = array_reverse($data);
@@ -261,12 +267,12 @@ function _import_account($data) {
 
       // Set the tags.
       if (strlen(trim($row[27])) >=2) {
-        $tags = explode(' ', trim($row[27]));
+        $tags = explode(',', trim($row[27]));
+        $curr_list = $entity->field_tags->value();
         foreach ($tags as $tag) {
-          $tid = Bullseye::getTermId('tags', $tag);
+          $tid = Bullseye::getTermId('tags', trim($tag));
           if ($tid) {
-            $tid = (int) $tid;
-            $entity->field_tags->set(array($tid));
+            $curr_list[] = (int) $tid;
           }
           else {
             // Create the term if it doesn't exist.
@@ -275,18 +281,18 @@ function _import_account($data) {
             $term->vid = 1;
             taxonomy_term_save($term);
 
-            $tid = Bullseye::getTermId('tags', $tag);
-            $tid = (int) $tid;
-            $entity->field_tags->set(array($tid));
+            $tid = Bullseye::getTermId('tags', trim($tag));
+            $curr_list[] = (int) $tid;
           }
         }
+        $entity->field_tags->set($curr_list);
       }
 
       // Set the value.
       $entity->field_value->set(trim($row[8]));
 
       // Set the mandate category.
-      $entity->field_mandate_category->set(trim($row[9]));
+      $entity->field_mandate_category->set(strtolower(trim($row[9])));
 
       // Set the source.
       $entity->field_source->set(trim($row[13]));
@@ -300,7 +306,7 @@ function _import_account($data) {
       // Set the states term reference.
       $tid = Bullseye::getTermId('states', trim($row[17]));
       $tid = (int) $tid;
-      $entity->field_states->set(array($tid));
+      $entity->field_states->set($tid);
 
       // Set the state code.
       $entity->field_state_code->set(trim($row[17]));
@@ -367,12 +373,21 @@ function _import_account($data) {
 
       // Save the entity.
       $entity->save();
-
-      // Notify the user once the import is done.
-      drupal_set_message(t('Import successfully completed.'), 'message');
     }
     else {
       // Check contact if it is different then update/add if yes.
+      $nid = Bullseye::accountExist(trim($row[10]));
+      $node = node_load($nid);
+      $entity = entity_metadata_wrapper('node', $node);
+
+      // Update the field collections.
+
     }
   }
+  // Clear the cache.
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('count_accounts_listing', 'cache');
+
+  // Notify the user once the import is done.
+  drupal_set_message(t('Import successfully completed.'), 'message');
 }
