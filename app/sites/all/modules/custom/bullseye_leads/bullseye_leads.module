@@ -367,6 +367,9 @@ function _import_account($data) {
 
       // Save the entity.
       $entity->save();
+
+      // Notify the user once the import is done.
+      drupal_set_message(t('Import successfully completed.'), 'message');
     }
     else {
       // Check contact if it is different then update/add if yes.
