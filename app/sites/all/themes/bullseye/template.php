@@ -377,3 +377,10 @@ function bullseye_preprocess_be_rfps(&$vars) {
 function bullseye_preprocess_be_prospects(&$vars) {
   drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
 }
+
+/**
+ * Implements template_preprocess_THEME().
+ */
+function bullseye_preprocess_be_leads(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
+}
