@@ -589,7 +589,7 @@ function bullseye_blocks_render_be_account_details() {
 
   $nid = $be->getNidFromPath(arg(1));
 
-  $vars['company_name'] = $be->getCompanyNameByNid($nid);
+  $vars['company_name'] = Bullseye::getCompanyNameByNid($nid);
   $vars['primary_email'] = 'No primary contact selected yet';
   $primary_contact = $be->getAccountPrimaryContact($nid);
   if (!empty($primary_contact)) {
@@ -598,14 +598,14 @@ function bullseye_blocks_render_be_account_details() {
       $vars['primary_email'] = 'Primary contact has no email address';
     }
   }
-  $vars['phone_number'] = $be->getPhoneNumberByNid($nid);
-  $vars['website'] = $be->getWebsiteByNid($nid);
-  $vars['street_address'] = $be->getStreetAddressByNid($nid);
-  $vars['city'] = $be->getCityByNid($nid);
-  $vars['state'] = $be->getStateByNid($nid);
-  $vars['zip_code'] = $be->getZipCodeByNid($nid);
-  $vars['business_type'] = $be->getBusinessTypeByNid($nid);
-  $tags = $be->getTagsByNid($nid);
+  $vars['phone_number'] = Bullseye::getPhoneNumberByNid($nid);
+  $vars['website'] = Bullseye::getWebsiteByNid($nid);
+  $vars['street_address'] = Bullseye::getStreetAddressByNid($nid);
+  $vars['city'] = Bullseye::getCityByNid($nid);
+  $vars['state'] = Bullseye::getStateByNid($nid);
+  $vars['zip_code'] = Bullseye::getZipCodeByNid($nid);
+  $vars['business_type'] = Bullseye::getBusinessTypeByNid($nid);
+  $tags = Bullseye::getTagsByNid($nid);
   $vars['tags'] = '';
 
   foreach ($tags as $key => $value) {

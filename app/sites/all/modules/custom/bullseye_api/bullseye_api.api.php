@@ -62,7 +62,7 @@ class Bullseye {
   /**
    * Get Company name by nid.
    */
-  function getCompanyNameByNid($nid) {
+  static function getCompanyNameByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_company', 'company', 'n.nid = company.entity_id');
     $company_name = $query
@@ -77,7 +77,7 @@ class Bullseye {
   /**
    * Get Primary email address by nid.
    */
-  function getPrimaryEmailByNid($nid) {
+  static function getPrimaryEmailByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
     $email = $query
@@ -92,7 +92,7 @@ class Bullseye {
   /**
    * Get Phone Number by nid.
    */
-  function getPhoneNumberByNid($nid) {
+  static function getPhoneNumberByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_work_phone', 'phone', 'n.nid = phone.entity_id');
     $phone = $query
@@ -107,7 +107,7 @@ class Bullseye {
   /**
    * Get Website by nid.
    */
-  function getWebsiteByNid($nid) {
+  static function getWebsiteByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_work_website', 'website', 'n.nid = website.entity_id');
     $website = $query
@@ -122,7 +122,7 @@ class Bullseye {
   /**
    * Get Street Address by nid.
    */
-  function getStreetAddressByNid($nid) {
+  static function getStreetAddressByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_street', 'street', 'n.nid = street.entity_id');
     $street = $query
@@ -137,7 +137,7 @@ class Bullseye {
   /**
    * Get City by nid.
    */
-  function getCityByNid($nid) {
+  static function getCityByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_city', 'city', 'n.nid = city.entity_id');
     $city = $query
@@ -152,7 +152,7 @@ class Bullseye {
   /**
    * Get State by nid.
    */
-  function getStateByNid($nid) {
+  static function getStateByNid($nid) {
     $state = '';
     $query = db_select('node', 'n');
     $query->join('field_data_field_states', 'states', 'n.nid = states.entity_id');
@@ -173,7 +173,7 @@ class Bullseye {
   /**
    * Get Zip Code by nid.
    */
-  function getZipCodeByNid($nid) {
+  static function getZipCodeByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_postal_code', 'zip_code', 'n.nid = zip_code.entity_id');
     $zip_code = $query
@@ -188,7 +188,7 @@ class Bullseye {
   /**
    * Get Business type by nid.
    */
-  function getBusinessTypeByNid($nid) {
+  static function getBusinessTypeByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_type_of_business', 'bt', 'n.nid = bt.entity_id');
     $bt = $query
@@ -203,7 +203,7 @@ class Bullseye {
   /**
    * Get tags by nid.
    */
-  function getTagsByNid($nid) {
+  static function getTagsByNid($nid) {
     $query = db_select('field_data_field_tags', 'tags');
     $query->join('taxonomy_term_data', 'tx', 'tags.field_tags_tid = tx.tid');
     $tags = $query
@@ -1525,7 +1525,7 @@ class Bullseye {
   /**
    * Get the primary contact of an account.
    */
-  function getAccountPrimaryContact($nid) {
+  static function getAccountPrimaryContact($nid) {
 
     if ($cache = cache_get('primary_contact_' . $nid)) {
       $contact = $cache->data;
