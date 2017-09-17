@@ -557,7 +557,7 @@ class Bullseye {
   /**
    * Get all leads account.
    */
-  function getLeadsAccounts() {
+  static function getLeadsAccounts() {
     if ($cache = cache_get('leads_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -567,10 +567,10 @@ class Bullseye {
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.entity_id = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.entity_id = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.entity_id = lname.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'contact.entity_id = mail.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
