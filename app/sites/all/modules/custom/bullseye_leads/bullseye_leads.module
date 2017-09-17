@@ -386,6 +386,7 @@ function _import_account($data, $type) {
   }
   // Clear the cache.
   cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('leads_accounts_listing', 'cache');
   cache_clear_all('count_accounts_listing', 'cache');
 
   // Notify the user once the import is done.
