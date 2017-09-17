@@ -46,6 +46,7 @@ function bullseye_producer_permission() {
  * Add producer form.
  */
 function bullseye_producer_form($form, &$form_state) {
+
   $form = array();
   global $user;
 
@@ -61,22 +62,44 @@ function bullseye_producer_form($form, &$form_state) {
   $pa = '';
   $hl = '';
   $eoi = '';
+  $lang = LANGUAGE_NONE;
+  $v = 'value';
 
   $form_title = t('Add New Producer');
   if (arg(1) == 'edit') {
     $form_title = t('Producer Details');
     $be = new Bullseye($user);
     $producer = $be->getProducerDetails(arg(2));
-    $type = $producer['field_producer_type_value'];
-    $company = $producer['field_producer_name_value'];
-    $firstname = $producer['field_first_name_value'];
-    $lastname = $producer['field_last_name_value'];
-    $email = $producer['mail'];
-    $phone = $producer['field_phone_number_value'];
-    $website = $producer['field_producer_website_value'];
-    $pa = $producer['field_producer_agreement_file_fid'];
-    $hl = $producer['field_health_and_life_fid'];
-    $eoi = $producer['field_errors_omission_insurance_fid'];
+    if (isset($producer['field_producer_type'][$lang][0][$v])) {
+      $type = $producer['field_producer_type'][$lang][0][$v];
+    }
+    if (isset($producer['field_producer_name'][$lang][0][$v])) {
+      $company = $producer['field_producer_name'][$lang][0][$v];
+    }
+    if (isset($producer['field_first_name'][$lang][0][$v])) {
+      $firstname = $producer['field_first_name'][$lang][0][$v];
+    }
+    if (isset($producer['field_last_name'][$lang][0][$v])) {
+      $lastname = $producer['field_last_name'][$lang][0][$v];
+    }
+    if (isset($producer['mail'])) {
+      $email = $producer['mail'];
+    }
+    if (isset($producer['field_phone_number'][$lang][0][$v])) {
+      $phone = $producer['field_phone_number'][$lang][0][$v];
+    }
+    if (isset($producer['field_producer_website'][$lang][0][$v])) {
+      $website = $producer['field_producer_website'][$lang][0][$v];
+    }
+    if (isset($producer['field_producer_agreement_file'][$lang][0]['fid'])) {
+      $pa = $producer['field_producer_agreement_file'][$lang][0]['fid'];
+    }
+    if (isset($producer['field_health_and_life'][$lang][0]['fid'])) {
+      $hl = $producer['field_health_and_life'][$lang][0]['fid'];
+    }
+    if (isset($producer['field_errors_omission_insurance'][$lang][0]['fid'])) {
+      $eoi = $producer['field_errors_omission_insurance'][$lang][0]['fid'];
+    }
   }
 
   $form['form_title'] = array(
