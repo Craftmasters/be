@@ -264,9 +264,6 @@ function bullseye_producer_form_submit($form, &$form_state) {
       // Create new user.
       $create_user = user_save(NULL, $new_user);
       $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
-
-      // Save the profile2 to the user account.
-      profile2_save($profile);
       
     }
   }
