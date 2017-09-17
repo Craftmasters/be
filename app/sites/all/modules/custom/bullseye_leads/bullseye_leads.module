@@ -103,19 +103,19 @@ function bullseye_leads_import($rows) {
         $node->field_details[$node->language][0]['#format'] = 'filtered_html';
 
         // Set the value.
-        $node->field_value[$node->language][0]['value'] = trim($row[8]);
+        // $node->field_value[$node->language][0]['value'] = trim($row[8]);
 
         // Set the mandate category.
-        $node->field_mandate_category[$node->language][0]['value'] = strtolower(trim($row[9]));
+        // $node->field_mandate_category[$node->language][0]['value'] = strtolower(trim($row[9]));
 
         // Set the company.
         $node->field_company[$node->language][0]['value'] = trim($row[10]);
 
         // Set the business type.
-        $node->field_type_of_business[$node->language][0]['value'] = trim($row[11]);
+        // $node->field_type_of_business[$node->language][0]['value'] = trim($row[11]);
 
         // Set the owned by.
-        $node->field_owned_by[$node->language][0]['value'] = trim($row[12]);
+        // $node->field_owned_by[$node->language][0]['value'] = trim($row[12]);
 
         // Set the source.
         $node->field_source[$node->language][0]['value'] = trim($row[13]);
@@ -140,7 +140,7 @@ function bullseye_leads_import($rows) {
         $node->field_postal_code[$node->language][0]['value'] = trim($row[19]);
 
         // Set the work phone.
-        $node->field_work_phone[$node->language][0]['value'] = trim($row[20]);
+        // $node->field_work_phone[$node->language][0]['value'] = trim($row[20]);
 
         // Set the mobile phone.
         $node->field_mobile_phone[$node->language][0]['value'] = trim($row[21]);
@@ -161,7 +161,7 @@ function bullseye_leads_import($rows) {
         $node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
 
         // Set the tags.
-        if (strlen(trim($row[27])) >=2) {
+        /*if (strlen(trim($row[27])) >=2) {
           $tags = explode(' ', trim($row[27]));
           foreach ($tags as $tag) {
             $tid = $be->getTermId('tags', $tag);
@@ -179,7 +179,7 @@ function bullseye_leads_import($rows) {
               $node->field_tags[$node->language][]['tid'] = (int) $tid;
             }
           }
-        }
+        }*/
 
         // Set the producers.
         $node->field_producers[$node->language][0]['value'] = trim($row[28]);
@@ -250,7 +250,43 @@ function _import_account($data) {
       $account_type = strtolower($account_type);
       $entity->field_type->set($account_type);
 
-      $entity->field_type->set($account_type);
+      // Set the owned by.
+      $entity->field_owned_by->set(trim($row[12]));
+
+      // Set the business type.
+      $entity->field_type_of_business->set(trim($row[11]));
+
+      // Set the work phone.
+      $entity->field_work_phone->set(trim($row[20]));
+
+      // Set the tags.
+      if (strlen(trim($row[27])) >=2) {
+        $tags = explode(' ', trim($row[27]));
+        foreach ($tags as $tag) {
+          $tid = Bullseye::getTermId('tags', $tag);
+          if ($tid) {
+            $node->field_tags[$node->language][]['tid'] = (int) $tid;
+            $entity->field_work_phone->set(trim($row[20]));
+          }
+          else {
+            // Create the term if it doesn't exist.
+            $term = new stdClass();
+            $term->name = $tag;
+            $term->vid = 1;
+            taxonomy_term_save($term);
+
+            $tid = Bullseye::getTermId('tags', $tag);
+            $tid = (int) $tid;
+            $entity->field_tags->set(trim($row[20]));
+          }
+        }
+      }
+
+      // Set the value.
+      $entity->field_value->set(trim($row[8]));
+
+      // Set the mandate category.
+      $entity->field_mandate_category->set(trim($row[9]));
 
       $entity->save();
       $en = $entity->value();
