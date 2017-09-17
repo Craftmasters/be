@@ -13,7 +13,7 @@ function bullseye_leads_menu() {
     'title' => 'Import Leads',
     'description' => 'Import leads from CSV file.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('bullseye_leads_import_leads'),
+    'page arguments' => array('_import_account'),
     'access arguments' => array('import leads'),
     'file' => 'import.inc.php',
     'type' => MENU_LOCAL_TASK,
