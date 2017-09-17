@@ -687,7 +687,7 @@ class Bullseye {
   /**
    * Get all opportunity account.
    */
-  function getOpportunityAccounts() {
+  static function getOpportunityAccounts() {
     if ($cache = cache_get('opportunity_accounts_listing')) {
       $accounts = $cache->data;
     }

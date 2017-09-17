@@ -219,9 +219,7 @@ function bullseye_blocks_render_be_prospects() {
  * Opportunities Block (Table).
  */
 function bullseye_blocks_render_be_opportunities() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -236,8 +234,8 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
   $vars['be'] = $be;
-  $vars['opportunities'] = $be->getOpportunityAccounts();
-  $vars['total'] = $be->countOpportunityAccnt();
+  $vars['opportunities'] = Bullseye::getOpportunityAccounts();
+  $vars['total'] = Bullseye::countOpportunityAccnt();
 
   foreach ($vars['opportunities'] as $key1 => $value1) {
     $workflow_status = $be->getWorkflowStatusByNid($value1->nid);
