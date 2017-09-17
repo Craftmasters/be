@@ -287,41 +287,6 @@ function profiles_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-producer-field_producer_agreement'.
-  $field_instances['profile2-producer-field_producer_agreement'] = array(
-    'bundle' => 'producer',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'file',
-        'settings' => array(),
-        'type' => 'file_default',
-        'weight' => 9,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_producer_agreement',
-    'label' => 'Producer Agreement',
-    'required' => FALSE,
-    'settings' => array(
-      'description_field' => 0,
-      'file_directory' => '',
-      'file_extensions' => 'txt',
-      'max_filesize' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'module' => 'file',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'file_generic',
-      'weight' => 11,
-    ),
-  );
-
   // Exported field_instance: 'profile2-producer-field_producer_agreement_file'.
   $field_instances['profile2-producer-field_producer_agreement_file'] = array(
     'bundle' => 'producer',

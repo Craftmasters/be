@@ -315,6 +315,9 @@ class Bullseye {
       $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
       $query->join('field_data_field_producer_website', 'wb', 'wb.entity_id = p.pid');
       $query->join('field_data_field_phone_number', 'pn', 'pn.entity_id = p.pid');
+      $query->join('field_data_field_producer_agreement_file', 'pa', 'pn.entity_id = p.pid');
+      $query->join('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
+      $query->join('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
       $producer = $query
         ->fields('u', array('mail', 'uid'))
         ->fields('ptype', array('field_producer_type_value'))
@@ -324,6 +327,9 @@ class Bullseye {
         ->fields('contact', array('field_primary_contact_value'))
         ->fields('wb', array('field_producer_website_value'))
         ->fields('pn', array('field_phone_number_value'))
+        ->fields('pa', array('field_producer_agreement_file_fid'))
+        ->fields('hl', array('field_health_and_life_fid'))
+        ->fields('eoi', array('field_errors_omission_insurance_fid'))
         ->condition('r.name', 'producer', '=')
         ->condition('u.status', 1, '=')
         ->condition('u.uid', $uid, '=')

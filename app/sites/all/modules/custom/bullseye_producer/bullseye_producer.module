@@ -58,6 +58,9 @@ function bullseye_producer_form($form, &$form_state) {
   $email = '';
   $phone = '';
   $website = '';
+  $pa = '';
+  $hl = '';
+  $eoi = '';
 
   $form_title = t('Add New Producer');
   if (arg(1) == 'edit') {
@@ -71,6 +74,9 @@ function bullseye_producer_form($form, &$form_state) {
     $email = $producer['mail'];
     $phone = $producer['field_phone_number_value'];
     $website = $producer['field_producer_website_value'];
+    $pa = $producer['field_producer_agreement_file_fid'];
+    $hl = $producer['field_health_and_life_fid'];
+    $eoi = $producer['field_errors_omission_insurance_fid'];
   }
 
   $form['form_title'] = array(
@@ -170,16 +176,19 @@ function bullseye_producer_form($form, &$form_state) {
   $form['attachments_container']['attachment']['producer_agreement'] = array(
     '#title' => t('Producer Agreement'),
     '#type' => 'managed_file',
+    '#default_value' => $pa,
   );
 
   $form['attachments_container']['attachment']['current_health_life'] = array(
     '#title' => t('Current Health and Life'),
     '#type' => 'managed_file',
+    '#default_value' => $hl,
   );
 
   $form['attachments_container']['attachment']['errors_omission_insurance'] = array(
     '#title' => t('Errors and Omission Insurance'),
     '#type' => 'managed_file',
+    '#default_value' => $eoi,
   );
 
   $form['submit_container'] = array(
@@ -251,31 +260,77 @@ function bullseye_producer_form_submit($form, &$form_state) {
 
       // Create new user.
       $create_user = user_save(NULL, $new_user);
-
       $profile = profile2_create(array('type' => 'producer', 'uid' => $create_user->uid));
-      $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
-      $profile->field_first_name[LANGUAGE_NONE][0]['value'] = $firstname;
-      $profile->field_last_name[LANGUAGE_NONE][0]['value'] = $lastname;
-      $profile->field_producer_type[LANGUAGE_NONE][0]['value'] = $type;
-      $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
-      $profile->field_producer_website[LANGUAGE_NONE][0]['value'] = $website;
-      $profile->field_phone_number[LANGUAGE_NONE][0]['value'] = $phone;
 
       // Save the profile2 to the user account.
       profile2_save($profile);
-
-      drupal_set_message(t('Successfully added new producer account.'));
       
     }
   }
   else {
     // Handler for updating/editing existing producers.
+
+    // Check if the account already exist.
+    if (!$be->accountExist($contact_email)) {
+      $update_user = array(
+        'mail' => $contact_email,
+      );
+
+      // Update user.
+      $edit_user = user_load(arg(2));
+      $update_user = user_save($edit_user, $update_user);
+      $profile = profile2_load_by_user($edit_user, 'producer');
+
+      // Clear the producer detail cache.
+      cache_clear_all('producer_detail_' . arg(2), 'cache');
+    }
   }
+
+  $profile->field_producer_name[LANGUAGE_NONE][0]['value'] = $producer_name;
+  $profile->field_first_name[LANGUAGE_NONE][0]['value'] = $firstname;
+  $profile->field_last_name[LANGUAGE_NONE][0]['value'] = $lastname;
+  $profile->field_producer_type[LANGUAGE_NONE][0]['value'] = $type;
+  $profile->field_primary_contact[LANGUAGE_NONE][0]['value'] = $contact_name;
+  $profile->field_producer_website[LANGUAGE_NONE][0]['value'] = $website;
+  $profile->field_phone_number[LANGUAGE_NONE][0]['value'] = $phone;
+
+  // Producer Agreement file.
+  if ($form_state['values']['producer_agreement'] != 0) {
+    $pa_file = file_load($form_state['values']['producer_agreement']);
+    $pa_file->display = 1;
+    $pa_file = file_copy($pa_file, 'public://');
+    $profile->field_producer_agreement_file[LANGUAGE_NONE][0] = (array) $pa_file;
+  }
+
+  // Health and life file.
+  if ($form_state['values']['current_health_life'] != 0) {
+    $hl_file = file_load($form_state['values']['current_health_life']);
+    $hl_file->display = 1;
+    $hl_file = file_copy($hl_file, 'public://');
+    $profile->field_health_and_life[LANGUAGE_NONE][0] = (array) $hl_file;
+  }
+
+  // Errors and omission insurance file.
+  if ($form_state['values']['errors_omission_insurance'] != 0) {
+    $hl_file = file_load($form_state['values']['errors_omission_insurance']);
+    $hl_file->display = 1;
+    $hl_file = file_copy($hl_file, 'public://');
+    $profile->field_errors_omission_insurance[LANGUAGE_NONE][0] = (array) $hl_file;
+  }
+
+  // Save the profile2 to the user account.
+  profile2_save($profile);
 
   // Invalidate the existing cache to make sure that
   // the newly added one will get indexed too.
   cache_clear_all('producers_listing', 'cache');
-  // Reroute the page to the listing page.
-  //drupal_goto('/producers');
+
+  // For status messages.
+  if (arg(0) == 'producer'  && arg(1) == 'add') {
+    drupal_set_message(t('Successfully added new producer account.'));
+  }
+  else {
+    drupal_set_message(t('Successfully updated producer account.'));
+  }
     
 }
