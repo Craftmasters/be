@@ -401,3 +401,42 @@ function bullseye_deploy_update_7036() {
 function bullseye_deploy_update_7037() {
   module_enable(array('bullseye_account'), TRUE);
 }
+
+/**
+ * Remove old fields from the accounts content type.
+ */
+function bullseye_deploy_update_7038() {
+
+  $fields = array(
+    'field_firstname',
+    'field_middle_name',
+    'field_lastname',
+    'field_prefix',
+    'field_suffix',
+    'field_title',
+    'field_details',
+    'field_mobile_phone',
+    'field_email',
+    'field_personal_website',
+    'field_facebook_personal'
+  );
+
+  foreach ($fields as $key => $value) {
+    $to_be_deleted = field_info_instance('node', $value, 'accounts');
+    field_delete_instance($to_be_deleted);
+  }
+
+  $contact_fields = array(
+    'field_contact_name',
+    'field_phone_number'
+  );
+
+  foreach ($contact_fields as $key1 => $value1) {
+    $to_be_deleted = field_info_instance('field_collection_item', $value1, 'field_contacts  ');
+    field_delete_instance($to_be_deleted);
+  }
+
+  field_purge_batch(1);
+
+  return 'Fields deleted.';
+}

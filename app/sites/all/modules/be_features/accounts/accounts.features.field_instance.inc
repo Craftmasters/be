@@ -11,41 +11,6 @@ function accounts_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'field_collection_item-field_contacts-field_contact_name'.
-  $field_instances['field_collection_item-field_contacts-field_contact_name'] = array(
-    'bundle' => 'field_contacts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_contact_name',
-    'label' => 'Name',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 0,
-    ),
-  );
-
-  // Exported field_instance:
   // 'field_collection_item-field_contacts-field_details'.
   $field_instances['field_collection_item-field_contacts-field_details'] = array(
     'bundle' => 'field_contacts',
@@ -353,41 +318,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 12,
-    ),
-  );
-
-  // Exported field_instance:
-  // 'field_collection_item-field_contacts-field_phone_number'.
-  $field_instances['field_collection_item-field_contacts-field_phone_number'] = array(
-    'bundle' => 'field_contacts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 2,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_phone_number',
-    'label' => 'Contact Number',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 1,
     ),
   );
 
@@ -781,206 +711,6 @@ function accounts_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-accounts-field_details'.
-  $field_instances['node-accounts-field_details'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 11,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_details',
-    'label' => 'Details',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 8,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_email'.
-  $field_instances['node-accounts-field_email'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 8,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_email',
-    'label' => 'Email',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 23,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_facebook_personal'.
-  $field_instances['node-accounts-field_facebook_personal'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 18,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_facebook_personal',
-    'label' => 'Facebook Personal',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 27,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_firstname'.
-  $field_instances['node-accounts-field_firstname'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_firstname',
-    'label' => 'Firstname',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_lastname'.
-  $field_instances['node-accounts-field_lastname'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_lastname',
-    'label' => 'Lastname',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 4,
-    ),
-  );
-
   // Exported field_instance: 'node-accounts-field_linkedin_personal'.
   $field_instances['node-accounts-field_linkedin_personal'] = array(
     'bundle' => 'accounts',
@@ -1062,86 +792,6 @@ function accounts_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-accounts-field_middle_name'.
-  $field_instances['node-accounts-field_middle_name'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_middle_name',
-    'label' => 'Middle Name',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 1,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_mobile_phone'.
-  $field_instances['node-accounts-field_mobile_phone'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_mobile_phone',
-    'label' => 'Mobile Phone',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 22,
-    ),
-  );
-
   // Exported field_instance: 'node-accounts-field_owned_by'.
   $field_instances['node-accounts-field_owned_by'] = array(
     'bundle' => 'accounts',
@@ -1179,46 +829,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 13,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_personal_website'.
-  $field_instances['node-accounts-field_personal_website'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 20,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_personal_website',
-    'label' => 'Personal Website',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 25,
     ),
   );
 
@@ -1296,46 +906,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 20,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_prefix'.
-  $field_instances['node-accounts-field_prefix'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 28,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_prefix',
-    'label' => 'Prefix',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
     ),
   );
 
@@ -1651,46 +1221,6 @@ function accounts_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-accounts-field_suffix'.
-  $field_instances['node-accounts-field_suffix'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 29,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_suffix',
-    'label' => 'Suffix',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 6,
-    ),
-  );
-
   // Exported field_instance: 'node-accounts-field_tags'.
   $field_instances['node-accounts-field_tags'] = array(
     'bundle' => 'accounts',
@@ -1728,46 +1258,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'taxonomy_autocomplete',
       'weight' => 28,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_title'.
-  $field_instances['node-accounts-field_title'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 30,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_title',
-    'label' => 'Title',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 7,
     ),
   );
 
@@ -2060,10 +1550,8 @@ function accounts_field_default_field_instances() {
   t('City');
   t('Client Interested?');
   t('Company');
-  t('Contact Number');
   t('Contacts');
   t('Details');
-  t('Email');
   t('Email Address');
   t('Facebook Personal');
   t('Firstname');
@@ -2073,7 +1561,6 @@ function accounts_field_default_field_instances() {
   t('Mandate Category');
   t('Middle Name');
   t('Mobile Phone');
-  t('Name');
   t('Owned By');
   t('Personal Website');
   t('Plan to Work Under SCA/DBRA');
@@ -2090,7 +1577,6 @@ function accounts_field_default_field_instances() {
   t('Street');
   t('Suffix');
   t('Tags');
-  t('Title');
   t('Type');
   t('Type of Business');
   t('Value');
