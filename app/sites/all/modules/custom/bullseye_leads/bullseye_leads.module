@@ -54,8 +54,8 @@ function bullseye_leads_import($rows) {
       // Initialize the class.
       $be = new Bullseye($user);
 
-      // Only create if the leads doesn't exist.
-      if (!$be->accountExist(trim($row[22]))) {
+      // Only create if the account doesn't exist.
+      if (!Bullseye::accountExist(trim($row[22]))) {
 
         $node = new stdClass();
 
@@ -175,7 +175,7 @@ function bullseye_leads_import($rows) {
               $term->vid = 1;
               taxonomy_term_save($term);
 
-              $tid = $be->getTermId('tags', $tag);
+              $tid = Bullseye::getTermId('tags', $tag);
               $node->field_tags[$node->language][]['tid'] = (int) $tid;
             }
           }
@@ -219,6 +219,54 @@ function bullseye_leads_import($rows) {
     }
     catch (Exception $e) {
       drupal_set_message(t('Error processing row.') . ' Error is: ' . $e);
+    }
+  }
+}
+
+/**
+ * Import accounts from a csv.
+ */
+function _import_account($data) {
+  global $user;
+
+  $data = array_reverse($data);
+
+  foreach ($data as $row) {
+    // Only create if the account doesn't exist.
+    if (!Bullseye::accountExist(trim($row[22]))) {
+      $node = entity_create('node', array('type' => 'accounts'));
+      $node->uid = $user->uid;
+      $node->status = 1;
+      $node->promote = 0;
+      $node->comment = 0;
+      $node->language = LANGUAGE_NONE;
+
+      // Create a 'Entity Wrapper' of that new entity.
+      $entity = entity_metadata_wrapper('node', $node);
+      $entity->title->set(trim($row[10]));
+
+      // Set the type field.
+      $account_type = trim($row[0]);
+      $account_type = strtolower($account_type);
+      $entity->field_type->set($account_type);
+
+      $entity->field_type->set($account_type);
+
+      $entity->save();
+      $en = $entity->value();
+
+      // Contact field collection.
+      $field_collection_1 = entity_create('field_collection_item', array('field_name' => 'field_ks_sent_to'));
+      $field_collection_1->setHostEntity('node', $en);
+      $field_collection_1->save();
+
+      $field_collection_2 = entity_create('field_collection_item', array('field_name' => 'field_ks_in_voice'));
+      $field_collection_2->setHostEntity('field_collection_item', $field_collection_1);
+      $field_collection_2->field_message_url[LANGUAGE_NONE][0]['value'] = 'http://www.google.com';
+      $field_collection_2->save();
+    }
+    else {
+      // Check contact if it is different then update/add if yes.
     }
   }
 }
