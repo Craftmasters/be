@@ -76,31 +76,31 @@ function bullseye_leads_import($rows) {
         $node->comment = 0;
 
         // Set the type field.
-        $account_type = trim($row[0]);
-        $account_type = strtolower($account_type);
-        $node->field_type[$node->language][0]['value'] = $account_type;
+        //$account_type = trim($row[0]);
+        //$account_type = strtolower($account_type);
+        //$node->field_type[$node->language][0]['value'] = $account_type;
 
         // Set the firstname.
-        $node->field_firstname[$node->language][0]['value'] = trim($row[1]);
+        // $node->field_firstname[$node->language][0]['value'] = trim($row[1]);
 
         // Set the middlename.
-        $node->field_middle_name[$node->language][0]['value'] = ucfirst(trim($row[2]));
+        // $node->field_middle_name[$node->language][0]['value'] = ucfirst(trim($row[2]));
 
         // Set the lastname.
-        $node->field_lastname[$node->language][0]['value'] = trim($row[3]);
+        //$node->field_lastname[$node->language][0]['value'] = trim($row[3]);
 
         // Set the prefix.
-        $node->field_prefix[$node->language][0]['value'] = trim($row[4]);
+        // $node->field_prefix[$node->language][0]['value'] = trim($row[4]);
 
         // Set the suffix.
-        $node->field_suffix[$node->language][0]['value'] = trim($row[5]);
+        // $node->field_suffix[$node->language][0]['value'] = trim($row[5]);
 
         // Set the title.
-        $node->field_title[$node->language][0]['value'] = trim($row[6]);
+        // $node->field_title[$node->language][0]['value'] = trim($row[6]);
 
         // Set the details.
-        $node->field_details[$node->language][0]['value'] = trim($row[7]);
-        $node->field_details[$node->language][0]['#format'] = 'filtered_html';
+        // $node->field_details[$node->language][0]['value'] = trim($row[7]);
+        // $node->field_details[$node->language][0]['#format'] = 'filtered_html';
 
         // Set the value.
         // $node->field_value[$node->language][0]['value'] = trim($row[8]);
@@ -109,7 +109,7 @@ function bullseye_leads_import($rows) {
         // $node->field_mandate_category[$node->language][0]['value'] = strtolower(trim($row[9]));
 
         // Set the company.
-        $node->field_company[$node->language][0]['value'] = trim($row[10]);
+        // $node->field_company[$node->language][0]['value'] = trim($row[10]);
 
         // Set the business type.
         // $node->field_type_of_business[$node->language][0]['value'] = trim($row[11]);
@@ -131,34 +131,34 @@ function bullseye_leads_import($rows) {
         // $node->field_states[$node->language][0]['tid'] = (int) $tid;
 
         // Set the state code.
-        $node->field_state_code[$node->language][0]['value'] = trim($row[17]);
+        // $node->field_state_code[$node->language][0]['value'] = trim($row[17]);
 
         // Set the state name.
-        $node->field_state[$node->language][0]['value'] = trim($row[18]);
+        // $node->field_state[$node->language][0]['value'] = trim($row[18]);
 
         // Set the postal code.
-        $node->field_postal_code[$node->language][0]['value'] = trim($row[19]);
+        // $node->field_postal_code[$node->language][0]['value'] = trim($row[19]);
 
         // Set the work phone.
         // $node->field_work_phone[$node->language][0]['value'] = trim($row[20]);
 
         // Set the mobile phone.
-        $node->field_mobile_phone[$node->language][0]['value'] = trim($row[21]);
+        //$node->field_mobile_phone[$node->language][0]['value'] = trim($row[21]);
 
         // Set the email.
-        $node->field_email[$node->language][0]['value'] = trim($row[22]);
+        // $node->field_email[$node->language][0]['value'] = trim($row[22]);
 
         // Set the work website.
-        $node->field_work_website[$node->language][0]['value'] = trim($row[23]);
+        // $node->field_work_website[$node->language][0]['value'] = trim($row[23]);
 
         // Set the personal website.
-        $node->field_personal_website[$node->language][0]['value'] = trim($row[24]);
+        //$node->field_personal_website[$node->language][0]['value'] = trim($row[24]);
 
         // Set the linkedin personal.
-        $node->field_linkedin_personal[$node->language][0]['value'] = trim($row[25]);
+        //$node->field_linkedin_personal[$node->language][0]['value'] = trim($row[25]);
 
         // Set the facebook personal.
-        $node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
+        //$node->field_facebook_personal[$node->language][0]['value'] = trim($row[26]);
 
         // Set the tags.
         /*if (strlen(trim($row[27])) >=2) {
@@ -182,18 +182,18 @@ function bullseye_leads_import($rows) {
         }*/
 
         // Set the producers.
-        $node->field_producers[$node->language][0]['value'] = trim($row[28]);
+        // $node->field_producers[$node->language][0]['value'] = trim($row[28]);
 
         // Set the referral partners.
-        $node->field_referral_partners[$node->language][0]['value'] = trim($row[29]);
+        // $node->field_referral_partners[$node->language][0]['value'] = trim($row[29]);
 
         // Set the account status.
-        $account_status = trim($row[30]);
-        $account_status = strtolower($account_status);
-        $node->field_account_status[$node->language][0]['value'] = $account_status;
+        // $account_status = trim($row[30]);
+        // $account_status = strtolower($account_status);
+        // $node->field_account_status[$node->language][0]['value'] = $account_status;
 
         // Set the workflow status and action status.
-        if ($account_status == 'lead') {
+        /*if ($account_status == 'lead') {
           $node->field_workflow_status[$node->language][0]['value'] = 'verification';
           $node->field_action_status[$node->language][0]['value'] = 'verify_sca_dbra';
         }
@@ -205,7 +205,7 @@ function bullseye_leads_import($rows) {
           // due to as per mariel mailchimp not yet available so
           // imported prospects statuses are directly 'build_rapport' by default temporarily.
           $node->field_action_status[$node->language][0]['value'] = 'build_rapport';
-        }
+        }*/
 
         $node = node_submit($node);
         node_save($node);
@@ -299,21 +299,74 @@ function _import_account($data) {
 
       // Set the states term reference.
       $tid = Bullseye::getTermId('states', trim($row[17]));
-      $node->field_states[$node->language][0]['tid'] = (int) $tid;
-      $entity->field_states->set(trim($row[15]));
+      $tid = (int) $tid;
+      $entity->field_states->set(array($tid));
 
-      $entity->save();
-      $en = $entity->value();
+      // Set the state code.
+      $entity->field_state_code->set(trim($row[17]));
+
+      // Set the state name.
+      $entity->field_state->set(trim($row[18]));
+
+      // Set the postal code.
+      $entity->field_postal_code->set(trim($row[19]));
+
+      // Set the work website.
+      $entity->field_work_website->set(trim($row[23]));
+
+      // Set the producers.
+      $entity->field_producers->set(trim($row[28]));
+
+      // Set the referral partners.
+      $entity->field_referral_partners->set(trim($row[29]));
+
+      // Set the account status.
+      $account_status = trim($row[30]);
+      $account_status = strtolower($account_status);
+      $entity->field_account_status->set($account_status);
+
+      // Set the workflow status and action status.
+      if ($account_status == 'lead') {
+        $entity->field_workflow_status->set('verification');
+        $entity->field_action_status->set('verify_sca_dbra');
+      }
+      else {
+        $entity->field_workflow_status->set('engagement');
+        //$entity->field_action_status->set('send_email');
+
+        // Commented out setting prospects action status 'send_email'
+        // due to as per mariel mailchimp not yet available so
+        // imported prospects statuses are directly 'build_rapport' by default temporarily.
+        $entity->field_action_status->set('build_rapport');
+      }
 
       // Contact field collection.
-      $field_collection_1 = entity_create('field_collection_item', array('field_name' => 'field_ks_sent_to'));
-      $field_collection_1->setHostEntity('node', $en);
-      $field_collection_1->save();
+      $contact = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
+      $contact->setHostEntity('node', $node);
 
-      $field_collection_2 = entity_create('field_collection_item', array('field_name' => 'field_ks_in_voice'));
-      $field_collection_2->setHostEntity('field_collection_item', $field_collection_1);
-      $field_collection_2->field_message_url[LANGUAGE_NONE][0]['value'] = 'http://www.google.com';
-      $field_collection_2->save();
+      // Now define the contact parameters.
+      $cwrapper = entity_metadata_wrapper('field_collection_item', $contact);
+      $cwrapper->field_firstname->set(trim($row[1]));
+      $cwrapper->field_middle_name->set(ucfirst(trim($row[2])));
+      $cwrapper->field_lastname->set(trim($row[3]));
+      $cwrapper->field_prefix->set(trim($row[4]));
+      $cwrapper->field_suffix->set(trim($row[5]));
+      $cwrapper->field_position->set(trim($row[6]));
+      // Set the details.
+      $cwrapper->field_details->set(trim($row[7]));
+      $cwrapper->field_mobile_phone->set(trim($row[21]));
+      $cwrapper->field_email->set(trim($row[22]));
+      $cwrapper->field_personal_website->set(trim($row[24]));
+      $cwrapper->field_facebook_personal->set(trim($row[26]));
+      $cwrapper->field_linkedin_personal->set(trim($row[25]));
+      $cwrapper->field_if_primary_contact->set(trim($row[33]));
+
+
+      // Save field collection.
+      $cwrapper->save();
+
+      // Save the entity.
+      $entity->save();
     }
     else {
       // Check contact if it is different then update/add if yes.
