@@ -65,7 +65,8 @@ function bullseye_leads_import($rows) {
         $last = ucfirst(trim($row[3]));
         $suffix = ucfirst(trim($row[5]));
 
-        $node->title = $prefix . ' ' . $first . ' ' . $middle . ' ' . $last . ' ' . $suffix;
+        //$node->title = $prefix . ' ' . $first . ' ' . $middle . ' ' . $last . ' ' . $suffix;
+        $node->title = trim($row[10]);
         $node->type = "accounts";
         node_object_prepare($node);
         $node->language = LANGUAGE_NONE;
