@@ -118,17 +118,17 @@ function bullseye_leads_import($rows) {
         // $node->field_owned_by[$node->language][0]['value'] = trim($row[12]);
 
         // Set the source.
-        $node->field_source[$node->language][0]['value'] = trim($row[13]);
+        // $node->field_source[$node->language][0]['value'] = trim($row[13]);
 
         // Set the street.
-        $node->field_street[$node->language][0]['value'] = trim($row[14]);
+        // $node->field_street[$node->language][0]['value'] = trim($row[14]);
 
         // Set the city.
-        $node->field_city[$node->language][0]['value'] = trim($row[15]);
+        // $node->field_city[$node->language][0]['value'] = trim($row[15]);
 
         // Set the states term reference.
-        $tid = $be->getTermId('states', trim($row[17]));
-        $node->field_states[$node->language][0]['tid'] = (int) $tid;
+        // $tid = $be->getTermId('states', trim($row[17]));
+        // $node->field_states[$node->language][0]['tid'] = (int) $tid;
 
         // Set the state code.
         $node->field_state_code[$node->language][0]['value'] = trim($row[17]);
@@ -265,8 +265,8 @@ function _import_account($data) {
         foreach ($tags as $tag) {
           $tid = Bullseye::getTermId('tags', $tag);
           if ($tid) {
-            $node->field_tags[$node->language][]['tid'] = (int) $tid;
-            $entity->field_work_phone->set(trim($row[20]));
+            $tid = (int) $tid;
+            $entity->field_tags->set(array($tid));
           }
           else {
             // Create the term if it doesn't exist.
@@ -277,7 +277,7 @@ function _import_account($data) {
 
             $tid = Bullseye::getTermId('tags', $tag);
             $tid = (int) $tid;
-            $entity->field_tags->set(trim($row[20]));
+            $entity->field_tags->set(array($tid));
           }
         }
       }
@@ -287,6 +287,20 @@ function _import_account($data) {
 
       // Set the mandate category.
       $entity->field_mandate_category->set(trim($row[9]));
+
+      // Set the source.
+      $entity->field_source->set(trim($row[13]));
+
+      // Set the street.
+      $entity->field_street->set(trim($row[14]));
+
+      // Set the city.
+      $entity->field_city->set(trim($row[15]));
+
+      // Set the states term reference.
+      $tid = Bullseye::getTermId('states', trim($row[17]));
+      $node->field_states[$node->language][0]['tid'] = (int) $tid;
+      $entity->field_states->set(trim($row[15]));
 
       $entity->save();
       $en = $entity->value();
