@@ -37,7 +37,13 @@
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/icons/default_user.svg">
               <span class="gray-font">
-                <?php $be->buildAccountName($p->field_firstname_value, $p->field_middle_name_value, $p->field_lastname_value); ?>
+                <?php
+                  Bullseye::buildAccountName(
+                    $p->field_firstname_value,
+                    $p->field_middle_name_value,
+                    $p->field_lastname_value
+                  );
+                ?>
               </span>
             </td>
             <td>

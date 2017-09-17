@@ -47,7 +47,13 @@
             </td>
             <td>
               <span class="gray-font">
-                <?php $be->buildAccountName($o->field_firstname_value, $o->field_middle_name_value, $o->field_lastname_value); ?>
+                <?php
+                  Bullseye::buildAccountName(
+                    $o->field_firstname_value,
+                    $o->field_middle_name_value,
+                    $o->field_lastname_value
+                  );
+                ?>
               </span>
             </td>
             <td class="be-table-arrow-td">

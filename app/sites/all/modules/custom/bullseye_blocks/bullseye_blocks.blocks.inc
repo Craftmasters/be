@@ -187,7 +187,6 @@ function bullseye_blocks_render_be_prospects() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['be'] = $be;
   $vars['prospects'] = Bullseye::getProspectsAccounts();
   $vars['total'] = Bullseye::countProspectsAccnt();
 
@@ -233,7 +232,6 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['arrow_green'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-green.svg';
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
-  $vars['be'] = $be;
   $vars['opportunities'] = Bullseye::getOpportunityAccounts();
   $vars['total'] = Bullseye::countOpportunityAccnt();
 
