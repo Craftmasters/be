@@ -36,15 +36,17 @@
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">
-                <?php
-                  Bullseye::buildAccountName(
-                    $l->field_firstname_value,
-                    $l->field_middle_name_value,
-                    $l->field_lastname_value
-                  );
-                ?>
-              </span>
+              <a href="<?php print drupal_get_path_alias('/node/' . $l->nid . '/edit'); ?>">
+                <span class="gray-font">
+                  <?php
+                    Bullseye::buildAccountName(
+                      $l->field_firstname_value,
+                      $l->field_middle_name_value,
+                      $l->field_lastname_value
+                    );
+                  ?>
+                </span>
+              </a>
             </td>
             <td>
               <span class="light-gray-font">

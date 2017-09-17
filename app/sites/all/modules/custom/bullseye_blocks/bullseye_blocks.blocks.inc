@@ -105,7 +105,7 @@ function bullseye_blocks_render_be_leads() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['leads'] = Bullseye::getLeadsAccounts();krumo($vars['leads']);
+  $vars['leads'] = Bullseye::getLeadsAccounts();
   $vars['total'] = Bullseye::countLeadsAccnt();
 
   $vars['aliases'] = array();
