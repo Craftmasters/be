@@ -622,7 +622,7 @@ class Bullseye {
   /**
    * Get all prospects account.
    */
-  function getProspectsAccounts() {
+  static function getProspectsAccounts() {
     if ($cache = cache_get('prospect_accounts_listing')) {
       $accounts = $cache->data;
     }

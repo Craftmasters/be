@@ -177,9 +177,7 @@ function bullseye_blocks_render_be_accounts() {
  * Prospects Block (Table).
  */
 function bullseye_blocks_render_be_prospects() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -190,8 +188,8 @@ function bullseye_blocks_render_be_prospects() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['be'] = $be;
-  $vars['prospects'] = $be->getProspectsAccounts();
-  $vars['total'] = $be->countProspectsAccnt();
+  $vars['prospects'] = Bullseye::getProspectsAccounts();
+  $vars['total'] = Bullseye::countProspectsAccnt();
 
   $vars['aliases'] = array();
 
