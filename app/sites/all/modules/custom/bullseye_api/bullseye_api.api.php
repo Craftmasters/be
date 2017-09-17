@@ -1472,7 +1472,7 @@ class Bullseye {
   /**
    * Get node id from path alias.
    */
-  function getNidFromPath($alias) {
+  static function getNidFromPath($alias) {
 
     if ($cache = cache_get('nid_from_' . $alias)) {
       $nid = $cache->data;

@@ -579,19 +579,18 @@ function bullseye_blocks_render_be_recent_activities() {
  * Account Details Block.
  */
 function bullseye_blocks_render_be_account_details() {
-  global $base_url, $user;
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars = array();
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
 
 
-  $nid = $be->getNidFromPath(arg(1));
+  $nid = Bullseye::getNidFromPath(arg(1));
 
   $vars['company_name'] = Bullseye::getCompanyNameByNid($nid);
   $vars['primary_email'] = 'No primary contact selected yet';
-  $primary_contact = $be->getAccountPrimaryContact($nid);
+  $primary_contact = Bullseye::getAccountPrimaryContact($nid);
   if (!empty($primary_contact)) {
     $vars['primary_email'] = $primary_contact['field_email_value'];
     if (empty($vars['primary_email']) || $vars['primary_email'] == '') {
