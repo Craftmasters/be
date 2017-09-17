@@ -21,6 +21,7 @@
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
+          <th class="td-width-80px"><?php print t('ID'); ?></th>
           <th><?php print t('Producer Name'); ?></th>
           <th><?php print t('Primary Contact'); ?></th>
           <th><?php print t('Email Address'); ?></th>
@@ -34,6 +35,9 @@
         <?php foreach ($producers as $producer): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
+            <td class="td-width-80px">
+              <a class="light-gray-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe"><?php print $producer->uid; ?></a>
+            </td>
             <td>
               <a class="orange-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe">
                 <?php if ($producer->field_producer_type_value == 'individual') : ?>
