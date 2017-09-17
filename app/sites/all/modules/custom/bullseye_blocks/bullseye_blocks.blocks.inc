@@ -141,8 +141,6 @@ function bullseye_blocks_render_be_leads() {
 function bullseye_blocks_render_be_accounts() {
   global $base_url, $user;
 
-  $be = new Bullseye($user);
-
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
@@ -151,9 +149,8 @@ function bullseye_blocks_render_be_accounts() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['accounts'] = $be->getAllAccounts();
-  $vars['be'] = $be;
-  $vars['total'] = $be->countAllAccnt();
+  $vars['accounts'] = Bullseye::getAllAccounts();
+  $vars['total'] = Bullseye::countAllAccnt();
 
   $vars['aliases'] = array();
 
@@ -420,7 +417,7 @@ function bullseye_blocks_render_be_producers() {
   $vars['producers'] = $be->getProducers();
 
   $vars['be'] = $be;
-  
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
@@ -597,7 +594,7 @@ function bullseye_blocks_render_be_account_details() {
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars = array();
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
-  
+
 
   $nid = $be->getNidFromPath(arg(1));
 
