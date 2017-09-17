@@ -38,18 +38,18 @@
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
               <span class="gray-font">
-                <?php $be->buildAccountName($a->field_firstname_value, $a->field_middle_name_value, $a->field_lastname_value); ?>
+                <?php Bullseye::buildAccountName($a->field_firstname_value, $a->field_middle_name_value, $a->field_lastname_value); ?>
               </span>
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print $a->field_title_value; ?>
+                <?php print $a->field_position_value; ?>
               </span>
             </td>
             <td>
               <span class="orange-font">
                 <a href="/company/<?php print $aliases[$a->nid]['alias'];?>?from=<?php print $aliases[$a->nid]['status'];?>" class="orange-font">
-                  <?php print $a->field_company_value; ?>
+                  <?php print $a->title; ?>
                 </a>
               </span>
             </td>
