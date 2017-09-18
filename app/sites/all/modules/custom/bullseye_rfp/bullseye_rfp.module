@@ -2555,7 +2555,7 @@ function generate_rfp_special_benefits($form, &$form_state) {
     $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
 
     // Send the email.
-    $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+    $attachment = file_load($form_state['values']['employee_census']);
 
     // Send the proposal via email.
     $params = array(
