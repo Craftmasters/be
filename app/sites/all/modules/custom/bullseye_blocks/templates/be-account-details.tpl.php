@@ -1,6 +1,6 @@
 <div class="be-regular-block">
   <h2 class="be-regular-h2"><?php print t('Account Details'); ?></h2>
-  <a href="#" class="edit-link edit-account-details"><img src="<?php print $edit_icon; ?>"></a>
+  <a href="/edit/account-details/<?php print $nid; ?>" class="edit-link edit-account-details" rel="lightframe"><img src="<?php print $edit_icon; ?>"></a>
   <div class="be-block-main">
 
   	<div class="be-view-field">

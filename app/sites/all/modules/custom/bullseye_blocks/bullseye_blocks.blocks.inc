@@ -606,6 +606,7 @@ function bullseye_blocks_render_be_account_details() {
   $vars['business_type'] = Bullseye::getBusinessTypeByNid($nid);
   $tags = Bullseye::getTagsByNid($nid);
   $vars['tags'] = '';
+  $vars['nid'] = $nid;
 
   foreach ($tags as $key => $value) {
     if ($key == 0) {
@@ -631,12 +632,11 @@ function bullseye_blocks_render_be_people() {
   global $base_url;
   global $user;
 
-  $be = new Bullseye($user);
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
-  $nid = $be->getNidFromPath(arg(1));
-  $vars['people'] = $be->getAccountPeople($nid);
+  $nid = Bullseye::getNidFromPath(arg(1));
+  $vars['people'] = Bullseye::getAccountPeople($nid);
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
   $output = theme('be_people', $vars);
 

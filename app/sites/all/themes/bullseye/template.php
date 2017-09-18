@@ -192,7 +192,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       $form['field_personal_website'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Website');
       $form['field_linkedin_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
       $form['field_facebook_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
-      $form['#validate'][] = '_make_title_from_person_name';
       break;
     case 'bullseye_rfp_initial_add_form':
       break;
@@ -275,26 +274,6 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'path' => drupal_get_path('theme', 'bullseye') . '/templates',
   );
   return $items;
-}
-
-/**
- * Make title from person name.
- */
-function _make_title_from_person_name($form, &$form_state) {
-  $form_state['redirect'] = FALSE;
-  $firstname = $form_state['values']['field_firstname'][LANGUAGE_NONE][0]['value'];
-  $middlename = $form_state['values']['field_middle_name'][LANGUAGE_NONE][0]['value'];
-  $lastname = $form_state['values']['field_lastname'][LANGUAGE_NONE][0]['value'];
-
-  if ($firstname == '' || $lastname == '') {
-    form_set_error('form', t('First Name and Last Name field is required.'));
-  }
-  else {
-    $form_state['values']['title'] = $firstname . ' ' . $lastname;
-    if ($middlename != '') {
-      $form_state['values']['title'] = $firstname . ' ' . $middlename . ' ' . $lastname;
-    }
-  }
 }
 
 /**

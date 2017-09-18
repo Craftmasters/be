@@ -25,6 +25,14 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['edit/account-details'] = array(
+    'title' => t('Edit Account Details'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('edit_account_details_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -222,6 +230,243 @@ function bullseye_account_new_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Form for editing account details.
+ */
+function edit_account_details_form($form, &$form_state) {
+  
+  global $user;
+
+  $company = Bullseye::getCompanyNameByNid(arg(2));
+  $people = Bullseye::getAccountPeople(arg(2));
+  $primary_contact = '';
+  $phone = Bullseye::getPhoneNumberByNid(arg(2));
+  $website = Bullseye::getWebsiteByNid(arg(2));
+  $address = Bullseye::getStreetAddressByNid(arg(2));
+  $city = Bullseye::getCityByNid(arg(2));
+  $state = Bullseye::getStateByNid(arg(2));
+  $zip_code = Bullseye::getZipCodeByNid(arg(2));
+  $business_type = Bullseye::getBusinessTypeByNid(arg(2));
+  $tags = Bullseye::getTagsByNid(arg(2));
+  $contacts = array();
+
+  // Getting the contacts of the account.
+  foreach ($people as $key => $value) {
+    $contacts[$value->field_contacts_value] = $value->field_email_value;
+    if ($value->field_if_primary_contact_value == 'yes') {
+      $primary_contact = $value->field_contacts_value;
+    }
+  }
+
+  $node = node_load(arg(2));
+
+  module_load_include('inc', 'field_collection', 'field_collection.pages');
+  module_load_include('inc', 'node', 'node.pages');
+
+  $form = array();
+  $form['#parents'] = array();
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $node->nid,
+  );
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Edit Account Details') . '</h2>',
+  );
+
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Company Name'),
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('Add Company Name'),
+    ),
+    '#default_value' => $company,
+  );
+
+  $form['primary_contact'] = array(
+    '#type' => 'select',
+    '#title' => t('Primary Contact'),
+    '#options' => $contacts,
+    '#default_value' => $primary_contact,
+  );
+
+  $form['phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Phone Number'),
+    '#attributes' => array(
+      'placeholder' => t('Add Phone Number'),
+    ),
+    '#default_value' => $phone,
+  );
+
+  $form['website'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Website'),
+    '#attributes' => array(
+      'placeholder' => t('Add Website'),
+    ),
+    '#default_value' => $website,
+  );
+
+  $form['address'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Corporate Street Address'),
+    '#default_value' => $address,
+  );
+
+  $form['city'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('City'),
+    '#default_value' => $city,
+  );
+
+  // Getting the field "Tags" from accounts content type fields.
+  $field1 = field_info_field('field_states');
+  $instance1 = field_info_instance('node', 'field_states', 'accounts');
+  $items1 = field_get_items('node', $node, 'field_states');
+  $my_field1 = field_default_form('node', $node, $field1, $instance1, LANGUAGE_NONE, $items1, $form, $form_state);
+  $form += (array) $my_field1;
+
+  $form['zip_code'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Zip Code'),
+    '#default_value' => $zip_code,
+    '#weight' => 26,
+  );
+
+  $form['business_type'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Business Type'),
+    '#default_value' => $business_type,
+    '#weight' => 27,
+  );
+
+  // Getting the field "Tags" from accounts content type fields.
+  $field = field_info_field('field_tags');
+  $instance = field_info_instance('node', 'field_tags', 'accounts');
+  $items = field_get_items('node', $node, 'field_tags');
+  $my_field = field_default_form('node', $node, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+  $form['field_tags'][LANGUAGE_NONE]['#attributes'] = array(
+    'placeholder' => t('+ Enter groups separated by commas ...'),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+    '#weight' => 29,
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+/**
+ * Submit Handler for editing account details.
+ */
+function edit_account_details_form_submit($form, &$form_state) {
+
+  global $base_url;
+
+  $nid = $form_state['values']['nid'];
+  $company = $form_state['values']['company'];
+  $phone = $form_state['values']['phone'];
+  $website = $form_state['values']['website'];
+  $address = $form_state['values']['address'];
+  $city = $form_state['values']['city'];
+  $field_states = $form_state['values']['field_states'][LANGUAGE_NONE][0]['tid'];
+  $zip_code = $form_state['values']['zip_code'];
+  $business_type = $form_state['values']['business_type'];
+  $tags = $form_state['values']['field_tags'][LANGUAGE_NONE];
+  $tids = array();
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->title->set($company);
+  $wrapper->field_company->set($company);
+  $wrapper->field_work_phone->set($phone);
+  $wrapper->field_work_website->set($website);
+  $wrapper->field_street->set($address);
+  $wrapper->field_city->set($city);
+  $wrapper->field_states->set($field_states);
+  $wrapper->field_postal_code->set($zip_code);
+  $wrapper->field_type_of_business->set($business_type);
+
+  // Saving the tags.
+  if (!empty($tags)) {
+    foreach ($tags as $key => $value) {
+      $tag = trim($value['name']);
+
+      $result = db_query('SELECT t.tid FROM {taxonomy_term_data} t WHERE t.name = :name AND t.vid = 1', array(':name' => $tag));
+      $record = $result->fetchAssoc();
+
+      if (!empty($record)) {
+        $tids[] = $record['tid'];
+      }
+      else {
+        $term = new stdClass();
+        $term->name = $value['name'];
+        $term->vid = 1;
+        taxonomy_term_save($term);
+        $tids[] = $term->tid;
+      }
+
+    }
+    $wrapper->field_tags->set($tids);
+  }
+  else {
+    $wrapper->field_tags->set(array());
+  }
+
+  $status = $wrapper->field_account_status->value();
+
+  $wrapper->save();
+
+  cache_clear_all('primary_contact_' . $nid, 'cache');
+  cache_clear_all('contacts_' . $nid, 'cache');
+
+  drupal_set_message('Successfully updated account details.');
+
+  $alias = drupal_get_path_alias('node/' . $nid);
+  $alias = substr($alias, 8);
+
+  // Close the lightbox.
+  print '<script>parent.location = "' . $base_url . '/company/' . $alias . '?from=' . $status . '";</script>';
+  print '<script>parent.Lightbox.end();</script>';
+  die();
+  
+  //field_tags
+
+  /*$collection = field_collection_item_load($value1['id']);
+  $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
+  $wrapper->field_firstname->set($value1['firstname']);
+  $wrapper->field_lastname->set($value1['lastname']);
+  $wrapper->field_if_primary_contact->set($value1['primary_contact']);
+  $wrapper->field_position->set($value1['position']);
+  $wrapper->field_mobile_phone->set($value1['phone']);
+  $wrapper->field_email->set($value1['email']);
+  $wrapper->save();*/
 }
 
 /**

@@ -168,7 +168,6 @@ function be_cp_save_exit_vpc() {
     $cwrapper->field_lastname->set($value['lastname']);
     $cwrapper->field_if_primary_contact->set($value['primary_contact']);
     $cwrapper->field_position->set($value['position']);
-    $cwrapper->field_phone_number->set($value['phone']);
     $cwrapper->field_mobile_phone->set($value['phone']);
     $cwrapper->field_email->set($value['email']);
 
@@ -185,13 +184,13 @@ function be_cp_save_exit_vpc() {
     $wrapper->field_lastname->set($value1['lastname']);
     $wrapper->field_if_primary_contact->set($value1['primary_contact']);
     $wrapper->field_position->set($value1['position']);
-    $wrapper->field_phone_number->set($value1['phone']);
     $wrapper->field_mobile_phone->set($value1['phone']);
     $wrapper->field_email->set($value1['email']);
     $wrapper->save();
   }
 
   cache_clear_all('primary_contact_' . $nid, 'cache');
+  cache_clear_all('contacts_' . $nid, 'cache');
 
   drupal_json_output($_POST);
 }
@@ -243,7 +242,6 @@ function be_cp_lead_set_priority() {
     $cwrapper->field_lastname->set($value['lastname']);
     $cwrapper->field_if_primary_contact->set($value['primary_contact']);
     $cwrapper->field_position->set($value['position']);
-    $cwrapper->field_phone_number->set($value['phone']);
     $cwrapper->field_mobile_phone->set($value['phone']);
     $cwrapper->field_email->set($value['email']);
 
@@ -260,13 +258,13 @@ function be_cp_lead_set_priority() {
     $wrapper->field_lastname->set($value1['lastname']);
     $wrapper->field_if_primary_contact->set($value1['primary_contact']);
     $wrapper->field_position->set($value1['position']);
-    $wrapper->field_phone_number->set($value1['phone']);
     $wrapper->field_mobile_phone->set($value1['phone']);
     $wrapper->field_email->set($value1['email']);
     $wrapper->save();
   }
 
   cache_clear_all('primary_contact_' . $nid, 'cache');
+  cache_clear_all('contacts_' . $nid, 'cache');
 
   drupal_json_output($_POST);
 }
