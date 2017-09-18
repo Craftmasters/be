@@ -191,6 +191,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
     'bullseye_producer_form',
     'bullseye_carriers_form',
     'bullseye_proposals_email_form',
+    'bullseye_account_new_form',
   );
 
   // Default drupal forms.

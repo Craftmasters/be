@@ -251,6 +251,11 @@ function bullseye_theme($existing, $type, $theme, $path) {
     'template' => 'producer-acct',
     'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
   );
+  $items['bullseye_account_new_form'] = array(
+    'render element' => 'form',
+    'template' => 'add-new-account-form',
+    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
+  );
 
   // pages
   $items['bullseye_producer_acct_select'] = array(

@@ -43,22 +43,12 @@ function bullseye_account_new_form($form, &$form_state) {
   
   global $user;
 
-  $firstname = '';
-  $middlename = '';
-  $lastname = '';
-  $company = '';
-  $title = '';
-  $contact_type = '';
-  $owner = '';
-  $business_type = '';
-  $work_email = '';
-  $work_phone = '';
-  $work_website = '';
-  $linkedin = '';
-  $address = '';
-  $visibility = '';
-  $tags = '';
-  $description = '';
+  $form = array();
+  $form['#parents'] = array();
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  module_load_include('inc', 'field_collection', 'field_collection.pages');
+  module_load_include('inc', 'node', 'node.pages');
 
   if (arg(2) == 'lead') {
     $form_title = t('Add New Lead');
@@ -67,14 +57,14 @@ function bullseye_account_new_form($form, &$form_state) {
     $form_title = t('Add New Prospect');
   }
 
-  $form = array();
-
-  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
-
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
     '#markup' => '<h2>' . $form_title . '</h2>',
+  );
+
+  $form['profile_picture'] = array(
+    '#type' => 'managed_file',
   );
 
   $form['firstname'] = array(
@@ -83,7 +73,6 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('First Name'),
     ),
-    '#default_value' => $firstname,
   );
 
   $form['middlename'] = array(
@@ -91,7 +80,6 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Middle Name'),
     ),
-    '#default_value' => $middlename,
   );
 
   $form['lastname'] = array(
@@ -100,7 +88,6 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Last Name'),
     ),
-    '#default_value' => $lastname,
   );
 
   $form['company'] = array(
@@ -110,7 +97,6 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Company'),
     ),
-    '#default_value' => $company,
   );
 
   $form['title'] = array(
@@ -120,34 +106,38 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Title'),
     ),
-    '#default_value' => $title,
   );
 
   $form['contact_type'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Contact Type'),
+    '#type' => 'select',
+    '#title' => t('Type'),
     '#options' => array(
-      'potential_prospect' => t('Potential Prospect'),
+      'accounts' => t('Account'),
+      'referrals' => t('Referral Partner'),
+      'producers' => t('Producer'),
     ),
-    '#default_value' => $contact_type,
+    '#default_value' => 'accounts',
   );
 
   $form['owner'] = array(
     '#type' => 'textfield',
     '#title' => t('Owner'),
-    '#default_value' => $owner,
+    '#attributes' => array(
+      'placeholder' => t('Add Owner'),
+    ),
   );
 
   $form['business_type'] = array(
     '#type' => 'textfield',
     '#title' => t('Business Type'),
-    '#default_value' => $business_type,
+    '#attributes' => array(
+      'placeholder' => t('Business Type'),
+    ),
   );
 
   $form['work_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Work Email'),
-    '#default_value' => $work_email,
     '#attributes' => array(
       'placeholder' => t('Add Email'),
     ),
@@ -156,16 +146,22 @@ function bullseye_account_new_form($form, &$form_state) {
   $form['work_phone'] = array(
     '#type' => 'textfield',
     '#title' => t('Work Phone'),
-    '#default_value' => $work_phone,
     '#attributes' => array(
       'placeholder' => t('Add Phone'),
+    ),
+  );
+
+  $form['mobile_phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Mobile Phone'),
+    '#attributes' => array(
+      'placeholder' => t('Mobile Phone'),
     ),
   );
 
   $form['work_website'] = array(
     '#type' => 'textfield',
     '#title' => t('Work Website'),
-    '#default_value' => $work_website,
     '#attributes' => array(
       'placeholder' => t('Add Website'),
     ),
@@ -174,7 +170,14 @@ function bullseye_account_new_form($form, &$form_state) {
   $form['linkedin'] = array(
     '#type' => 'textfield',
     '#title' => t('LinkedIn'),
-    '#default_value' => $linkedin,
+    '#attributes' => array(
+      'placeholder' => t('Add Social'),
+    ),
+  );
+
+  $form['facebook'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facebook'),
     '#attributes' => array(
       'placeholder' => t('Add Social'),
     ),
@@ -182,39 +185,64 @@ function bullseye_account_new_form($form, &$form_state) {
 
   $form['address'] = array(
     '#type' => 'textfield',
-    '#title' => t('Address'),
-    '#default_value' => $address,
     '#attributes' => array(
-      'placeholder' => t('Add Address'),
+      'placeholder' => t('Street'),
+    ),
+  );
+
+  $form['city'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('City'),
+    ),
+  );
+
+  $node = new stdClass();
+  $node->type = 'accounts';
+
+  // Getting the field "Tags" from accounts content type fields.
+  $field1 = field_info_field('field_states');
+  $instance1 = field_info_instance('node', 'field_states', 'accounts');
+  $items1 = field_get_items('node', $node, 'field_states');
+  $my_field1 = field_default_form('node', $node, $field1, $instance1, LANGUAGE_NONE, $items1, $form, $form_state);
+  $form += (array) $my_field1;
+  $form['field_states'][LANGUAGE_NONE]['#title'] = '';
+
+  $form['zip_code'] = array(
+    '#type' => 'textfield',
+    '#weight' => 26,
+    '#attributes' => array(
+      'placeholder' => t('Zip Code'),
     ),
   );
 
   $form['visibility'] = array(
     '#type' => 'textfield',
     '#title' => t('Visibility'),
-    '#default_value' => $visibility,
   );
 
-  $form['tags'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Tags'),
-    '#default_value' => $tags,
-    '#attributes' => array(
-      'placeholder' => t('Add Tags'),
-    ),
+  // Getting the field "Tags" from accounts content type fields.
+  $field = field_info_field('field_tags');
+  $instance = field_info_instance('node', 'field_tags', 'accounts');
+  $items = field_get_items('node', $node, 'field_tags');
+  $my_field = field_default_form('node', $node, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $my_field;
+  $form['field_tags'][LANGUAGE_NONE]['#attributes'] = array(
+    'placeholder' => t('+ Enter groups separated by commas ...'),
   );
 
   $form['description'] = array(
     '#type' => 'textfield',
     '#title' => t('Description'),
-    '#default_value' => $description,
     '#attributes' => array(
       'placeholder' => t('Add Description'),
     ),
+    '#weight' => 29,
   );
 
   $form['submit_container'] = array(
     '#type' => 'container',
+    '#weight' => 30,
   );
 
   $form['submit_container']['cancel'] = array(
@@ -230,6 +258,112 @@ function bullseye_account_new_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Submit Handler for adding new leads.
+ */
+function bullseye_account_new_form_submit($form, &$form_state) {
+  global $user;
+
+  // Contact Details.
+  $firstname = $form_state['values']['firstname'];
+  $middlename = $form_state['values']['middlename'];
+  $lastname = $form_state['values']['lastname'];
+  $title = $form_state['values']['title'];
+  $work_email = $form_state['values']['work_email'];
+  $mobile_phone = $form_state['values']['mobile_phone'];
+  $linkedin = $form_state['values']['linkedin'];
+  $facebook = $form_state['values']['facebook'];
+  $description = $form_state['values']['description'];
+
+  // Company Details.
+  $company = $form_state['values']['company'];
+  $contact_type = $form_state['values']['contact_type'];
+  $owner = $form_state['values']['owner'];
+  $business_type = $form_state['values']['business_type'];
+  $work_phone = $form_state['values']['work_phone'];
+  $work_website = $form_state['values']['work_website'];
+  $address = $form_state['values']['address'];
+  $city = $form_state['values']['city'];
+  $field_states = $form_state['values']['field_states'][LANGUAGE_NONE][0]['tid'];
+  $zip_code = $form_state['values']['zip_code'];
+  $visibility = $form_state['values']['visibility'];
+  $tags = $form_state['values']['field_tags'][LANGUAGE_NONE];
+  $tids = array();
+
+  $node = new stdClass();
+  $node->type = 'accounts';
+  $node->uid = $user->uid;
+  node_object_prepare($node);
+  $node->language = LANGUAGE_NONE;
+
+  $wrapper = entity_metadata_wrapper('node', $node);
+  $wrapper->title->set($company);
+  $wrapper->status->set(1);
+  $wrapper->field_type->set($contact_type);
+  $wrapper->field_owned_by->set($owner);
+  $wrapper->field_type_of_business->set($business_type);
+  $wrapper->field_work_phone->set($work_phone);
+  $wrapper->field_work_website->set($work_website);
+  $wrapper->field_street->set($address);
+  $wrapper->field_city->set($city);
+  $wrapper->field_states->set($field_states);
+  $wrapper->field_postal_code->set($zip_code);
+  $wrapper->field_visibility->set($visibility);
+  $wrapper->field_account_status->set('lead');
+  $wrapper->field_action_status->set('verify_sca_dbra');
+  $wrapper->field_workflow_status->set('verification');
+  // Saving the tags.
+  if (!empty($tags)) {
+    foreach ($tags as $key => $value) {
+      $tag = trim($value['name']);
+
+      $result = db_query('SELECT t.tid FROM {taxonomy_term_data} t WHERE t.name = :name AND t.vid = 1', array(':name' => $tag));
+      $record = $result->fetchAssoc();
+
+      if (!empty($record)) {
+        $tids[] = $record['tid'];
+      }
+      else {
+        $term = new stdClass();
+        $term->name = $value['name'];
+        $term->vid = 1;
+        taxonomy_term_save($term);
+        $tids[] = $term->tid;
+      }
+
+    }
+    $wrapper->field_tags->set($tids);
+  }
+  else {
+    $wrapper->field_tags->set(array());
+  }
+  $wrapper->save();
+
+  $nid = $wrapper->getIdentifier();
+  $node = node_load($nid);
+
+  // Saving the contact.
+  $collection = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
+  $collection->setHostEntity('node', $node);
+  $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+  $cwrapper->field_firstname->set($firstname);
+  $cwrapper->field_middle_name->set($middlename);
+  $cwrapper->field_lastname->set($lastname);
+  $cwrapper->field_if_primary_contact->set('yes');
+  $cwrapper->field_position->set($title);
+  $cwrapper->field_email->set($work_email);
+  $cwrapper->field_mobile_phone->set($mobile_phone);
+  $cwrapper->field_linkedin_personal->set($linkedin);
+  $cwrapper->field_facebook_personal->set($facebook);
+  $cwrapper->field_details->set($description);
+  $cwrapper->save();
+
+  cache_clear_all('leads_accounts_listing', 'cache');
+
+  drupal_set_message('Successfully added new lead.');
+
 }
 
 /**
