@@ -375,10 +375,32 @@ function _import_account($data, $type) {
       $node = node_load($nid);
       $entity = entity_metadata_wrapper('node', $node);
 
-      // Update the field collections.
+      // Contact field collection.
+      $contact = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
+      $contact->setHostEntity('node', $node);
 
-      // Notify the admin that the update is successful.
-      drupal_set_message(t('Update successfully completed.'), 'message');
+      // Update the field collections.
+      // Now define the contact parameters.
+      $cwrapper = entity_metadata_wrapper('field_collection_item', $contact);
+      $cwrapper->field_firstname->set(trim($row[1]));
+      $cwrapper->field_middle_name->set(ucfirst(trim($row[2])));
+      $cwrapper->field_lastname->set(trim($row[3]));
+      $cwrapper->field_prefix->set(trim($row[4]));
+      $cwrapper->field_suffix->set(trim($row[5]));
+      $cwrapper->field_position->set(trim($row[6]));
+      // Set the details.
+      $cwrapper->field_details->set(trim($row[7]));
+      $cwrapper->field_mobile_phone->set(trim($row[20]));
+      $cwrapper->field_email->set(trim($row[21]));
+      $cwrapper->field_personal_website->set(trim($row[23]));
+      $cwrapper->field_facebook_personal->set(trim($row[25]));
+      $cwrapper->field_linkedin_personal->set(trim($row[24]));
+
+      // Save field collection.
+      $cwrapper->save();
+
+      // Save the entity.
+      $entity->save();
     }
   }
   // Clear the cache.
