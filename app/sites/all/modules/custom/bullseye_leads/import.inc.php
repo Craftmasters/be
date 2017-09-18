@@ -92,7 +92,6 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
   if ($rows) {
     // Remove the header row from the array.
     array_shift($rows);
-    //bullseye_leads_import($rows);
     _import_account($rows, $type);
   }
 }

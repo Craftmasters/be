@@ -263,7 +263,7 @@ function _import_account($data, $type) {
       $entity->field_type_of_business->set(trim($row[11]));
 
       // Set the work phone.
-      $entity->field_work_phone->set(trim($row[20]));
+      $entity->field_work_phone->set(trim($row[19]));
 
       // Set the tags.
       if (strlen(trim($row[27])) >=2) {
@@ -311,14 +311,11 @@ function _import_account($data, $type) {
       // Set the state code.
       $entity->field_state_code->set(trim($row[17]));
 
-      // Set the state name.
-      $entity->field_state->set(trim($row[18]));
-
       // Set the postal code.
-      $entity->field_postal_code->set(trim($row[19]));
+      $entity->field_postal_code->set(trim($row[18]));
 
       // Set the work website.
-      $entity->field_work_website->set(trim($row[23]));
+      $entity->field_work_website->set(trim($row[22]));
 
       // Set the producers.
       $entity->field_producers->set(trim($row[28]));
@@ -360,13 +357,11 @@ function _import_account($data, $type) {
       $cwrapper->field_position->set(trim($row[6]));
       // Set the details.
       $cwrapper->field_details->set(trim($row[7]));
-      $cwrapper->field_mobile_phone->set(trim($row[21]));
-      $cwrapper->field_email->set(trim($row[22]));
-      $cwrapper->field_personal_website->set(trim($row[24]));
-      $cwrapper->field_facebook_personal->set(trim($row[26]));
-      $cwrapper->field_linkedin_personal->set(trim($row[25]));
-      $cwrapper->field_if_primary_contact->set(trim($row[33]));
-
+      $cwrapper->field_mobile_phone->set(trim($row[20]));
+      $cwrapper->field_email->set(trim($row[21]));
+      $cwrapper->field_personal_website->set(trim($row[23]));
+      $cwrapper->field_facebook_personal->set(trim($row[25]));
+      $cwrapper->field_linkedin_personal->set(trim($row[24]));
 
       // Save field collection.
       $cwrapper->save();
@@ -382,6 +377,8 @@ function _import_account($data, $type) {
 
       // Update the field collections.
 
+      // Notify the admin that the update is successful.
+      drupal_set_message(t('Update successfully completed.'), 'message');
     }
   }
   // Clear the cache.
