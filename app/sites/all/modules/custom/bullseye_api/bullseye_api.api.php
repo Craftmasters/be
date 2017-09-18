@@ -107,9 +107,8 @@ class Bullseye {
    */
   static function getCompanyNameByNid($nid) {
     $query = db_select('node', 'n');
-    $query->join('field_data_field_company', 'company', 'n.nid = company.entity_id');
     $company_name = $query
-      ->fields('company', array('field_company_value'))
+      ->fields('n', array('title'))
       ->condition('n.nid', $nid, '=')
       ->execute()
       ->fetchField();
@@ -453,10 +452,10 @@ class Bullseye {
 
     $nid = str_replace('node/', '', $nid);
 
-    $query = db_select('field_data_field_company', 'c');
+    $query = db_select('node', 'n');
     $company_name = $query
-      ->fields('c', array('field_company_value'))
-      ->condition('c.entity_id', $nid, '=')
+      ->fields('n', array('title'))
+      ->condition('n.nid', $nid, '=')
       ->execute()
       ->fetchField();
 
