@@ -2547,20 +2547,30 @@ function generate_rfp_special_benefits($form, &$form_state) {
   $values['renewal'] = $form_state['values']['sb_renewal_of_current_plan'];
   $values['waiting_period'] = $form_state['values']['sb_waiting_period'];
 
-  // Send the email.
-  $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+  if (isset($_SESSION['add_rfp'])) {
+    $data = $_SESSION['add_rfp'];
+    $account = node_load($data['account_id']);
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
 
-  $params = array(
-    'key' => 'bullseye',
-    'to' => $data['to'],
-    'from' => $user->mail,
-    'subject' => $data['subject'],
-    'body' => $data['message'],
-    'attachment' => $attachment,
-  );
+    // Send the email.
+    $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
 
-  Bullseye::sendEmail($to, $user->mail, $params);
+    // Send the proposal via email.
+    $params = array(
+      'key' => 'bullseye',
+      'to' => $to,
+      'from' => $user->mail,
+      'subject' => Bullseye::getRfpSubject(),
+      'body' => $be->getRfpBody(),
+      'attachment' => $attachment,
+    );
+    Bullseye::sendEmail($to, $user->mail, $params);
 
-  // Generate pdf and download it.
-  bullseye_rfp_pdf_generate('Special Benefits', $values, $form_state['values']);
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    bullseye_rfp_pdf_generate('Special Benefits', $values, $form_state['values']);
+  }
 }
