@@ -454,6 +454,7 @@ function edit_account_details_form_submit($form, &$form_state) {
     $cwrapper->save();
   }
 
+  cache_clear_all('leads_accounts_listing', 'cache');
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 

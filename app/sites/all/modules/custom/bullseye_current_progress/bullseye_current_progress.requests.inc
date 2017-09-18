@@ -189,6 +189,7 @@ function be_cp_save_exit_vpc() {
     $wrapper->save();
   }
 
+  cache_clear_all('leads_accounts_listing', 'cache');
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
@@ -263,6 +264,7 @@ function be_cp_lead_set_priority() {
     $wrapper->save();
   }
 
+  cache_clear_all('leads_accounts_listing', 'cache');
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
