@@ -290,14 +290,6 @@ function bullseye_proposals_email_form($form, &$form_state) {
     '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
   );
 
-  $form['submit_container']['save_draft'] = array(
-    '#type' => 'button',
-    '#attributes' => array(
-      'class' => array('blue-gray-btn'),
-    ),
-    '#value' => t('Save as Draft'),
-  );
-
   $form['submit_container']['submit'] = array(
     '#type' => 'submit',
     '#attributes' => array(
