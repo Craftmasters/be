@@ -254,7 +254,8 @@ function edit_account_details_form($form, &$form_state) {
 
   // Getting the contacts of the account.
   foreach ($people as $key => $value) {
-    $contacts[$value->field_contacts_value] = $value->field_email_value;
+    $name = $value->field_firstname_value . ' ' . $value->field_lastname_value;
+    $contacts[$value->field_contacts_value] = $name . ' - ' . $value->field_email_value;
     if ($value->field_if_primary_contact_value == 'yes') {
       $primary_contact = $value->field_contacts_value;
     }
@@ -392,6 +393,7 @@ function edit_account_details_form_submit($form, &$form_state) {
 
   $nid = $form_state['values']['nid'];
   $company = $form_state['values']['company'];
+  $primary_contact = $form_state['values']['primary_contact'];
   $phone = $form_state['values']['phone'];
   $website = $form_state['values']['website'];
   $address = $form_state['values']['address'];
@@ -440,8 +442,22 @@ function edit_account_details_form_submit($form, &$form_state) {
   }
 
   $status = $wrapper->field_account_status->value();
+  $contacts = $wrapper->field_contacts->value();
 
   $wrapper->save();
+
+  // For saving the primary contact.
+  foreach ($contacts as $key => $contact) {
+    $collection = field_collection_item_load($contact->item_id);
+    $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    if ($contact->item_id == $primary_contact) {
+      $cwrapper->field_if_primary_contact->set('yes');
+    }
+    else {
+      $cwrapper->field_if_primary_contact->set('no');
+    }
+    $cwrapper->save();
+  }
 
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
@@ -456,17 +472,6 @@ function edit_account_details_form_submit($form, &$form_state) {
   print '<script>parent.Lightbox.end();</script>';
   die();
   
-  //field_tags
-
-  /*$collection = field_collection_item_load($value1['id']);
-  $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
-  $wrapper->field_firstname->set($value1['firstname']);
-  $wrapper->field_lastname->set($value1['lastname']);
-  $wrapper->field_if_primary_contact->set($value1['primary_contact']);
-  $wrapper->field_position->set($value1['position']);
-  $wrapper->field_mobile_phone->set($value1['phone']);
-  $wrapper->field_email->set($value1['email']);
-  $wrapper->save();*/
 }
 
 /**
