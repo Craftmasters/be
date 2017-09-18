@@ -319,11 +319,13 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
     $data = $_SESSION['add_rfp'];
     $account = node_load($data['account_id']);
 
-    if (isset($account->field_company[LANGUAGE_NONE])) {
-      $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
-    }
-    if (isset($account->field_email[LANGUAGE_NONE][0]['value'])) {
-      $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+
+    $vars['company'] = $account->title;
+
+    if (isset($contact->field_email[LANGUAGE_NONE][0]['value'])) {
+      $vars['email'] = $contact->field_email[LANGUAGE_NONE][0]['value'];
     }
     if (isset($account->field_work_phone[LANGUAGE_NONE])) {
       $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
