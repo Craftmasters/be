@@ -206,11 +206,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_theme().
  */
 function bullseye_theme($existing, $type, $theme, $path) {
-  $items['accounts_node_form'] = array(
-    'render element' => 'form',
-    'template' => 'accounts-node-form',
-    'path' => drupal_get_path('theme', 'bullseye') . '/templates/forms',
-  );
   $items['bullseye_rfp_initial_add_form'] = array(
     'render element' => 'form',
     'template' => 'rfp-initial-add-form',

@@ -25,6 +25,22 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['accounts/new/opportunity'] = array(
+    'title' => t('Add New Opportunity'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_account_new_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['accounts/new/deal-in-progress'] = array(
+    'title' => t('Add New Deal in Progress'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_account_new_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['edit/account-details'] = array(
     'title' => t('Edit Account Details'),
     'page callback' => 'drupal_get_form',
@@ -55,6 +71,12 @@ function bullseye_account_new_form($form, &$form_state) {
   }
   elseif (arg(2) == 'prospect') {
     $form_title = t('Add New Prospect');
+  }
+  elseif (arg(2) == 'opportunity') {
+    $form_title = t('Add New Opportunity');
+  }
+  elseif (arg(2) == 'deal-in-progress') {
+    $form_title = t('Add New Deal in Progress');
   }
 
   $form['form_title'] = array(
@@ -321,6 +343,16 @@ function bullseye_account_new_form_submit($form, &$form_state) {
     $wrapper->field_action_status->set('send_email');
     $wrapper->field_workflow_status->set('engagement');
   }
+  elseif (arg(2) == 'opportunity') {
+    $wrapper->field_account_status->set('opportunity');
+    $wrapper->field_action_status->set('request_specifications');
+    $wrapper->field_workflow_status->set('plan_specification');
+  }
+  elseif (arg(2) == 'deal-in-progress') {
+    $wrapper->field_account_status->set('deal_in_progress');
+    $wrapper->field_action_status->set('draw_documents');
+    $wrapper->field_workflow_status->set('generate_trust_agreement');
+  }
     
   // Saving the tags.
   if (!empty($tags)) {
@@ -368,9 +400,22 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   $cwrapper->field_details->set($description);
   $cwrapper->save();
 
-  cache_clear_all('leads_accounts_listing', 'cache');
-
-  drupal_set_message('Successfully added new lead.');
+  if (arg(2) == 'lead') {
+    drupal_set_message('Successfully added new lead.');
+    cache_clear_all('leads_accounts_listing', 'cache');
+  }
+  elseif (arg(2) == 'prospect') {
+    drupal_set_message('Successfully added new prospect.');
+    cache_clear_all('prospects_accounts_listing', 'cache');
+  }
+  elseif (arg(2) == 'opportunity') {
+    drupal_set_message('Successfully added new opportunity.');
+    cache_clear_all('opportunity_accounts_listing', 'cache');
+  }
+  elseif (arg(2) == 'deal-in-progress') {
+    drupal_set_message('Successfully added new deal in progress.');
+    cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+  }
 
 }
 

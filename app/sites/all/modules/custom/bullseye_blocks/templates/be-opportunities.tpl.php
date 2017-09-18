@@ -3,8 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <span class="account-count"><?php print t('All Opportunities (' . $total . ')'); ?></span>
-        <a class="be-table-button" href="/node/add/accounts?account_status=opportunity" rel="lightframe"><?php print t('Add New Opportunity'); ?></a>
-        <!--<a class="be-table-button" href="#"><?php print t('Import Opportunities'); ?></a>-->
+        <a class="be-table-button" href="/accounts/new/opportunity" rel="lightframe"><?php print t('Add New Opportunity'); ?></a>
       </div>
       <div class="col-md-4">
         <div class="be-table-right-icons">

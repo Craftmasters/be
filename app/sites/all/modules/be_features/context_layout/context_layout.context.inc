@@ -738,7 +738,6 @@ function context_layout_context_default_contexts() {
   $context->conditions = array(
     'path' => array(
       'values' => array(
-        'node/add/accounts' => 'node/add/accounts',
         'admin/content/leads/import' => 'admin/content/leads/import',
       ),
     ),
