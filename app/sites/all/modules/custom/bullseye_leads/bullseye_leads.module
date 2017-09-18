@@ -410,5 +410,5 @@ function _import_account($data, $type) {
   cache_clear_all('count_leads_accounts_listing', 'cache');
 
   // Notify the user once the import is done.
-  drupal_set_message(t('Import successfully completed.'), 'message');
+  drupal_set_message(t('Import successfully completed.'), 'status');
 }

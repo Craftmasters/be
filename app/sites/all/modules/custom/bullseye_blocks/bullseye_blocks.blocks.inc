@@ -236,7 +236,7 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['total'] = Bullseye::countOpportunityAccnt();
 
   foreach ($vars['opportunities'] as $key1 => $value1) {
-    $workflow_status = $be->getWorkflowStatusByNid($value1->nid);
+    $workflow_status = Bullseye::getWorkflowStatusByNid($value1->nid);
     $vars['opportunities'][$key1]->plan_specs_td = $vars['arrow_gray'];
     $vars['opportunities'][$key1]->rfp_td = $vars['arrow_gray'];
     $vars['opportunities'][$key1]->plan_pres_td = $vars['arrow_gray'];

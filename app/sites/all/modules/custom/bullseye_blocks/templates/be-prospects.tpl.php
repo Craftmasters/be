@@ -48,13 +48,13 @@
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print $p->field_title_value; ?>
+                <?php print $p->field_position_value; ?>
               </span>
             </td>
             <td>
               <span class="orange-font">
                 <a href="/company/<?php print $aliases[$p->nid]['alias'];?>?from=<?php print $aliases[$p->nid]['status'];?>" class="orange-font">
-                  <?php print $p->field_company_value; ?>
+                  <?php print $p->title; ?>
                 </a>
               </span>
             </td>

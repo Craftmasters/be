@@ -41,7 +41,7 @@
             <td>
               <span class="orange-font">
                 <a href="/company/<?php print $aliases[$o->nid]['alias'];?>?from=<?php print $aliases[$o->nid]['status'];?>" class="orange-font">
-                  <?php print $o->field_company_value; ?>
+                  <?php print $o->title; ?>
                 </a>
               </span>
             </td>

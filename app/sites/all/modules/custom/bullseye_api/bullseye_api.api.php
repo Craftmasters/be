@@ -747,7 +747,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
         ->fields('w', array('field_workflow_status_value'))
         ->fields('fname', array('field_firstname_value'))
@@ -813,7 +813,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
@@ -879,7 +879,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
@@ -929,7 +929,7 @@ class Bullseye {
   /**
    * Get the workflow status of an account.
    */
-  function getWorkflowStatusByNid($nid) {
+  static function getWorkflowStatusByNid($nid) {
     if ($cache = cache_get('workflow_status_' . $nid)) {
       $status = $cache->data;
     }

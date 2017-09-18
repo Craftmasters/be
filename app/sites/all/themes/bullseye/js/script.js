@@ -419,6 +419,21 @@
           });
         }
 
+        // For edit account details modal.
+        if ($('.page-edit-account-details').length) {
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'taxonomy_field_widget_form()') {
+              if ($(this).closest('ul').length) {
+                $(this).closest('li').remove();
+              }
+              else {
+                $(this).closest('.alert').remove();
+              }
+            }
+          });
+          $('.alert').show();
+        }
+
         // For dashboard revenue chart.
         if ($("#dashboard-revenue").length) {
           var dashboard_revenue = $("#dashboard-revenue");

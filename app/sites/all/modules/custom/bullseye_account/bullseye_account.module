@@ -309,7 +309,6 @@ function edit_account_details_form($form, &$form_state) {
 
   $form['website'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('Website'),
     '#attributes' => array(
       'placeholder' => t('Add Website'),
@@ -319,14 +318,12 @@ function edit_account_details_form($form, &$form_state) {
 
   $form['address'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('Corporate Street Address'),
     '#default_value' => $address,
   );
 
   $form['city'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('City'),
     '#default_value' => $city,
   );
@@ -340,7 +337,6 @@ function edit_account_details_form($form, &$form_state) {
 
   $form['zip_code'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('Zip Code'),
     '#default_value' => $zip_code,
     '#weight' => 26,
@@ -348,7 +344,6 @@ function edit_account_details_form($form, &$form_state) {
 
   $form['business_type'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('Business Type'),
     '#default_value' => $business_type,
     '#weight' => 27,
