@@ -682,8 +682,7 @@ function bullseye_blocks_render_be_people() {
   $nid = Bullseye::getNidFromPath(arg(1));
   $vars['people'] = Bullseye::getAccountPeople($nid);
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
-  $output = theme('be_people', $vars);
-
+  
   $vars['profile_pictures'] = array();
 
   foreach ($vars['people'] as $key => $value) {
@@ -697,6 +696,8 @@ function bullseye_blocks_render_be_people() {
       $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
     }
   }
+
+  $output = theme('be_people', $vars);
 
   return array(
     'subject' => '',
