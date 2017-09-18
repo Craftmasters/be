@@ -14,7 +14,6 @@ class Bullseye {
     if ($user) {
       $this->user = $user;
       $this->uid = $user->uid;
-      $this->mail = $user->mail;
       $this->roles = $user->roles;
     }
   }
