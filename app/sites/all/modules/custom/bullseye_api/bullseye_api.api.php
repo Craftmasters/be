@@ -14,6 +14,8 @@ class Bullseye {
     if ($user) {
       $this->user = $user;
       $this->uid = $user->uid;
+      $this->mail = $user->mail;
+      $this->roles = $user->roles;
     }
   }
 
@@ -33,23 +35,65 @@ class Bullseye {
 
   /**
    * Get first name.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  function getAccountFirstName() {
-    return $this->userData()->name;
+  function getAccountFirstName($uid = NULL) {
+    if (is_null($uid)) {
+      if ($this->hasRole('administrator', $this->roles) || $this->hasRole('admin', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'producer');
+      }
+    }
+    else {
+      $user = user_load($uid);
+      if ($this->hasRole('administrator', $user->roles) || $this->hasRole('admin', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'producer');
+      }
+    }
+
+    return $profile->field_first_name[LANGUAGE_NONE][0]['value'];
   }
 
   /**
    * Get last name.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  function getAccountLastName() {
-    return $this->userData()->name;
+  function getAccountLastName($uid = NULL) {
+    if (is_null($uid)) {
+      if ($this->hasRole('administrator', $this->roles) || $this->hasRole('admin', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'producer');
+      }
+    }
+    else {
+      $user = user_load($uid);
+      if ($this->hasRole('administrator', $user->roles) || $this->hasRole('admin', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'producer');
+      }
+    }
+
+    return $profile->field_last_name[LANGUAGE_NONE][0]['value'];
   }
 
   /**
    * Get email.
    */
   function getAccountEmail() {
-    return $this->userData()->mail;
+    return $this->mail;
   }
 
   /**
@@ -1789,16 +1833,27 @@ class Bullseye {
   /**
    * Get RFP email body.
    */
-  static function getRfpBody() {
+  function getRfpBody() {
     if ($cache = cache_get('rfp_body')) {
       $data = $cache->data;
     }
     else {
       $body = variable_get('rfp_body');
-      $data = $body['value'];
+      $data = str_replace('[Lastname]', $this->getAccountLastName(), $body['value']);
+      $data = str_replace('[Firstname]', $this->getAccountFirstName(), $data);
       cache_set('rfp_body', $data, 'cache');
     }
 
     return $data;
+  }
+
+  /**
+   * Determine the roles of the current logged in user.
+   */
+  function hasRole($role, $roles) {
+    if (in_array($role, $roles)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 }
