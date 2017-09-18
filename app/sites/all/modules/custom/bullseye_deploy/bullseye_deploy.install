@@ -440,3 +440,10 @@ function bullseye_deploy_update_7038() {
 
   return 'Fields deleted.';
 }
+
+/**
+ * Install bullseye_image_styles module.
+ */
+function bullseye_deploy_update_7039() {
+  module_enable(array('bullseye_image_styles'), TRUE);
+}

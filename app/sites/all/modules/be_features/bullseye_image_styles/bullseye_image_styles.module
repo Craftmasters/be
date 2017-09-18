@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BullsEye Image Styles feature.
+ */
+
+include_once 'bullseye_image_styles.features.inc';
