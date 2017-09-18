@@ -398,7 +398,19 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   $cwrapper->field_linkedin_personal->set($linkedin);
   $cwrapper->field_facebook_personal->set($facebook);
   $cwrapper->field_details->set($description);
+
+  // Producer Agreement file.
+  if ($form_state['values']['profile_picture'] != 0) {
+    $pp_file = file_load($form_state['values']['profile_picture']);
+    $pp_file->display = 1;
+    $pp_file = file_copy($pp_file, 'public://');
+    $pp_file = (array) $pp_file;
+    $cwrapper->field_profile_picture->set($pp_file);
+  }
+
   $cwrapper->save();
+
+  cache_clear_all('accounts_listing', 'cache');
 
   if (arg(2) == 'lead') {
     drupal_set_message('Successfully added new lead.');

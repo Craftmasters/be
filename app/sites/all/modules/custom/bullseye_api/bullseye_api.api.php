@@ -551,6 +551,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->distinct()
         ->fields('n', array('nid', 'title'))
@@ -562,6 +563,7 @@ class Bullseye {
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->execute()
@@ -614,6 +616,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
@@ -624,6 +627,7 @@ class Bullseye {
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'lead', '=')
@@ -679,6 +683,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
@@ -689,6 +694,7 @@ class Bullseye {
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'prospect', '=')
@@ -745,6 +751,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
@@ -756,6 +763,7 @@ class Bullseye {
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'opportunity', '=')
@@ -811,6 +819,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
       $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
@@ -821,6 +830,7 @@ class Bullseye {
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'deal_in_progress', '=')

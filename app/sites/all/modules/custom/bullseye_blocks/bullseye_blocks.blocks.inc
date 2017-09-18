@@ -109,6 +109,7 @@ function bullseye_blocks_render_be_leads() {
   $vars['total'] = Bullseye::countLeadsAccnt();
 
   $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
 
   foreach ($vars['leads'] as $key => $value) {
     $nid = $value->nid;
@@ -122,6 +123,16 @@ function bullseye_blocks_render_be_leads() {
       'alias' => $alias,
       'status' => $account_status,
     );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
   }
 
   $output = theme('be_leads', $vars);
@@ -150,6 +161,7 @@ function bullseye_blocks_render_be_accounts() {
   $vars['total'] = Bullseye::countAllAccnt();
 
   $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
 
   foreach ($vars['accounts'] as $key => $value) {
     $nid = $value->nid;
@@ -163,6 +175,16 @@ function bullseye_blocks_render_be_accounts() {
       'alias' => $alias,
       'status' => $account_status,
     );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
   }
 
   $output = theme('be_accounts', $vars);
@@ -191,6 +213,7 @@ function bullseye_blocks_render_be_prospects() {
   $vars['total'] = Bullseye::countProspectsAccnt();
 
   $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
 
   foreach ($vars['prospects'] as $key => $value) {
     $nid = $value->nid;
@@ -204,6 +227,16 @@ function bullseye_blocks_render_be_prospects() {
       'alias' => $alias,
       'status' => $account_status,
     );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
   }
 
   $output = theme('be_prospects', $vars);
@@ -316,6 +349,7 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $vars['be'] = $be;
 
   $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
 
   foreach ($vars['deals'] as $key => $value) {
     $nid = $value->nid;
@@ -329,6 +363,16 @@ function bullseye_blocks_render_be_deals_in_progress() {
       'alias' => $alias,
       'status' => $account_status,
     );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
   }
 
   $output = theme('be_deals_in_progress', $vars);

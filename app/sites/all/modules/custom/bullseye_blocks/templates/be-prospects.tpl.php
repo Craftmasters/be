@@ -31,11 +31,11 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($prospects as $p): ?>
+        <?php foreach ($prospects as $key => $p): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/icons/default_user.svg">
+              <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <span class="gray-font">
                 <?php
                   Bullseye::buildAccountName(

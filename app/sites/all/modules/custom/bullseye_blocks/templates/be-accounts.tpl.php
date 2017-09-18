@@ -36,7 +36,7 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
+              <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print drupal_get_path_alias('/node/' . $a->nid . '/edit'); ?>">
                 <span class="gray-font">
                   <?php
