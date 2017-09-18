@@ -41,7 +41,7 @@ function accounts_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 6,
     ),
   );
 
@@ -76,7 +76,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 8,
     ),
   );
 
@@ -111,7 +111,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 10,
     ),
   );
 
@@ -146,7 +146,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 2,
+      'weight' => 0,
     ),
   );
 
@@ -177,7 +177,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 15,
+      'weight' => 12,
     ),
   );
 
@@ -212,7 +212,42 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_contacts-field_linkedin_personal'.
+  $field_instances['field_collection_item-field_contacts-field_linkedin_personal'] = array(
+    'bundle' => 'field_contacts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_linkedin_personal',
+    'label' => 'LinkedIn Personal',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 11,
     ),
   );
 
@@ -247,7 +282,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 1,
     ),
   );
 
@@ -282,7 +317,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 7,
     ),
   );
 
@@ -317,7 +352,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 9,
     ),
   );
 
@@ -352,7 +387,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 5,
     ),
   );
 
@@ -387,7 +422,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
@@ -422,7 +457,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 4,
     ),
   );
 
@@ -625,46 +660,6 @@ function accounts_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-accounts-field_company'.
-  $field_instances['node-accounts-field_company'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_company',
-    'label' => 'Company',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 11,
-    ),
-  );
-
   // Exported field_instance: 'node-accounts-field_contacts'.
   $field_instances['node-accounts-field_contacts'] = array(
     'bundle' => 'accounts',
@@ -708,46 +703,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'field_collection_embed',
       'weight' => 35,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_linkedin_personal'.
-  $field_instances['node-accounts-field_linkedin_personal'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 19,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_linkedin_personal',
-    'label' => 'LinkedIn Personal',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 26,
     ),
   );
 
@@ -1061,46 +1016,6 @@ function accounts_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 14,
-    ),
-  );
-
-  // Exported field_instance: 'node-accounts-field_state'.
-  $field_instances['node-accounts-field_state'] = array(
-    'bundle' => 'accounts',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 23,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_state',
-    'label' => 'State',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 19,
     ),
   );
 
@@ -1549,7 +1464,6 @@ function accounts_field_default_field_instances() {
   t('Action Status');
   t('City');
   t('Client Interested?');
-  t('Company');
   t('Contacts');
   t('Details');
   t('Email Address');
@@ -1571,7 +1485,6 @@ function accounts_field_default_field_instances() {
   t('Referral Partners');
   t('Set Priority');
   t('Source');
-  t('State');
   t('State Code');
   t('States');
   t('Street');

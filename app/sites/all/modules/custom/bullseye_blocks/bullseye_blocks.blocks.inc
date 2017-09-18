@@ -95,9 +95,7 @@ function bullseye_blocks_render_be_bottom_header() {
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -107,9 +105,8 @@ function bullseye_blocks_render_be_leads() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['leads'] = $be->getLeadsAccounts();
-  $vars['be'] = $be;
-  $vars['total'] = $be->countLeadsAccnt();
+  $vars['leads'] = Bullseye::getLeadsAccounts();
+  $vars['total'] = Bullseye::countLeadsAccnt();
 
   $vars['aliases'] = array();
 
@@ -141,8 +138,6 @@ function bullseye_blocks_render_be_leads() {
 function bullseye_blocks_render_be_accounts() {
   global $base_url, $user;
 
-  $be = new Bullseye($user);
-
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
@@ -151,9 +146,8 @@ function bullseye_blocks_render_be_accounts() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['accounts'] = $be->getAllAccounts();
-  $vars['be'] = $be;
-  $vars['total'] = $be->countAllAccnt();
+  $vars['accounts'] = Bullseye::getAllAccounts();
+  $vars['total'] = Bullseye::countAllAccnt();
 
   $vars['aliases'] = array();
 
@@ -183,9 +177,7 @@ function bullseye_blocks_render_be_accounts() {
  * Prospects Block (Table).
  */
 function bullseye_blocks_render_be_prospects() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -195,9 +187,8 @@ function bullseye_blocks_render_be_prospects() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['be'] = $be;
-  $vars['prospects'] = $be->getProspectsAccounts();
-  $vars['total'] = $be->countProspectsAccnt();
+  $vars['prospects'] = Bullseye::getProspectsAccounts();
+  $vars['total'] = Bullseye::countProspectsAccnt();
 
   $vars['aliases'] = array();
 
@@ -227,9 +218,7 @@ function bullseye_blocks_render_be_prospects() {
  * Opportunities Block (Table).
  */
 function bullseye_blocks_render_be_opportunities() {
-  global $base_url, $user;
-
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -243,9 +232,8 @@ function bullseye_blocks_render_be_opportunities() {
   $vars['arrow_green'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-green.svg';
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
-  $vars['be'] = $be;
-  $vars['opportunities'] = $be->getOpportunityAccounts();
-  $vars['total'] = $be->countOpportunityAccnt();
+  $vars['opportunities'] = Bullseye::getOpportunityAccounts();
+  $vars['total'] = Bullseye::countOpportunityAccnt();
 
   foreach ($vars['opportunities'] as $key1 => $value1) {
     $workflow_status = $be->getWorkflowStatusByNid($value1->nid);
@@ -420,7 +408,7 @@ function bullseye_blocks_render_be_producers() {
   $vars['producers'] = $be->getProducers();
 
   $vars['be'] = $be;
-  
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
@@ -591,33 +579,32 @@ function bullseye_blocks_render_be_recent_activities() {
  * Account Details Block.
  */
 function bullseye_blocks_render_be_account_details() {
-  global $base_url, $user;
-  $be = new Bullseye($user);
+  global $base_url;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
   $vars = array();
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
-  
 
-  $nid = $be->getNidFromPath(arg(1));
 
-  $vars['company_name'] = $be->getCompanyNameByNid($nid);
+  $nid = Bullseye::getNidFromPath(arg(1));
+
+  $vars['company_name'] = Bullseye::getCompanyNameByNid($nid);
   $vars['primary_email'] = 'No primary contact selected yet';
-  $primary_contact = $be->getAccountPrimaryContact($nid);
+  $primary_contact = Bullseye::getAccountPrimaryContact($nid);
   if (!empty($primary_contact)) {
     $vars['primary_email'] = $primary_contact['field_email_value'];
     if (empty($vars['primary_email']) || $vars['primary_email'] == '') {
       $vars['primary_email'] = 'Primary contact has no email address';
     }
   }
-  $vars['phone_number'] = $be->getPhoneNumberByNid($nid);
-  $vars['website'] = $be->getWebsiteByNid($nid);
-  $vars['street_address'] = $be->getStreetAddressByNid($nid);
-  $vars['city'] = $be->getCityByNid($nid);
-  $vars['state'] = $be->getStateByNid($nid);
-  $vars['zip_code'] = $be->getZipCodeByNid($nid);
-  $vars['business_type'] = $be->getBusinessTypeByNid($nid);
-  $tags = $be->getTagsByNid($nid);
+  $vars['phone_number'] = Bullseye::getPhoneNumberByNid($nid);
+  $vars['website'] = Bullseye::getWebsiteByNid($nid);
+  $vars['street_address'] = Bullseye::getStreetAddressByNid($nid);
+  $vars['city'] = Bullseye::getCityByNid($nid);
+  $vars['state'] = Bullseye::getStateByNid($nid);
+  $vars['zip_code'] = Bullseye::getZipCodeByNid($nid);
+  $vars['business_type'] = Bullseye::getBusinessTypeByNid($nid);
+  $tags = Bullseye::getTagsByNid($nid);
   $vars['tags'] = '';
 
   foreach ($tags as $key => $value) {

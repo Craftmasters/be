@@ -14,6 +14,8 @@ class Bullseye {
     if ($user) {
       $this->user = $user;
       $this->uid = $user->uid;
+      $this->mail = $user->mail;
+      $this->roles = $user->roles;
     }
   }
 
@@ -33,23 +35,65 @@ class Bullseye {
 
   /**
    * Get first name.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  function getAccountFirstName() {
-    return $this->userData()->name;
+  function getAccountFirstName($uid = NULL) {
+    if (is_null($uid)) {
+      if ($this->hasRole('administrator', $this->roles) || $this->hasRole('admin', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'producer');
+      }
+    }
+    else {
+      $user = user_load($uid);
+      if ($this->hasRole('administrator', $user->roles) || $this->hasRole('admin', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'producer');
+      }
+    }
+
+    return $profile->field_first_name[LANGUAGE_NONE][0]['value'];
   }
 
   /**
    * Get last name.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  function getAccountLastName() {
-    return $this->userData()->name;
+  function getAccountLastName($uid = NULL) {
+    if (is_null($uid)) {
+      if ($this->hasRole('administrator', $this->roles) || $this->hasRole('admin', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $this->roles)) {
+        $profile = profile2_load_by_user($this->uid, 'producer');
+      }
+    }
+    else {
+      $user = user_load($uid);
+      if ($this->hasRole('administrator', $user->roles) || $this->hasRole('admin', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'admin');
+      }
+      elseif ($this->hasRole('producer', $user->roles)) {
+        $profile = profile2_load_by_user($user->uid, 'producer');
+      }
+    }
+
+    return $profile->field_last_name[LANGUAGE_NONE][0]['value'];
   }
 
   /**
    * Get email.
    */
   function getAccountEmail() {
-    return $this->userData()->mail;
+    return $this->mail;
   }
 
   /**
@@ -62,7 +106,7 @@ class Bullseye {
   /**
    * Get Company name by nid.
    */
-  function getCompanyNameByNid($nid) {
+  static function getCompanyNameByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_company', 'company', 'n.nid = company.entity_id');
     $company_name = $query
@@ -77,7 +121,7 @@ class Bullseye {
   /**
    * Get Primary email address by nid.
    */
-  function getPrimaryEmailByNid($nid) {
+  static function getPrimaryEmailByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
     $email = $query
@@ -92,7 +136,7 @@ class Bullseye {
   /**
    * Get Phone Number by nid.
    */
-  function getPhoneNumberByNid($nid) {
+  static function getPhoneNumberByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_work_phone', 'phone', 'n.nid = phone.entity_id');
     $phone = $query
@@ -107,7 +151,7 @@ class Bullseye {
   /**
    * Get Website by nid.
    */
-  function getWebsiteByNid($nid) {
+  static function getWebsiteByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_work_website', 'website', 'n.nid = website.entity_id');
     $website = $query
@@ -122,7 +166,7 @@ class Bullseye {
   /**
    * Get Street Address by nid.
    */
-  function getStreetAddressByNid($nid) {
+  static function getStreetAddressByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_street', 'street', 'n.nid = street.entity_id');
     $street = $query
@@ -137,7 +181,7 @@ class Bullseye {
   /**
    * Get City by nid.
    */
-  function getCityByNid($nid) {
+  static function getCityByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_city', 'city', 'n.nid = city.entity_id');
     $city = $query
@@ -152,7 +196,7 @@ class Bullseye {
   /**
    * Get State by nid.
    */
-  function getStateByNid($nid) {
+  static function getStateByNid($nid) {
     $state = '';
     $query = db_select('node', 'n');
     $query->join('field_data_field_states', 'states', 'n.nid = states.entity_id');
@@ -173,7 +217,7 @@ class Bullseye {
   /**
    * Get Zip Code by nid.
    */
-  function getZipCodeByNid($nid) {
+  static function getZipCodeByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_postal_code', 'zip_code', 'n.nid = zip_code.entity_id');
     $zip_code = $query
@@ -188,7 +232,7 @@ class Bullseye {
   /**
    * Get Business type by nid.
    */
-  function getBusinessTypeByNid($nid) {
+  static function getBusinessTypeByNid($nid) {
     $query = db_select('node', 'n');
     $query->join('field_data_field_type_of_business', 'bt', 'n.nid = bt.entity_id');
     $bt = $query
@@ -203,7 +247,7 @@ class Bullseye {
   /**
    * Get tags by nid.
    */
-  function getTagsByNid($nid) {
+  static function getTagsByNid($nid) {
     $query = db_select('field_data_field_tags', 'tags');
     $query->join('taxonomy_term_data', 'tx', 'tags.field_tags_tid = tx.tid');
     $tags = $query
@@ -221,7 +265,7 @@ class Bullseye {
    * @param string $state
    *   The state name.
    */
-  function getTermId($voc, $term) {
+  static function getTermId($voc, $term) {
     $tid = db_select('taxonomy_term_data', 'td');
     $tid->join('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
     $tid = $tid->fields('td',array('tid'))
@@ -236,19 +280,18 @@ class Bullseye {
   /**
    * Check if the account already exist.
    *
-   * @param string $email
+   * @param string $company
    *   The email address of the account.
    */
-  function accountExist($email) {
+  static function accountExist($company) {
     $query = db_select('node', 'n');
-    $query->join('field_data_field_email', 'email', 'email.entity_id = n.nid');
-    $email = $query
-      ->fields('email', array('field_email_value'))
-      ->condition('email.field_email_value', $email, '=')
+    $nid = $query
+      ->fields('n', array('nid'))
+      ->condition('n.title', $company, '=')
       ->execute()
       ->fetchField();
 
-    return $email;
+    return $nid;
   }
 
   /**
@@ -494,33 +537,33 @@ class Bullseye {
   /**
    * Get all the accounts.
    */
-  function getAllAccounts() {
+  static function getAllAccounts() {
     if ($cache = cache_get('accounts_listing')) {
       $accounts = $cache->data;
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'astatus', 'n.nid = astatus.entity_id');
+      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->distinct()
+        ->fields('n', array('nid', 'title'))
         ->fields('astatus', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
+        ->fields('pos', array('field_position_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->execute()
@@ -535,7 +578,7 @@ class Bullseye {
   /**
    * Count all accounts.
    */
-  function countAllAccnt() {
+  static function countAllAccnt() {
     if ($cache = cache_get('count_accounts_listing')) {
       $accounts = $cache->data;
     }
@@ -558,33 +601,31 @@ class Bullseye {
   /**
    * Get all leads account.
    */
-  function getLeadsAccounts() {
+  static function getLeadsAccounts() {
     if ($cache = cache_get('leads_accounts_listing')) {
       $accounts = $cache->data;
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
-      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
+        ->fields('pos', array('field_position_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'lead', '=')
@@ -625,33 +666,31 @@ class Bullseye {
   /**
    * Get all prospects account.
    */
-  function getProspectsAccounts() {
+  static function getProspectsAccounts() {
     if ($cache = cache_get('prospect_accounts_listing')) {
       $accounts = $cache->data;
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
-        ->fields('n', array('nid'))
+        ->fields('n', array('nid', 'title'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
+        ->fields('pos', array('field_position_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'prospect', '=')
@@ -692,23 +731,22 @@ class Bullseye {
   /**
    * Get all opportunity account.
    */
-  function getOpportunityAccounts() {
+  static function getOpportunityAccounts() {
     if ($cache = cache_get('opportunity_accounts_listing')) {
       $accounts = $cache->data;
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
       $query->leftJoin('field_data_field_workflow_status', 'w', 'n.nid = w.entity_id');
+      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
         ->fields('n', array('nid'))
         ->fields('type', array('field_account_status_value'))
@@ -716,11 +754,10 @@ class Bullseye {
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
+        ->fields('pos', array('field_position_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'opportunity', '=')
@@ -767,27 +804,25 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
       $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
       $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
       $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
       $accounts = $query
         ->fields('n', array('nid'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
         ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
         ->fields('mail', array('field_email_value'))
         ->fields('source', array('field_source_value'))
         ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
+        ->fields('pos', array('field_position_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->condition('type.field_account_status_value', 'deal_in_progress', '=')
@@ -1047,7 +1082,7 @@ class Bullseye {
   /**
    * Build account name.
    */
-  function buildAccountName($fname, $mname, $lname) {
+  static function buildAccountName($fname, $mname, $lname) {
     if ($mname) {
       print ucfirst($fname) . ' ' . ucfirst($mname) . '. ' . ucfirst($lname);
     }
@@ -1481,7 +1516,7 @@ class Bullseye {
   /**
    * Get node id from path alias.
    */
-  function getNidFromPath($alias) {
+  static function getNidFromPath($alias) {
 
     if ($cache = cache_get('nid_from_' . $alias)) {
       $nid = $cache->data;
@@ -1534,7 +1569,7 @@ class Bullseye {
   /**
    * Get the primary contact of an account.
    */
-  function getAccountPrimaryContact($nid) {
+  static function getAccountPrimaryContact($nid) {
 
     if ($cache = cache_get('primary_contact_' . $nid)) {
       $contact = $cache->data;
@@ -1798,16 +1833,27 @@ class Bullseye {
   /**
    * Get RFP email body.
    */
-  static function getRfpBody() {
+  function getRfpBody() {
     if ($cache = cache_get('rfp_body')) {
       $data = $cache->data;
     }
     else {
       $body = variable_get('rfp_body');
-      $data = $body['value'];
+      $data = str_replace('[Lastname]', $this->getAccountLastName(), $body['value']);
+      $data = str_replace('[Firstname]', $this->getAccountFirstName(), $data);
       cache_set('rfp_body', $data, 'cache');
     }
 
     return $data;
+  }
+
+  /**
+   * Determine the roles of the current logged in user.
+   */
+  function hasRole($role, $roles) {
+    if (in_array($role, $roles)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 }

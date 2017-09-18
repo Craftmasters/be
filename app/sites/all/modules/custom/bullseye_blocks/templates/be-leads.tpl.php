@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="be-table-content">
-    <table class="be-tables">
+    <table class="be-tables sortable">
       <thead>
         <tr>
           <th class="cell-check"><input type="checkbox"></th>
@@ -31,24 +31,32 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($leads as $l): ?>
+        <?php foreach ($leads as $key => $l): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
-              <span class="gray-font">
-                <?php $be->buildAccountName($l->field_firstname_value, $l->field_middle_name_value, $l->field_lastname_value); ?>
-              </span>
+              <a href="<?php print drupal_get_path_alias('/node/' . $l->nid . '/edit'); ?>">
+                <span class="gray-font">
+                  <?php
+                    Bullseye::buildAccountName(
+                      $l->field_firstname_value,
+                      $l->field_middle_name_value,
+                      $l->field_lastname_value
+                    );
+                  ?>
+                </span>
+              </a>
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print $l->field_title_value; ?>
+                <?php print $l->field_position_value; ?>
               </span>
             </td>
             <td>
               <span class="orange-font">
                 <a href="/company/<?php print $aliases[$l->nid]['alias'];?>?from=<?php print $aliases[$l->nid]['status'];?>" class="orange-font">
-                  <?php print $l->field_company_value; ?>
+                  <?php print $l->title; ?>
                 </a>
               </span>
             </td>

@@ -67,6 +67,8 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
 
   ini_set('auto_detect_line_endings', true);
 
+  $type = $form_state['values']['type_options'];
+
   $rows = array();
 
   if ($csv_file = file_load($form_state['values']['csv_file'])) {
@@ -90,7 +92,6 @@ function bullseye_leads_import_leads_submit($form, &$form_state) {
   if ($rows) {
     // Remove the header row from the array.
     array_shift($rows);
-    bullseye_leads_import($rows);
+    _import_account($rows, $type);
   }
-
 }
