@@ -2538,6 +2538,8 @@ function generate_rfp_retirement($form, &$form_state) {
 function generate_rfp_special_benefits($form, &$form_state) {
   global $user;
 
+  $be = new Bullseye($user);
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['sb_current_carrier'];
@@ -2555,16 +2557,22 @@ function generate_rfp_special_benefits($form, &$form_state) {
     $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
 
     // Send the email.
-    $attachment = file_load($form_state['values']['employee_census']);
-
-    // Send the proposal via email.
     $params = array(
       'key' => 'bullseye',
       'to' => $to,
       'from' => $user->mail,
       'subject' => Bullseye::getRfpSubject(),
       'body' => $be->getRfpBody(),
-      'attachment' => $attachment,
+      'attachments' => array(
+        file_load($form_state['values']['employee_census']),
+        file_load($form_state['values']['current_summary_of_benefit']),
+        file_load($form_state['values']['current_bill']),
+        file_load($form_state['values']['last_renewal_letter']),
+        file_load($form_state['values']['summary_of_monthly_claims_experience']),
+        file_load($form_state['values']['broker_of_record']),
+        file_load($form_state['values']['letter_of_authorization']),
+        file_load($form_state['values']['large_claims_report']),
+      ),
     );
     Bullseye::sendEmail($to, $user->mail, $params);
 
