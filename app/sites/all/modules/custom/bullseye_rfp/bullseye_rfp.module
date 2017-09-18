@@ -2157,6 +2157,8 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
 function generate_rfp_major_medical($form, &$form_state) {
   global $user;
 
+  $be = new Bullseye($user);
+
   $form_state['rebuild'] = TRUE;
   $values = array();
   $values['current_carrier'] = $form_state['values']['mm_current_carrier'];
@@ -2169,7 +2171,9 @@ function generate_rfp_major_medical($form, &$form_state) {
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
     $account = node_load($data['account_id']);
-    $to = $account->field_email[LANGUAGE_NONE][0]['value'];
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
 
     $attachment = array();
 
@@ -2179,7 +2183,7 @@ function generate_rfp_major_medical($form, &$form_state) {
       'to' => $to,
       'from' => $user->mail,
       'subject' => Bullseye::getRfpSubject(),
-      'body' => Bullseye::getRfpBody(),
+      'body' => $be->getRfpBody(),
       'attachment' => $attachment,
     );
     Bullseye::sendEmail($to, $user->mail, $params);
