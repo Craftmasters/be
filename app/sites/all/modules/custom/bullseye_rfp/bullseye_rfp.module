@@ -202,7 +202,7 @@ function bullseye_rfp_initial_add_form_submit($form, &$form_state) {
 
   $account = node_load($form_state['values']['account']['entity_id']);
   $query = '/rfps/add?';
-  $query .= 'account_name=' . $account->field_company[LANGUAGE_NONE][0]['value'];
+  $query .= 'account_name=' . $account->title;
 
   // Save the data temporarily to session variable.
   $_SESSION['add_rfp'] = array(
