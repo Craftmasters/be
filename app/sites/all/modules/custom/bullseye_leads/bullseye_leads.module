@@ -377,8 +377,7 @@ function _import_account($data, $type) {
 
       // Update the field collections.
 
-      // Notify the admin that the update is successful.
-      drupal_set_message(t('Update successfully completed.'), 'message');
+
     }
   }
   // Clear the cache.
