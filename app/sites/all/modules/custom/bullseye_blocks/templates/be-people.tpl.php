@@ -6,7 +6,7 @@
     <?php foreach ($people as $key => $value) : ?>
       <div class="be-user-row">
         <div class="be-user-img">
-          <img src="/sites/all/themes/bullseye/images/default-user.png">
+          <img src="<?php print $profile_pictures[$key]; ?>">
         </div>
         <div class="be-user-name orange-font">
           <?php print $value->field_firstname_value . ' ' . $value->field_lastname_value; ?>

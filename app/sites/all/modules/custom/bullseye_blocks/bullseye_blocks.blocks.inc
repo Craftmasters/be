@@ -684,6 +684,20 @@ function bullseye_blocks_render_be_people() {
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
   $output = theme('be_people', $vars);
 
+  $vars['profile_pictures'] = array();
+
+  foreach ($vars['people'] as $key => $value) {
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
+  }
+
   return array(
     'subject' => '',
     'content' => $output,

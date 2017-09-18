@@ -1556,6 +1556,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
       $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
       $query->leftJoin('field_data_field_if_primary_contact', 'pc', 'con.field_contacts_value = pc.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'con.field_contacts_value = pp.entity_id');
       $contacts = $query
         ->fields('con', array('field_contacts_value'))
         ->fields('fname', array('field_firstname_value'))
@@ -1564,6 +1565,7 @@ class Bullseye {
         ->fields('mphone', array('field_mobile_phone_value'))
         ->fields('email', array('field_email_value'))
         ->fields('pc', array('field_if_primary_contact_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
         ->condition('con.entity_id', $nid, '=')
         ->execute()
         ->fetchAll();
