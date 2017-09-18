@@ -432,7 +432,7 @@ function bullseye_deploy_update_7038() {
   );
 
   foreach ($contact_fields as $key1 => $value1) {
-    $to_be_deleted = field_info_instance('field_collection_item', $value1, 'field_contacts  ');
+    $to_be_deleted = field_info_instance('field_collection_item', $value1, 'field_contacts');
     field_delete_instance($to_be_deleted);
   }
 
@@ -446,4 +446,24 @@ function bullseye_deploy_update_7038() {
  */
 function bullseye_deploy_update_7039() {
   module_enable(array('bullseye_image_styles'), TRUE);
+}
+
+/**
+ * Remove old fields from the accounts content type.
+ */
+function bullseye_deploy_update_7040() {
+
+  $fields = array(
+    'field_company',
+    'field_linkedin_personal',
+  );
+
+  foreach ($fields as $key => $value) {
+    $to_be_deleted = field_info_instance('node', $value, 'accounts');
+    field_delete_instance($to_be_deleted);
+  }
+
+  field_purge_batch(1);
+
+  return 'Fields deleted.';
 }
