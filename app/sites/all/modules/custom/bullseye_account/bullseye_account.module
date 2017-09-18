@@ -4,6 +4,239 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function bullseye_account_menu() {
+  $items = array();
+
+  $items['accounts/new/lead'] = array(
+    'title' => t('Add New Lead'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_account_new_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['accounts/new/prospect'] = array(
+    'title' => t('Add New Prospect'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_account_new_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Form for adding new accounts.
+ */
+function bullseye_account_new_form($form, &$form_state) {
+  
+  global $user;
+
+  $firstname = '';
+  $middlename = '';
+  $lastname = '';
+  $company = '';
+  $title = '';
+  $contact_type = '';
+  $owner = '';
+  $business_type = '';
+  $work_email = '';
+  $work_phone = '';
+  $work_website = '';
+  $linkedin = '';
+  $address = '';
+  $visibility = '';
+  $tags = '';
+  $description = '';
+
+  if (arg(2) == 'lead') {
+    $form_title = t('Add New Lead');
+  }
+  elseif (arg(2) == 'prospect') {
+    $form_title = t('Add New Prospect');
+  }
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . $form_title . '</h2>',
+  );
+
+  $form['firstname'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('First Name'),
+    ),
+    '#default_value' => $firstname,
+  );
+
+  $form['middlename'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Middle Name'),
+    ),
+    '#default_value' => $middlename,
+  );
+
+  $form['lastname'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('Last Name'),
+    ),
+    '#default_value' => $lastname,
+  );
+
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Company'),
+    '#attributes' => array(
+      'placeholder' => t('Add Company'),
+    ),
+    '#default_value' => $company,
+  );
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Title'),
+    '#attributes' => array(
+      'placeholder' => t('Add Title'),
+    ),
+    '#default_value' => $title,
+  );
+
+  $form['contact_type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Contact Type'),
+    '#options' => array(
+      'potential_prospect' => t('Potential Prospect'),
+    ),
+    '#default_value' => $contact_type,
+  );
+
+  $form['owner'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Owner'),
+    '#default_value' => $owner,
+  );
+
+  $form['business_type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Business Type'),
+    '#default_value' => $business_type,
+  );
+
+  $form['work_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Work Email'),
+    '#default_value' => $work_email,
+    '#attributes' => array(
+      'placeholder' => t('Add Email'),
+    ),
+  );
+
+  $form['work_phone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Work Phone'),
+    '#default_value' => $work_phone,
+    '#attributes' => array(
+      'placeholder' => t('Add Phone'),
+    ),
+  );
+
+  $form['work_website'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Work Website'),
+    '#default_value' => $work_website,
+    '#attributes' => array(
+      'placeholder' => t('Add Website'),
+    ),
+  );
+
+  $form['linkedin'] = array(
+    '#type' => 'textfield',
+    '#title' => t('LinkedIn'),
+    '#default_value' => $linkedin,
+    '#attributes' => array(
+      'placeholder' => t('Add Social'),
+    ),
+  );
+
+  $form['address'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Address'),
+    '#default_value' => $address,
+    '#attributes' => array(
+      'placeholder' => t('Add Address'),
+    ),
+  );
+
+  $form['visibility'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Visibility'),
+    '#default_value' => $visibility,
+  );
+
+  $form['tags'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tags'),
+    '#default_value' => $tags,
+    '#attributes' => array(
+      'placeholder' => t('Add Tags'),
+    ),
+  );
+
+  $form['description'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description'),
+    '#default_value' => $description,
+    '#attributes' => array(
+      'placeholder' => t('Add Description'),
+    ),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_account_permission() {
+  return array(
+    'add account' => array(
+      'title' => t('Add an Account'),
+      'description' => t('Allow user to an account.'),
+    ),
+  );
+}
+
+/**
  * Implements hook_node_update().
  *
  * Clear the cache after updat
