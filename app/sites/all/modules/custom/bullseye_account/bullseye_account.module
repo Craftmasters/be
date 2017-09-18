@@ -311,9 +311,17 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   $wrapper->field_states->set($field_states);
   $wrapper->field_postal_code->set($zip_code);
   $wrapper->field_visibility->set($visibility);
-  $wrapper->field_account_status->set('lead');
-  $wrapper->field_action_status->set('verify_sca_dbra');
-  $wrapper->field_workflow_status->set('verification');
+  if (arg(2) == 'lead') {
+    $wrapper->field_account_status->set('lead');
+    $wrapper->field_action_status->set('verify_sca_dbra');
+    $wrapper->field_workflow_status->set('verification');
+  }
+  elseif (arg(2) == 'prospect') {
+    $wrapper->field_account_status->set('prospect');
+    $wrapper->field_action_status->set('send_email');
+    $wrapper->field_workflow_status->set('engagement');
+  }
+    
   // Saving the tags.
   if (!empty($tags)) {
     foreach ($tags as $key => $value) {
