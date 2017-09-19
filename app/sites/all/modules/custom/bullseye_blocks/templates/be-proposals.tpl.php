@@ -40,6 +40,7 @@
         <?php foreach ($proposals as $proposal): ?>
           <?php $data = node_load($proposal->nid); ?>
           <?php $has = Bullseye::isBenefitActive($data->field_benefits['und']); ?>
+          <?php $val = $data->field_priority[LANGUAGE_NONE][0]['value']; ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
@@ -86,7 +87,7 @@
                 <?php print date('Y-d-m', strtotime($data->field_due_date[LANGUAGE_NONE][0]['value'])); ?>
               </span>
             </td>
-            <td class="be-dot-td"><span class="dot-priority <?php Bullseye::priorityClass(); ?>"></span></td>
+            <td class="be-dot-td"><span class="dot-priority <?php Bullseye::priorityClass($val); ?>"></span></td>
             <td>
               <span class="light-gray-font">
                 <?php Bullseye::getAuthor($proposal->uid); ?>
