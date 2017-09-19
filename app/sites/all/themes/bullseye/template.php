@@ -372,3 +372,34 @@ function bullseye_preprocess_be_leads(&$vars) {
 function bullseye_preprocess_be_carriers(&$vars) {
   drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
 }
+
+/**
+ * Implements hook_preprocess_form().
+ */
+function bullseye_preprocess_bullseye_account_new_form(&$vars) {
+  global $base_url;
+  $vars['edit_contact_person'] = FALSE;
+  $vars['fields_disabled'] = '';
+  if (isset($_GET['account_status']) && !empty($_GET['account_status']) && isset($_GET['contact_id'])) {
+    $vars['edit_contact_person'] = TRUE;
+    $vars['fields_disabled'] = 'fields-disabled';
+
+    $theme_directory = path_to_theme('theme', 'bullseye');
+    $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
+    
+    $vars['name'] = strtoupper($vars['form']['firstname']['#default_value']);
+    if ($vars['form']['middlename']['#default_value'] != '') {
+      $vars['name'] .= ' ' . strtoupper($vars['form']['middlename']['#default_value']);
+    }
+    $vars['name'] .= ' ' . strtoupper($vars['form']['lastname']['#default_value']);
+
+    $vars['position'] = $vars['form']['title']['#default_value'];
+    $vars['profile_picture'] = '/sites/all/themes/bullseye/images/default-user.png';
+
+    if ($vars['form']['profile_picture']['#default_value'] != NULL || !empty($vars['form']['profile_picture']['#default_value'])) {
+      $fid = $vars['form']['profile_picture']['#default_value'];
+      $pic = file_load($fid);
+      $vars['profile_picture'] = image_style_url('profile_picture', $pic->uri);
+    }
+  }
+}

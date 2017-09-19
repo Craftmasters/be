@@ -599,6 +599,13 @@
           });
         }
 
+        // For toggling the edit fields in contact modal.
+        if ($('.edit-contact-toggle').length) {
+          $('.edit-contact-toggle').click(function() {
+            $('.be-custom-template-form').toggleClass('fields-disabled');
+          });
+        }
+
       });
 
       $(window).load(function() {
