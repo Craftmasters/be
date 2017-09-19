@@ -381,6 +381,20 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_leads_fo
     $vars['class_set_priority'] = 'done-step';
     $vars['class_convert_to_prospect'] = 'green-check';
   }
+
+  if ($vars['account_status'] == '') {
+    $vars['class_verification'] = 'gray-check';
+    $vars['class_verify_sca_dbra'] = 'current-step';
+    $vars['class_classify_to_group'] = '';
+    $vars['class_validate_point_of_contact'] = '';
+    $vars['class_set_priority'] = '';
+    $vars['class_convert_to_prospect'] = 'no-check';
+    $vars['modal_access_vsd'] = 'modal';
+    $vars['modal_access_ctg'] = '';
+    $vars['modal_access_vpc'] = '';
+    $vars['modal_access_sp'] = '';
+    $vars['modal_access_ctp'] = '';
+  }
 }
 
 /**

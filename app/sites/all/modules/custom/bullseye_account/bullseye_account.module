@@ -57,6 +57,14 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['edit/contact-person'] = array(
+    'title' => t('Edit Contact Person'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_account_new_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -183,6 +191,18 @@ function bullseye_account_new_form($form, &$form_state) {
   $tags = '';
   $tids = array();
 
+  // Contact Person Details.
+  $firstname = '';
+  $middlename = '';
+  $lastname = '';
+  $title = '';
+  $work_email = '';
+  $mobile_phone = '';
+  $linkedin = '';
+  $facebook = '';
+  $description = '';
+  $fid = '';
+
   $node = new stdClass();
   $node->type = 'accounts';
 
@@ -199,6 +219,7 @@ function bullseye_account_new_form($form, &$form_state) {
     $form_title = t('Add New Deal in Progress');
   }
 
+  // If from add new lead and the company is already existing.
   if (isset($_GET['existing_company']) && !empty($_GET['existing_company'])) {
     $nid = $_GET['existing_company'];
     $account_status = $_GET['account_status'];
@@ -229,17 +250,37 @@ function bullseye_account_new_form($form, &$form_state) {
     }
   }
 
+  // If from accounts tab edit modal.
+  if (isset($_GET['contact_id']) && !empty($_GET['contact_id'])) {
+    unset($form_title);
+    $contact_id = $_GET['contact_id'];
+    $contact = Bullseye::getContactDetailsById($contact_id);
+    $firstname = $contact['field_firstname_value'];
+    $middlename = $contact['field_middle_name_value'];
+    $lastname = $contact['field_lastname_value'];
+    $title = $contact['field_position_value'];
+    $work_email = $contact['field_email_value'];
+    $mobile_phone = $contact['field_mobile_phone_value'];
+    $linkedin = $contact['field_linkedin_personal_value'];
+    $facebook = $contact['field_facebook_personal_value'];
+    $description = $contact['field_details_value'];
+    $fid = $contact['field_profile_picture_fid'];
+  }
+
   module_load_include('inc', 'field_collection', 'field_collection.pages');
   module_load_include('inc', 'node', 'node.pages');
 
-  $form['form_title'] = array(
-    '#prefix' => '<div class="form-title">',
-    '#suffix' => '</div>',
-    '#markup' => '<h2>' . $form_title . '</h2>',
-  );
+  if (isset($form_title)) {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . $form_title . '</h2>',
+    );
+  }
 
   $form['profile_picture'] = array(
     '#type' => 'managed_file',
+    '#default_value' => $fid,
   );
 
   $form['firstname'] = array(
@@ -248,6 +289,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('First Name'),
     ),
+    '#default_value' => $firstname,
   );
 
   $form['middlename'] = array(
@@ -255,6 +297,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Middle Name'),
     ),
+    '#default_value' => $middlename,
   );
 
   $form['lastname'] = array(
@@ -263,6 +306,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Last Name'),
     ),
+    '#default_value' => $lastname,
   );
 
   $form['company'] = array(
@@ -282,6 +326,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Title'),
     ),
+    '#default_value' => $title,
   );
 
   $form['contact_type'] = array(
@@ -319,6 +364,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Email'),
     ),
+    '#default_value' => $work_email,
   );
 
   $form['work_phone'] = array(
@@ -336,6 +382,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Mobile Phone'),
     ),
+    '#default_value' => $mobile_phone,
   );
 
   $form['work_website'] = array(
@@ -353,6 +400,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Social'),
     ),
+    '#default_value' => $linkedin,
   );
 
   $form['facebook'] = array(
@@ -361,6 +409,7 @@ function bullseye_account_new_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Add Social'),
     ),
+    '#default_value' => $facebook,
   );
 
   $form['address'] = array(
@@ -422,6 +471,7 @@ function bullseye_account_new_form($form, &$form_state) {
       'placeholder' => t('Add Description'),
     ),
     '#weight' => 29,
+    '#default_value' => $description,
   );
 
   $form['submit_container'] = array(
@@ -449,13 +499,6 @@ function bullseye_account_new_form($form, &$form_state) {
  */
 function bullseye_account_new_form_submit($form, &$form_state) {
   global $user;
-
-  if (isset($_GET['existing_company']) && !empty($_GET['existing_company'])) {
-
-  }
-  else {
-
-  }
 
   // Contact Details.
   $firstname = $form_state['values']['firstname'];
@@ -561,9 +604,17 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   $nid = $wrapper->getIdentifier();
   $node = node_load($nid);
 
-  // Saving the contact.
-  $collection = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
-  $collection->setHostEntity('node', $node);
+  // If from accounts tab edit modal.
+  if (isset($_GET['contact_id']) && !empty($_GET['contact_id'])) {
+    $cid = $_GET['contact_id'];
+    $collection = field_collection_item_load($cid);
+  }
+  else {
+    $collection = entity_create('field_collection_item', array('field_name' => 'field_contacts'));
+    $collection->setHostEntity('node', $node);
+  }
+
+  // Saving/updating the contact.
   $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
   $cwrapper->field_firstname->set($firstname);
   $cwrapper->field_middle_name->set($middlename);
@@ -584,20 +635,23 @@ function bullseye_account_new_form_submit($form, &$form_state) {
     $pp_file = (array) $pp_file;
     $cwrapper->field_profile_picture->set($pp_file);
   }
+  else {
+    $cwrapper->field_profile_picture->set(NULL);
+  }
 
   $cwrapper->save();
 
   cache_clear_all('accounts_listing', 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
-  if (isset($_GET['account_status']) && !empty($_GET['account_status'])) {
+  if (isset($_GET['account_status']) && !empty($_GET['account_status']) && !isset($_GET['contact_id'])) {
     if ($_GET['account_status'] == 'lead') {
       drupal_set_message('Successfully added new lead.');
       cache_clear_all('leads_accounts_listing', 'cache');
     }
     elseif ($_GET['account_status'] == 'prospect') {
       drupal_set_message('Successfully added new prospect.');
-      cache_clear_all('prospects_accounts_listing', 'cache');
+      cache_clear_all('prospect_accounts_listing', 'cache');
     }
     elseif ($_GET['account_status'] == 'opportunity') {
       drupal_set_message('Successfully added new opportunity.');
@@ -608,6 +662,25 @@ function bullseye_account_new_form_submit($form, &$form_state) {
       cache_clear_all('deal_in_progress_accounts_listing', 'cache');
     }
   }
+  elseif (isset($_GET['account_status']) && !empty($_GET['account_status']) && isset($_GET['contact_id'])) {
+    if ($_GET['account_status'] == 'lead') {
+      drupal_set_message('Successfully updated lead.');
+      cache_clear_all('leads_accounts_listing', 'cache');
+    }
+    elseif ($_GET['account_status'] == 'prospect') {
+      drupal_set_message('Successfully updated prospect.');
+      cache_clear_all('prospect_accounts_listing', 'cache');
+    }
+    elseif ($_GET['account_status'] == 'opportunity') {
+      drupal_set_message('Successfully updated opportunity.');
+      cache_clear_all('opportunity_accounts_listing', 'cache');
+    }
+    elseif ($_GET['account_status'] == 'deal_in_progress') {
+      drupal_set_message('Successfully updated deal in progress.');
+      cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+    }
+    cache_clear_all('contact_details_' . $_GET['contact_id'], 'cache');
+  }
   else {
     if (arg(2) == 'lead') {
       drupal_set_message('Successfully added new lead.');
@@ -615,7 +688,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
     }
     elseif (arg(2) == 'prospect') {
       drupal_set_message('Successfully added new prospect.');
-      cache_clear_all('prospects_accounts_listing', 'cache');
+      cache_clear_all('prospect_accounts_listing', 'cache');
     }
     elseif (arg(2) == 'opportunity') {
       drupal_set_message('Successfully added new opportunity.');
@@ -626,9 +699,6 @@ function bullseye_account_new_form_submit($form, &$form_state) {
       cache_clear_all('deal_in_progress_accounts_listing', 'cache');
     }
   }
-
-    
-
 }
 
 /**
@@ -860,6 +930,10 @@ function edit_account_details_form_submit($form, &$form_state) {
 
   $alias = drupal_get_path_alias('node/' . $nid);
   $alias = substr($alias, 8);
+
+  if ($status == '') {
+    $status = 'lead';
+  }
 
   // Close the lightbox.
   print '<script>parent.location = "' . $base_url . '/company/' . $alias . '?from=' . $status . '";</script>';

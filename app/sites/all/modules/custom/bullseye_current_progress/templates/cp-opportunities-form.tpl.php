@@ -98,7 +98,7 @@
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<?php if ($account_status != 'prospect' && $account_status != 'lead' && $account_status != 'opportunity') : ?>
+			<?php if ($account_status != 'prospect' && $account_status != 'lead' && $account_status != 'opportunity' && $account_status != '') : ?>
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Deal in Progress!'); ?></span>
 				</a>

@@ -62,7 +62,7 @@
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
-              <a href="<?php print drupal_get_path_alias('/node/' . $a->nid . '/edit'); ?>">
+              <a href="<?php print $a->edit_link; ?>" rel="lightframe">
                 <span class="gray-font">
                   <?php
                     Bullseye::buildAccountName(

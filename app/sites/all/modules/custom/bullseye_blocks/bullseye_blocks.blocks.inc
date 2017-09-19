@@ -185,6 +185,20 @@ function bullseye_blocks_render_be_accounts() {
     else {
       $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
     }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['accounts'][$key]->edit_link = $edit_link;
   }
 
   $output = theme('be_accounts', $vars);

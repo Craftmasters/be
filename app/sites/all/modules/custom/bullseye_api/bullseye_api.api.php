@@ -642,6 +642,7 @@ class Bullseye {
         ->fields('btype', array('field_type_of_business_value'))
         ->fields('pos', array('field_position_value'))
         ->fields('pp', array('field_profile_picture_fid'))
+        ->fields('contact', array('field_contacts_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
         ->execute()
@@ -1725,6 +1726,50 @@ class Bullseye {
     }
 
     return $contacts;
+  }
+
+  /**
+   * Get details of a contact person.
+   */
+  static function getContactDetailsById($cid) {
+
+    if ($cache = cache_get('contact_details_' . $cid)) {
+      $contact = $cache->data;
+    }
+    else {
+      $query = db_select('field_data_field_contacts', 'con');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'con.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_middle_name', 'mname', 'con.field_contacts_value = mname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'con.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
+      $query->leftJoin('field_data_field_if_primary_contact', 'pc', 'con.field_contacts_value = pc.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'con.field_contacts_value = pp.entity_id');
+      $query->leftJoin('field_data_field_facebook_personal', 'fb', 'con.field_contacts_value = fb.entity_id');
+      $query->leftJoin('field_data_field_linkedin_personal', 'li', 'con.field_contacts_value = li.entity_id');
+      $query->leftJoin('field_data_field_details', 'de', 'con.field_contacts_value = de.entity_id');
+      $contact = $query
+        ->fields('con', array('field_contacts_value'))
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('mname', array('field_middle_name_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('pos', array('field_position_value'))
+        ->fields('mphone', array('field_mobile_phone_value'))
+        ->fields('email', array('field_email_value'))
+        ->fields('pc', array('field_if_primary_contact_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
+        ->fields('fb', array('field_facebook_personal_value'))
+        ->fields('li', array('field_linkedin_personal_value'))
+        ->fields('de', array('field_details_value'))
+        ->condition('con.field_contacts_value', $cid, '=')
+        ->execute()
+        ->fetchAssoc();
+
+      cache_set('contact_details_' . $cid, $contact, 'cache');
+    }
+
+    return $contact;
   }
 
   /**
