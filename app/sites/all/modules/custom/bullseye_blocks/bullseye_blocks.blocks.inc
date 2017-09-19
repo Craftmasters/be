@@ -422,13 +422,12 @@ function bullseye_blocks_render_be_proposals() {
 
   // Get all the proposals.
   $vars['proposals'] = Bullseye::getProposals();
-  krumo($vars['proposals']);
 
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['total'] = $be->countProposals();
+  $vars['total'] = count(Bullseye::getProposals());
 
   $output = theme('be_proposals', $vars);
 
