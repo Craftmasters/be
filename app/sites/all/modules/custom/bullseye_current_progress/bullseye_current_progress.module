@@ -624,7 +624,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form['company_name'] = array(
     '#type' => 'hidden',
-    '#value' => $node->field_company[LANGUAGE_NONE][0]['value'],
+    '#value' => $node->title,
   );
 
   // Fringe Rate/s.
@@ -1026,7 +1026,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['subject'] = array(
     '#type' => 'textfield',
     '#title' => t('Subject:'),
-    '#default_value' => 'Plan Proposal for ' . $node->field_company[LANGUAGE_NONE][0]['value'],
+    '#default_value' => 'Plan Proposal for ' . $node->title,
   );
 
   $form['to'] = array(
@@ -1299,7 +1299,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
-  $vars['account_name'] = $wrapper->field_company->value();
+  $vars['account_name'] = $wrapper->title->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
   $vars['plan_specs_nid'] = $vars['form']['plan_specs_nid']['#value'];
 

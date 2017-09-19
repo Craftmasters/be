@@ -103,6 +103,21 @@ class Bullseye {
   }
 
   /**
+   * Get account status by nid.
+   */
+  static function getAccountStatusByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_account_status', 'status', 'n.nid = status.entity_id');
+    $account_status = $query
+      ->fields('status', array('field_account_status_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $account_status;
+  }
+
+  /**
    * Get Company name by nid.
    */
   static function getCompanyNameByNid($nid) {
@@ -129,6 +144,51 @@ class Bullseye {
       ->fetchField();
 
     return $email;
+  }
+
+  /**
+   * Get Account type by nid.
+   */
+  static function getAccountTypeByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_type', 't', 'n.nid = t.entity_id');
+    $owner = $query
+      ->fields('t', array('field_type_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
+  }
+
+  /**
+   * Get Visibility by nid.
+   */
+  static function getVisibilityByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_visibility', 'v', 'n.nid = v.entity_id');
+    $owner = $query
+      ->fields('v', array('field_visibility_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
+  }
+
+  /**
+   * Get Owner by nid.
+   */
+  static function getOwnerByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_owned_by', 'ob', 'n.nid = ob.entity_id');
+    $owner = $query
+      ->fields('ob', array('field_owned_by_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
   }
 
   /**
@@ -305,7 +365,7 @@ class Bullseye {
   /**
    * Get all the producers account.
    */
-  function getProducers() {
+  static function getProducers() {
     if ($cache = cache_get('producers_listing')) {
       $producers = $cache->data;
     }
@@ -335,6 +395,27 @@ class Bullseye {
     }
 
     return $producers;
+  }
+
+  /**
+   * Get the visibility field options.
+   */
+  static function getVisibilityOptions() {
+    if ($cache = cache_get('visibility_options')) {
+      $visibility_options = $cache->data;
+    }
+    else {
+      $producers = Bullseye::getProducers();
+      $visibility_options = array();
+      $visibility_options['visible_to_all'] = t('Visible to All');
+      foreach ($producers as $key => $value) {
+        $producer_name = $value->field_first_name_value . ' ' . $value->field_last_name_value;
+        $visibility_options[$value->uid] = $producer_name;
+      }
+      cache_set('visibility_options', $visibility_options, 'cache');
+    }
+
+    return $visibility_options;
   }
 
   /**
@@ -1209,7 +1290,7 @@ class Bullseye {
   /**
    * Total producers.
    */
-  function totalProducers() {
+  static function totalProducers() {
     if ($cache = cache_get('total_producers')) {
       $total = $cache->data;
     }

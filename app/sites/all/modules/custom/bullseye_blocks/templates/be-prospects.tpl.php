@@ -3,7 +3,32 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Prospects (' . $total . ')'); ?></span>
-        <a class="be-table-button" href="/accounts/new/prospect" rel="lightframe"><?php print t('Add New Prospect'); ?></a>
+        <a class="be-table-button"  data-toggle="modal" data-target="#add-new-account"><?php print t('Add New Prospect'); ?></a>
+
+        <div id="add-new-account" class="modal be-bs-modal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-inner">
+                <div class="modal-header">
+                  <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                  <div class="modal-body-wrap">
+                    <div class="modal-body-inner">
+                      <h3><?php print t('Is the company of the prospect you are trying to add already exists in the system?'); ?></h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="be-custom-actions">
+                    <a href="/accounts/new/prospect" rel="lightframe" data-dismiss="modal" class="blue-gray-btn" id="company-exists-no"><?php print t('No'); ?></a>
+                    <a href="/accounts/select-existing-company?from=prospect" rel="lightframe" data-dismiss="modal" class="orange-btn" id="company-exists-yes"><?php print t('Yes'); ?></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
