@@ -2835,7 +2835,7 @@ function generate_rfp_life($form, &$form_state) {
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values, );
+    bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values);
   }
 }
 
