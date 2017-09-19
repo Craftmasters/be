@@ -1765,9 +1765,15 @@ class Bullseye {
     // Due date.
     $node->field_due_date[$lang][0]['value'] = $data['due_date'];
 
+    // Status.
+    $node->field_proposal_status[$lang][0]['value'] = 'sent';
+
     // Save the carrier in the storage.
     $node = node_submit($node);
     node_save($node);
+
+    // Clear listing page items.
+    cache_clear_all('proposals_listing_sent', 'cache');
 
     return $node->nid;
   }
