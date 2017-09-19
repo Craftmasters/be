@@ -38,6 +38,8 @@
       </thead>
       <tbody>
         <?php foreach ($proposals as $proposal): ?>
+          <?php $data = node_load($proposal->nid); ?>
+          <?php $has = Bullseye::isBenefitActive($data->field_benefits['und']); ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
@@ -52,21 +54,39 @@
                 </a>
               </span>
             </td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority green"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['mm']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['lm']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['td']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['mc']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['dt']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['vs']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['lf']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['sd']; ?>">
+            </td>
+            <td class="be-dot-td">
+              <span class="<?php print $has['sb']; ?>">
+            </td>
             <td>
               <span class="light-gray-font">
-                <?php print $proposal->field_due_date_value; ?>
+                <?php print date('Y-d-m', strtotime($data->field_due_date[LANGUAGE_NONE][0]['value'])); ?>
               </span>
             </td>
-            <td class="be-dot-td"><span class="dot-priority blue"></span></td>
+            <td class="be-dot-td"><span class="dot-priority <?php Bullseye::priorityClass(); ?>"></span></td>
             <td>
               <span class="light-gray-font">
                 <?php Bullseye::getAuthor($proposal->uid); ?>
