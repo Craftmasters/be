@@ -421,7 +421,8 @@ function bullseye_blocks_render_be_proposals() {
   $vars['be'] = $be;
 
   // Get all the proposals.
-  $vars['proposals'] = $be->proposalSent();
+  $vars['proposals'] = Bullseye::getProposals();
+  krumo($vars['proposals']);
 
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
@@ -682,7 +683,7 @@ function bullseye_blocks_render_be_people() {
   $nid = Bullseye::getNidFromPath(arg(1));
   $vars['people'] = Bullseye::getAccountPeople($nid);
   $vars['edit_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_edit_details.svg';
-  
+
   $vars['profile_pictures'] = array();
 
   foreach ($vars['people'] as $key => $value) {
