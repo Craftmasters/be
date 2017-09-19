@@ -944,16 +944,10 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account', 'account', 'n.nid = account.entity_id');
-      $query->leftJoin('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
-      $query->leftJoin('field_data_field_proposal_status', 'status', 'n.nid = status.entity_id');
-      $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
+      $query->join('field_data_field_account', 'account', 'n.nid = account.entity_id');
+      $query->join('field_data_field_proposal_status', 'status', 'n.nid = status.entity_id');
       $proposals = $query
-        ->distinct()
-        ->fields('n', array('nid', 'title', 'uid'))
-        ->fields('account', array('field_account_nid'))
-        ->fields('benefits', array('field_benefits_value'))
-        ->fields('due', array('field_due_date_value'))
+        ->fields('n', array('nid', 'uid'))
         ->condition('n.type', 'proposal', '=')
         ->condition('n.status', 1, '=')
         ->condition('status.field_proposal_status_value', $status, '=')
@@ -1117,6 +1111,62 @@ class Bullseye {
     else {
       print "dot-priority gray";
     }
+  }
+
+  /**
+   * Determine if benefits in Proposal is active.
+   *
+   * Classes for Proposal account by row on listing page.
+   */
+  static function isBenefitActive($data) {
+    $class_n = "dot-priority gray";
+    $class_p = "dot-priority green";
+
+    $benefits = array();
+
+    $benefits['mm'] = $class_n;
+    $benefits['lm'] = $class_n;
+    $benefits['td'] = $class_n;
+    $benefits['lf'] = $class_n;
+    $benefits['vs'] = $class_n;
+    $benefits['dt'] = $class_n;
+    $benefits['mc'] = $class_n;
+    $benefits['sd'] = $class_n;
+    $benefits['sb'] = $class_n;
+    $benefits['rt'] = $class_n;
+
+    if (Bullseye::recursive_array_search('major_medical', $data)) {
+      $benefits['mm'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('limited_medical', $data)) {
+      $benefits['lm'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('teledoc', $data)) {
+      $benefits['td'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('mec', $data)) {
+      $benefits['mc'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('dental', $data)) {
+      $benefits['dt'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('vision', $data)) {
+      $benefits['vs'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('life', $data)) {
+      $benefits['lf'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('short_term_disability', $data)) {
+      $benefits['sd'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('special_benefits', $data)) {
+      $benefits['sb'] = $class_p;
+    }
+    if (Bullseye::recursive_array_search('retirement', $data)) {
+      $benefits['rt'] = $class_p;
+    }
+
+    return $benefits;
   }
 
   /**
@@ -1896,4 +1946,6 @@ class Bullseye {
     }
     return FALSE;
   }
+
+
 }
