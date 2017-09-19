@@ -262,7 +262,7 @@ function bullseye_proposals_email_form($form, &$form_state) {
   $form['subject'] = array(
     '#type' => 'textfield',
     '#title' => t('Subject:'),
-    '#default_value' => 'Plan Proposal for ' . $company_name,
+    '#default_value' => 'Plan Proposal for ' . $company_name . ' ' . format_date(time(), 'custom', t('m/d/Y')),
   );
 
   $form['to'] = array(
