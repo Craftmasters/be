@@ -474,7 +474,6 @@ class Bullseye {
       $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
       $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
       $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
-      $query->join('field_data_field_due_date', 'date', 'n.nid = date.entity_id');
       $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
       $carriers = $query
         ->distinct()
@@ -482,7 +481,6 @@ class Bullseye {
         ->fields('contact', array('field_primary_contact_value'))
         ->fields('email', array('field_email_value'))
         ->fields('benefits', array('field_benefits_value'))
-        ->fields('date', array('field_due_date_value'))
         ->fields('priority', array('field_priority_value'))
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
@@ -502,7 +500,6 @@ class Bullseye {
         'contact_name' => $item->field_primary_contact_value,
         'contact_email' => $item->field_email_value,
         'benefits' => array(),
-        'due_date' => $item->field_due_date_value,
         'priority' => $item->field_priority_value,
       );
 
