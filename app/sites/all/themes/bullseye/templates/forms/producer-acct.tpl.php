@@ -183,6 +183,14 @@ A few more things to wrap this up.</h4>
 </div>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+$('label[for="edit-file-health-life-upload"]').click(function(e){
+  e.preventDefault();
+  $('input#edit-file-health-life-upload').click();
+})
+$('label[for="edit-file-error-omission-insurance-upload"]').click(function(e){
+  e.preventDefault();
+  $('input#edit-file-error-omission-insurance-upload').click();
+})
 $('#producer-acct-next-btn').click(function(e){
   e.preventDefault();
   // @todo: validate and check if required fields have been inputted and checked
