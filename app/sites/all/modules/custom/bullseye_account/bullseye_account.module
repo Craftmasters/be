@@ -41,6 +41,14 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['accounts/select-existing-company'] = array(
+    'title' => t('Select Existing Company for Lead'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('selet_existing_company'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['edit/account-details'] = array(
     'title' => t('Edit Account Details'),
     'page callback' => 'drupal_get_form',
@@ -50,6 +58,103 @@ function bullseye_account_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Select existing company form.
+ */
+function selet_existing_company($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if ($_GET['from'] == 'lead') {
+    $label = 'lead';
+  }
+  elseif ($_GET['from'] == 'prospect') {
+    $label = 'prospect';
+  }
+  elseif ($_GET['from'] == 'opportunity') {
+    $label = 'opportunity';
+  }
+  elseif ($_GET['from'] == 'deal-in-progress') {
+    $label = 'deal in progress';
+  }
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Select the existing company for the new ' . $label) . '</h2>',
+  );
+
+  $form['account'] = array(
+    '#required' => TRUE,
+    '#type' => 'entityreference',
+    '#era_entity_type' => 'node',
+    '#era_bundles' => array('accounts'),
+    '#era_cardinality' => 1,
+    '#era_query_settings' => array(
+      'limit' => 15, // Default is 50.
+      'property_conditions' => array(
+        array('status', 1, '='),
+      ),
+      'field_conditions' => array(),
+    ),
+    '#attributes' => array(
+      'placeholder' => t('Enter existing company'),
+    ),
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Next'),
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler or selecting existing company.
+ */
+function selet_existing_company_submit($form, &$form_state) {
+
+  $nid = $form_state['values']['account']['entity_id'];
+  $account_status = Bullseye::getAccountStatusByNid($nid);
+
+  $arg = $account_status;
+
+  if ($account_status == 'deal_in_progress') {
+    $arg = 'deal-in-progress';
+  }
+  if ($account_status == 'closed_deal') {
+    $arg = 'closed-deal';
+  }
+  if ($arg == '') {
+    $arg = 'lead';
+  }
+
+  $param = array(
+    'query' => array(
+      'existing_company' => $nid,
+      'account_status' => $account_status,
+    )
+  );
+  
+  // Go to the add new lead modal.
+  drupal_goto('accounts/new/' . $arg, $param);
 }
 
 /**
@@ -238,9 +343,12 @@ function bullseye_account_new_form($form, &$form_state) {
     ),
   );
 
+  $visibility = Bullseye::getVisibilityOptions();
+
   $form['visibility'] = array(
-    '#type' => 'textfield',
+    '#type' => 'select',
     '#title' => t('Visibility'),
+    '#options' => $visibility,
   );
 
   // Getting the field "Tags" from accounts content type fields.

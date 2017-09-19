@@ -450,7 +450,7 @@ function bullseye_blocks_render_be_producers() {
 
   $vars = array();
   // Get the producers.
-  $vars['producers'] = $be->getProducers();
+  $vars['producers'] = Bullseye::getProducers();
 
   $vars['be'] = $be;
 
@@ -460,7 +460,7 @@ function bullseye_blocks_render_be_producers() {
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
 
   // Total number of producers.
-  $vars['total'] = $be->totalProducers();
+  $vars['total'] = Bullseye::totalProducers();
 
   $output = theme('be_producers', $vars);
 

@@ -91,6 +91,16 @@
         parent_iframe.contents().find('html').addClass('be-lightbox-html');
         $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
+        // For adding new account modal.
+        if ($('#add-new-account').length) {
+          $('#company-exists-no').click(function() {
+            $('#add-new-account').modal('hide');
+          });
+          $('#company-exists-yes').click(function() {
+            $('#add-new-account').modal('hide');
+          });
+        }
+
         // For Create RFP page.
         if ($('.page-rfps-add').length) {
 
