@@ -1082,6 +1082,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_std_current_carrier', 'sdcc', 'n.nid = sdcc.entity_id');
       $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
       $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
       $rfps = $query
         ->fields('n', array('nid', 'title', 'uid'))
         ->fields('cmp', array('field_company_value'))
@@ -1095,6 +1096,7 @@ class Bullseye {
         ->fields('sdcc', array('field_std_current_carrier_value'))
         ->fields('rtcc', array('field_ret_current_carrier_value'))
         ->fields('sbcc', array('field_sb_current_carrier_value'))
+        ->fields('due', array('field_due_date_value'))
         ->condition('n.type', 'rfp', '=')
         ->condition('n.status', 1, '=')
         ->execute()

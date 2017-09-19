@@ -38,6 +38,7 @@
       </thead>
       <tbody>
         <?php foreach($rfps as $rfp): ?>
+          <?php $data = node_load($rfp->nid); ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
@@ -75,7 +76,7 @@
             </td>
             <td>
               <span class="light-gray-font">
-                8/30/2017
+                <?php print date('Y-d-m', strtotime($data->field_due_date[LANGUAGE_NONE][0]['value'])); ?>
               </span>
             </td>
             <td class="be-dot-td">
