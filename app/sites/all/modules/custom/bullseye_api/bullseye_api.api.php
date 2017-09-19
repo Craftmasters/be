@@ -147,6 +147,51 @@ class Bullseye {
   }
 
   /**
+   * Get Account type by nid.
+   */
+  static function getAccountTypeByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_type', 't', 'n.nid = t.entity_id');
+    $owner = $query
+      ->fields('t', array('field_type_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
+  }
+
+  /**
+   * Get Visibility by nid.
+   */
+  static function getVisibilityByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_visibility', 'v', 'n.nid = v.entity_id');
+    $owner = $query
+      ->fields('v', array('field_visibility_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
+  }
+
+  /**
+   * Get Owner by nid.
+   */
+  static function getOwnerByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_owned_by', 'ob', 'n.nid = ob.entity_id');
+    $owner = $query
+      ->fields('ob', array('field_owned_by_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $owner;
+  }
+
+  /**
    * Get Phone Number by nid.
    */
   static function getPhoneNumberByNid($nid) {
