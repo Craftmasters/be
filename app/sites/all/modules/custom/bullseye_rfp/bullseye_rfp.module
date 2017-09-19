@@ -2178,6 +2178,7 @@ function generate_rfp_major_medical($form, &$form_state) {
     $contact = field_collection_item_load($fcid);
     $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
+    // Recipients.
     $recipients = array();
     if (is_array($values['mm_carrier_to_send_1'])) {
       $c1 = node_load($values['mm_carrier_to_send_1']['entity_id']);
@@ -2200,29 +2201,30 @@ function generate_rfp_major_medical($form, &$form_state) {
       $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
     }
 
+    // Attachments.
     $attachments = array();
-    if ($form_state['values']['special_benefits_attach_ec'] == 1) {
+    if ($form_state['values']['major_medical_attach_ec'] == 1) {
       $attachments[] = file_load($values['employee_census']);
     }
-    if ($form_state['values']['special_benefits_attach_csob'] == 1) {
+    if ($form_state['values']['major_medical_attach_csob'] == 1) {
       $attachments[] = file_load($values['current_summary_of_benefit']);
     }
-    if ($form_state['values']['special_benefits_attach_cb'] == 1) {
+    if ($form_state['values']['major_medical_attach_cb'] == 1) {
       $attachments[] = file_load($values['current_bill']);
     }
-    if ($form_state['values']['special_benefits_attach_lrlr'] == 1) {
+    if ($form_state['values']['major_medical_attach_lrlr'] == 1) {
       $attachments[] = file_load($values['last_renewal_letter']);
     }
-    if ($form_state['values']['special_benefits_attach_somce'] == 1) {
+    if ($form_state['values']['major_medical_attach_somce'] == 1) {
       $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
     }
-    if ($form_state['values']['special_benefits_attach_bor'] == 1) {
+    if ($form_state['values']['major_medical_attach_bor'] == 1) {
       $attachments[] = file_load($values['broker_of_record']);
     }
-    if ($form_state['values']['special_benefits_attach_loa'] == 1) {
+    if ($form_state['values']['major_medical_attach_loa'] == 1) {
       $attachments[] = file_load($values['letter_of_authorization']);
     }
-    if ($form_state['values']['special_benefits_attach_lcr'] == 1) {
+    if ($form_state['values']['major_medical_attach_lcr'] == 1) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
@@ -2244,7 +2246,7 @@ function generate_rfp_major_medical($form, &$form_state) {
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Major Medical', $vars, $form_state['values']);
+    bullseye_rfp_pdf_generate('Major Medical', $vars, $values);
   }
 
 }
@@ -2255,48 +2257,95 @@ function generate_rfp_major_medical($form, &$form_state) {
 function generate_rfp_limited_medical($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['lm_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['lm_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['lm_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['lm_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['lm_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['lm_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['lm_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['lm_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['lm_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['lm_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['lm_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['lm_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['lm_carrier_to_send_1'])) {
+      $c1 = node_load($values['lm_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lm_carrier_to_send_2'])) {
+      $c2 = node_load($values['lm_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lm_carrier_to_send_3'])) {
+      $c3 = node_load($values['lm_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lm_carrier_to_send_4'])) {
+      $c4 = node_load($values['lm_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lm_carrier_to_send_5'])) {
+      $c5 = node_load($values['lm_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['limited_medical_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['limited_medical_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['limited_medical_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['limited_medical_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['limited_medical_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['limited_medical_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['limited_medical_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['limited_medical_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Limited Medical', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
   }
 }
 
@@ -2306,48 +2355,95 @@ function generate_rfp_limited_medical($form, &$form_state) {
 function generate_rfp_teledoc($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['tel_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['tel_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['tel_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['tel_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['tel_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['tel_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['tel_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['tel_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['tel_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['tel_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['tel_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['tel_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['tel_carrier_to_send_1'])) {
+      $c1 = node_load($values['tel_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['tel_carrier_to_send_2'])) {
+      $c2 = node_load($values['tel_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['tel_carrier_to_send_3'])) {
+      $c3 = node_load($values['tel_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['tel_carrier_to_send_4'])) {
+      $c4 = node_load($values['tel_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['tel_carrier_to_send_5'])) {
+      $c5 = node_load($values['tel_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['teledoc_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['teledoc_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['teledoc_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['teledoc_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['teledoc_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['teledoc_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['teledoc_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['teledoc_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Telemedicine', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Telemedicine', $vars, $values);
   }
 }
 
@@ -2357,48 +2453,95 @@ function generate_rfp_teledoc($form, &$form_state) {
 function generate_rfp_mec($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['mec_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['mec_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['mec_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['mec_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['mec_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['mec_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['mec_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['mec_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['mec_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['mec_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['mec_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['mec_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['mec_carrier_to_send_1'])) {
+      $c1 = node_load($values['mec_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['mec_carrier_to_send_2'])) {
+      $c2 = node_load($values['mec_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['mec_carrier_to_send_3'])) {
+      $c3 = node_load($values['mec_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['mec_carrier_to_send_4'])) {
+      $c4 = node_load($values['mec_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['mec_carrier_to_send_5'])) {
+      $c5 = node_load($values['mec_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['mec_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['mec_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['mec_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['mec_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['mec_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['mec_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['mec_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['mec_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('MEC', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('MEC', $vars, $values);
   }
 }
 
@@ -2408,48 +2551,95 @@ function generate_rfp_mec($form, &$form_state) {
 function generate_rfp_dental($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['den_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['den_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['den_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['den_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['den_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['den_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['den_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['den_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['den_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['den_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['den_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['den_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['den_carrier_to_send_1'])) {
+      $c1 = node_load($values['den_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['den_carrier_to_send_2'])) {
+      $c2 = node_load($values['den_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['den_carrier_to_send_3'])) {
+      $c3 = node_load($values['den_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['den_carrier_to_send_4'])) {
+      $c4 = node_load($values['den_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['den_carrier_to_send_5'])) {
+      $c5 = node_load($values['den_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['dental_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['dental_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['dental_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['dental_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['dental_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['dental_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['dental_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['dental_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Dental', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Dental', $vars, $values);
   }
 }
 
@@ -2459,48 +2649,95 @@ function generate_rfp_dental($form, &$form_state) {
 function generate_rfp_vision($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['vs_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['vs_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['vs_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['vs_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['vs_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['vs_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['vs_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['vs_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['vs_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['vs_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['vs_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['vs_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['vs_carrier_to_send_1'])) {
+      $c1 = node_load($values['vs_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['vs_carrier_to_send_2'])) {
+      $c2 = node_load($values['vs_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['vs_carrier_to_send_3'])) {
+      $c3 = node_load($values['vs_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['vs_carrier_to_send_4'])) {
+      $c4 = node_load($values['vs_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['vs_carrier_to_send_5'])) {
+      $c5 = node_load($values['vs_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['vision_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['vision_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['vision_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['vision_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['vision_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['vision_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['vision_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['vision_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Vision', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Vision', $vars, $values);
   }
 }
 
@@ -2510,48 +2747,95 @@ function generate_rfp_vision($form, &$form_state) {
 function generate_rfp_life($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['lf_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['lf_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['lf_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['lf_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['lf_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['lf_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['lf_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['lf_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['lf_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['lf_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['lf_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['lf_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['lf_carrier_to_send_1'])) {
+      $c1 = node_load($values['lf_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lf_carrier_to_send_2'])) {
+      $c2 = node_load($values['lf_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lf_carrier_to_send_3'])) {
+      $c3 = node_load($values['lf_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lf_carrier_to_send_4'])) {
+      $c4 = node_load($values['lf_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['lf_carrier_to_send_5'])) {
+      $c5 = node_load($values['lf_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['life_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['life_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['life_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['life_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['life_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['life_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['life_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['life_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Life & AD&D', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values, );
   }
 }
 
@@ -2561,48 +2845,95 @@ function generate_rfp_life($form, &$form_state) {
 function generate_rfp_short_term_disability($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['std_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['std_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['std_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['std_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['std_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['std_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['std_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['std_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['std_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['std_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['std_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['std_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['std_carrier_to_send_1'])) {
+      $c1 = node_load($values['std_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['std_carrier_to_send_2'])) {
+      $c2 = node_load($values['std_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['std_carrier_to_send_3'])) {
+      $c3 = node_load($values['std_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['std_carrier_to_send_4'])) {
+      $c4 = node_load($values['std_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['std_carrier_to_send_5'])) {
+      $c5 = node_load($values['std_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['short_term_disability_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['short_term_disability_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['short_term_disability_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['short_term_disability_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['short_term_disability_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['short_term_disability_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['short_term_disability_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['short_term_disability_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Short Term Disability', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Short Term Disability', $vars, $values);
   }
 }
 
@@ -2612,48 +2943,95 @@ function generate_rfp_short_term_disability($form, &$form_state) {
 function generate_rfp_retirement($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['ret_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['ret_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['ret_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['ret_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['ret_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['ret_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['ret_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['ret_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['ret_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['ret_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['ret_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['ret_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
-    // Send the proposal via email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => array(
-        file_load($form_state['values']['employee_census']),
-        file_load($form_state['values']['current_summary_of_benefit']),
-        file_load($form_state['values']['current_bill']),
-        file_load($form_state['values']['last_renewal_letter']),
-        file_load($form_state['values']['summary_of_monthly_claims_experience']),
-        file_load($form_state['values']['broker_of_record']),
-        file_load($form_state['values']['letter_of_authorization']),
-        file_load($form_state['values']['large_claims_report']),
-      ),
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['ret_carrier_to_send_1'])) {
+      $c1 = node_load($values['ret_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['ret_carrier_to_send_2'])) {
+      $c2 = node_load($values['ret_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['ret_carrier_to_send_3'])) {
+      $c3 = node_load($values['ret_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['ret_carrier_to_send_4'])) {
+      $c4 = node_load($values['ret_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['ret_carrier_to_send_5'])) {
+      $c5 = node_load($values['ret_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
+    $attachments = array();
+    if ($form_state['values']['retirement_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
+    }
+    if ($form_state['values']['retirement_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
+    }
+    if ($form_state['values']['retirement_attach_cb'] == 1) {
+      $attachments[] = file_load($values['current_bill']);
+    }
+    if ($form_state['values']['retirement_attach_lrlr'] == 1) {
+      $attachments[] = file_load($values['last_renewal_letter']);
+    }
+    if ($form_state['values']['retirement_attach_somce'] == 1) {
+      $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
+    }
+    if ($form_state['values']['retirement_attach_bor'] == 1) {
+      $attachments[] = file_load($values['broker_of_record']);
+    }
+    if ($form_state['values']['retirement_attach_loa'] == 1) {
+      $attachments[] = file_load($values['letter_of_authorization']);
+    }
+    if ($form_state['values']['retirement_attach_lcr'] == 1) {
+      $attachments[] = file_load($values['large_claims_report']);
+    }
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Retirement', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Retirement', $vars, $values);
   }
 }
 
@@ -2663,64 +3041,94 @@ function generate_rfp_retirement($form, &$form_state) {
 function generate_rfp_special_benefits($form, &$form_state) {
   global $user;
 
+  $values = $form_state['values'];
+
   $be = new Bullseye($user);
 
   $form_state['rebuild'] = TRUE;
-  $values = array();
-  $values['current_carrier'] = $form_state['values']['sb_current_carrier'];
-  $values['years_with_current_carrier'] = $form_state['values']['sb_years_with_current_carrier'];
-  $values['plan_year_to_quote_start'] = $form_state['values']['sb_plan_year_to_quote_start'];
-  $values['plan_year_to_quote_end'] = $form_state['values']['sb_plan_year_to_quote_end'];
-  $values['renewal'] = $form_state['values']['sb_renewal_of_current_plan'];
-  $values['waiting_period'] = $form_state['values']['sb_waiting_period'];
+  $vars = array();
+  $vars['current_carrier'] = $values['sb_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['sb_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['sb_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['sb_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['sb_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['sb_waiting_period'];
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    $account = node_load($data['account_id']);
+    /*$account = node_load($data['account_id']);
     $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
     $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
+    // Recipients.
+    $recipients = array();
+    if (is_array($values['sb_carrier_to_send_1'])) {
+      $c1 = node_load($values['sb_carrier_to_send_1']['entity_id']);
+      $recipients[] = $c1->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['sb_carrier_to_send_2'])) {
+      $c2 = node_load($values['sb_carrier_to_send_2']['entity_id']);
+      $recipients[] = $c2->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['sb_carrier_to_send_3'])) {
+      $c3 = node_load($values['sb_carrier_to_send_3']['entity_id']);
+      $recipients[] = $c3->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['sb_carrier_to_send_4'])) {
+      $c4 = node_load($values['sb_carrier_to_send_4']['entity_id']);
+      $recipients[] = $c4->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if (is_array($values['sb_carrier_to_send_5'])) {
+      $c5 = node_load($values['sb_carrier_to_send_5']['entity_id']);
+      $recipients[] = $c5->field_email[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Attachments.
     $attachments = array();
-    if ($form_state['values']['special_benefits_attach_ec'] == 1) {
-      $attachments[] = file_load($form_state['values']['employee_census']);
+    if ($values['special_benefits_attach_ec'] == 1) {
+      $attachments[] = file_load($values['employee_census']);
     }
-    if ($form_state['values']['special_benefits_attach_csob'] == 1) {
-      $attachments[] = file_load($form_state['values']['current_summary_of_benefit']);
+    if ($values['special_benefits_attach_csob'] == 1) {
+      $attachments[] = file_load($values['current_summary_of_benefit']);
     }
-    if ($form_state['values']['special_benefits_attach_cb'] == 1) {
-       $attachments[] = file_load($form_state['values']['current_bill']);
+    if ($values['special_benefits_attach_cb'] == 1) {
+       $attachments[] = file_load($values['current_bill']);
     }
-    if ($form_state['values']['special_benefits_attach_lrlr'] == 1) {
-       $attachments[] = file_load($form_state['values']['last_renewal_letter']);
+    if ($values['special_benefits_attach_lrlr'] == 1) {
+       $attachments[] = file_load($values['last_renewal_letter']);
     }
-    if ($form_state['values']['special_benefits_attach_somce'] == 1) {
-       $attachments[] = file_load($form_state['values']['summary_of_monthly_claims_experience']);
+    if ($values['special_benefits_attach_somce'] == 1) {
+       $attachments[] = file_load($values['summary_of_monthly_claims_experience']);
     }
-    if ($form_state['values']['special_benefits_attach_bor'] == 1) {
-       $attachments[] = file_load($form_state['values']['broker_of_record']);
+    if ($values['special_benefits_attach_bor'] == 1) {
+       $attachments[] = file_load($values['broker_of_record']);
     }
-    if ($form_state['values']['special_benefits_attach_loa'] == 1) {
-       $attachments[] = file_load($form_state['values']['letter_of_authorization']);
+    if ($values['special_benefits_attach_loa'] == 1) {
+       $attachments[] = file_load($values['letter_of_authorization']);
     }
-    if ($form_state['values']['special_benefits_attach_lcr'] == 1) {
-       $attachments[] = file_load($form_state['values']['large_claims_report']);
+    if ($values['special_benefits_attach_lcr'] == 1) {
+       $attachments[] = file_load($values['large_claims_report']);
     }
 
-    // Send the email.
-    $params = array(
-      'key' => 'bullseye',
-      'to' => $to,
-      'from' => $user->mail,
-      'subject' => Bullseye::getRfpSubject(),
-      'body' => $be->getRfpBody(),
-      'attachments' => $attachments,
-    );
-    Bullseye::sendEmail($to, $user->mail, $params);
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
 
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Special Benefits', $values, $form_state['values']);
+    bullseye_rfp_pdf_generate('Special Benefits', $vars, $values);
   }
 }
