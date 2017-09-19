@@ -328,8 +328,6 @@ function _import_account($data, $type) {
       $account_status = strtolower($account_status);
       $entity->field_account_status->set($account_status);
 
-      kpr($row);die();
-
       // Set the workflow status and action status.
       if ($account_status == 'lead') {
         $entity->field_workflow_status->set('verification');
