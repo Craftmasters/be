@@ -266,8 +266,8 @@ function _import_account($data, $type) {
       $entity->field_work_phone->set(trim($row[19]));
 
       // Set the tags.
-      if (strlen(trim($row[27])) >=2) {
-        $tags = explode(',', trim($row[27]));
+      if (strlen(trim($row[26])) >=2) {
+        $tags = explode(',', trim($row[26]));
         $curr_list = $entity->field_tags->value();
         foreach ($tags as $tag) {
           $tid = Bullseye::getTermId('tags', trim($tag));
@@ -327,6 +327,8 @@ function _import_account($data, $type) {
       $account_status = trim($row[29]);
       $account_status = strtolower($account_status);
       $entity->field_account_status->set($account_status);
+
+      kpr($row);die();
 
       // Set the workflow status and action status.
       if ($account_status == 'lead') {
