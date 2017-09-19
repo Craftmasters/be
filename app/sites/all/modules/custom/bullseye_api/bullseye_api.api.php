@@ -1669,7 +1669,7 @@ class Bullseye {
     global $user;
 
     $account = node_load($data['account']['entity_id']);
-    $company = $account->field_company[LANGUAGE_NONE][0]['value'];
+    $company = $account->title;
 
     // Map the data to plan specs storage entity.
     $node = new stdClass();
