@@ -1951,15 +1951,15 @@ class Bullseye {
    * Search in array recursively.
    */
   public static function recursive_array_search($needle, $haystack, $currentKey = '') {
-    foreach($haystack as $key=>$value) {
+    foreach ($haystack as $key => $value) {
       if (is_array($value)) {
         $nextKey = Bullseye::recursive_array_search($needle,$value, $currentKey . '[' . $key . ']');
         if ($nextKey) {
           return $nextKey;
         }
       }
-      else if($value==$needle) {
-        return is_numeric($key) ? $currentKey . '[' .$key . ']' : $currentKey;
+      elseif ($value == $needle) {
+        return is_numeric($key) ? $currentKey . '[' . $key . ']' : $currentKey;
       }
     }
     return false;
