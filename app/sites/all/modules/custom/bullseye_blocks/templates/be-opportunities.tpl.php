@@ -70,15 +70,17 @@
               </span>
             </td>
             <td>
-              <span class="gray-font">
-                <?php
-                  Bullseye::buildAccountName(
-                    $o->field_firstname_value,
-                    $o->field_middle_name_value,
-                    $o->field_lastname_value
-                  );
-                ?>
-              </span>
+              <a href="<?php print $o->edit_link; ?>" rel="lightframe">
+                <span class="gray-font">
+                  <?php
+                    Bullseye::buildAccountName(
+                      $o->field_firstname_value,
+                      $o->field_middle_name_value,
+                      $o->field_lastname_value
+                    );
+                  ?>
+                </span>
+              </a>
             </td>
             <td class="be-table-arrow-td">
               <img src="<?php print $o->plan_specs_td; ?>">

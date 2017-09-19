@@ -698,6 +698,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_contacts_value'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
@@ -765,6 +766,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_contacts_value'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
@@ -833,6 +835,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_contacts_value'))
         ->fields('type', array('field_account_status_value'))
         ->fields('w', array('field_workflow_status_value'))
         ->fields('fname', array('field_firstname_value'))
@@ -901,6 +904,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
       $accounts = $query
         ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_contacts_value'))
         ->fields('type', array('field_account_status_value'))
         ->fields('fname', array('field_firstname_value'))
         ->fields('mname', array('field_middle_name_value'))
@@ -1027,6 +1031,7 @@ class Bullseye {
       $query->join('field_data_field_proposal_status', 'status', 'n.nid = status.entity_id');
       $proposals = $query
         ->fields('n', array('nid', 'uid'))
+        ->fields('account', array('field_account_nid'))
         ->condition('n.type', 'proposal', '=')
         ->condition('n.status', 1, '=')
         ->condition('status.field_proposal_status_value', $status, '=')

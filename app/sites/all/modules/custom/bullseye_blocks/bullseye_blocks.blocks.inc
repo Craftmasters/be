@@ -133,6 +133,20 @@ function bullseye_blocks_render_be_leads() {
     else {
       $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
     }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['leads'][$key]->edit_link = $edit_link;
   }
 
   $output = theme('be_leads', $vars);
@@ -251,6 +265,20 @@ function bullseye_blocks_render_be_prospects() {
     else {
       $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
     }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['prospects'][$key]->edit_link = $edit_link;
   }
 
   $output = theme('be_prospects', $vars);
@@ -328,6 +356,20 @@ function bullseye_blocks_render_be_opportunities() {
       'alias' => $alias,
       'status' => $account_status,
     );
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['opportunities'][$key]->edit_link = $edit_link;
   }
 
   $output = theme('be_opportunities', $vars);
@@ -387,6 +429,20 @@ function bullseye_blocks_render_be_deals_in_progress() {
     else {
       $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
     }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['deals'][$key]->edit_link = $edit_link;
   }
 
   $output = theme('be_deals_in_progress', $vars);
@@ -442,6 +498,22 @@ function bullseye_blocks_render_be_proposals() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['total'] = count(Bullseye::getProposals());
+
+  $vars['aliases'] = array();
+
+  foreach ($vars['proposals'] as $key => $value) {
+    $nid = $value->field_account_nid;
+    $account_status = Bullseye::getAccountStatusByNid($nid);
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
 
   $output = theme('be_proposals', $vars);
 
