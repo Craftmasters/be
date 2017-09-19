@@ -936,6 +936,37 @@ class Bullseye {
   }
 
   /**
+   * Get all prospects account.
+   */
+  static function getProposals($status = 'sent') {
+    if ($cache = cache_get('proposals_listing_' . $status)) {
+      $proposals = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account', 'account', 'n.nid = account.entity_id');
+      $query->leftJoin('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+      $query->leftJoin('field_data_field_proposal_status', 'status', 'n.nid = status.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
+      $proposals = $query
+        ->fields('n', array('nid', 'title', 'uid'))
+        ->fields('account', array('field_account_nid'))
+        ->fields('benefits', array('field_benefits_value'))
+        ->fields('due', array('field_due_date_value'))
+        ->condition('n.type', 'proposal', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('status.field_proposal_status_value', $status, '=')
+        ->execute()
+        ->fetchAll();
+
+      cache_set('proposals_listing_' . $status, $proposals, 'cache');
+    }
+
+    return $proposals;
+  }
+
+
+  /**
    * Get the workflow status of an account.
    */
   static function getWorkflowStatusByNid($nid) {
@@ -1206,15 +1237,6 @@ class Bullseye {
     $total = 0;
 
     return $total;
-  }
-
-  /**
-   * Sent proposals.
-   */
-  function proposalSent() {
-    $proposals = array();
-
-    return $proposals;
   }
 
   /**
@@ -1739,6 +1761,9 @@ class Bullseye {
       $proposal_file = file_copy($proposal_file, 'public://');
       $node->field_attached_proposal[$lang][0] = (array) $proposal_file;
     }
+
+    // Due date.
+    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
 
     // Save the carrier in the storage.
     $node = node_submit($node);
