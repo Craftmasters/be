@@ -48,7 +48,7 @@
             <td>
               <span class="gray-font">
                 <a href="/company/allen-markarian?from=lead" class="gray-font">
-                  ABC Company
+                  <?php print Bullseye::getCompanyNameByNid($proposal->nid); ?>
                 </a>
               </span>
             </td>
