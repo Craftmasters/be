@@ -37,12 +37,21 @@
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < 2; $i++) : ?>
-          <!--
+        <?php foreach ($proposals as $proposal): ?>
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
-            <td><span class="orange-font">365234</span></td>
-            <td><span class="gray-font"><a href="/company/allen-markarian?from=lead" class="gray-font">ABC Company</a></span></td>
+            <td>
+              <span class="orange-font">
+                <?php print $proposal->nid; ?>
+              </span>
+            </td>
+            <td>
+              <span class="gray-font">
+                <a href="/company/allen-markarian?from=lead" class="gray-font">
+                  ABC Company
+                </a>
+              </span>
+            </td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority green"></td>
@@ -52,11 +61,19 @@
             <td class="be-dot-td"><span class="dot-priority green"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
             <td class="be-dot-td"><span class="dot-priority gray"></td>
-            <td><span class="light-gray-font">8/30/2017</span></td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $proposal->field_due_date_value; ?>
+              </span>
+            </td>
             <td class="be-dot-td"><span class="dot-priority blue"></span></td>
-            <td><span class="light-gray-font">James J</span></td>
-          </tr>-->
-        <?php endfor; ?>
+            <td>
+              <span class="light-gray-font">
+                <?php Bullseye::getAuthor($proposal->uid); ?>
+              </span>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
