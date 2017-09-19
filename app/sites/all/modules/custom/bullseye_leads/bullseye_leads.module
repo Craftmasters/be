@@ -318,13 +318,13 @@ function _import_account($data, $type) {
       $entity->field_work_website->set(trim($row[22]));
 
       // Set the producers.
-      $entity->field_producers->set(trim($row[28]));
+      $entity->field_producers->set(trim($row[27]));
 
       // Set the referral partners.
-      $entity->field_referral_partners->set(trim($row[29]));
+      $entity->field_referral_partners->set(trim($row[28]));
 
       // Set the account status.
-      $account_status = trim($row[30]);
+      $account_status = trim($row[29]);
       $account_status = strtolower($account_status);
       $entity->field_account_status->set($account_status);
 
