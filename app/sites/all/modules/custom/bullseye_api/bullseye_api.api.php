@@ -949,6 +949,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_proposal_status', 'status', 'n.nid = status.entity_id');
       $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
       $proposals = $query
+        ->distinct()
         ->fields('n', array('nid', 'title', 'uid'))
         ->fields('account', array('field_account_nid'))
         ->fields('benefits', array('field_benefits_value'))
