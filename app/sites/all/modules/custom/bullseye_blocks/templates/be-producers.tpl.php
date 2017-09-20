@@ -36,7 +36,9 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td class="td-width-80px">
-              <a class="light-gray-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe"><?php print $producer->uid; ?></a>
+              <a class="light-gray-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe">
+                <?php print $producer->uid; ?>
+              </a>
             </td>
             <td>
               <a class="orange-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe">
@@ -47,12 +49,36 @@
                 <?php endif; ?>
               </a>
             </td>
-            <td><span class="light-gray-font"><?php print $producer->field_primary_contact_value; ?></span></td>
-            <td><span class="light-gray-font"><?php print $producer->mail; ?></span></td>
-            <td class="td-width-80px"><span class="gray-font"><?php print $be->leadsAssigned($producer); ?></span></td>
-            <td class="td-width-80px"><span class="gray-font"><?php print $be->opportunitiesCovered($producer); ?></span></td>
-            <td class="td-width-80px"><span class="gray-font"><?php print $be->dealsClosed($producer); ?></span></td>
-            <td class="td-width-80px"><span class="gray-font"><?php print $be->winRatio($producer); ?>%</span></td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $producer->field_primary_contact_value; ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <?php print $producer->mail; ?>
+              </span>
+            </td>
+            <td class="td-width-80px">
+              <span class="gray-font">
+                <?php print $be->leadsAssigned($producer); ?>
+              </span>
+            </td>
+            <td class="td-width-80px">
+              <span class="gray-font">
+                <?php print $be->opportunitiesCovered($producer); ?>
+              </span>
+            </td>
+            <td class="td-width-80px">
+              <span class="gray-font">
+                <?php print $be->dealsClosed($producer); ?>
+              </span>
+            </td>
+            <td class="td-width-80px">
+              <span class="gray-font">
+                <?php print $be->winRatio($producer); ?>%
+              </span>
+            </td>
           </tr>
         <?php endforeach; ?>
       </tbody>
