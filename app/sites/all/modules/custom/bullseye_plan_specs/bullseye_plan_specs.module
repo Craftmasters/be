@@ -71,7 +71,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
   if (isset($_GET['company_nid']) && !empty($_GET['company_nid'])) {
     $nid = $_GET['company_nid'];
     $node = node_load($nid);
-    $company_name = $node->field_company[LANGUAGE_NONE][0]['value'];
+    $company_name = $node->title;
     $primary_contact = $node->field_email[LANGUAGE_NONE][0]['value'];
     $title = $node->field_title[LANGUAGE_NONE][0]['value'];
     $contact_number = $node->field_work_phone[LANGUAGE_NONE][0]['value'];
@@ -323,5 +323,5 @@ function bullseye_plan_specs_form_submit($form, &$form_state) {
     // Update the existing plan specs if there is existing.
     $be->updatePlanSpecs($data);
   }
-  
+
 }
