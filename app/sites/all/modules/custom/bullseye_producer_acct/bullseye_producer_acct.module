@@ -49,6 +49,13 @@ function bullseye_producer_acct_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['producer/delete-pending-producer'] = array(
+    'title' => 'Approve Pending Producer',
+    'page callback' => 'bullseye_producer_acct_delete',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -277,6 +284,22 @@ function bullseye_producer_acct_company_form_submit($form, &$form_state) {
 function bullseye_producer_acct_approved() {
   if (isset($_POST['producer_uid'])) {
     Bullseye::approvedUser($_POST['producer_uid']);
+
+    // Clear producers cache.
+    cache_clear_all('producers_listings_1', 'cache');
+    cache_clear_all('producers_listings_0', 'cache');
+    cache_clear_all('total_producers_1', 'cache');
+    cache_clear_all('total_producers_0', 'cache');
+  }
+  drupal_json_output(NULL);
+}
+
+/**
+ * Delete pending producer account.
+ */
+function bullseye_producer_acct_delete() {
+  if (isset($_POST['producer_uid'])) {
+    Bullseye::deleteUser($_POST['producer_uid']);
 
     // Clear producers cache.
     cache_clear_all('producers_listings_1', 'cache');
