@@ -600,6 +600,13 @@
           });
         }
 
+        if ($('.be-tables').length) {
+          $('.be-tables').tableSearch({
+            searchText:'Search',
+            searchPlaceHolder:'Enter keyword here ..'
+          });
+        }
+
       });
 
       $(window).load(function() {
