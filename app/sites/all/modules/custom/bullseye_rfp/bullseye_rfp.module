@@ -2104,8 +2104,12 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
     $data = $_SESSION['add_rfp'];
     $account = node_load($data['account_id']);
 
-    $vars['company'] = $account->field_company[LANGUAGE_NONE][0]['value'];
-    $vars['email'] = $account->field_email[LANGUAGE_NONE][0]['value'];
+    // Contact.
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+
+    $vars['company'] = $account->title;
+    $vars['email'] = $contact->field_email[LANGUAGE_NONE][0]['value'];
     $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
     $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
     $street = $account->field_street[LANGUAGE_NONE][0]['value'];
