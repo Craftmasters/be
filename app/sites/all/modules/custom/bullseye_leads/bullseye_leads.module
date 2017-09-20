@@ -289,7 +289,10 @@ function _import_account($data, $type) {
       }
 
       // Set the value.
-      $entity->field_value->set(trim($row[8]));
+      $value = (float) trim($row[8]);
+      if (is_float($value)) {
+        $entity->field_value->set($value);
+      }
 
       // Set the mandate category.
       $entity->field_mandate_category->set(strtolower(trim($row[9])));

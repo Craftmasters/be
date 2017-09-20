@@ -74,7 +74,7 @@
               <span class="<?php Bullseye::isActive($p->field_errors_omission_insurance_fid); ?>"></span>
             </td>
             <td class="be-dot-td">
-              <a href="path/to/file/download" class="producer-pending-file">
+              <a href="<?php Bullseye::dl($p->field_health_and_life_fid); ?>" download="<?php Bullseye::filename($p->field_health_and_life_fid); ?> " class="producer-pending-file">
                 <i class="fa fa-download" aria-hidden="true"></i>
               <a>
             </td>
@@ -124,7 +124,7 @@
                       <div class="modal-footer">
                         <div class="be-custom-actions">
                           <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Cancel'); ?></button>
-                          <button id="btn-delete-producer-1" type="button" class="green-btn delete" data-dismiss="modal"><?php print t('yes'); ?></button>
+                          <button id="btn-delete-producer-1" type="button" class="green-btn delete" data-uid="<?php print $p->uid; ?>" data-dismiss="modal"><?php print t('yes'); ?></button>
                         </div>
                       </div>
                     </div>
