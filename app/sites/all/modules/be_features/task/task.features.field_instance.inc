@@ -10,8 +10,8 @@
 function task_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-task-field_assigned_to'.
-  $field_instances['node-task-field_assigned_to'] = array(
+  // Exported field_instance: 'node-task-field_account'.
+  $field_instances['node-task-field_account'] = array(
     'bundle' => 'task',
     'default_value' => NULL,
     'deleted' => 0,
@@ -19,10 +19,10 @@ function task_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'user_reference',
+        'module' => 'node_reference',
         'settings' => array(),
-        'type' => 'user_reference_default',
-        'weight' => 3,
+        'type' => 'node_reference_default',
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -32,8 +32,8 @@ function task_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_assigned_to',
-    'label' => 'Assigned To',
+    'field_name' => 'field_account',
+    'label' => 'Account',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -43,7 +43,47 @@ function task_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-task-field_contact'.
+  $field_instances['node-task-field_contact'] = array(
+    'bundle' => 'task',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_contact',
+    'label' => 'Contact',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 4,
     ),
   );
 
@@ -98,7 +138,43 @@ function task_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 4,
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-task-field_event_type'.
+  $field_instances['node-task-field_event_type'] = array(
+    'bundle' => 'task',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_type',
+    'label' => 'Event Type',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 7,
     ),
   );
 
@@ -178,8 +254,10 @@ function task_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Assigned To');
+  t('Account');
+  t('Contact');
   t('Due Date');
+  t('Event Type');
   t('Priority');
   t('Type');
 

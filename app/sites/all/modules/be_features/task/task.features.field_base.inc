@@ -10,39 +10,26 @@
 function task_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_assigned_to'.
-  $field_bases['field_assigned_to'] = array(
+  // Exported field_base: 'field_contact'.
+  $field_bases['field_contact'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_assigned_to',
+    'field_name' => 'field_contact',
     'indexes' => array(
-      'uid' => array(
-        0 => 'uid',
+      'format' => array(
+        0 => 'format',
       ),
     ),
     'locked' => 0,
-    'module' => 'user_reference',
+    'module' => 'text',
     'settings' => array(
-      'referenceable_roles' => array(
-        2 => 0,
-        3 => 0,
-        4 => 4,
-        5 => 5,
-      ),
-      'referenceable_status' => array(
-        0 => 0,
-        1 => 1,
-      ),
-      'view' => array(
-        'args' => array(),
-        'display_name' => '',
-        'view_name' => '',
-      ),
+      'max_length' => 255,
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
-    'type' => 'user_reference',
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_due_date'.
@@ -72,6 +59,31 @@ function task_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'datetime',
+  );
+
+  // Exported field_base: 'field_event_type'.
+  $field_bases['field_event_type'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_type',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'activity' => 'Activity',
+        'task' => 'Task',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_priority'.
@@ -119,8 +131,10 @@ function task_field_default_field_bases() {
         'phone_call' => 'Phone Call',
         'email' => 'Email',
         'meeting' => 'Meeting',
+        'others' => 'Others',
       ),
       'allowed_values_function' => '',
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'list_text',

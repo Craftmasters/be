@@ -467,3 +467,22 @@ function bullseye_deploy_update_7040() {
 
   return 'Fields deleted.';
 }
+
+/**
+ * Remove old fields task/event type.
+ */
+function bullseye_deploy_update_7041() {
+
+  $fields = array(
+    'field_assigned_to',
+  );
+
+  foreach ($fields as $key => $value) {
+    $to_be_deleted = field_info_instance('node', $value, 'task');
+    field_delete_instance($to_be_deleted);
+  }
+
+  field_purge_batch(1);
+
+  return 'Fields deleted.';
+}

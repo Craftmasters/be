@@ -19,11 +19,11 @@ function task_ctools_plugin_api($module = NULL, $api = NULL) {
 function task_node_info() {
   $items = array(
     'task' => array(
-      'name' => t('Task'),
+      'name' => t('Event'),
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Task Name'),
+      'title_label' => t('Name'),
       'help' => '',
     ),
   );
