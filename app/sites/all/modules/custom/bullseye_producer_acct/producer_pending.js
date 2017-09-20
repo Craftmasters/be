@@ -31,6 +31,7 @@
           },
           success: function(result){
             console.log(result);
+            location.reload();
           },
         }).fail(function(jqXHR, textStatus) {
           console.log('Cannot processed producer account.');
@@ -50,6 +51,7 @@
           },
           success: function(result){
             console.log(result);
+            location.reload();
           },
         }).fail(function(jqXHR, textStatus) {
           console.log('Cannot processed producer account.');
