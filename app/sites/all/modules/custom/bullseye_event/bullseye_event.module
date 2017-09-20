@@ -69,15 +69,19 @@ function bullseye_event_save_activity() {
 
   if ($type == 'phone_call') {
   	$title = 'Phone call with ' . $contact_name;
+  	cache_clear_all('recent_activities_phonecall_' . $nid, 'cache');
   }
   elseif ($type == 'email') {
   	$title = 'Email with ' . $contact_name;
+  	cache_clear_all('recent_activities_email_' . $nid, 'cache');
   }
   elseif ($type == 'meeting') {
   	$title = 'Meeting with ' . $contact_name;
+  	cache_clear_all('recent_activities_meeting_' . $nid, 'cache');
   }
   elseif ($type == 'others') {
   	$title = $activity_name;
+  	cache_clear_all('recent_activities_others_' . $nid, 'cache');
   }
 
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -129,6 +133,8 @@ function bullseye_event_load_activities() {
 
 	$sorted = array();
 
+	$be = new Bullseye($user);
+
 	if (!empty($activities)) {
 		foreach ($activities as $key => $value) {
 	    $date = strtotime($value->field_due_date_value);
@@ -153,6 +159,15 @@ function bullseye_event_load_activities() {
 	    elseif ($value->field_task_type_value == 'meeting') {
 	      $value->icon_img = $meeting_icon;
 	      $value->description = 'Meeting with';
+	    }
+
+	    if ($value->field_if_system_generated_value == 'yes') {
+	      $firstname = $be->getAccountFirstName($value->field_contact_value);
+	      $firstname = ucwords($firstname);
+	      $lastname = $be->getAccountLastName($value->field_contact_value);
+	      $lastname = substr($lastname, 0, 1);
+	      $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+	      $value->description = $value->title . ' by ';
 	    }
 
 	    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

@@ -251,6 +251,9 @@ function convert_to_prospect($form, &$form_state) {
   //$wrapper->field_tags->set($tag_tids);
   $wrapper->save();
 
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('convert_to_prospect', $form_state['values']['nid']);
+
   // Clear the leads and prospects listing cache so that
   // the new account changes will reflect to the 
   // corresponding list.
@@ -444,6 +447,9 @@ function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   $wrapper->field_workflow_status->set('plan_specification');
   $wrapper->field_account_status->set('opportunity');
   $wrapper->save();
+
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('convert_to_opportunity', $form_state['values']['nid']);
 
   // Clear the prospects and opportunities listing cache so that
   // the new account changes will reflect to the 
@@ -1268,6 +1274,9 @@ function send_proposal_email($form, &$form_state) {
       'proposal_sent' => TRUE,
     )
   );
+
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('proposal', $form_state['values']['nid']);
   
   // Refresh the page.
   drupal_goto('company/' . arg(1), $param);
@@ -1289,6 +1298,9 @@ function convert_to_deal($form, &$form_state) {
     $wrapper->field_workflow_status->set('generate_trust_agreement');
     $wrapper->field_account_status->set('deal_in_progress');
   }
+
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('convert_to_deal_in_progress', $form_state['values']['nid']);
 
   // Clear the opportunities and deals in progress listing cache so that
   // the new account changes will reflect to the 

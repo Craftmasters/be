@@ -223,6 +223,7 @@ function bullseye_proposals_form_submit($form, &$form_state) {
   // Save the data temporarily to session variable.
   $_SESSION['proposal_recipient'] = array(
     'company' => $company,
+    'company_id' => $account->nid,
     'attachments' => array(
       array(
         'filename' => $node->field_attached_proposal[$lang][0]['filename'],
@@ -314,6 +315,11 @@ function bullseye_proposals_email_form_submit($form, &$form_state) {
 
   $be = new Bullseye($user);
   $be->sendProposal($data);
+
+  $company_id = $_SESSION['proposal_recipient']['company_id'];
+
+  Bullseye::createSystemGeneratedActivity('proposal', $company_id);
+
 }
 
 /**

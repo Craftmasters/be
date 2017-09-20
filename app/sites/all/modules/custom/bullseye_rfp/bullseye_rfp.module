@@ -2033,6 +2033,9 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // the newly added one will get indexed too.
   cache_clear_all('rfp_listing', 'cache');
 
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('rfp', $data['account_id']);
+
 
   if ($_GET['from_current_progress'] == 1) {
 

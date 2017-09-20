@@ -709,6 +709,8 @@ function bullseye_blocks_render_be_recent_activities() {
 
   $sorted = array();
 
+  $be = new Bullseye($user);
+
   foreach ($activities as $key => $value) {
     $date = strtotime($value->field_due_date_value);
     $value->icon_img = $send_icon;
@@ -732,6 +734,15 @@ function bullseye_blocks_render_be_recent_activities() {
     elseif ($value->field_task_type_value == 'meeting') {
       $value->icon_img = $meeting_icon;
       $value->description = 'Meeting with';
+    }
+
+    if ($value->field_if_system_generated_value == 'yes') {
+      $firstname = $be->getAccountFirstName($value->field_contact_value);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($value->field_contact_value);
+      $lastname = substr($lastname, 0, 1);
+      $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+      $value->description = $value->title . ' by ';
     }
 
     $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

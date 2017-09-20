@@ -57,7 +57,13 @@ class Bullseye {
       }
     }
 
-    return $profile->field_first_name[LANGUAGE_NONE][0]['value'];
+    if (isset($profile->field_first_name[LANGUAGE_NONE][0]['value'])) {
+      return $profile->field_first_name[LANGUAGE_NONE][0]['value'];
+    }
+    else {
+      return '';
+    }
+
   }
 
   /**
@@ -85,7 +91,13 @@ class Bullseye {
       }
     }
 
-    return $profile->field_last_name[LANGUAGE_NONE][0]['value'];
+    if (isset($profile->field_last_name[LANGUAGE_NONE][0]['value'])) {
+      return $profile->field_last_name[LANGUAGE_NONE][0]['value'];
+    }
+    else {
+      return '';
+    }
+
   }
 
   /**
@@ -2392,5 +2404,51 @@ class Bullseye {
    */
   public static function getDealsClosed($producer) {
 
+  }
+
+  /**
+   * Save the activity.
+   */
+  static function createSystemGeneratedActivity($type, $nid) {
+    global $user;
+
+    if ($type == 'proposal') {
+      $activity_title = t('Proposal Created');
+    }
+    elseif ($type == 'rfp') {
+      $activity_title = t('RFP Created');
+    }
+    elseif ($type == 'convert_to_prospect') {
+      $activity_title = t('Converted to Prospect');
+    }
+    elseif ($type == 'convert_to_opportunity') {
+      $activity_title = t('Converted to Opportunity');
+    }
+    elseif ($type == 'convert_to_deal_in_progress') {
+      $activity_title = t('Converted to Deal in Progress');
+    }
+    elseif ($type == 'convert_to_closed_deal') {
+      $activity_title = t('Converted to Closed Deal');
+    }
+
+    $node = new stdClass();
+    $node->type = 'task';
+    $node->uid = $user->uid;
+    node_object_prepare($node);
+    $node->language = LANGUAGE_NONE;
+
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $wrapper->title->set($activity_title);
+    $wrapper->field_task_type->set('others');
+    $wrapper->field_due_date->set(strtotime(date('Y-m-d H:i:s')));
+    $wrapper->field_account->set($nid);
+    $wrapper->field_contact->set($user->uid);
+    $wrapper->field_if_system_generated->set('yes');
+    $wrapper->field_event_type->set('activity');
+    
+    $wrapper->save();
+
+    cache_clear_all('recent_activities_others_' . $nid, 'cache');
+    cache_clear_all('recent_activities_' . $nid, 'cache');
   }
 }
