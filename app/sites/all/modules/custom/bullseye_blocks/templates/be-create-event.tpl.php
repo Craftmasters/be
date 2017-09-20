@@ -20,33 +20,23 @@
           </div>
           <div class="be-event-field-row row">
 
-          	<div class="col-xs-4">
+          	<div class="col-xs-6">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Type'); ?>
 		          	</div>
 		          	<div class="be-event-input">
 		          		<select>
-			          		<option value="1"><?php print t('Email'); ?></option>
-			          		<option value="1"><?php print t('Meeting'); ?></option>
-		          			<option value="1"><?php print t('Phone Call'); ?></option>
+                    <option value="phone_call"><?php print t('Phone Call'); ?></option>
+			          		<option value="email"><?php print t('Email'); ?></option>
+			          		<option value="meeting"><?php print t('Meeting'); ?></option>
+                    <option value="others"><?php print t('Others'); ?></option>
 		          		</select>
 		          	</div>
 		          </div>
           	</div>
 
-          	<div class="col-xs-4">
-          		<div class="be-event-field">
-		          	<div class="be-event-label">
-		          		<?php print t('Date'); ?>
-		          	</div>
-		          	<div class="be-event-input">
-		          		<input type="text" id="create-event-date-activity">
-		          	</div>
-		          </div>
-          	</div>
-
-          	<div class="col-xs-4">
+          	<div class="col-xs-6">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Contact'); ?>
@@ -68,6 +58,22 @@
 		          	</div>
 		          </div>
           	</div>
+
+            <div class="col-xs-12">
+              <div class="be-event-field">
+                <div class="be-event-label">
+                  <?php print t('Date'); ?>
+                </div>
+                <div class="form-group event-datetimepicker">
+                  <div class="input-group date" id="create-event-date-activity">
+                      <input type='text' class="form-control" placeholder="Click calendar to select date and time"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="be-custom-actions">
           	<a href="#" class="submit green-btn"><?php print t('Save'); ?></a>
@@ -91,10 +97,11 @@
 		          	</div>
 		          	<div class="be-event-input">
 		          		<select>
-		          			<option value="1"><?php print t('Email'); ?></option>
-			          		<option value="1"><?php print t('Meeting'); ?></option>
-		          			<option value="1"><?php print t('Phone Call'); ?></option>
-		          		</select>
+                    <option value="phone_call"><?php print t('Phone Call'); ?></option>
+                    <option value="email"><?php print t('Email'); ?></option>
+                    <option value="meeting"><?php print t('Meeting'); ?></option>
+                    <option value="others"><?php print t('Others'); ?></option>
+                  </select>
 		          	</div>
 		          </div>
           	</div>
@@ -135,14 +142,19 @@
 		          </div>
           	</div>
 
-          	<div class="col-xs-4">
+          	<div class="col-xs-12">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Due Date'); ?>
 		          	</div>
-		          	<div class="be-event-input">
-		          		<input type="text" id="create-event-date-task">
-		          	</div>
+		          	<div class="form-group event-datetimepicker">
+                  <div class="input-group date" id="create-event-date-task">
+                      <input type="text" class="form-control" placeholder="Click calendar to select date and time" />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+                </div>
 		          </div>
           	</div>
           </div>

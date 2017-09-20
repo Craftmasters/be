@@ -1,9 +1,12 @@
 <div class="be-regular-block">
   <h2 class="be-regular-h2"><?php print t('Recent Activities'); ?></h2>
   <select class="select-link">
-  	<option><?php print t('All Activity'); ?></option>
+  	<option value="all"><?php print t('All Activity'); ?></option>
+    <option value="phone_call"><?php print t('Phone Calls'); ?></option>
+    <option value="meeting"><?php print t('Meetings'); ?></option>
+    <option value="others"><?php print t('Others'); ?></option>
   </select>
-  <div class="be-block-main">
+  <div class="be-block-main" id="recent-activities-container">
   <!--
   	<div class="be-activity-row row">
   		<div class="col-xs-2 be-activity-icon">

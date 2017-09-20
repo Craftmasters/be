@@ -123,6 +123,7 @@ function bullseye_preprocess_page(&$vars, $hook) {
 
   // Add Vuejs library.
   drupal_add_js('https://unpkg.com/vue@2.4.4/dist/vue.js', 'external');
+
 }
 
 

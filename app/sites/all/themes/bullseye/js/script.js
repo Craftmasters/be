@@ -566,16 +566,10 @@
 
         // Datepicker for create event block.
         if ($('#create-event-date-activity').length) {
-          $('#create-event-date-activity').datepicker({
-            altFormat: "mm-dd-yy",
-            dateFormat: "mm-dd-yy",
-          });
+          $('#create-event-date-activity').datetimepicker();
         }
         if ($('#create-event-date-task').length) {
-          $('#create-event-date-task').datepicker({
-            altFormat: "mm-dd-yy",
-            dateFormat: "mm-dd-yy",
-          });
+          $('#create-event-date-task').datetimepicker();
         }
 
         // For sending the suggestion form.
