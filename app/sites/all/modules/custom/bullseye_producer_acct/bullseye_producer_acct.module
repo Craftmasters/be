@@ -56,13 +56,6 @@ function bullseye_producer_acct_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['reload'] = array(
-    'title' => 'Reload the Page',
-    'page callback' => 'bullseye_producer_reload',
-    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
-    'type' => MENU_CALLBACK,
-  );
-
   return $items;
 }
 
