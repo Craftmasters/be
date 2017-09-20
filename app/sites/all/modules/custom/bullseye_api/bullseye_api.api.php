@@ -364,9 +364,12 @@ class Bullseye {
 
   /**
    * Get all the producers account.
+   *
+   * @param int $status
+   *   The user account status.
    */
-  static function getProducers() {
-    if ($cache = cache_get('producers_listing')) {
+  public static function getProducers($status = 1) {
+    if ($cache = cache_get('producers_listings_' . $status)) {
       $producers = $cache->data;
     }
     else {
@@ -379,6 +382,10 @@ class Bullseye {
       $query->join('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
       $query->join('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
       $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
+      $query->join('field_data_field_phone_number', 'phone', 'phone.entity_id = p.pid');
+      $query->join('field_data_field_producer_website', 'site', 'site.entity_id = p.pid');
+      $query->join('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
+      $query->join('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
       $producers = $query
         ->fields('u', array('mail', 'uid'))
         ->fields('ptype', array('field_producer_type_value'))
@@ -386,12 +393,16 @@ class Bullseye {
         ->fields('fname', array('field_first_name_value'))
         ->fields('lname', array('field_last_name_value'))
         ->fields('contact', array('field_primary_contact_value'))
+        ->fields('phone', array('field_phone_number_value'))
+        ->fields('site', array('field_producer_website_value'))
+        ->fields('hl', array('field_health_and_life_fid'))
+        ->fields('eoi', array('field_errors_omission_insurance_fid'))
         ->condition('r.name', 'producer', '=')
-        ->condition('u.status', 1, '=')
+        ->condition('u.status', $status, '=')
         ->execute()
         ->fetchAll();
 
-      cache_set('producers_listing', $producers, 'cache');
+      cache_set('producers_listings_' . $status, $producers, 'cache');
     }
 
     return $producers;
@@ -1292,8 +1303,8 @@ class Bullseye {
   /**
    * Total producers.
    */
-  static function totalProducers() {
-    if ($cache = cache_get('total_producers')) {
+  public static function totalProducers($status = 1) {
+    if ($cache = cache_get('total_producers_' . $status)) {
       $total = $cache->data;
     }
     else {
@@ -1303,12 +1314,12 @@ class Bullseye {
       $total = $query
         ->fields('u', array('mail'))
         ->condition('r.name', 'producer', '=')
-        ->condition('u.status', 1, '=')
+        ->condition('u.status', $status, '=')
         ->countQuery()
         ->execute()
         ->fetchField();
 
-      cache_set('total_producers', $total, 'cache');
+      cache_set('total_producers_' . $status, $total, 'cache');
     }
 
     return $total;
@@ -2043,5 +2054,21 @@ class Bullseye {
       }
     }
     return false;
+  }
+
+  /**
+   * Approve pending producer account.
+   *
+   * @param string $uid
+   *   The user id.
+   */
+  public static function approvedUser($uid) {
+    $update = array(
+      'status' => 1,
+    );
+    $user = user_load($uid);
+    $user = user_save($user, $update);
+
+    drupal_json_output($user->status);
   }
 }
