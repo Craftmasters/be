@@ -43,9 +43,11 @@
             <td class="cell-check"><input type="checkbox"></td>
             <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
             <td>
-              <span class="gray-font">
-                <?php print $rfp->field_company_value; ?>
-              </span>
+              <a href="/company/<?php print $rfp->alias_details['alias'];?>?from=<?php print $rfp->alias_details['status'];?>">
+                <span class="gray-font">
+                  <?php print $rfp->field_company_value; ?>
+                </span>
+              </a>
             </td>
             <td class="be-dot-td">
               <span class="<?php Bullseye::isActive($rfp->field_mm_current_carrier_value); ?>">

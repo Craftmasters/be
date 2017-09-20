@@ -849,6 +849,21 @@ function bullseye_blocks_render_be_rfps() {
   $vars['rfps'] = Bullseye::getRfps();
   $vars['total'] = Bullseye::totalRfps();
 
+  foreach ($vars['rfps'] as $key => $value) {
+    
+    $company_nid = Bullseye::getAccountNidByName($value->field_company_value); 
+    $account_status = Bullseye::getAccountStatusByNid($company_nid);
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $company_nid);
+    $alias = substr($alias, 8);
+    $vars['rfps'][$key]->alias_details = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+  }
+
   $output = theme('be_rfps', $vars);
 
   return array(
