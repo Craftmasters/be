@@ -63,9 +63,13 @@
               </span>
             </td>
             <td>
-              <a class="orange-font" href="http://company.com">
+              <?php if ($p->field_producer_website_value): ?>
+              <a class="orange-font" href="http://<?php print $p->field_producer_website_value; ?>">
                 <?php print $p->field_producer_website_value; ?>
               </a>
+              <?php else: ?>
+                <a class="orange-font disabled" href="#"></a>
+              <?php endif; ?>
             </td>
             <td class="be-dot-td">
               <span class="<?php Bullseye::isActive($p->field_health_and_life_fid); ?>"></span>
