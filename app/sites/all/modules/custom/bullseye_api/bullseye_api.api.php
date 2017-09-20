@@ -2134,6 +2134,9 @@ class Bullseye {
     drupal_json_output($user->status);
   }
 
+  /**
+   * Get the nid of account content.
+   */
   public static function getAccountNidByName($name) {
     $query = db_select('node', 'n');
     $nid = $query
