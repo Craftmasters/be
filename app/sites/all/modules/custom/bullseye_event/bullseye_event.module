@@ -56,10 +56,13 @@ function bullseye_event_save_activity() {
   $type = $_POST['type'];
   $contact = $_POST['contact'];
   $date = strtotime($_POST['date']);
+  $priority = $_POST['priority'];
   $contact_details = Bullseye::getContactDetailsById($contact);
   $firstname = $contact_details['field_firstname_value'];
   $lastname = $contact_details['field_lastname_value'];
   $contact_name = $firstname . ' ' . $lastname;
+  $event_type = $_POST['event_type'];
+
 
   $node = new stdClass();
   $node->type = 'task';
@@ -69,19 +72,27 @@ function bullseye_event_save_activity() {
 
   if ($type == 'phone_call') {
   	$title = 'Phone call with ' . $contact_name;
-  	cache_clear_all('recent_activities_phonecall_' . $nid, 'cache');
+    if ($event_type == 'activity') {
+      cache_clear_all('recent_activities_phonecall_' . $nid, 'cache');
+    }
   }
   elseif ($type == 'email') {
   	$title = 'Email with ' . $contact_name;
-  	cache_clear_all('recent_activities_email_' . $nid, 'cache');
+    if ($event_type == 'activity') {
+      cache_clear_all('recent_activities_email_' . $nid, 'cache');
+    }
   }
   elseif ($type == 'meeting') {
   	$title = 'Meeting with ' . $contact_name;
-  	cache_clear_all('recent_activities_meeting_' . $nid, 'cache');
+    if ($event_type == 'activity') {
+      cache_clear_all('recent_activities_meeting_' . $nid, 'cache');
+    }
   }
   elseif ($type == 'others') {
   	$title = $activity_name;
-  	cache_clear_all('recent_activities_others_' . $nid, 'cache');
+    if ($event_type == 'activity') {
+      cache_clear_all('recent_activities_others_' . $nid, 'cache');
+    }
   }
 
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -89,9 +100,10 @@ function bullseye_event_save_activity() {
   $wrapper->field_task_type->set($type);
   $wrapper->field_due_date->set($date);
   $wrapper->field_contact->set($contact);
+  $wrapper->field_priority->set($priority);
   $wrapper->field_account->set($nid);
   $wrapper->field_if_system_generated->set('no');
-  $wrapper->field_event_type->set('activity');
+  $wrapper->field_event_type->set($event_type);
   
   $wrapper->save();
 

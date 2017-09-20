@@ -64,6 +64,7 @@
 
             <div class="col-xs-12">
               <div class="be-event-field">
+                <div class="-task-event-error-container"> </div>
                 <div class="be-event-label">
                   <?php print t('Date'); ?>
                 </div>
@@ -84,11 +85,12 @@
         </div>
         <div id="tab-1" class="tab-content">
           <div class="be-event-field">
+            <div class="task-event-error-container"> </div>
           	<div class="be-event-label">
           		<?php print t('Task Name'); ?>
           	</div>
           	<div class="be-event-input">
-          		<input type="text" placeholder="<?php print t('Add Task'); ?>">
+          		<input type="text" placeholder="<?php print t('Add Task'); ?>" id="task-name">
           	</div>
           </div>
           <div class="be-event-field-row row">
@@ -99,7 +101,7 @@
 		          		<?php print t('Type'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<select>
+		          		<select id="task-type">
                     <option value="phone_call"><?php print t('Phone Call'); ?></option>
                     <option value="email"><?php print t('Email'); ?></option>
                     <option value="meeting"><?php print t('Meeting'); ?></option>
@@ -115,7 +117,7 @@
 		          		<?php print t('Priority'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-		          		<select>
+		          		<select id="task-priority">
 		          			<option value="low"><?php print t('Low'); ?></option>
                     <option value="normal"><?php print t('Normal'); ?></option>
                     <option value="high"><?php print t('High'); ?></option>
@@ -131,7 +133,7 @@
 		          	</div>
 		          	<div class="be-event-input">
                   <?php if (arg(0) == 'company') : ?>
-                    <select>
+                    <select id="task-contact">
                       <?php foreach ($people as $key => $value) : ?>
                         <option value="<?php print $value->field_contacts_value;?>">
                           <?php print $value->field_firstname_value . ' ' . $value->field_lastname_value; ?>
@@ -154,7 +156,7 @@
 		          	</div>
 		          	<div class="form-group event-datetimepicker">
                   <div class="input-group date" id="create-event-date-task">
-                      <input type="text" class="form-control" placeholder="Click calendar to select date and time" />
+                      <input type="text" class="form-control" id="task-date" placeholder="Click calendar to select date and time" />
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                       </span>

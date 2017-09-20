@@ -54,6 +54,8 @@
                 type: type,
                 contact: contact,
                 date: date,
+                priority: '',
+                event_type: 'activity',
               },
               success: function(result){
                 var success = 'Successfully added new activity.';
@@ -65,6 +67,60 @@
           }
           else {
             $('.event-error-container').html(div_error);
+          }
+
+          e.preventDefault();
+        });
+
+        $('#btn-save-task').click(function(e) {
+          var task_name = $('#task-name').val();
+          var type = $('#task-type').val();
+          var contact = $('#task-contact').val();
+          var date = $('#task-date').val();
+          var priority = $('#task-priority').val();
+
+          var proceed = false;
+          var error = '';
+
+          if (type == '' || contact == '' || date == '' || priority == '') {
+            error = error + 'Type, Contact, Priority and Date fields are required.';
+            proceed = false;
+          }
+          else {
+            if (type == 'others' && task_name == '') {
+              error = error + 'Task Name is required when choosing "others" for the type field.';
+              proceed = false;
+            }
+            else {
+              proceed = true;
+            }
+          }
+
+          var close = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+          var div_error = '<div class="alert alert-danger">' + close + error + '</div>';
+
+          if (proceed) {
+            $.ajax({
+              url: '/be-event/save-activity',
+              method: 'POST',
+              data: {
+                nid: nid,
+                task_name: task_name,
+                type: type,
+                contact: contact,
+                date: date,
+                priority: priority,
+                event_type: 'task',
+              },
+              success: function(result){
+                var success = 'Successfully added new task.';
+                var div_success = '<div class="alert alert-success">' + close + success + '</div>';
+                $('.task-event-error-container').html(div_success);
+              },
+            });
+          }
+          else {
+            $('.task-event-error-container').html(div_error);
           }
 
           e.preventDefault();
