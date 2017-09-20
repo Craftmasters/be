@@ -55,6 +55,20 @@
           console.log('Cannot processed producer account.');
         });
       });
+
+      // For refreshing the page after hitting exit.
+      $('#exit').click(function() {
+        $.ajax({
+          url: '/reload',
+          method: 'POST',
+          data: {},
+          success: function(result){
+            console.log(result);
+          },
+        }).fail(function(jqXHR, textStatus) {
+          console.log('Error refreshing the page.');
+        });
+      });
     }
   };
 })(jQuery, Drupal, this, this.document);
