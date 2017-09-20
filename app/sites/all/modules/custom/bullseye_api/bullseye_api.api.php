@@ -1468,8 +1468,6 @@ class Bullseye {
           // Save the profile2 to the user account.
           profile2_save($profile);
 
-          $message = t('Your account was created successfully and is pending for admin approval.');
-          drupal_set_message($message, 'message');
           break;
 
         case 'individual':
