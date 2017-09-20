@@ -92,7 +92,7 @@ function accounts_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '34',
+          'weight' => '21',
         ),
       ),
       'display' => array(),
