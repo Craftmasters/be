@@ -2403,7 +2403,7 @@ class Bullseye {
    *   The producer account.
    */
   public static function getDealsClosed($producer) {
-
+    return $producer;
   }
 
   /**

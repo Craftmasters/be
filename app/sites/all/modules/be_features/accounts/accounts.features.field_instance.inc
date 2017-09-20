@@ -542,7 +542,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 40,
+      'weight' => 27,
     ),
   );
 
@@ -583,7 +583,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 31,
+      'weight' => 18,
     ),
   );
 
@@ -624,7 +624,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 20,
     ),
   );
 
@@ -664,7 +664,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 8,
     ),
   );
 
@@ -701,7 +701,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 39,
+      'weight' => 26,
     ),
   );
 
@@ -747,7 +747,7 @@ function accounts_field_default_field_instances() {
         'title_on_top' => TRUE,
       ),
       'type' => 'field_collection_embed',
-      'weight' => 35,
+      'weight' => 22,
     ),
   );
 
@@ -788,7 +788,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 3,
     ),
   );
 
@@ -828,7 +828,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 5,
     ),
   );
 
@@ -865,7 +865,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 37,
+      'weight' => 24,
     ),
   );
 
@@ -905,7 +905,48 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 20,
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-accounts-field_producer'.
+  $field_instances['node-accounts-field_producer'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'user_reference',
+        'settings' => array(),
+        'type' => 'user_reference_default',
+        'weight' => 42,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_producer',
+    'label' => 'Producer',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'user_reference',
+      'settings' => array(
+        'autocomplete_match' => 'contains',
+        'autocomplete_path' => 'user_reference/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'user_reference_autocomplete',
+      'weight' => 15,
     ),
   );
 
@@ -945,7 +986,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 29,
+      'weight' => 16,
     ),
   );
 
@@ -984,7 +1025,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 30,
+      'weight' => 17,
     ),
   );
 
@@ -1020,7 +1061,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 38,
+      'weight' => 25,
     ),
   );
 
@@ -1060,7 +1101,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 6,
     ),
   );
 
@@ -1100,7 +1141,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 10,
     ),
   );
 
@@ -1137,7 +1178,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 17,
+      'weight' => 9,
     ),
   );
 
@@ -1177,7 +1218,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 7,
     ),
   );
 
@@ -1217,7 +1258,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 28,
+      'weight' => 14,
     ),
   );
 
@@ -1294,7 +1335,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 4,
     ),
   );
 
@@ -1340,7 +1381,7 @@ function accounts_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 9,
+      'weight' => 2,
     ),
   );
 
@@ -1379,7 +1420,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 41,
+      'weight' => 28,
     ),
   );
 
@@ -1419,7 +1460,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 21,
+      'weight' => 12,
     ),
   );
 
@@ -1456,7 +1497,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 36,
+      'weight' => 23,
     ),
   );
 
@@ -1496,7 +1537,7 @@ function accounts_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 24,
+      'weight' => 13,
     ),
   );
 
@@ -1537,7 +1578,7 @@ function accounts_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 19,
     ),
   );
 
@@ -1565,6 +1606,7 @@ function accounts_field_default_field_instances() {
   t('Position');
   t('Postal Code');
   t('Prefix');
+  t('Producer');
   t('Producers');
   t('Profile Picture');
   t('Referral Partners');
