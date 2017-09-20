@@ -12,7 +12,6 @@ dependencies[] = text
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = field_benefits
-features[field_instance][] = node-carrier-body
 features[field_instance][] = node-carrier-field_benefits
 features[field_instance][] = node-carrier-field_due_date
 features[field_instance][] = node-carrier-field_email
