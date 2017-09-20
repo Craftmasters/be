@@ -213,6 +213,32 @@ function bullseye_producer_acct_email_element_validate($element, &$form_state, $
 }
 
 /**
+ * implements hook_form_validate()
+ */
+function bullseye_producer_acct_indiv_form_validate($form, &$form_state){
+
+  // drupal_set_message('<pre>'.print_r($form_state, 1).'</pre>');
+  // @see modules/user/user.module, line 1252
+  // Trim whitespace from mail, to prevent confusing 'e-mail not valid'
+  // warnings often caused by cutting and pasting.
+  $mail = trim($form_state['values']['producer_email']);
+  // form_set_value($form['account']['mail'], $mail, $form_state);
+
+  // Validate the e-mail address, and check if it is taken by an existing user.
+  if ($error = user_validate_mail($form_state['values']['producer_email'])) {
+    form_set_error('mail', $error);
+  }
+  elseif ((bool) db_select('users')->fields('users', array('uid'))->condition('mail', db_like($form_state['values']['producer_email']), 'LIKE')->range(0, 1)->execute()->fetchField()) {
+    form_set_error('mail', t('The e-mail address %email is already taken.', array('%email' => $form_state['values']['producer_email'])));
+  }
+
+  // check if email already exists
+  if (user_validate_mail($form_state['values']['producer_email'])) {
+    form_set_error('producer_email', t(''));
+  }
+}
+
+/**
  * Implements hook_form_submit().
  */
 function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
@@ -223,6 +249,8 @@ function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
 
   // Register the company producer account.
   $be->addProducer($data);
+
+  drupal_goto('producer/registration/confirmation');
 }
 
 /**
@@ -266,6 +294,14 @@ function bullseye_producer_acct_company_form($form, &$form_state) {
 }
 
 /**
+ * implements hook_form_validate()
+ */
+function bullseye_producer_acct_company_form_validate($form, &$form_state){
+  // re-use the individual form validateion
+  bullseye_producer_acct_indiv_form_validate($form, $form_state);
+}
+
+/**
  * Implements hook_FORM_submit().
  */
 function bullseye_producer_acct_company_form_submit($form, &$form_state) {
@@ -276,6 +312,8 @@ function bullseye_producer_acct_company_form_submit($form, &$form_state) {
 
   // Register the company producer account.
   $be->addProducer($data);
+  
+  drupal_goto('producer/registration/confirmation');
 }
 
 /**
@@ -290,8 +328,6 @@ function bullseye_producer_acct_approved() {
     cache_clear_all('producers_listings_0', 'cache');
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
-
-    drupal_goto('/producers/pending');
   }
   unset($_POST['producer_uid']);
   drupal_json_output(NULL);
@@ -311,4 +347,17 @@ function bullseye_producer_acct_delete() {
     cache_clear_all('total_producers_0', 'cache');
   }
   drupal_json_output(NULL);
+}
+
+/**
+ * Refresh the page.
+ */
+function bullseye_producer_reload() {
+  // Clear producers cache.
+  cache_clear_all('producers_listings_1', 'cache');
+  cache_clear_all('producers_listings_0', 'cache');
+  cache_clear_all('total_producers_1', 'cache');
+  cache_clear_all('total_producers_0', 'cache');
+
+  header("Refresh:0; url=/producers");
 }
