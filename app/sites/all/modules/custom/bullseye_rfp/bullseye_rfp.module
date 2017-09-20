@@ -1737,7 +1737,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
    * Group Info
    ***************/
   // Company.
-  $node->field_company[$lang][0][$val] = $account->field_company[$lang][0][$val];
+  $node->field_company[$lang][0][$val] = $account->title;
   // Primary email.
   $node->field_email[$lang][0][$val] = $account->field_email[$lang][0][$val];
   // Phone number.
