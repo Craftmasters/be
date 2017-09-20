@@ -42,6 +42,13 @@ function bullseye_producer_acct_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producer/approve-pending-producer'] = array(
+    'title' => 'Approve Pending Producer',
+    'page callback' => 'bullseye_producer_acct_approved',
+    'access arguments' => array(BULLSEYE_PRODUCER_ACCT_ADD),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -262,4 +269,20 @@ function bullseye_producer_acct_company_form_submit($form, &$form_state) {
 
   // Register the company producer account.
   $be->addProducer($data);
+}
+
+/**
+ * Approved pending producer account.
+ */
+function bullseye_producer_acct_approved() {
+  if (isset($_POST['producer_uid'])) {
+    Bullseye::approvedUser($_POST['producer_uid']);
+
+    // Clear producers cache.
+    cache_clear_all('producers_listings_1', 'cache');
+    cache_clear_all('producers_listings_0', 'cache');
+    cache_clear_all('total_producers_1', 'cache');
+    cache_clear_all('total_producers_0', 'cache');
+  }
+  drupal_json_output(NULL);
 }
