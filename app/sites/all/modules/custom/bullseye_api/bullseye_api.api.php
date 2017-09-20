@@ -2121,4 +2121,16 @@ class Bullseye {
 
     drupal_json_output($user->status);
   }
+
+  /**
+   * Approve pending producer account.
+   *
+   * @param string $uid
+   *   The user id.
+   */
+  public static function deleteUser($uid) {
+    user_delete($uid);
+
+    drupal_json_output($user->status);
+  }
 }
