@@ -2133,4 +2133,18 @@ class Bullseye {
 
     drupal_json_output($user->status);
   }
+
+  public static function getAccountNidByName($name) {
+    $query = db_select('node', 'n');
+    $nid = $query
+      ->distinct()
+      ->fields('n', array('nid'))
+      ->condition('n.type', 'accounts', '=')
+      ->condition('n.title', $name, '=')
+      ->orderBy('n.status', 1, '=')
+      ->execute()
+      ->fetchField();
+
+    return $nid;
+  }
 }
