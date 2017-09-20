@@ -1504,7 +1504,7 @@ class Bullseye {
             $feoi_file = file_load($data['file_error_omission_insurance']);
             $feoi_file->display = 1;
             $feoi_file = file_copy($feoi_file, 'public://');
-            $profile->field_health_and_life[$lang][0] = (array) $feoi_file;
+            $profile->field_errors_omission_insurance[$lang][0] = (array) $feoi_file;
           }
 
           // Save the profile2 to the user account.
