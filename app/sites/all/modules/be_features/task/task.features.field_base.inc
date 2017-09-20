@@ -86,6 +86,32 @@ function task_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_if_system_generated'.
+  $field_bases['field_if_system_generated'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_if_system_generated',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes' => 'Yes',
+        'no' => 'No',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_priority'.
   $field_bases['field_priority'] = array(
     'active' => 1,

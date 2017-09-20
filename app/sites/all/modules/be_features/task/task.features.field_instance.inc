@@ -178,6 +178,47 @@ function task_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-task-field_if_system_generated'.
+  $field_instances['node-task-field_if_system_generated'] = array(
+    'bundle' => 'task',
+    'default_value' => array(
+      0 => array(
+        'value' => 'no',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_if_system_generated',
+    'label' => 'if System Generated',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-task-field_priority'.
   $field_instances['node-task-field_priority'] = array(
     'bundle' => 'task',
@@ -260,6 +301,7 @@ function task_field_default_field_instances() {
   t('Event Type');
   t('Priority');
   t('Type');
+  t('if System Generated');
 
   return $field_instances;
 }

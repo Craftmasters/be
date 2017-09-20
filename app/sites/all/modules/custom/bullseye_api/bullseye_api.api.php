@@ -1711,6 +1711,195 @@ class Bullseye {
   }
 
   /**
+   * Get the recent activities of an account.
+   */
+  static function getRecentActivitiesByNid($nid) {
+    if ($cache = cache_get('recent_activities_' . $nid)) {
+      $activities = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $activities = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->condition('n.type', 'task', '=')
+        ->condition('et.field_event_type_value', 'activity', '=')
+        ->condition('a.field_account_nid', $nid, '=')
+        ->orderBy('d.field_due_date_value', 'DESC')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAll();
+
+      cache_set('recent_activities_' . $nid, $activities, 'cache');
+    }
+
+    return $activities;
+  }
+
+  /**
+   * Get the recent phone call activities of an account.
+   */
+  static function getRecentPhoneCallActivitiesByNid($nid) {
+    if ($cache = cache_get('recent_activities_phonecall_' . $nid)) {
+      $activities = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $activities = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->condition('n.type', 'task', '=')
+        ->condition('et.field_event_type_value', 'activity', '=')
+        ->condition('t.field_task_type_value', 'phone_call', '=')
+        ->condition('a.field_account_nid', $nid, '=')
+        ->orderBy('d.field_due_date_value', 'DESC')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAll();
+
+      cache_set('recent_activities_phonecall_' . $nid, $activities, 'cache');
+    }
+
+    return $activities;
+  }
+
+  /**
+   * Get the recent meeting activities of an account.
+   */
+  static function getRecentMeetingActivitiesByNid($nid) {
+    if ($cache = cache_get('recent_activities_meeting_' . $nid)) {
+      $activities = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $activities = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->condition('n.type', 'task', '=')
+        ->condition('et.field_event_type_value', 'activity', '=')
+        ->condition('t.field_task_type_value', 'meeting', '=')
+        ->condition('a.field_account_nid', $nid, '=')
+        ->orderBy('d.field_due_date_value', 'DESC')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAll();
+
+      cache_set('recent_activities_meeting_' . $nid, $activities, 'cache');
+    }
+
+    return $activities;
+  }
+
+  /**
+   * Get the recent email activities of an account.
+   */
+  static function getRecentEmailActivitiesByNid($nid) {
+    if ($cache = cache_get('recent_activities_email_' . $nid)) {
+      $activities = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $activities = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->condition('n.type', 'task', '=')
+        ->condition('et.field_event_type_value', 'activity', '=')
+        ->condition('t.field_task_type_value', 'email', '=')
+        ->condition('a.field_account_nid', $nid, '=')
+        ->orderBy('d.field_due_date_value', 'DESC')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAll();
+
+      cache_set('recent_activities_email_' . $nid, $activities, 'cache');
+    }
+
+    return $activities;
+  }
+
+  /**
+   * Get the recent others activities of an account.
+   */
+  static function getRecentOthersActivitiesByNid($nid) {
+    if ($cache = cache_get('recent_activities_others_' . $nid)) {
+      $activities = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $activities = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->condition('n.type', 'task', '=')
+        ->condition('et.field_event_type_value', 'activity', '=')
+        ->condition('t.field_task_type_value', 'others', '=')
+        ->condition('a.field_account_nid', $nid, '=')
+        ->orderBy('d.field_due_date_value', 'DESC')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAll();
+
+      cache_set('recent_activities_others_' . $nid, $activities, 'cache');
+    }
+
+    return $activities;
+  }
+
+  /**
    * Get all contacts from an account.
    */
   static function getAccountPeople($nid) {

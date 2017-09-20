@@ -670,13 +670,14 @@ function bullseye_blocks_render_be_create_event() {
 
   global $user;
 
-  $be = new Bullseye($user);
-
   $vars = array();
+  
+  $vars['nid'] = '';
 
   if (arg(0) == 'company') {
-    $nid = $be->getNidFromPath(arg(1));
-    $vars['people'] = $be->getAccountPeople($nid);
+    $nid = Bullseye::getNidFromPath(arg(1));
+    $vars['nid'] = $nid;
+    $vars['people'] = Bullseye::getAccountPeople($nid);
   }
 
   $output = theme('be_create_event', $vars);
@@ -697,10 +698,49 @@ function bullseye_blocks_render_be_recent_activities() {
 
   $vars = array();
 
-  $vars['call_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_call.svg';
-  $vars['send_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_send.svg';
-  $vars['receive_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_receive.svg';
-  $vars['meeting_icon'] = $base_url . '/' . $theme_directory . '/images/icons/be_activity_meeting.svg';
+  $call_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_call.svg';
+  $send_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_send.svg';
+  $receive_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_receive.svg';
+  $meeting_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_meeting.svg';
+
+  $nid = Bullseye::getNidFromPath(arg(1));
+  $vars['nid'] = $nid;
+  $activities = Bullseye::getRecentActivitiesByNid($nid);
+
+  $sorted = array();
+
+  foreach ($activities as $key => $value) {
+    $date = strtotime($value->field_due_date_value);
+    $value->icon_img = $send_icon;
+
+    // Contact name.
+    $contact = Bullseye::getContactDetailsById($value->field_contact_value);
+    $firstname = ucwords($contact['field_firstname_value']);
+    $lastname = substr($contact['field_lastname_value'], 0, 1);
+    $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+    $value->description = $value->title . ' - ';
+
+    // For the icon and description.
+    if ($value->field_task_type_value == 'phone_call') {
+      $value->icon_img = $call_icon;
+      $value->description = 'Call with';
+    }
+    elseif ($value->field_task_type_value == 'email') {
+      $value->icon_img = $send_icon;
+      $value->description = 'Email with';
+    }
+    elseif ($value->field_task_type_value == 'meeting') {
+      $value->icon_img = $meeting_icon;
+      $value->description = 'Meeting with';
+    }
+
+    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
+    $sorted[$date . '-' . $value->nid] = $value;
+  }
+
+  krsort($sorted);
+
+  $vars['activities'] = $sorted;
 
   $output = theme('be_recent_activities', $vars);
 
