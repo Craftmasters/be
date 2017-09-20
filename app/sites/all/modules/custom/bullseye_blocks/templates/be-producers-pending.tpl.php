@@ -74,8 +74,13 @@
               <span class="<?php Bullseye::isActive($p->field_errors_omission_insurance_fid); ?>"></span>
             </td>
             <td class="be-dot-td">
-              <a href="<?php Bullseye::dl($p->field_health_and_life_fid); ?>" download="<?php Bullseye::filename($p->field_health_and_life_fid); ?> " class="producer-pending-file">
+              <?php if ($p->field_health_and_life_fid): ?>
+                <a href="<?php Bullseye::dl($p->field_health_and_life_fid); ?>" download="<?php Bullseye::filename($p->field_health_and_life_fid); ?> " class="producer-pending-file">
                 <i class="fa fa-download" aria-hidden="true"></i>
+              <?php else: ?>
+                <a href="#" class="producer-pending-file" style="pointer-events: none;">
+                <i class="fa fa-download" aria-hidden="true"></i>
+              <?php endif; ?>
               <a>
             </td>
             <td>
