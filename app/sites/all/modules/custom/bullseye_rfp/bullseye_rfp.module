@@ -1754,7 +1754,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   // City.
   $node->field_city[$lang][0][$val] = $account->field_city[$lang][0][$val];
   // State.
-  $node->field_frp_state[$lang][0][$val] = $account->field_state[$lang][0][$val];
+  $node->field_frp_state[$lang][0][$val] = $account->field_state_code[$lang][0][$val];
   // Zip Code.
   $node->field_zip_code[$lang][0][$val] = $account->field_postal_code[$lang][0][$val];
   // Due date.
