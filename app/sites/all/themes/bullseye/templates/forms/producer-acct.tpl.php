@@ -162,6 +162,7 @@ A few more things to wrap this up.</h4>
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
       <label for="edit-file-health-life" class="producer-acct-file-label">Upload a copy of current Health and Life</label>
+      <span class="producer-file-name-life"></span>
       <?php print render($form['file_health_life']); ?>
     </div>
   </div>
@@ -170,6 +171,7 @@ A few more things to wrap this up.</h4>
     <div class="check-icon-gray"></div>
     <div class="producer-acct-file-field-wrapper">
       <label for="edit-file-error-omission-insurance" class="producer-acct-file-label">Upload a copy of Errors and Omission Insurance</label>
+      <span class="producer-file-name-omission"></span>
       <?php print render($form['file_error_omission_insurance']); ?>
     </div>
   </div>
@@ -187,6 +189,16 @@ $('label[for="edit-file-health-life-upload"]').click(function(e){
   e.preventDefault();
   $('input#edit-file-health-life-upload').click();
 })
+
+/*$('#edit-file-health-life-upload').change(function(e) {
+  alert($(this).val());
+  if ($(this).val() != '') {
+      //$('.avatar-filename').html('Chosen file: ' + $(this).val().replace(/.*[\/\\]/, ''));
+    $('.producer-acct-health-life .check-icon-gray').addClass('check-icon-green');
+    $('.producer-acct-health-life').removeClass('check-icon-gray');
+  }
+});*/
+
 $('label[for="edit-file-error-omission-insurance-upload"]').click(function(e){
   e.preventDefault();
   $('input#edit-file-error-omission-insurance-upload').click();
@@ -236,20 +248,21 @@ agreements.click(function(e){
   hasAgreed = true;
   return true;
 });
-var healthLife = $('#edit-file-health-life');
+var healthLife = $('input#edit-file-health-life-upload');
 var healthLifeCheck = $('.producer-acct-check.producer-acct-health-life');
 healthLife.change(function (e){
   var file = $(this).val();
-  
   if(file){
     hasHealthLife = true;
     healthLifeCheck.children('.check-icon-gray').removeClass('check-icon-gray').addClass('check-icon-green');
+    healthLifeCheck.children('.producer-file-name').html('Chosen file: ' + file.replace(/.*[\/\\]/, ''));
+    $('.producer-file-name-life').html('Chosen file: ' + file.replace(/.*[\/\\]/, ''));
   }
   else{
     hasHealthLife = false;
   }
 });
-var omission = $('#edit-file-error-omission-insurance');
+var omission = $('input#edit-file-error-omission-insurance-upload');
 var omissionCheck = $('.producer-acct-check.producer-acct-omission-insurance');
 omission.change(function (e){
   var file = $(this).val();
@@ -257,6 +270,7 @@ omission.change(function (e){
   if(file){
     hasOmission = true;
     omissionCheck.children('.check-icon-gray').removeClass('check-icon-gray').addClass('check-icon-green');
+    $('.producer-file-name-omission').html('Chosen file: ' + file.replace(/.*[\/\\]/, ''));
   }
   else{
     hasOmission = false;
