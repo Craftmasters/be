@@ -377,15 +377,15 @@ class Bullseye {
       $query->join('users_roles', 'ur', 'u.uid = ur.uid');
       $query->join('role', 'r', 'r.rid = ur.rid');
       $query->join('profile', 'p', 'p.uid = u.uid');
-      $query->join('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
-      $query->join('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
-      $query->join('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
-      $query->join('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
-      $query->join('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
-      $query->join('field_data_field_phone_number', 'phone', 'phone.entity_id = p.pid');
-      $query->join('field_data_field_producer_website', 'site', 'site.entity_id = p.pid');
-      $query->join('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
-      $query->join('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
+      $query->leftJoin('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
+      $query->leftJoin('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
+      $query->leftJoin('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
+      $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
+      $query->leftJoin('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
+      $query->leftJoin('field_data_field_phone_number', 'phone', 'phone.entity_id = p.pid');
+      $query->leftJoin('field_data_field_producer_website', 'site', 'site.entity_id = p.pid');
+      $query->leftJoin('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
+      $query->leftJoin('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
       $producers = $query
         ->fields('u', array('mail', 'uid'))
         ->fields('ptype', array('field_producer_type_value'))
@@ -2149,5 +2149,29 @@ class Bullseye {
       ->fetchField();
 
     return $nid;
+  }
+
+  /**
+   * Download file.
+   *
+   * @param string $fid
+   *  The file id.
+   */
+  public static function dl($fid) {
+    $file = file_load($fid);
+    $uri = $file->uri;
+
+    print file_create_url($uri);
+  }
+
+  /**
+   * Get the filename.
+   *
+   * @param string $fid
+   *  The file id.
+   */
+  public static function filename($fid) {
+    $file = file_load($fid);
+    print $file->filename;
   }
 }
