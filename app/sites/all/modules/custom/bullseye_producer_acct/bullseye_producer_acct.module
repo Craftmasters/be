@@ -290,7 +290,10 @@ function bullseye_producer_acct_approved() {
     cache_clear_all('producers_listings_0', 'cache');
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
+
+    drupal_goto('/producers/pending');
   }
+  unset($_POST['producer_uid']);
   drupal_json_output(NULL);
 }
 
