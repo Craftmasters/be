@@ -59,7 +59,7 @@
 		</div>
 		<div class="col-xs-10">
 				
-			<?php if ($account_status != 'lead') : ?>
+			<?php if ($account_status == 'prospect' || $account_status == 'opportunity' || $account_status == 'deal_in_progress') : ?>
 				<a href="#" class="cp-link big-step">
 					<span><?php print t('Converted to Prospect!'); ?></span>
 				</a>

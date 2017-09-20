@@ -61,15 +61,17 @@
             <td class="cell-check"><input type="checkbox"></td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
-              <span class="gray-font">
-                <?php
-                  Bullseye::buildAccountName(
-                    $p->field_firstname_value,
-                    $p->field_middle_name_value,
-                    $p->field_lastname_value
-                  );
-                ?>
-              </span>
+              <a href="<?php print $p->edit_link; ?>" rel="lightframe">
+                <span class="gray-font">
+                  <?php
+                    Bullseye::buildAccountName(
+                      $p->field_firstname_value,
+                      $p->field_middle_name_value,
+                      $p->field_lastname_value
+                    );
+                  ?>
+                </span>
+              </a>
             </td>
             <td>
               <span class="light-gray-font">

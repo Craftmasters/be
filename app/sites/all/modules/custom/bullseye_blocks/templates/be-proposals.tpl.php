@@ -49,11 +49,9 @@
               </span>
             </td>
             <td>
-              <span class="gray-font">
-                <a href="/company/allen-markarian?from=lead" class="gray-font">
-                  <?php print Bullseye::getCompanyNameByNid($proposal->nid); ?>
-                </a>
-              </span>
+              <a href="/company/<?php print $aliases[$proposal->field_account_nid]['alias'];?>?from=<?php print $aliases[$proposal->field_account_nid]['status'];?>">
+                <span class="gray-font"><?php print Bullseye::getCompanyNameByNid($proposal->field_account_nid); ?></span>
+              </a>
             </td>
             <td class="be-dot-td">
               <span class="<?php print $has['mm']; ?>">
