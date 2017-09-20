@@ -223,6 +223,8 @@ function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
 
   // Register the company producer account.
   $be->addProducer($data);
+
+  drupal_goto('producer/registration/confirmation');
 }
 
 /**
@@ -276,6 +278,8 @@ function bullseye_producer_acct_company_form_submit($form, &$form_state) {
 
   // Register the company producer account.
   $be->addProducer($data);
+  
+  drupal_goto('producer/registration/confirmation');
 }
 
 /**
