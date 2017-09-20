@@ -479,10 +479,15 @@ function bullseye_blocks_render_be_producers_pending() {
 
   $vars = array();
 
+  $vars['producers'] = Bullseye::getProducers(0);
+  // Total number of producers.
+  $vars['total'] = Bullseye::totalProducers(0);
+
   $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  drupal_add_js(drupal_get_path('module', 'bullseye_producer_acct') . '/producer_pending.js');
 
   $output = theme('be_producers_pending', $vars);
 
