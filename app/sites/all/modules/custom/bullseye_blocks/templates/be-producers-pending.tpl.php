@@ -124,7 +124,7 @@
                       <div class="modal-footer">
                         <div class="be-custom-actions">
                           <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Cancel'); ?></button>
-                          <button id="btn-delete-producer-1" type="button" class="green-btn" data-dismiss="modal"><?php print t('yes'); ?></button>
+                          <button id="btn-delete-producer-1" type="button" class="green-btn delete" data-dismiss="modal"><?php print t('yes'); ?></button>
                         </div>
                       </div>
                     </div>
