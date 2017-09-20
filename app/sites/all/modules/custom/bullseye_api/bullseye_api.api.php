@@ -2174,4 +2174,34 @@ class Bullseye {
     $file = file_load($fid);
     print $file->filename;
   }
+
+  /**
+   * Get Leads assigned.
+   *
+   * @param string $producer
+   *   The producer account.
+   */
+  public static function getLeadsAssigned($producer) {
+
+  }
+
+  /**
+   * Get Opportunities covered.
+   *
+   * @param string $producer
+   *   The producer account.
+   */
+  public static function getOpportunitiesCovered($producer) {
+
+  }
+
+  /**
+   * Get Deals closed.
+   *
+   * @param string $producer
+   *   The producer account.
+   */
+  public static function getDealsClosed($producer) {
+
+  }
 }
