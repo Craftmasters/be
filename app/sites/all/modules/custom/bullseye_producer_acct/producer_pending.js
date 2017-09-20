@@ -38,12 +38,12 @@
       });
 
       // Delete pending producer.
-      $('.approve').click(function() {
+      $('.delete').click(function() {
         console.log(this)
         var producer_uid = $(this).data('uid');
         console.log(producer_uid);
         $.ajax({
-          url: '/producer/approve-pending-producer',
+          url: '/producer/delete-pending-producer',
           method: 'POST',
           data: {
             producer_uid: producer_uid,
