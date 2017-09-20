@@ -1522,8 +1522,6 @@ class Bullseye {
           // Save the profile2 to the user account.
           profile2_save($profile);
 
-          $message = t('Your account was created successfully and is pending for admin approval.');
-          drupal_set_message($message, 'message');
           break;
       }
     }
@@ -2445,7 +2443,7 @@ class Bullseye {
     $wrapper->field_contact->set($user->uid);
     $wrapper->field_if_system_generated->set('yes');
     $wrapper->field_event_type->set('activity');
-    
+
     $wrapper->save();
 
     cache_clear_all('recent_activities_others_' . $nid, 'cache');
