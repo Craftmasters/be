@@ -486,3 +486,10 @@ function bullseye_deploy_update_7041() {
 
   return 'Fields deleted.';
 }
+
+/**
+ * Enable event module.
+ */
+function bullseye_deploy_update_7042() {
+  module_enable(array('bullseye_event'), TRUE);
+}

@@ -1,0 +1,25 @@
+<?php
+/**
+ * Bullseye event module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_event_menu() {
+  $items = array();
+
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_form().
+ *
+ * Add producer form.
+ */
+function bullseye_event_form($form, &$form_state) {
+
+  
+}
