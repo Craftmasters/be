@@ -636,6 +636,19 @@
           });
         }
 
+        // For add new leads form.
+        if ($('.page-edit-contact-person').length) {
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'taxonomy_field_widget_form()') {
+              $(this).closest('.alert').remove();
+            }
+          });
+          $('.alert').show();
+          if ($('.alert').length) {
+            $('.be-custom-template-form').removeClass('fields-disabled');
+          }
+        }
+
       });
 
       $(window).load(function() {
