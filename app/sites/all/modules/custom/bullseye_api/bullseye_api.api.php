@@ -644,12 +644,6 @@ class Bullseye {
 
   /**
    * Get all the accounts.
-   *
-   * @param string $role
-   *   The role of the logged in user.
-   *
-   * @param int $uid
-   *   The user id. Null by default.
    */
   public static function getAllAccounts() {
     global $user;
