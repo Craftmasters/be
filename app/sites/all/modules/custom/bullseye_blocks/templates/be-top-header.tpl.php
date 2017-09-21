@@ -10,9 +10,6 @@
       </ul>
     </li>
     <li>
-      <a href="#"><img class="be-icon" src="<?php print $gear_icon; ?>"></a>
-    </li>
-    <li>
       <a href="/gmail-connector/other"><img class="be-icon" src="<?php print $envelope_icon; ?>"></a>
     </li>
     <li class="top-header-li">

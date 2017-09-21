@@ -187,7 +187,7 @@ function bullseye_account_new_form($form, &$form_state) {
   $city = '';
   $field_states = '';
   $zip_code = '';
-  $visibility = '';
+  $visibility = 'visible_to_admin';
   $tags = '';
   $tids = array();
 

@@ -34,9 +34,6 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
-          <a href="#"><img src="<?php print $single_user_gray; ?>"></a>
-          <a href="#"><img src="<?php print $gray_gear; ?>"></a>
-          <a href="#"><img src="<?php print $three_bars; ?>"></a>
         </div>
       </div>
     </div>

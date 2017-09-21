@@ -14,6 +14,8 @@ function roles_and_permission_user_default_permissions() {
   $permissions['Add plan specification'] = array(
     'name' => 'Add plan specification',
     'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
     ),
     'module' => 'bullseye_plan_specs',
@@ -23,6 +25,7 @@ function roles_and_permission_user_default_permissions() {
   $permissions['Producers registration page'] = array(
     'name' => 'Producers registration page',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
     ),
@@ -45,6 +48,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -55,6 +59,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -65,6 +70,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -75,6 +81,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -85,6 +92,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -95,6 +103,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -105,6 +114,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -115,6 +125,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -125,6 +136,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -155,6 +167,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -165,6 +178,7 @@ function roles_and_permission_user_default_permissions() {
     'roles' => array(
       'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_blocks',
   );
@@ -180,6 +194,27 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_account',
   );
 
+  // Exported permission: 'add carrier'.
+  $permissions['add carrier'] = array(
+    'name' => 'add carrier',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+      'producer' => 'producer',
+    ),
+    'module' => 'bullseye_carriers',
+  );
+
+  // Exported permission: 'add producer'.
+  $permissions['add producer'] = array(
+    'name' => 'add producer',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'bullseye_producer',
+  );
+
   // Exported permission: 'add proposal'.
   $permissions['add proposal'] = array(
     'name' => 'add proposal',
@@ -189,6 +224,33 @@ function roles_and_permission_user_default_permissions() {
       'producer' => 'producer',
     ),
     'module' => 'bullseye_proposals',
+  );
+
+  // Exported permission: 'add rfp'.
+  $permissions['add rfp'] = array(
+    'name' => 'add rfp',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'bullseye_rfp',
+  );
+
+  // Exported permission: 'administer rfp settings'.
+  $permissions['administer rfp settings'] = array(
+    'name' => 'administer rfp settings',
+    'roles' => array(),
+    'module' => 'bullseye_rfp',
+  );
+
+  // Exported permission: 'import leads'.
+  $permissions['import leads'] = array(
+    'name' => 'import leads',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+      'producer' => 'producer',
+    ),
+    'module' => 'bullseye_leads',
   );
 
   return $permissions;
