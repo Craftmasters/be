@@ -172,7 +172,8 @@ function bullseye_blocks_render_be_accounts() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['accounts'] = Bullseye::getAllAccounts();
-  $vars['total'] = Bullseye::countAllAccnt();
+  //$vars['total'] = Bullseye::countAllAccnt();
+  $vars['total'] = count(Bullseye::getAllAccounts());
 
   $vars['aliases'] = array();
   $vars['profile_pictures'] = array();
@@ -671,7 +672,7 @@ function bullseye_blocks_render_be_create_event() {
   global $user;
 
   $vars = array();
-  
+
   $vars['nid'] = '';
 
   if (arg(0) == 'company') {
@@ -901,8 +902,8 @@ function bullseye_blocks_render_be_rfps() {
   $vars['total'] = Bullseye::totalRfps();
 
   foreach ($vars['rfps'] as $key => $value) {
-    
-    $company_nid = Bullseye::getAccountNidByName($value->field_company_value); 
+
+    $company_nid = Bullseye::getAccountNidByName($value->field_company_value);
     $account_status = Bullseye::getAccountStatusByNid($company_nid);
     if ($account_status == '') {
       $account_status = 'lead';
