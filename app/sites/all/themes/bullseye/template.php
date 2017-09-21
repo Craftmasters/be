@@ -384,6 +384,13 @@ function bullseye_preprocess_be_accounts(&$vars) {
 }
 
 /**
+ * Implements template_preprocess_THEME().
+ */
+function bullseye_preprocess_be_producers(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
+}
+
+/**
  * Implements hook_preprocess_form().
  */
 function bullseye_preprocess_bullseye_account_new_form(&$vars) {
