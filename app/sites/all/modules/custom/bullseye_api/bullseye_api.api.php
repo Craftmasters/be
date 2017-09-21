@@ -651,14 +651,15 @@ class Bullseye {
    * @param int $uid
    *   The user id. Null by default.
    */
-  public static function getAllAccounts($role = NULL, $uid = NULL) {
+  public static function getAllAccounts() {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
 
     // Check if the account is administrator.
-    if (Bullseye::hasRole('administrator', $be->getAccountRole()) || Bullseye::hasRole('admin', $be->getAccountRole())) {
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
       if ($cache = cache_get('accounts_listing')) {
         $accounts = $cache->data;
       }
@@ -697,7 +698,7 @@ class Bullseye {
       }
     }
 
-    if ($be->hasRole('producer', $be->getAccountRole())) {
+    if ($be->hasRole('producer', $roles)) {
       if ($cache = cache_get('accounts_listing_producer')) {
         $accounts = $cache->data;
       }
