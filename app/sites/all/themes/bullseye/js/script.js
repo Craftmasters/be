@@ -134,6 +134,7 @@
             $('.attachment-main').hide();
             $('.attachment-summary').show();
             $('.attachment-summary').html('');
+            $('.rfp-benefits-error-container').hide();
 
             // Build the summary block for Benefits block.
             $('.accordion_in').each(function() {
@@ -293,31 +294,47 @@
 
           // For attachments.
           $('.next-send-email').click(function() {
+
+            var count = 0;
+
             $('.include-attachments .form-type-checkbox').css('display', 'none');
             if ($('span.edit-employee-census-upload').html() != 'No Attachment') {
               $('div[class*="attach-ec"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-current-summary-of-benefit-upload').html() != 'No Attachment') {
               $('div[class*="attach-csob"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-current-bill-upload').html() != 'No Attachment') {
               $('div[class*="attach-cb"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-last-renewal-letter-upload').html() != 'No Attachment') {
               $('div[class*="attach-lrlr"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-summary-of-monthly-claims-experience-upload').html() != 'No Attachment') {
               $('div[class*="attach-somce"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-broker-of-record-upload').html() != 'No Attachment') {
               $('div[class*="attach-bor"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-letter-of-authorization-upload').html() != 'No Attachment') {
               $('div[class*="attach-loa"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-large-claims-report-upload').html() != 'No Attachment') {
               $('div[class*="attach-lcr"]').css('display', 'block');
+              count++;
             }
+
+            if (count == 0) {
+              $('.rfp-benefits-error-container').show();
+            }
+
           });
 
           // For carriers to send email.
