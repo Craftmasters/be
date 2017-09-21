@@ -104,6 +104,32 @@
         // For Create RFP page.
         if ($('.page-rfps-add').length) {
 
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'FontLib\\AdobeFontMetrics->write()') {
+              if ($(this).closest('ul').length) {
+                $(this).closest('li').remove();
+              }
+              else {
+                $(this).closest('.alert').remove();
+              }
+            }
+            if ($(this).text() == 'FontLib\\AdobeFontMetrics->addLine()') {
+              if ($(this).closest('ul').length) {
+                $(this).closest('li').remove();
+              }
+              else {
+                $(this).closest('.alert').remove();
+              }
+            }
+          });
+
+          $('.alert.alert-block.error').each(function() {
+            if ($(this).find('li').length == 0) {
+              $(this).remove();
+            }
+          });
+          $('.alert.alert-block.error').show();
+
           // Benefits Accordion.
           $(".accordion-benefits").smk_Accordion({
             showIcon: true, // Show the expand/collapse icons.

@@ -1120,6 +1120,7 @@
                     </div>
                     <div class="modal-footer">
                       <div class="be-custom-actions">
+                        <?php print render($form['generate_rfp_' . $key . '_dl']); ?>
                         <?php print render($form['generate_rfp_' . $key]); ?>
                       </div>
                     </div>
