@@ -430,6 +430,7 @@ class Bullseye {
     else {
       $producers = Bullseye::getProducers();
       $visibility_options = array();
+      $visibility_options['visible_to_admin'] = t('Visible to Admin');
       $visibility_options['visible_to_all'] = t('Visible to All');
       foreach ($producers as $key => $value) {
         $producer_name = $value->field_first_name_value . ' ' . $value->field_last_name_value;

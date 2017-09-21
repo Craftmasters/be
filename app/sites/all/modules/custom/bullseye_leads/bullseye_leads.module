@@ -323,6 +323,9 @@ function _import_account($data, $type) {
       // Set the producers.
       $entity->field_producers->set(trim($row[27]));
 
+      // Set the visibility.
+      $entity->field_visibility->set('visible_to_admin');
+
       // Set the referral partners.
       $entity->field_referral_partners->set(trim($row[28]));
 
