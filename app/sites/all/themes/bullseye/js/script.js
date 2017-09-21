@@ -629,7 +629,7 @@
             method: 'POST',
             data: {},
             success: function(result){
-              console.log(result);
+              $("a:contains('Producers').sf-depth-1").parent().prepend(result);
             },
           }).fail(function(jqXHR, textStatus) {
             
