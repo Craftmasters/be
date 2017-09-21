@@ -61,17 +61,17 @@
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print $be->leadsAssigned($producer); ?>
+                <?php print Bullseye::getLeadsAssigned($producer->uid); ?>
               </span>
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print $be->opportunitiesCovered($producer); ?>
+                <?php print Bullseye::getOpportunitiesCovered($producer->uid); ?>
               </span>
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print $be->dealsClosed($producer); ?>
+                <?php print Bullseye::getDealsClosed($producer->uid); ?>
               </span>
             </td>
             <td class="td-width-80px">
