@@ -664,6 +664,78 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'dashboard_producer_blocks';
+  $context->description = 'Dashboard blocks for the admin role.';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'dashboard_producer_page' => 'dashboard_producer_page',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_dashboard_statistics' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_statistics',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+        'bullseye_blocks-be_dashboard_revenue' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_revenue',
+          'region' => 'column_one',
+          'weight' => '-9',
+        ),
+        'bullseye_blocks-be_dashboard_performance' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_dashboard_performance',
+          'region' => 'column_one',
+          'weight' => '-8',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Blocks');
+  t('Dashboard blocks for the admin role.');
+  $export['dashboard_producer_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'dashboard_producer_page';
+  $context->description = 'Dashboard for Producer Role';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        '<front>' => '<front>',
+      ),
+    ),
+    'user' => array(
+      'values' => array(
+        'producer' => 'producer',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Dashboard for Producer Role');
+  t('Location');
+  $export['dashboard_producer_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'edit_producer_page';
   $context->description = '';
   $context->tag = 'Location';
