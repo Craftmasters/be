@@ -715,6 +715,9 @@ class Bullseye {
         $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
         $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
         $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->distinct()
           ->fields('n', array('nid', 'title'))
@@ -730,7 +733,7 @@ class Bullseye {
           ->fields('contact', array('field_contacts_value'))
           ->condition('n.type', 'accounts', '=')
           ->condition('n.status', 1, '=')
-          ->condition('uid.field_visibility_value', $be->uid, '=')
+          ->condition($or)
           ->execute()
           ->fetchAll();
 
