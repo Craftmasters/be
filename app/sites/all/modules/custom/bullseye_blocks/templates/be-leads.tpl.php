@@ -33,7 +33,7 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
-          <a href="#"><img src="<?php print $single_user_gray; ?>"></a>
+          <a href="/producer/assign" rel="lightframe"><img src="<?php print $single_user_gray; ?>"></a>
         </div>
       </div>
     </div>
