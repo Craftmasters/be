@@ -96,6 +96,7 @@ function bullseye_preprocess_page(&$vars, $hook) {
     $vars['column'] = 'four-eight-col';
   }
 
+  // For create rfp page.
   if (arg(0) == 'rfps' && arg(1) == 'add') {
     drupal_add_js($theme_directory . '/js/smk-accordion.min.js');
   }
@@ -155,51 +156,6 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'user_pass':
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
-      break;
-    case 'accounts_node_form':
-      $lang = LANGUAGE_NONE;
-      $form['#attributes']['class'][] = 'be-forms be-forms-default';
-      $form_title = t('Add Account');
-      if (isset($_GET['account_status'])) {
-        if ($_GET['account_status'] == 'lead') {
-          $form_title = t('Add New Lead');
-        }
-      }
-      $form['form_title'] = array(
-        '#prefix' => '<div class="form-title">',
-        '#suffix' => '</div>',
-        '#markup' => '<h2>' . $form_title . '</h2>',
-        '#weight' => -100,
-      );
-      //hide($form['additional_settings']);
-      hide($form['actions']['preview']);
-      $form['actions']['cancel'] = array(
-        '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
-      );
-
-      if (isset($_GET['account_status']) && $_GET['account_status'] == 'prospect') {
-        $form['field_account_status'][$lang]['#default_value'][0] = 'prospect';
-      }
-
-      $form['title']['#required'] = FALSE;
-      $form['field_firstname'][$lang][0]['value']['#title'] = '';
-      $form['field_firstname'][$lang][0]['value']['#attributes']['placeholder'] = t('First Name');
-      $form['field_middle_name'][$lang][0]['value']['#title'] = '';
-      $form['field_middle_name'][$lang][0]['value']['#attributes']['placeholder'] = t('Middle Name');
-      $form['field_lastname'][$lang][0]['value']['#title'] = '';
-      $form['field_lastname'][$lang][0]['value']['#attributes']['placeholder'] = t('Last Name');
-      $form['field_company'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Company');
-      $form['field_title'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Title');
-      $form['field_owned_by'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Owner');
-      $form['field_email'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Email');
-      $form['field_work_phone'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Phone');
-      $form['field_personal_website'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Website');
-      $form['field_linkedin_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
-      $form['field_facebook_personal'][$lang][0]['value']['#attributes']['placeholder'] = t('Add Social');
-      break;
-    case 'bullseye_rfp_initial_add_form':
-      break;
-    case 'bullseye_rfp_form':
       break;
     default:
       break;

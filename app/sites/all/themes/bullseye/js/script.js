@@ -622,6 +622,20 @@
           });
         }
 
+        // Load the producer pending count if admin.
+        if ($('body.administrator').length || $('body.admin').length) {
+          $.ajax({
+            url: '/producer/get-pending-count',
+            method: 'POST',
+            data: {},
+            success: function(result){
+              console.log(result);
+            },
+          }).fail(function(jqXHR, textStatus) {
+            
+          });
+        }
+
       });
 
       $(window).load(function() {

@@ -33,6 +33,13 @@ function bullseye_producer_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producer/get-pending-count'] = array(
+    'title' => 'Count pending producers',
+    'page callback' => 'producer_get_pending_count',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -434,7 +441,6 @@ function producer_assign_form($form, &$form_state) {
 }
 
 /**
- *
  * Assign to producer form submit handler.
  */
 function producer_assign_form_submit($form, &$form_state) {
@@ -458,4 +464,15 @@ function producer_assign_form_submit($form, &$form_state) {
   }
 
   drupal_set_message(t('Successfully assigned the accounts to the selected producer.'));
+}
+
+/**
+ * Return the count of pending producers.
+ */
+function producer_get_pending_count() {
+  $count = Bullseye::totalProducers(0);
+
+  if ($count || !empty($count) || $count != 0) {
+    echo '<span class="menu-producer-count">' . $count . '</span>';
+  }
 }
