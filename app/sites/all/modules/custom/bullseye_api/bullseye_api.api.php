@@ -2589,16 +2589,35 @@ class Bullseye {
    *   The producer account.
    */
   public static function getDealsClosed($producer) {
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
-    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-    $nids = $query
-      ->fields('n', array('nid'))
-      ->condition('producer.field_visibility_value', $producer, '=')
-      ->condition('n.type', 'accounts', '=')
-      ->condition('status.field_account_status_value', 'closed_deal', '=')
-      ->execute()
-      ->fetchAll();
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $nids = $query
+        ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('status.field_account_status_value', 'closed_deal', '=')
+        ->execute()
+        ->fetchAll();
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $nids = $query
+        ->fields('n', array('nid'))
+        ->condition('producer.field_visibility_value', $producer, '=')
+        ->condition('n.type', 'accounts', '=')
+        ->condition('status.field_account_status_value', 'closed_deal', '=')
+        ->execute()
+        ->fetchAll();
+    }
 
     return count($nids);
   }
