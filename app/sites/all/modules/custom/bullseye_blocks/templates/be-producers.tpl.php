@@ -76,7 +76,11 @@
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print $be->winRatio($producer); ?>%
+                <?php if (!Bullseye::winRatio($producer->uid)): ?>
+                  0.00%
+                <?php else: ?>
+                  <?php print Bullseye::winRatio($producer->uid); ?>%
+                <?php endif; ?>
               </span>
             </td>
           </tr>
