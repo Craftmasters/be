@@ -1375,22 +1375,6 @@ class Bullseye {
   }
 
   /**
-   * Get the total number of opportunities covered by the producer.
-   */
-  function opportunitiesCovered($producer) {
-    $total = 2;
-    return $total;
-  }
-
-  /**
-   * Get the total number of leads assigned to a producer.
-   */
-  function leadsAssigned($producer) {
-    $total = 3;
-    return $total;
-  }
-
-  /**
    * Total number of proposals.
    */
   function countProposals() {
@@ -2379,7 +2363,18 @@ class Bullseye {
    *   The producer account.
    */
   public static function getLeadsAssigned($producer) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $producer, '=')
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'lead', '=')
+      ->execute()
+      ->fetchAll();
 
+    return count($nids);
   }
 
   /**
@@ -2389,7 +2384,18 @@ class Bullseye {
    *   The producer account.
    */
   public static function getOpportunitiesCovered($producer) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $producer, '=')
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'opportunity', '=')
+      ->execute()
+      ->fetchAll();
 
+    return count($nids);
   }
 
   /**
@@ -2399,7 +2405,18 @@ class Bullseye {
    *   The producer account.
    */
   public static function getDealsClosed($producer) {
-    return $producer;
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $producer, '=')
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'closed_deal', '=')
+      ->execute()
+      ->fetchAll();
+
+    return count($nids);
   }
 
   /**
