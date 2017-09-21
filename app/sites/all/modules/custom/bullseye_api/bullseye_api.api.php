@@ -470,7 +470,6 @@ class Bullseye {
     $dc = (int) Bullseye::getDealsClosed($uid);
     $accounts = (int) Bullseye::totalAccounts($uid);
 
-
     if ($dc == 0 && $accounts == 0) {
       return FALSE;
     }
