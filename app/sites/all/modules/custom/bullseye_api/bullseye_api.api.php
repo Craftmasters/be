@@ -471,16 +471,30 @@ class Bullseye {
    *   The producer name.
    */
   public static function winRatio($uid) {
-    $dc = (int) Bullseye::getDealsClosed($uid);
-    $accounts = (int) Bullseye::totalAccounts($uid);
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      $dc = (int) Bullseye::getDealsClosed($uid);
+      $accounts = (int) Bullseye::totalAccounts($uid);
+    }
+    else {
+      $dc = (int) Bullseye::getDealsClosed($uid);
+      $accounts = (int) Bullseye::totalAccounts($uid);
+    }
 
     if ($dc == 0 && $accounts == 0) {
       return FALSE;
     }
     else {
       $ratio = $dc / $accounts;
-      return number_format($ratio, 2);
     }
+
+    return number_format($ratio, 2);
   }
 
   /**
