@@ -2353,7 +2353,7 @@ function generate_rfp_major_medical($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    file_put_contents('public://' . $pdf_data['filename'], $output);
 
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
@@ -2449,6 +2449,22 @@ function generate_rfp_limited_medical($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2464,21 +2480,7 @@ function generate_rfp_limited_medical($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    $pdf_data = bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
-
-    // Generate the PDF.
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($pdf_data['html']);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-    // Saving pdf to server.
-    $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    
   }
 }
 
@@ -2558,21 +2560,6 @@ function generate_rfp_teledoc($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
-    // Send the email to specified recipients.
-    foreach ($recipients as $to) {
-      // Send the proposal via email.
-      $params = array(
-        'key' => 'bullseye',
-        'to' => $to,
-        'from' => $user->mail,
-        'subject' => Bullseye::getRfpSubject(),
-        'body' => $be->getRfpBody(),
-        'attachments' => $attachments,
-      );
-
-      Bullseye::sendEmail($to, $user->mail, $params);
-    }
-
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
@@ -2587,7 +2574,22 @@ function generate_rfp_teledoc($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
   }
 }
 
@@ -2667,6 +2669,22 @@ function generate_rfp_mec($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('MEC', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2682,21 +2700,6 @@ function generate_rfp_mec($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    $pdf_data = bullseye_rfp_pdf_generate('MEC', $vars, $values);
-
-    // Generate the PDF.
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($pdf_data['html']);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-    // Saving pdf to server.
-    $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
   }
 }
 
@@ -2776,6 +2779,22 @@ function generate_rfp_dental($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Dental', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2791,21 +2810,6 @@ function generate_rfp_dental($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    $pdf_data = bullseye_rfp_pdf_generate('Dental', $vars, $values);
-
-    // Generate the PDF.
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($pdf_data['html']);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-    // Saving pdf to server.
-    $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
   }
 }
 
@@ -2885,6 +2889,22 @@ function generate_rfp_vision($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Vision', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2900,21 +2920,6 @@ function generate_rfp_vision($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    $pdf_data = bullseye_rfp_pdf_generate('Vision', $vars, $values);
-
-    // Generate the PDF.
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($pdf_data['html']);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-    // Saving pdf to server.
-    $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
   }
 }
 
@@ -2994,21 +2999,6 @@ function generate_rfp_life($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
-    // Send the email to specified recipients.
-    foreach ($recipients as $to) {
-      // Send the proposal via email.
-      $params = array(
-        'key' => 'bullseye',
-        'to' => $to,
-        'from' => $user->mail,
-        'subject' => Bullseye::getRfpSubject(),
-        'body' => $be->getRfpBody(),
-        'attachments' => $attachments,
-      );
-
-      Bullseye::sendEmail($to, $user->mail, $params);
-    }
-
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
@@ -3023,7 +3013,22 @@ function generate_rfp_life($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
   }
 }
 
@@ -3103,21 +3108,6 @@ function generate_rfp_short_term_disability($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
-    // Send the email to specified recipients.
-    foreach ($recipients as $to) {
-      // Send the proposal via email.
-      $params = array(
-        'key' => 'bullseye',
-        'to' => $to,
-        'from' => $user->mail,
-        'subject' => Bullseye::getRfpSubject(),
-        'body' => $be->getRfpBody(),
-        'attachments' => $attachments,
-      );
-
-      Bullseye::sendEmail($to, $user->mail, $params);
-    }
-
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
@@ -3132,7 +3122,23 @@ function generate_rfp_short_term_disability($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
+    
   }
 }
 
@@ -3212,6 +3218,22 @@ function generate_rfp_retirement($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Retirement', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -3227,21 +3249,6 @@ function generate_rfp_retirement($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    $pdf_data = bullseye_rfp_pdf_generate('Retirement', $vars, $values);
-
-    // Generate the PDF.
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($pdf_data['html']);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-    // Saving pdf to server.
-    $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
   }
 }
 
@@ -3321,21 +3328,6 @@ function generate_rfp_special_benefits($form, &$form_state) {
        $attachments[] = file_load($values['large_claims_report']);
     }
 
-    // Send the email to specified recipients.
-    foreach ($recipients as $to) {
-      // Send the proposal via email.
-      $params = array(
-        'key' => 'bullseye',
-        'to' => $to,
-        'from' => $user->mail,
-        'subject' => Bullseye::getRfpSubject(),
-        'body' => $be->getRfpBody(),
-        'attachments' => $attachments,
-      );
-
-      Bullseye::sendEmail($to, $user->mail, $params);
-    }
-
     // Generate pdf and download it.
     // @TODO the function below is somehow preventing the email to execute.
     // Refactor this approach in the future.
@@ -3350,8 +3342,22 @@ function generate_rfp_special_benefits($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://rfp_pdfs/' . $pdf_data['filename'], $output);
+    file_put_contents('public://' . $pdf_data['filename'], $output);
 
+    // Send the email to specified recipients.
+    foreach ($recipients as $to) {
+      // Send the proposal via email.
+      $params = array(
+        'key' => 'bullseye',
+        'to' => $to,
+        'from' => $user->mail,
+        'subject' => Bullseye::getRfpSubject(),
+        'body' => $be->getRfpBody(),
+        'attachments' => $attachments,
+      );
+
+      Bullseye::sendEmail($to, $user->mail, $params);
+    }
   }
 }
 
