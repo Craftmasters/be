@@ -33,6 +33,9 @@
       <div class="col-md-4">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+            <img src="<?php print $single_user_gray; ?>">
+          </a>
         </div>
       </div>
     </div>
@@ -56,7 +59,7 @@
       <tbody>
         <?php foreach ($opportunities as $o): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $o->nid; ?>"></td>
             <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <!-- link "/company/allen-markarian?from=opportunity" where 'allen-markarian' is the alias and 'opportunity' is the status of account -->
             <td>

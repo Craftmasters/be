@@ -34,6 +34,9 @@
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
         </div>
+        <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+          <img src="<?php print $single_user_gray; ?>">
+        </a>
       </div>
     </div>
   </div>
@@ -54,7 +57,7 @@
       <tbody>
         <?php foreach ($deals as $d): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $d->nid; ?>"></td>
             <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <td>
               <span class="orange-font">
