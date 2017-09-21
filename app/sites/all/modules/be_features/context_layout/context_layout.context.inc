@@ -830,6 +830,29 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'producer_assign_page';
+  $context->description = '';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'producer/assign' => 'producer/assign',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'template_suggestions' => 'page',
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  $export['producer_assign_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'producer_pending_blocks';
   $context->description = 'All block from producer pending page to be put here.';
   $context->tag = 'Blocks';

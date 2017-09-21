@@ -5,9 +5,7 @@ Accounts {"url":"accounts","options":{"attributes":{"class":["icon","be-building
 -Opportunities {"url":"accounts\/opportunities","options":{"item_attributes":{"id":"","class":"","style":""}},"weight":"-48"}
 -Deals in Progress {"url":"accounts\/deals-in-progress","options":{"item_attributes":{"id":"","class":"","style":""}},"weight":"-47"}
 -Closed Deals {"url":"accounts\/closed-deals","options":{"item_attributes":{"id":"","class":"","style":""}},"weight":"-46"}
-Calendar {"url":"calendar","options":{"attributes":{"class":["icon","be-calendar"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-48"}
 RFPs {"url":"rfps","options":{"attributes":{"class":["icon","be-checklist"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-47"}
 Proposals {"url":"proposals","options":{"attributes":{"class":["icon","be-document"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-46"}
 Producers {"url":"producers","options":{"attributes":{"class":["icon","be-users"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-45"}
 Carriers {"url":"carriers","options":{"attributes":{"class":["icon","be-bag"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}
-Files {"url":"files","options":{"attributes":{"class":["icon","be-folder"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"0"}

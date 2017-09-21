@@ -600,10 +600,39 @@
           });
         }
 
+        // For be tables.
         if ($('.be-tables').length) {
           $('.be-tables').tableSearch({
             searchText:'Search',
             searchPlaceHolder:'Enter keyword here ..'
+          });
+        }
+
+        // For checkbox in leads and prospects.
+        if ($('.be-table-checkbox').length) {
+          $('.be-table-checkbox').each(function() {
+            $(this).change(function() {
+              var company_nid = $(this).val();
+              var assign_link = $('#producer-assign-link').attr('href');
+              if ($(this).is(':checked')) {
+                assign_link = assign_link + company_nid + ',';
+              }
+              $('#producer-assign-link').attr('href', assign_link);
+            });
+          });
+        }
+
+        // Load the producer pending count if admin.
+        if ($('body.administrator').length || $('body.admin').length) {
+          $.ajax({
+            url: '/producer/get-pending-count',
+            method: 'POST',
+            data: {},
+            success: function(result){
+              console.log(result);
+            },
+          }).fail(function(jqXHR, textStatus) {
+            
           });
         }
 

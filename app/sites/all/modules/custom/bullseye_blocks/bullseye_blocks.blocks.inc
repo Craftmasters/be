@@ -483,6 +483,8 @@ function bullseye_blocks_render_be_closed_deals() {
 function bullseye_blocks_render_be_proposals() {
   global $base_url, $user;
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
   $be = new Bullseye($user);
 
   $theme_directory = path_to_theme('theme', 'bullseye');
@@ -514,6 +516,13 @@ function bullseye_blocks_render_be_proposals() {
       'alias' => $alias,
       'status' => $account_status,
     );
+  }
+
+  $vars['add_proposal'] = TRUE;
+
+  // Hide the add proposal button to other roles.
+  if ($producer) {
+    $vars['add_proposal'] = FALSE;
   }
 
   $output = theme('be_proposals', $vars);

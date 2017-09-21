@@ -250,6 +250,9 @@ function bullseye_producer_acct_indiv_form_submit($form, &$form_state) {
   // Register the company producer account.
   $be->addProducer($data);
 
+  cache_clear_all('producers_listings_0', 'cache');
+  cache_clear_all('total_producers_0', 'cache');
+
   drupal_goto('producer/registration/confirmation');
 }
 
@@ -328,6 +331,7 @@ function bullseye_producer_acct_approved() {
     cache_clear_all('producers_listings_0', 'cache');
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
+    cache_clear_all('visibility_options', 'cache');
   }
   unset($_POST['producer_uid']);
   drupal_json_output(NULL);

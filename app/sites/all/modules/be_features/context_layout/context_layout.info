@@ -34,6 +34,7 @@ features[context][] = edit_producer_page
 features[context][] = files_blocks
 features[context][] = files_page
 features[context][] = pages_with_bullseye_theme
+features[context][] = producer_assign_page
 features[context][] = producer_pending_blocks
 features[context][] = producer_pending_page
 features[context][] = producers_blocks

@@ -8,6 +8,9 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+            <img src="<?php print $single_user_gray; ?>">
+          </a>
         </div>
       </div>
     </div>
@@ -34,7 +37,7 @@
       <tbody>
       <!--
         <tr>
-          <td class="cell-check"><input type="checkbox"></td>
+          <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value=""></td>
           <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
           <td><span class="gray-font">Chris Devon</span></td>
           <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>

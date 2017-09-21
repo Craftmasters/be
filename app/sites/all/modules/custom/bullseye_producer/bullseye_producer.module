@@ -25,6 +25,21 @@ function bullseye_producer_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producer/assign'] = array(
+    'title' => 'Assign Account to Producer',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('producer_assign_form'),
+    'access arguments' => array('add producer'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['producer/get-pending-count'] = array(
+    'title' => 'Count pending producers',
+    'page callback' => 'producer_get_pending_count',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -350,7 +365,9 @@ function bullseye_producer_form_submit($form, &$form_state) {
 
   // Invalidate the existing cache to make sure that
   // the newly added one will get indexed too.
-  cache_clear_all('producers_listing', 'cache');
+  cache_clear_all('producers_listings_1', 'cache');
+  cache_clear_all('visibility_options', 'cache');
+  cache_clear_all('total_producers_1', 'cache');
 
   // For status messages.
   if (arg(0) == 'producer'  && arg(1) == 'add') {
@@ -358,5 +375,104 @@ function bullseye_producer_form_submit($form, &$form_state) {
   }
   else {
     drupal_set_message(t('Successfully updated producer account.'));
+  }
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Assign to producer form.
+ */
+function producer_assign_form($form, &$form_state) {
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if (isset($_GET['ids']) && !empty($_GET['ids'])) {
+
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Assign Account to a Producer') . '</h2>',
+    );
+
+    $visibility_options = Bullseye::getVisibilityOptions();
+    unset($visibility_options['visible_to_all']);
+    unset($visibility_options['visible_to_admin']);
+
+    $form['visibility'] = array(
+      '#type' => 'select',
+      '#options' => $visibility_options,
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
+
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Done'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * Assign to producer form submit handler.
+ */
+function producer_assign_form_submit($form, &$form_state) {
+  $ids = $_GET['ids'];
+  $ids = explode(',', $ids);
+
+  // Removing empty values.
+  foreach ($ids as $key => $value) {
+    if ($value == '') {
+      unset($ids[$key]);
+    }
+  }
+
+  $ids = array_unique($ids);
+  $producer_id = $form_state['values']['visibility'];
+
+  foreach ($ids as $key => $value) {
+    $wrapper = entity_metadata_wrapper('node', $value);
+    $wrapper->field_visibility->set($producer_id);
+    $wrapper->save();
+  }
+
+  drupal_set_message(t('Successfully assigned the accounts to the selected producer.'));
+}
+
+/**
+ * Return the count of pending producers.
+ */
+function producer_get_pending_count() {
+  $count = Bullseye::totalProducers(0);
+
+  if ($count || !empty($count) || $count != 0) {
+    echo '<span class="menu-producer-count">' . $count . '</span>';
   }
 }
