@@ -3,7 +3,11 @@
     <div class="row">
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Open Proposals (' . $total . ')'); ?></span>
-        <a class="be-table-button" href="/proposals/add" rel="lightframe"><?php print t('Send New Proposal'); ?></a>
+
+        <?php if ($add_proposal) : ?>
+          <a class="be-table-button" href="/proposals/add" rel="lightframe"><?php print t('Send New Proposal'); ?></a>
+        <?php endif; ?>
+        
       </div>
       <div class="col-md-6">
         <div class="be-table-right-icons">
