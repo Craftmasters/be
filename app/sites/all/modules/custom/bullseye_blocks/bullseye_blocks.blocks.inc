@@ -973,15 +973,20 @@ function bullseye_blocks_render_be_tasks() {
  * Dashboard Statistics Block.
  */
 function bullseye_blocks_render_be_dashboard_statistics() {
-  global $base_url;
+  global $base_url, $user;
 
   $vars = array();
 
-  $vars['leads_total'] = Bullseye::countLeadsAccnt();
-  $vars['prospects_total'] = Bullseye::countProspectsAccnt();
-  $vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
-  $vars['deals_total'] = Bullseye::countDealsAccnt();
-  $vars['closed_deals_total'] = Bullseye::countClosedDeals();
+  //$vars['leads_total'] = Bullseye::countLeadsAccnt();
+  $vars['leads_total'] = Bullseye::getLeadsAssigned($user->uid);
+  //$vars['prospects_total'] = Bullseye::countProspectsAccnt();
+  $vars['prospects_total'] = Bullseye::getProspects($user->uid);
+  //$vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
+  $vars['opportunities_total'] = Bullseye::getOpportunitiesCovered($user->uid);
+  //$vars['deals_total'] = Bullseye::countDealsAccnt();
+  $vars['deals_total'] = Bullseye::geDealsInProgress($user->uid);
+  //$vars['closed_deals_total'] = Bullseye::countClosedDeals();
+  $vars['closed_deals_total'] = Bullseye::getDealsClosed($user->uid);
 
   $output = theme('be_dashboard_statistics', $vars);
 

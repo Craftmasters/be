@@ -2440,6 +2440,27 @@ class Bullseye {
   }
 
   /**
+   * Get prospects.
+   *
+   * @param string $producer
+   *   The producer account.
+   */
+  public static function getProspects($producer) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $producer, '=')
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'prospect', '=')
+      ->execute()
+      ->fetchAll();
+
+    return count($nids);
+  }
+
+  /**
    * Get Opportunities covered.
    *
    * @param string $producer
@@ -2454,6 +2475,27 @@ class Bullseye {
       ->condition('producer.field_visibility_value', $producer, '=')
       ->condition('n.type', 'accounts', '=')
       ->condition('status.field_account_status_value', 'opportunity', '=')
+      ->execute()
+      ->fetchAll();
+
+    return count($nids);
+  }
+
+  /**
+   * Get deals in progress.
+   *
+   * @param string $producer
+   *   The producer account.
+   */
+  public static function geDealsInProgress($producer) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $producer, '=')
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'deal_in_progress', '=')
       ->execute()
       ->fetchAll();
 
