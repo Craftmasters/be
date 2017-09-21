@@ -230,7 +230,9 @@ function roles_and_permission_user_default_permissions() {
   $permissions['add rfp'] = array(
     'name' => 'add rfp',
     'roles' => array(
+      'admin' => 'admin',
       'administrator' => 'administrator',
+      'producer' => 'producer',
     ),
     'module' => 'bullseye_rfp',
   );
