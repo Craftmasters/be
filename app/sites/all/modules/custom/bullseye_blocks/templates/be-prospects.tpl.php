@@ -58,7 +58,7 @@
       <tbody>
         <?php foreach ($prospects as $key => $p): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox" value="<?php print $p->nid; ?>"></td>
+            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $p->nid; ?>"></td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $p->edit_link; ?>" rel="lightframe">

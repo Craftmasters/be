@@ -380,37 +380,54 @@ function producer_assign_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
+  if (isset($_GET['ids']) && !empty($_GET['ids'])) {
 
-  $form['form_title'] = array(
-    '#prefix' => '<div class="form-title">',
-    '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Assign Account to a Producer') . '</h2>',
-  );
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Assign Account to a Producer') . '</h2>',
+    );
 
-  $visibility_options = Bullseye::getVisibilityOptions();
-  unset($visibility_options['visible_to_all']);
-  unset($visibility_options['visible_to_admin']);
+    $visibility_options = Bullseye::getVisibilityOptions();
+    unset($visibility_options['visible_to_all']);
+    unset($visibility_options['visible_to_admin']);
 
-  $form['visibility'] = array(
-    '#type' => 'select',
-    '#options' => $visibility_options,
-  );
+    $form['visibility'] = array(
+      '#type' => 'select',
+      '#options' => $visibility_options,
+    );
 
-  $form['submit_container'] = array(
-    '#type' => 'container',
-  );
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
 
-  $form['submit_container']['cancel'] = array(
-    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
-  );
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
 
-  $form['submit_container']['submit'] = array(
-    '#type' => 'submit',
-    '#attributes' => array(
-      'class' => array('green-btn'),
-    ),
-    '#value' => t('Done'),
-  );
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Done'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  }
 
   return $form;
 }
@@ -420,5 +437,24 @@ function producer_assign_form($form, &$form_state) {
  * Assign to producer form submit handler.
  */
 function producer_assign_form_submit($form, &$form_state) {
+  $ids = $_GET['ids'];
+  $ids = explode(',', $ids);
 
+  // Removing empty values.
+  foreach ($ids as $key => $value) {
+    if ($value == '') {
+      unset($ids[$key]);
+    }
+  }
+
+  $ids = array_unique($ids);
+  $producer_id = $form_state['values']['visibility'];
+
+  foreach ($ids as $key => $value) {
+    $wrapper = entity_metadata_wrapper('node', $value);
+    $wrapper->field_visibility->set($producer_id);
+    $wrapper->save();
+  }
+
+  drupal_set_message(t('Successfully assigned the accounts to the selected producer.'));
 }
