@@ -33,7 +33,9 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
-          <a href="/producer/assign" rel="lightframe"><img src="<?php print $single_user_gray; ?>"></a>
+          <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+            <img src="<?php print $single_user_gray; ?>">
+          </a>
         </div>
       </div>
     </div>
@@ -56,7 +58,7 @@
       <tbody>
         <?php foreach ($prospects as $key => $p): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check"><input type="checkbox" value="<?php print $p->nid; ?>"></td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $p->edit_link; ?>" rel="lightframe">

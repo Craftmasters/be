@@ -358,7 +358,8 @@ function bullseye_producer_form_submit($form, &$form_state) {
 
   // Invalidate the existing cache to make sure that
   // the newly added one will get indexed too.
-  cache_clear_all('producers_listing', 'cache');
+  cache_clear_all('producers_listings_1', 'cache');
+  cache_clear_all('visibility_options', 'cache');
 
   // For status messages.
   if (arg(0) == 'producer'  && arg(1) == 'add') {
@@ -386,22 +387,13 @@ function producer_assign_form($form, &$form_state) {
     '#markup' => '<h2>' . t('Assign Account to a Producer') . '</h2>',
   );
 
-  $form['account'] = array(
-    '#required' => TRUE,
-    '#type' => 'entityreference',
-    '#era_entity_type' => 'user',
-    '#era_bundles' => array(),
-    '#era_cardinality' => 1,
-    '#era_query_settings' => array(
-      'limit' => 15, // Default is 50.
-      'property_conditions' => array(
-        array('status', 1, '='),
-      ),
-      'field_conditions' => array(),
-    ),
-    '#attributes' => array(
-      'placeholder' => t('Enter existing producer'),
-    ),
+  $visibility_options = Bullseye::getVisibilityOptions();
+  unset($visibility_options['visible_to_all']);
+  unset($visibility_options['visible_to_admin']);
+
+  $form['visibility'] = array(
+    '#type' => 'select',
+    '#options' => $visibility_options,
   );
 
   $form['submit_container'] = array(
@@ -417,7 +409,7 @@ function producer_assign_form($form, &$form_state) {
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
-    '#value' => t('Next'),
+    '#value' => t('Done'),
   );
 
   return $form;

@@ -51,6 +51,7 @@ function bullseye_preprocess_html(&$variables, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function bullseye_preprocess_page(&$vars, $hook) {
+
   global $base_url;
 
   // Theme directory.

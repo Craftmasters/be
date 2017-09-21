@@ -434,6 +434,9 @@ class Bullseye {
       $visibility_options['visible_to_all'] = t('Visible to All');
       foreach ($producers as $key => $value) {
         $producer_name = $value->field_first_name_value . ' ' . $value->field_last_name_value;
+        if ($value->field_producer_type_value == 'company') {
+          $producer_name = $value->field_producer_name_value . ' - ' . $producer_name;
+        }
         $visibility_options[$value->uid] = $producer_name;
       }
       cache_set('visibility_options', $visibility_options, 'cache');
