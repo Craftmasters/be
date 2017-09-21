@@ -77,7 +77,7 @@
             <td class="td-width-80px">
               <span class="gray-font">
                 <?php if (!Bullseye::winRatio($producer->uid)): ?>
-                  0%
+                  0.00%
                 <?php else: ?>
                   <?php print Bullseye::winRatio($producer->uid); ?>%
                 <?php endif; ?>
