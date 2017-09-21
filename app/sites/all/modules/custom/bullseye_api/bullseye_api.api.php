@@ -466,9 +466,18 @@ class Bullseye {
    * @param string $producer
    *   The producer name.
    */
-  function winRatio($producer) {
-    $ratio = 4;
-    return $ratio;
+  public static function winRatio($uid) {
+    $dc = (int) Bullseye::getDealsClosed($uid);
+    $accounts = (int) Bullseye::totalAccounts($uid);
+
+
+    if ($dc == 0 && $accounts == 0) {
+      return FALSE;
+    }
+    else {
+      $ratio = $dc / $accounts;
+      return number_format($ratio, 2);
+    }
   }
 
   /**
@@ -2413,6 +2422,26 @@ class Bullseye {
       ->condition('producer.field_visibility_value', $producer, '=')
       ->condition('n.type', 'accounts', '=')
       ->condition('status.field_account_status_value', 'closed_deal', '=')
+      ->execute()
+      ->fetchAll();
+
+    return count($nids);
+  }
+
+  /**
+   * Get the total accounts under producer.
+   *
+   * @param int $uid
+   *   The producer user id.
+   */
+  public static function totalAccounts($uid) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('producer.field_visibility_value', $uid, '=')
+      ->condition('n.type', 'accounts', '=')
       ->execute()
       ->fetchAll();
 
