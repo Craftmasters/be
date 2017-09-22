@@ -493,3 +493,11 @@ function bullseye_deploy_update_7041() {
 function bullseye_deploy_update_7042() {
   module_enable(array('bullseye_event'), TRUE);
 }
+
+/**
+ * Create new folder in files directory.
+ */
+function bullseye_deploy_update_7043() {
+  $new_folder = 'public://rfp_pdfs/';
+  file_prepare_directory($new_folder, FILE_CREATE_DIRECTORY);
+}

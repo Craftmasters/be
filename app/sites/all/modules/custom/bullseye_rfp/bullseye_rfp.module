@@ -300,7 +300,7 @@ function bullseye_rfp_form($form, &$form_state) {
   $form['proposed_effective_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'now',
+    '#default_value' => $proposed_effective_date,
     '#date_year_range' => '0:+3',
     '#title' => t('Proposed Effective Date'),
   );
@@ -369,7 +369,7 @@ function bullseye_rfp_form($form, &$form_state) {
   $form['renewal_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'now',
+    '#default_value' => $renewal_date,
     '#date_year_range' => '0:+3',
     '#title' => t('Renewal Date'),
   );
@@ -1673,6 +1673,107 @@ function bullseye_rfp_form($form, &$form_state) {
     ),
   );
 
+  // Submit buttons for Download RFPs.
+  $form['generate_rfp_major_medical_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_major_medical_dl'),
+    '#name' => 'generate_rfp_major_medical_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_limited_medical_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_limited_medical_dl'),
+    '#name' => 'generate_rfp_limited_medical_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_teledoc_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_teledoc_dl'),
+    '#name' => 'generate_rfp_teledoc_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_mec_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_mec_dl'),
+    '#name' => 'generate_rfp_mec_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_dental_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_dental_dl'),
+    '#name' => 'generate_rfp_dental_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_vision_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_vision_dl'),
+    '#name' => 'generate_rfp_vision_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_life_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_life_dl'),
+    '#name' => 'generate_rfp_life_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_short_term_disability_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_short_term_disability_dl'),
+    '#name' => 'generate_rfp_short_term_disability_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_retirement_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_retirement_dl'),
+    '#name' => 'generate_rfp_retirement_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
+  $form['generate_rfp_special_benefits_dl'] = array(
+    '#type' => 'submit',
+    '#submit' => array('generate_rfp_special_benefits_dl'),
+    '#name' => 'generate_rfp_special_benefits_dl',
+    '#value' => t('Download PDF'),
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+  );
+
   // The values for the dropdown box.
   $form['type_options'] = array(
     '#type' => 'value',
@@ -2072,8 +2173,6 @@ function bullseye_rfp_form_submit($form, &$form_state) {
     drupal_set_message(t('Successfully added RFP.'));
     drupal_goto('/rfps');
   }
-
-
 }
 
 /**
@@ -2092,7 +2191,7 @@ function bullseye_rfp_theme($existing, $type, $theme, $path) {
  * Generate the RFP PDF file.
  */
 function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
-  global $base_url;
+  global $base_url, $user;
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
@@ -2149,23 +2248,21 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
 
   $html = theme('benefit_pdf', $vars);
 
-  $filename = $benefit_title . ' - RFP.pdf';
+  $filename = $benefit_title . '-' . date('mdYHis') . '-' . $user->uid . '-RFP.pdf';
 
-  // Generate the PDF.
-  $options = new Options();
-  $options->set('isRemoteEnabled', TRUE);
-  $dompdf = new Dompdf($options);
-  $dompdf->loadHtml($html);
-  $dompdf->setPaper('A4', 'portrait');
-  $dompdf->render();
-  $dompdf->stream($filename);
+  $pdf_data = array(
+    'html' => $html,
+    'filename' => $filename,
+  );
 
-  // Saving pdf to server.
-  /*$output = $dompdf->output();
-  $dest = "/your-directory/final_file.pdf";
-  $result = file_put_contents($dest, $output); */
+  return $pdf_data;
 
 }
+
+/**
+ * SUBMIT HANDLERS FOR RFP EMAIL.
+ */
+
 
 /**
  * Submit handler for generate_rfp_major_medical.
@@ -2243,6 +2340,22 @@ function generate_rfp_major_medical($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Major Medical', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2257,13 +2370,8 @@ function generate_rfp_major_medical($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Major Medical', $vars, $values);
+    
   }
-
 }
 
 /**
@@ -2342,6 +2450,22 @@ function generate_rfp_limited_medical($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2357,10 +2481,7 @@ function generate_rfp_limited_medical($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
+    
   }
 }
 
@@ -2440,6 +2561,22 @@ function generate_rfp_teledoc($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Telemedicine', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2454,11 +2591,6 @@ function generate_rfp_teledoc($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Telemedicine', $vars, $values);
   }
 }
 
@@ -2538,6 +2670,22 @@ function generate_rfp_mec($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('MEC', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2553,10 +2701,6 @@ function generate_rfp_mec($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('MEC', $vars, $values);
   }
 }
 
@@ -2636,6 +2780,22 @@ function generate_rfp_dental($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Dental', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2651,10 +2811,6 @@ function generate_rfp_dental($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Dental', $vars, $values);
   }
 }
 
@@ -2734,6 +2890,22 @@ function generate_rfp_vision($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Vision', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2749,10 +2921,6 @@ function generate_rfp_vision($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Vision', $vars, $values);
   }
 }
 
@@ -2832,6 +3000,22 @@ function generate_rfp_life($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2846,11 +3030,6 @@ function generate_rfp_life($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values);
   }
 }
 
@@ -2930,6 +3109,22 @@ function generate_rfp_short_term_disability($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Short Term Disability', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -2944,11 +3139,7 @@ function generate_rfp_short_term_disability($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Short Term Disability', $vars, $values);
+    
   }
 }
 
@@ -3028,6 +3219,22 @@ function generate_rfp_retirement($form, &$form_state) {
       $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Retirement', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -3043,10 +3250,6 @@ function generate_rfp_retirement($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Retirement', $vars, $values);
   }
 }
 
@@ -3126,6 +3329,22 @@ function generate_rfp_special_benefits($form, &$form_state) {
        $attachments[] = file_load($values['large_claims_report']);
     }
 
+    // Generate pdf and download it.
+    // @TODO the function below is somehow preventing the email to execute.
+    // Refactor this approach in the future.
+    $pdf_data = bullseye_rfp_pdf_generate('Special Benefits', $vars, $values);
+
+    // Generate the PDF.
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($pdf_data['html']);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    // Saving pdf to server.
+    $output = $dompdf->output();
+    file_put_contents('public://' . $pdf_data['filename'], $output);
+
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
       // Send the proposal via email.
@@ -3140,10 +3359,329 @@ function generate_rfp_special_benefits($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-
-    // Generate pdf and download it.
-    // @TODO the function below is somehow preventing the email to execute.
-    // Refactor this approach in the future.
-    bullseye_rfp_pdf_generate('Special Benefits', $vars, $values);
   }
+}
+
+
+/**
+ * SUBMIT HANDLERS FOR RFP DOWNLOAD.
+ */
+
+/**
+ * Submit handler for generate_rfp_major_medical_dl.
+ */
+function generate_rfp_major_medical_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['mm_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['mm_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['mm_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['mm_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['mm_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['mm_waiting_period'];
+
+  // Generate pdf and download it.
+  $pdf_data = bullseye_rfp_pdf_generate('Major Medical', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_limited_medical_dl.
+ */
+function generate_rfp_limited_medical_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['lm_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['lm_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['lm_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['lm_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['lm_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['lm_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Limited Medical', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+}
+
+/**
+ * Submit handler for generate_rfp_teledoc_dl.
+ */
+function generate_rfp_teledoc_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['tel_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['tel_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['tel_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['tel_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['tel_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['tel_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Telemedicine', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_mec_dl.
+ */
+function generate_rfp_mec_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['mec_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['mec_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['mec_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['mec_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['mec_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['mec_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('MEC', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_dental_dl.
+ */
+function generate_rfp_dental_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['den_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['den_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['den_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['den_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['den_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['den_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Dental', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+}
+
+/**
+ * Submit handler for generate_rfp_vision_dl.
+ */
+function generate_rfp_vision_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['vs_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['vs_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['vs_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['vs_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['vs_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['vs_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Vision', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_life_dl.
+ */
+function generate_rfp_life_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['lf_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['lf_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['lf_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['lf_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['lf_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['lf_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Life & AD&D', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_short_term_disability_dl.
+ */
+function generate_rfp_short_term_disability_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['std_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['std_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['std_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['std_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['std_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['std_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Short Term Disability', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_retirement_dl.
+ */
+function generate_rfp_retirement_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['ret_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['ret_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['ret_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['ret_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['ret_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['ret_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Retirement', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
+}
+
+/**
+ * Submit handler for generate_rfp_special_benefits_dl.
+ */
+function generate_rfp_special_benefits_dl($form, &$form_state) {
+  global $user;
+
+  $values = $form_state['values'];
+
+  $be = new Bullseye($user);
+
+  $form_state['rebuild'] = TRUE;
+  $vars = array();
+  $vars['current_carrier'] = $values['sb_current_carrier'];
+  $vars['years_with_current_carrier'] = $values['sb_years_with_current_carrier'];
+  $vars['plan_year_to_quote_start'] = $values['sb_plan_year_to_quote_start'];
+  $vars['plan_year_to_quote_end'] = $values['sb_plan_year_to_quote_end'];
+  $vars['renewal'] = $values['sb_renewal_of_current_plan'];
+  $vars['waiting_period'] = $values['sb_waiting_period'];
+
+  $pdf_data = bullseye_rfp_pdf_generate('Special Benefits', $vars, $values);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($pdf_data['html']);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+  $dompdf->stream($pdf_data['filename']);
+
 }

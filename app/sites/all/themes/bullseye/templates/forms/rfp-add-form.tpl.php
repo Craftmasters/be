@@ -1104,6 +1104,9 @@
                     </div>
                     <div class="modal-body">
                       <div class="include-attachments">
+                        <div class="rfp-benefits-error-container">
+                          <div class="alert alert-danger">You have not attached any files.</div>
+                        </div>
                         <?php print render($form[$key . '_fields'][$key . '_attach_ec']); ?>
                         <?php print render($form[$key . '_fields'][$key . '_attach_csob']); ?>
                         <?php print render($form[$key . '_fields'][$key . '_attach_cb']); ?>
@@ -1117,6 +1120,7 @@
                     </div>
                     <div class="modal-footer">
                       <div class="be-custom-actions">
+                        <?php print render($form['generate_rfp_' . $key . '_dl']); ?>
                         <?php print render($form['generate_rfp_' . $key]); ?>
                       </div>
                     </div>

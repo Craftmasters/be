@@ -47,6 +47,46 @@ function carrier_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-carrier-field_contact_number'.
+  $field_instances['node-carrier-field_contact_number'] = array(
+    'bundle' => 'carrier',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_contact_number',
+    'label' => 'Contact Number',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-carrier-field_due_date'.
   $field_instances['node-carrier-field_due_date'] = array(
     'bundle' => 'carrier',
@@ -219,13 +259,96 @@ function carrier_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-carrier-field_special_benefits'.
+  $field_instances['node-carrier-field_special_benefits'] = array(
+    'bundle' => 'carrier',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_special_benefits',
+    'label' => 'Special Benefits',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-carrier-field_street'.
+  $field_instances['node-carrier-field_street'] = array(
+    'bundle' => 'carrier',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_street',
+    'label' => 'Address',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Address');
   t('Benefits');
+  t('Contact Number');
   t('Due Date');
   t('Email Address');
   t('Primary Contact');
   t('Priority');
+  t('Special Benefits');
 
   return $field_instances;
 }

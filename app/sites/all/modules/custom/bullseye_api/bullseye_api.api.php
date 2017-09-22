@@ -595,7 +595,8 @@ class Bullseye {
   /**
    * Get all the carriers.
    */
-  function getCarriers() {
+  static function getCarriers() {
+
     if ($cache = cache_get('carriers_listing')) {
       $carriers = $cache->data;
     }
@@ -603,53 +604,84 @@ class Bullseye {
       $query = db_select('node', 'n');
       $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
       $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
-      $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+      $query->join('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
       $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->join('field_data_field_street', 'st', 'n.nid = st.entity_id');
       $carriers = $query
         ->distinct()
         ->fields('n', array('nid', 'title'))
         ->fields('contact', array('field_primary_contact_value'))
+        ->fields('cn', array('field_contact_number_value'))
         ->fields('email', array('field_email_value'))
-        ->fields('benefits', array('field_benefits_value'))
         ->fields('priority', array('field_priority_value'))
+        ->fields('st', array('field_street_value'))
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
         ->execute()
         ->fetchAll();
 
+        foreach ($carriers as $key => $value) {
+          $bquery = db_select('node', 'n');
+          $bquery->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+          $benefits = $bquery
+            ->distinct()
+            ->fields('benefits', array('field_benefits_value'))
+            ->condition('n.nid', $value->nid, '=')
+            ->execute()
+            ->fetchCol();
+          $carriers[$key]->benefits = $benefits;
+        }
+
       cache_set('carriers_listing', $carriers, 'cache');
     }
+    return $carriers;
+  }
 
-    // We need to restructure the data to avoid duplicate items.
-    $structured_carrier = array_map(function($item) {
-      $data = array();
+  /**
+   * Get the carrier details by nid.
+   */
+  static function getCarrierDetails($nid) {
+    if ($cache = cache_get('carrier_info_' . $nid)) {
+      $carriers = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
+      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
+      $query->join('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
+      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->join('field_data_field_street', 'st', 'n.nid = st.entity_id');
+      $query->join('field_data_field_special_benefits', 'sb', 'n.nid = sb.entity_id');
+      $carriers = $query
+        ->distinct()
+        ->fields('n', array('nid', 'title'))
+        ->fields('contact', array('field_primary_contact_value'))
+        ->fields('cn', array('field_contact_number_value'))
+        ->fields('email', array('field_email_value'))
+        ->fields('priority', array('field_priority_value'))
+        ->fields('st', array('field_street_value'))
+        ->fields('sb', array('field_special_benefits_value'))
+        ->condition('n.type', 'carrier', '=')
+        ->condition('n.status', 1, '=')
+        ->condition('n.nid', $nid, '=')
+        ->execute()
+        ->fetchAssoc();
 
-      return array(
-        'nid' => $item->nid,
-        'carrier_name' => $item->title,
-        'contact_name' => $item->field_primary_contact_value,
-        'contact_email' => $item->field_email_value,
-        'benefits' => array(),
-        'priority' => $item->field_priority_value,
-      );
-
-    }, $carriers);
-
-    // Filter the duplicate items.
-    $new_items = $this->getUnique($structured_carrier);
-
-    foreach($new_items as $key => $value) {
-      $raw = array_values(array_filter($carriers, function($item) use ($value){
-        return $item->nid == $value['nid'];
-      }));
-
-      $value['benefits'] = array_map(function($item) {
-        return $item->field_benefits_value;
-      }, $raw);
-      $new_items[$key] = $value;
+      cache_set('carrier_info_' . $nid, $carriers, 'cache');
     }
 
-    return $new_items;
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+    $benefits = $query
+      ->distinct()
+      ->fields('benefits', array('field_benefits_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchCol();
+
+    $carriers['field_benefits_value'] = $benefits;
+
+    return $carriers;
   }
 
   /**
@@ -1221,7 +1253,7 @@ class Bullseye {
    *
    * This function will filter the duplicate result in an array.
    */
-  function getUnique($array, $preserveKeys = false) {
+  static function getUnique($array, $preserveKeys = false) {
     // Unique Array for return
     $arrayRewrite = array();
     // Array with the md5 hashes

@@ -95,7 +95,7 @@ function bullseye_blocks_render_be_bottom_header() {
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -147,6 +147,13 @@ function bullseye_blocks_render_be_leads() {
     $edit_link .= '&contact_id=' . $value->field_contacts_value;
 
     $vars['leads'][$key]->edit_link = $edit_link;
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
   }
 
   $output = theme('be_leads', $vars);
@@ -228,7 +235,7 @@ function bullseye_blocks_render_be_accounts() {
  * Prospects Block (Table).
  */
 function bullseye_blocks_render_be_prospects() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -282,6 +289,13 @@ function bullseye_blocks_render_be_prospects() {
     $vars['prospects'][$key]->edit_link = $edit_link;
   }
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+  }
+
   $output = theme('be_prospects', $vars);
 
   return array(
@@ -294,7 +308,7 @@ function bullseye_blocks_render_be_prospects() {
  * Opportunities Block (Table).
  */
 function bullseye_blocks_render_be_opportunities() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -373,6 +387,13 @@ function bullseye_blocks_render_be_opportunities() {
     $vars['opportunities'][$key]->edit_link = $edit_link;
   }
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+  }
+
   $output = theme('be_opportunities', $vars);
 
   return array(
@@ -446,6 +467,13 @@ function bullseye_blocks_render_be_deals_in_progress() {
     $vars['deals'][$key]->edit_link = $edit_link;
   }
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+  }
+
   $output = theme('be_deals_in_progress', $vars);
 
   return array(
@@ -458,7 +486,7 @@ function bullseye_blocks_render_be_deals_in_progress() {
  * Closed Deals Block (Table).
  */
 function bullseye_blocks_render_be_closed_deals() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -468,6 +496,13 @@ function bullseye_blocks_render_be_closed_deals() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+  }
 
   $output = theme('be_closed_deals', $vars);
 
@@ -599,13 +634,11 @@ function bullseye_blocks_render_be_producers_pending() {
 function bullseye_blocks_render_be_carriers() {
   global $base_url, $user;
 
-  $be = new Bullseye($user);
-
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
   // Get the producers.
-  $vars['carriers'] = $be->getCarriers();
+  $vars['carriers'] = Bullseye::getCarriers();
   $vars['total_carriers'] = Bullseye::countCarriers();
 
   // Shortened variables.

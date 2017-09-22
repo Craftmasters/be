@@ -104,6 +104,32 @@
         // For Create RFP page.
         if ($('.page-rfps-add').length) {
 
+          $('em.placeholder').each(function() {
+            if ($(this).text() == 'FontLib\\AdobeFontMetrics->write()') {
+              if ($(this).closest('ul').length) {
+                $(this).closest('li').remove();
+              }
+              else {
+                $(this).closest('.alert').remove();
+              }
+            }
+            if ($(this).text() == 'FontLib\\AdobeFontMetrics->addLine()') {
+              if ($(this).closest('ul').length) {
+                $(this).closest('li').remove();
+              }
+              else {
+                $(this).closest('.alert').remove();
+              }
+            }
+          });
+
+          $('.alert.alert-block.error').each(function() {
+            if ($(this).find('li').length == 0) {
+              $(this).remove();
+            }
+          });
+          $('.alert.alert-block.error').show();
+
           // Benefits Accordion.
           $(".accordion-benefits").smk_Accordion({
             showIcon: true, // Show the expand/collapse icons.
@@ -134,6 +160,7 @@
             $('.attachment-main').hide();
             $('.attachment-summary').show();
             $('.attachment-summary').html('');
+            $('.rfp-benefits-error-container').hide();
 
             // Build the summary block for Benefits block.
             $('.accordion_in').each(function() {
@@ -293,31 +320,47 @@
 
           // For attachments.
           $('.next-send-email').click(function() {
+
+            var count = 0;
+
             $('.include-attachments .form-type-checkbox').css('display', 'none');
             if ($('span.edit-employee-census-upload').html() != 'No Attachment') {
               $('div[class*="attach-ec"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-current-summary-of-benefit-upload').html() != 'No Attachment') {
               $('div[class*="attach-csob"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-current-bill-upload').html() != 'No Attachment') {
               $('div[class*="attach-cb"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-last-renewal-letter-upload').html() != 'No Attachment') {
               $('div[class*="attach-lrlr"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-summary-of-monthly-claims-experience-upload').html() != 'No Attachment') {
               $('div[class*="attach-somce"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-broker-of-record-upload').html() != 'No Attachment') {
               $('div[class*="attach-bor"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-letter-of-authorization-upload').html() != 'No Attachment') {
               $('div[class*="attach-loa"]').css('display', 'block');
+              count++;
             }
             if ($('span.edit-large-claims-report-upload').html() != 'No Attachment') {
               $('div[class*="attach-lcr"]').css('display', 'block');
+              count++;
             }
+
+            if (count == 0) {
+              $('.rfp-benefits-error-container').show();
+            }
+
           });
 
           // For carriers to send email.
@@ -606,6 +649,7 @@
             searchText:'Search',
             searchPlaceHolder:'Enter keyword here ..'
           });
+          $('.be-tables').stickyTableHeaders({scrollableArea: $('.be-table-content')});
         }
 
         // For checkbox in leads and prospects.

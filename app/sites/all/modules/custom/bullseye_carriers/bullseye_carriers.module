@@ -17,6 +17,14 @@ function bullseye_carriers_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['carriers/edit'] = array(
+    'title' => 'Edit Carrier',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_carriers_form'),
+    'access arguments' => array('add carrier'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['get-carrier-email'] = array(
     'page callback' => 'bullseye_carriers_get_email',
     'access arguments' => array('access content'),
@@ -48,42 +56,112 @@ function bullseye_carriers_form($form, &$form_state) {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
+  $form_title = t('Add New Carrier');
+
+  $carrier_name = '';
+  $primary_contact_name = '';
+  $primary_contact_email = '';
+  $contact_number = '';
+  $address = '';
+  $benefits = array();
+  $major_medical = 0;
+  $limited_medical = 0;
+  $teledoc = 0;
+  $mec = 0;
+  $life = 0;
+  $short_term_disability = 0;
+  $dental = 0;
+  $vision = 0;
+  $retirement = 0;
+  $special_benefits = 0;
+  $special_benefits_text = '';
+
+  if (arg(1) == 'edit') {
+    $form_title = t('Edit Carrier Details');
+    $carrier = Bullseye::getCarrierDetails(arg(2));
+    $carrier_name = $carrier['title'];
+    $primary_contact_name = $carrier['field_primary_contact_value'];
+    $primary_contact_email = $carrier['field_email_value'];
+    $contact_number = $carrier['field_contact_number_value'];
+    $address = $carrier['field_street_value'];
+    $benefits = $carrier['field_benefits_value'];
+    $special_benefits_text = $carrier['field_special_benefits_value'];
+    if (in_array('major_medical', $benefits)) {
+      $major_medical = 1;
+    }
+    if (in_array('limited_medical', $benefits)) {
+      $limited_medical = 1;
+    }
+    if (in_array('teledoc', $benefits)) {
+      $teledoc = 1;
+    }
+    if (in_array('mec', $benefits)) {
+      $mec = 1;
+    }
+    if (in_array('life', $benefits)) {
+      $life = 1;
+    }
+    if (in_array('short_term_disability', $benefits)) {
+      $short_term_disability = 1;
+    }
+    if (in_array('dental', $benefits)) {
+      $dental = 1;
+    }
+    if (in_array('vision', $benefits)) {
+      $vision = 1;
+    }
+    if (in_array('retirement', $benefits)) {
+      $retirement = 1;
+    }
+    if (in_array('special_benefits', $benefits)) {
+      $special_benefits = 1;
+    }
+  }
+
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Add New Carrier') . '</h2>',
+    '#markup' => '<h2>' . $form_title . '</h2>',
   );
 
   $form['carrier_name'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#title' => t('Carier Name'),
     '#attributes' => array(
       'placeholder' => t('Enter Carrier Name'),
     ),
+    '#default_value' => $carrier_name,
   );
 
   $form['primary_contact_name'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#title' => t('Primary Contact'),
     '#attributes' => array(
       'placeholder' => t('Enter Primary Contact Name'),
     ),
+    '#default_value' => $primary_contact_name,
   );
 
   $form['primary_contact_email'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#title' => t('Email Address'),
     '#attributes' => array(
       'placeholder' => t('Enter Contact Number'),
     ),
+    '#default_value' => $primary_contact_email,
   );
 
   $form['contact_number'] = array(
     '#type' => 'textfield',
     '#title' => t('Contact Number'),
+    '#required' => TRUE,
     '#attributes' => array(
       'placeholder' => t('Enter Contact Number'),
     ),
+    '#default_value' => $contact_number,
   );
 
   $form['address'] = array(
@@ -92,6 +170,7 @@ function bullseye_carriers_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter Address'),
     ),
+    '#default_value' => $address,
   );
 
   $form['benefits_container'] = array(
@@ -102,51 +181,61 @@ function bullseye_carriers_form($form, &$form_state) {
   $form['benefits_container']['benefits']['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
   );
 
   $form['benefits_container']['benefits']['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
   );
 
   $form['benefits_container']['benefits']['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
   );
 
   $form['benefits_container']['benefits']['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $mec,
   );
 
   $form['benefits_container']['benefits']['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
   );
 
   $form['benefits_container']['benefits']['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
   );
 
   $form['benefits_container']['benefits']['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $dental,
   );
 
   $form['benefits_container']['benefits']['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $vision,
   );
 
   $form['benefits_container']['benefits']['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $retirement,
   );
 
   $form['benefits_container']['benefits']['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
   );
 
   $form['special_benefits_text'] = array(
@@ -154,6 +243,7 @@ function bullseye_carriers_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter special benefit'),
     ),
+    '#default_value' => $special_benefits_text,
   );
 
   // The values for the dropdown box.
@@ -213,103 +303,77 @@ function bullseye_carriers_form_submit($form, &$form_state) {
   $carrier_name = $form_state['values']['carrier_name'];
   $contact_name = $form_state['values']['primary_contact_name'];
   $contact_email = $form_state['values']['primary_contact_email'];
-  $major_medical = $form_state['values']['major_medical'];
-  $limited_medical = $form_state['values']['limited_medical'];
-  $teledoc = $form_state['values']['teledoc'];
-  $mec = $form_state['values']['mec'];
-  $dental = $form_state['values']['dental'];
-  $vision = $form_state['values']['vision'];
-  $life = $form_state['values']['life'];
-  $short_term_disability = $form_state['values']['short_term_disability'];
-  $special_benefits = $form_state['values']['special_benefits'];
-  $retirement = $form_state['values']['retirement'];
+  $contact_number = $form_state['values']['contact_number'];
+  $address = $form_state['values']['address'];
   $priority = $form_state['values']['priority'];
   $due_date = $form_state['values']['due_date'];
+  $benefits = array();
+  $special_benefits_text = $form_state['values']['special_benefits_text'];
 
-  // Check if the account already exist.
-  if (!$be->carrierExist($carrier_name)) {
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if (isset($value['#value']) && $value['#value'] == 1) {
+      $benefits[] = $key;
+    }
+  }
 
-    $node = new stdClass();
+  if (arg(1) == 'edit') {
 
-    $node->title = $carrier_name;
+      $wrapper = entity_metadata_wrapper('node', arg(2));
+      $wrapper->title->set($carrier_name);
+      $wrapper->status->set(1);
+      $wrapper->field_primary_contact->set($contact_name);
+      $wrapper->field_email->set($contact_email);
+      $wrapper->field_priority->set($priority);
+      $wrapper->field_due_date->set($due_date);
+      $wrapper->field_contact_number->set($contact_number);
+      $wrapper->field_street->set($address);
+      $wrapper->field_benefits->set($benefits);
+      $wrapper->field_special_benefits->set($special_benefits_text);
+      $wrapper->save();    
 
-    $node->type = "carrier";
-    node_object_prepare($node);
-    $node->language = LANGUAGE_NONE;
-    $node->uid = $user->uid;
-    $node->status = 1;
-    $node->promote = 0;
-    $node->comment = 0;
+      drupal_set_message(t('Successfully updated carrier information.'));
 
-    // For contact name.
-    if ($contact_name) {
-      $node->field_primary_contact[$node->language][0]['value'] = $contact_name;
-    }
-
-    // For contact email.
-    if ($contact_email) {
-      $node->field_email[$node->language][0]['value'] = $contact_email;
-    }
-
-    // For major medical.
-    if ($major_medical == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'major_medical';
-    }
-    if ($limited_medical == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'limited_medical';
-    }
-    if ($teledoc == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'teledoc';
-    }
-    if ($mec == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'mec';
-    }
-    if ($dental == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'dental';
-    }
-    if ($vision == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'vision';
-    }
-    if ($life == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'life';
-    }
-    if ($short_term_disability == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'short_term_disability';
-    }
-    if ($special_benefits == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'special_benefits';
-    }
-    if ($retirement == 1) {
-      $node->field_benefits[$node->language][]['value'] = 'retirement';
-    }
-
-    if ($priority) {
-      $node->field_priority[$node->language][0]['value'] = $priority;
-    }
-
-    if ($due_date) {
-      $node->field_due_date[$node->language][0]['value'] = $due_date;
-    }
-
-    if ($priority) {
-      $node->field_priority[$node->language][0]['value'] = $priority;
-    }
-
-    // Save the carrier in the storage.
-    $node = node_submit($node);
-    node_save($node);
-
-    drupal_set_message(t('Successfully added carrier.'));
-
-    // Invalidate the existing cache to make sure that
-    // the newly added one will get indexed too.
-    cache_clear_all('carriers_listing', 'cache');
-    // Reroute the page to the listing page.
-    //drupal_goto('/carriers');
+      // Invalidate the existing cache to make sure that
+      // the newly added one will get indexed too.
+      cache_clear_all('carriers_listing', 'cache');
+      cache_clear_all('carrier_info_' . arg(2), 'cache');
   }
   else {
-    drupal_set_message(t('Carrier already exist.'));
+    // Check if the account already exist.
+    if (!$be->carrierExist($carrier_name)) {
+
+      $node = new stdClass();
+      $node->type = "carrier";
+      node_object_prepare($node);
+      $node->language = LANGUAGE_NONE;
+      $node->uid = $user->uid;
+      $node->promote = 0;
+      $node->comment = 0; 
+
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $wrapper->title->set($carrier_name);
+      $wrapper->status->set(1);
+      $wrapper->field_primary_contact->set($contact_name);
+      $wrapper->field_email->set($contact_email);
+      $wrapper->field_priority->set($priority);
+      $wrapper->field_due_date->set($due_date);
+      $wrapper->field_contact_number->set($contact_number);
+      $wrapper->field_street->set($address);
+      $wrapper->field_benefits->set($benefits);
+      $wrapper->field_special_benefits->set($special_benefits_text);
+      $wrapper->save();    
+
+      drupal_set_message(t('Successfully added carrier.'));
+
+      // Invalidate the existing cache to make sure that
+      // the newly added one will get indexed too.
+      cache_clear_all('carriers_listing', 'cache');
+    }
+    else {
+      drupal_set_message(t('Carrier already exist.'));
+    }
   }
+
 }
 
 /**
