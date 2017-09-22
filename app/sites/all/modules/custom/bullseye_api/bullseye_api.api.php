@@ -1353,24 +1353,7 @@ class Bullseye {
       $proposal = $cache->data;
     }
     else {
-      $query = db_select('node', 'n');
-      $query->join('field_data_field_account', 'account', 'n.nid = account.entity_id');
-      $query->join('field_data_field_due_date', 'dd', 'n.nid = dd.entity_id');
-      $query->join('field_data_field_priority', 'pr', 'n.nid = pr.entity_id');
-      $query->join('field_data_field_special_benefits', 'sb', 'n.nid = sb.entity_id');
-      $query->join('field_data_field_attached_proposal', 'ap', 'n.nid = ap.entity_id');
-      $proposal = $query
-        ->fields('n', array('nid'))
-        ->fields('account', array('field_account_nid'))
-        ->fields('dd', array('field_due_date_value'))
-        ->fields('pr', array('field_priority_value'))
-        ->fields('sb', array('field_special_benefits_value'))
-        ->fields('ap', array('field_attached_proposal_fid'))
-        ->condition('n.type', 'proposal', '=')
-        ->condition('n.status', 1, '=')
-        ->execute()
-        ->fetchAssoc();
-
+      $proposal = node_load($nid);
       $query1 = db_select('node', 'n');
       $query1->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
       $benefits = $query1
@@ -1380,7 +1363,7 @@ class Bullseye {
         ->execute()
         ->fetchCol();
 
-      $proposal['field_benefits_value'] = $benefits;
+      $proposal->field_benefits_value = $benefits;
       cache_set('proposal_details_' . $nid, $proposal, 'cache');
     }
 
@@ -2390,7 +2373,7 @@ class Bullseye {
     $due_date = strtotime($data['due_date']);
     $priority = $data['priority'];
     $proposal_status = 'sent';
-    $attached_proposal = array();
+    $attached_proposal = NULL;
     $benefits = array();
     $special_benefits_text = $data['special_benefits_text'];
 

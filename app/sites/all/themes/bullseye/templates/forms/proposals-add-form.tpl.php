@@ -1,6 +1,12 @@
 <?php print render($form['form_title']); ?>
 
-<div class="be-form-single"><?php print render($form['account']); ?></div>
+<?php if (arg(1) == 'edit') : ?>
+	<div class="be-form-single"><?php print render($form['company_name']); ?></div>
+<?php else: ?>
+	<div class="be-form-single"><?php print render($form['account']); ?></div>
+<?php endif; ?>
+
+
 
 <div class="be-form-section">
 	<div class="row">

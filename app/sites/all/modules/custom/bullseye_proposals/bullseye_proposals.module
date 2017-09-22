@@ -81,11 +81,14 @@ function bullseye_proposals_form($form, &$form_state) {
   if (arg(1) == 'edit') {
     $form_title = t('Edit Proposal Details');
     $proposal = Bullseye::getProposalDetailsByNid(arg(2));
-    $account = $proposal['field_account_nid'];
-    $priority = $proposal['field_priority_value'];
-    $due_date = $proposal['field_due_date_value'];
-    $proposal_attachment = $proposal['field_attached_proposal_fid'];
-    $benefits = $proposal['field_benefits_value'];
+    $account = $proposal->field_account[LANGUAGE_NONE][0]['nid'];
+    $priority = $proposal->field_priority[LANGUAGE_NONE][0]['value'];
+    $due_date = $proposal->field_due_date[LANGUAGE_NONE][0]['value'];
+    $special_benefits_text = $proposal->field_special_benefits[LANGUAGE_NONE][0]['value'];
+    $benefits = $proposal->field_benefits_value;
+    if (isset($proposal->field_attached_proposal[LANGUAGE_NONE][0]['fid'])) {
+      $proposal_attachment = $proposal->field_attached_proposal[LANGUAGE_NONE][0]['fid'];
+    }
     if (in_array('major_medical', $benefits)) {
       $major_medical = 1;
     }
@@ -116,7 +119,6 @@ function bullseye_proposals_form($form, &$form_state) {
     if (in_array('special_benefits', $benefits)) {
       $special_benefits = 1;
     }
-    $special_benefits_text = $proposal['field_special_benefits_value'];
   }
 
   $form['form_title'] = array(
@@ -125,21 +127,38 @@ function bullseye_proposals_form($form, &$form_state) {
     '#markup' => '<h2>' . $form_title . '</h2>',
   );
 
-  $form['account'] = array(
-    '#required' => FALSE,
-    '#type' => 'entityreference',
-    '#title' => t('Select Account'),
-    '#era_entity_type' => 'node',
-    '#era_bundles' => array('accounts'),
-    '#era_cardinality' => 1,
-    '#era_query_settings' => array(
-      'limit' => 15, // Default is 50.
-      'property_conditions' => array(
-        array('status', 1, '='),
+  if (arg(1) == 'edit') {
+    $form['company_name'] = array(
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#title' => t('Account'),
+      '#default_value' => Bullseye::getCompanyNameByNid($account),
+      '#attributes' => array(
+        'readonly' => 'readonly',
       ),
-      'field_conditions' => array(),
-    ),
-  );
+    );
+    $form['nid'] = array(
+      '#type' => 'hidden',
+      '#default_value' => $account,
+    );
+  }
+  else {
+    $form['account'] = array(
+      '#required' => TRUE,
+      '#type' => 'entityreference',
+      '#title' => t('Select Account'),
+      '#era_entity_type' => 'node',
+      '#era_bundles' => array('accounts'),
+      '#era_cardinality' => 1,
+      '#era_query_settings' => array(
+        'limit' => 15, // Default is 50.
+        'property_conditions' => array(
+          array('status', 1, '='),
+        ),
+        'field_conditions' => array(),
+      ),
+    );
+  }
 
   // The values for the dropdown box.
   $form['type_options'] = array(
@@ -274,22 +293,77 @@ function bullseye_proposals_form($form, &$form_state) {
 function bullseye_proposals_form_submit($form, &$form_state) {
   global $user;
 
+  // Get the account data.
+  $due_date = strtotime($form_state['values']['due_date']);
+  $priority = $form_state['values']['priority'];
+  $proposal_status = 'sent';
+  $attached_proposal = NULL;
+  $benefits = array();
+  $special_benefits_text = $form_state['values']['special_benefits_text'];
+
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if (isset($value['#value']) && $value['#value'] == 1) {
+      $benefits[] = $key;
+    }
+  }
+
+  // Attched proposal.
+  if ($form_state['values']['attach_proposal'] != 0) {
+    $attached_proposal = file_load($form_state['values']['attach_proposal']);
+    $attached_proposal->display = 1;
+    $attached_proposal = file_copy($attached_proposal, 'public://');
+    $attached_proposal = (array) $attached_proposal;
+  }
+
   // Make sure the the session is clear before we proceed.
   unset($_SESSION['proposal_recipient']);
 
-  $be = new Bullseye($user);
-  $data = $form_state['values'];
-  $data['complete form'] = $form_state['complete form'];
+  if (arg(1) == 'edit') {
 
-  // Build the data for email.
-  $account = node_load($data['account']['entity_id']);
-  $company = $account->title;
-  $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
-  $contact = field_collection_item_load($fcid);
-  $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    $account = node_load($form_state['values']['nid']);
+    $account_nid = $form_state['values']['nid'];
+    $proposal_title = $account->title;
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
 
-  // Save the proposal to Proposal entity storage and get the nid.
-  $nid = $be->createProposal($data);
+    $nid = arg(2);
+
+    $wrapper = entity_metadata_wrapper('node', $nid);
+    $wrapper->title->set($proposal_title);
+    $wrapper->field_account->set($account_nid);
+    $wrapper->field_due_date->set($due_date);
+    $wrapper->field_priority->set($priority);
+    $wrapper->field_benefits->set($benefits);
+    $wrapper->field_special_benefits->set($special_benefits_text);
+    $wrapper->field_others->set($special_benefits_text);
+    $wrapper->field_proposal_status->set($proposal_status);
+    $wrapper->field_attached_proposal->set($attached_proposal);
+
+    $wrapper->save();
+
+    // Clear listing page items.
+    cache_clear_all('proposals_listing_sent', 'cache');
+    cache_clear_all('proposal_details_' . $nid, 'cache');
+
+  }
+  else {
+
+    $be = new Bullseye($user);
+    $data = $form_state['values'];
+    $data['complete form'] = $form_state['complete form'];
+
+    // Build the data for email.
+    $account = node_load($data['account']['entity_id']);
+    $proposal_title = $account->title;
+    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
+    $contact = field_collection_item_load($fcid);
+    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];
+
+    // Save the proposal to Proposal entity storage and get the nid.
+    $nid = $be->createProposal($data);
+    
+  }
 
   // Load the proposal entity.
   $node = node_load($nid);
@@ -305,7 +379,7 @@ function bullseye_proposals_form_submit($form, &$form_state) {
 
   // Save the data temporarily to session variable.
   $_SESSION['proposal_recipient'] = array(
-    'company' => $company,
+    'company' => $proposal_title,
     'company_id' => $account->nid,
     'attachments' => array(
       array(
@@ -319,6 +393,7 @@ function bullseye_proposals_form_submit($form, &$form_state) {
 
   // Navigate to proposal email form.
   drupal_goto('proposals/send-email');
+
 }
 
 /**
