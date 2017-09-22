@@ -670,18 +670,21 @@
               var rfp_delete_link = $('#delete-rfps-link').attr('href');
               var proposal_delete_link = $('#delete-proposals-link').attr('href');
               var producer_delete_link = $('#delete-producers-link').attr('href');
+              var carrier_delete_link = $('#delete-carriers-link').attr('href');
               if ($(this).is(':checked')) {
                 assign_link = assign_link + id + ',';
                 delete_link = delete_link + contact_id + ',';
                 rfp_delete_link = rfp_delete_link + id + ',';
                 proposal_delete_link = proposal_delete_link + id + ',';
                 producer_delete_link = producer_delete_link + id + ',';
+                carrier_delete_link = carrier_delete_link + id + ',';
               }
               $('#producer-assign-link').attr('href', assign_link);
               $('#delete-accounts-link').attr('href', delete_link);
               $('#delete-rfps-link').attr('href', rfp_delete_link);
               $('#delete-proposals-link').attr('href', proposal_delete_link);
               $('#delete-producers-link').attr('href', producer_delete_link);
+              $('#delete-carriers-link').attr('href', carrier_delete_link);
             });
           });
         }

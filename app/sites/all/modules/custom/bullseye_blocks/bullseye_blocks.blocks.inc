@@ -686,6 +686,13 @@ function bullseye_blocks_render_be_carriers() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_carrier'] = TRUE;
+  if ($producer) {
+    $vars['delete_carrier'] = FALSE;
+  }
+
   $output = theme('be_carriers', $vars);
 
   return array(

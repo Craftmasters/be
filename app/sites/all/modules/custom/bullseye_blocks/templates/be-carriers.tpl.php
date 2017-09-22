@@ -9,6 +9,11 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <?php if ($delete_carrier) : ?>
+            <a href="/carriers/delete?&ids=" rel="lightframe" id="delete-carriers-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -37,7 +42,9 @@
       <tbody>
         <?php foreach ($carriers as $carrier): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $carrier->nid; ?>">
+            </td>
             <td class="be-dot-td">
               <a href="/carriers/edit/<?php print $carrier->nid; ?>" rel="lightframe">
                 <span class="light-gray-font"><?php print $carrier->nid; ?></span>
