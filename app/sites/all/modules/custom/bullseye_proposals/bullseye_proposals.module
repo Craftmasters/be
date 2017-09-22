@@ -84,8 +84,10 @@ function bullseye_proposals_form($form, &$form_state) {
     $account = $proposal->field_account[LANGUAGE_NONE][0]['nid'];
     $priority = $proposal->field_priority[LANGUAGE_NONE][0]['value'];
     $due_date = $proposal->field_due_date[LANGUAGE_NONE][0]['value'];
-    $special_benefits_text = $proposal->field_special_benefits[LANGUAGE_NONE][0]['value'];
     $benefits = $proposal->field_benefits_value;
+    if (isset($proposal->field_special_benefits[LANGUAGE_NONE][0]['value'])) {
+      $special_benefits_text = $proposal->field_special_benefits[LANGUAGE_NONE][0]['value'];
+    }
     if (isset($proposal->field_attached_proposal[LANGUAGE_NONE][0]['fid'])) {
       $proposal_attachment = $proposal->field_attached_proposal[LANGUAGE_NONE][0]['fid'];
     }
