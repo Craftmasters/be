@@ -505,6 +505,6 @@ function bullseye_deploy_update_7043() {
 /**
  * Install find_content module.
  */
-function bullseye_deploy_update_7044{
+function bullseye_deploy_update_7044() {
   module_enable(array('find_content'), TRUE);
 }
