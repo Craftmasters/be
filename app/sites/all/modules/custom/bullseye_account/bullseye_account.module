@@ -49,6 +49,14 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['accounts/delete'] = array(
+    'title' => t('Delete Items'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('accounts_delete_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['edit/account-details'] = array(
     'title' => t('Edit Account Details'),
     'page callback' => 'drupal_get_form',
@@ -163,6 +171,61 @@ function select_existing_company_submit($form, &$form_state) {
   
   // Go to the add new lead modal.
   drupal_goto('accounts/new/' . $arg, $param);
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Delete accounts form.
+ */
+function accounts_delete_form($form, &$form_state) {
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if (isset($_GET['ids']) && !empty($_GET['ids'])) {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Are you sure you want to delete the following items?') . '</h2>',
+    );
+    
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
+
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Delete'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  }
+
+    
+
+  return $form;
 }
 
 /**

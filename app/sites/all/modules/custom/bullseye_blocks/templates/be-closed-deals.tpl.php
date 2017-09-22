@@ -13,6 +13,11 @@
               <img src="<?php print $single_user_gray; ?>">
             </a>
           <?php endif; ?>
+          <?php if ($delete_accounts) : ?>
+            <a href="/accounts/delete?ids=" rel="lightframe" id="delete-accounts-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

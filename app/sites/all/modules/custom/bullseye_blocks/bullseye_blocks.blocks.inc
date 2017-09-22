@@ -152,8 +152,10 @@ function bullseye_blocks_render_be_leads() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_leads', $vars);
@@ -221,6 +223,15 @@ function bullseye_blocks_render_be_accounts() {
     $edit_link .= '&contact_id=' . $value->field_contacts_value;
 
     $vars['accounts'][$key]->edit_link = $edit_link;
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_accounts', $vars);
@@ -292,8 +303,10 @@ function bullseye_blocks_render_be_prospects() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_prospects', $vars);
@@ -390,8 +403,10 @@ function bullseye_blocks_render_be_opportunities() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_opportunities', $vars);
@@ -470,8 +485,10 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_deals_in_progress', $vars);
@@ -500,8 +517,10 @@ function bullseye_blocks_render_be_closed_deals() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_closed_deals', $vars);
