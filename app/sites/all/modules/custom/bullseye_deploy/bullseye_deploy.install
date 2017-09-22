@@ -501,3 +501,10 @@ function bullseye_deploy_update_7043() {
   $new_folder = 'public://rfp_pdfs/';
   file_prepare_directory($new_folder, FILE_CREATE_DIRECTORY);
 }
+
+/**
+ * Install find_content module.
+ */
+function bullseye_deploy_update_7044{
+  module_enable(array('find_content'), TRUE);
+}
