@@ -2,7 +2,7 @@
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
-        <span class="account-count"><?php print t('All Closed Deals (6)'); ?></span>
+        <span class="account-count"><?php print t('All Closed Deals (0)'); ?></span>
         <a class="be-table-button" href="#"><?php print t('Export Closed Deals'); ?></a>
       </div>
       <div class="col-md-6">
@@ -34,7 +34,7 @@
           <th class="be-dot-td"><?php print t('Life & AD&D'); ?></th>
           <th class="be-dot-td"><?php print t('Short Term Dissability'); ?></th>
           <th></th>
-        </tr> 
+        </tr>
       </thead>
       <tbody>
       <!--

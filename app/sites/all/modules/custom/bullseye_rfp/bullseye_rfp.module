@@ -2081,6 +2081,7 @@ function bullseye_rfp_form_submit($form, &$form_state) {
   }
   if ($value['broker_of_record'] != 0) {
     $br_file = file_load($value['broker_of_record']);
+    $br_file->display = 1;
     $br_file = file_copy($br_file, 'public://');
     $node->field_broker_of_record[$lang][0] = (array) $br_file;
   }

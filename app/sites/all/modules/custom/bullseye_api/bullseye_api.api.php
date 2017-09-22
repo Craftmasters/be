@@ -471,16 +471,30 @@ class Bullseye {
    *   The producer name.
    */
   public static function winRatio($uid) {
-    $dc = (int) Bullseye::getDealsClosed($uid);
-    $accounts = (int) Bullseye::totalAccounts($uid);
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      $dc = (int) Bullseye::getDealsClosed($uid);
+      $accounts = (int) Bullseye::totalAccounts($uid);
+    }
+    else {
+      $dc = (int) Bullseye::getDealsClosed($uid);
+      $accounts = (int) Bullseye::totalAccounts($uid);
+    }
 
     if ($dc == 0 && $accounts == 0) {
       return FALSE;
     }
     else {
       $ratio = $dc / $accounts;
-      return number_format($ratio, 2);
     }
+
+    return number_format($ratio, 2);
   }
 
   /**
@@ -869,40 +883,91 @@ class Bullseye {
    * Get all prospects account.
    */
   static function getProspectsAccounts() {
-    if ($cache = cache_get('prospect_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('prospect_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+        $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+        $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+        $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('contact', array('field_contacts_value'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->fields('mail', array('field_email_value'))
+          ->fields('source', array('field_source_value'))
+          ->fields('btype', array('field_type_of_business_value'))
+          ->fields('pos', array('field_position_value'))
+          ->fields('pp', array('field_profile_picture_fid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'prospect', '=')
+          ->execute()
+          ->fetchAll();
+
+        cache_set('prospect_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
-      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
-      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
-      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid', 'title'))
-        ->fields('contact', array('field_contacts_value'))
-        ->fields('type', array('field_account_status_value'))
-        ->fields('fname', array('field_firstname_value'))
-        ->fields('mname', array('field_middle_name_value'))
-        ->fields('lname', array('field_lastname_value'))
-        ->fields('mail', array('field_email_value'))
-        ->fields('source', array('field_source_value'))
-        ->fields('btype', array('field_type_of_business_value'))
-        ->fields('pos', array('field_position_value'))
-        ->fields('pp', array('field_profile_picture_fid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'prospect', '=')
-        ->execute()
-        ->fetchAll();
+      if ($cache = cache_get('prospect_accounts_listing_producer')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+        $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+        $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+        $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+        $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('contact', array('field_contacts_value'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->fields('mail', array('field_email_value'))
+          ->fields('source', array('field_source_value'))
+          ->fields('btype', array('field_type_of_business_value'))
+          ->fields('pos', array('field_position_value'))
+          ->fields('pp', array('field_profile_picture_fid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'prospect', '=')
+          ->condition('producer.field_visibility_value', $be->uid, '=')
+          ->execute()
+          ->fetchAll();
 
-      cache_set('prospect_accounts_listing', $accounts, 'cache');
+        cache_set('prospect_accounts_listing_producer', $accounts, 'cache');
+      }
     }
 
     return $accounts;
@@ -912,22 +977,55 @@ class Bullseye {
    * Count all prospects account.
    */
   static function countProspectsAccnt() {
-    if ($cache = cache_get('count_prospect_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('count_prospect_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'prospect', '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('count_prospect_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'prospect', '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('count_prospect_accounts_listing_producer')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'prospect', '=')
+          ->condition($or)
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('count_prospect_accounts_listing', $accounts, 'cache');
+        cache_set('count_prospect_accounts_listing_producer', $accounts, 'cache');
+      }
     }
 
     return $accounts;
@@ -937,42 +1035,92 @@ class Bullseye {
    * Get all opportunity account.
    */
   static function getOpportunityAccounts() {
-    if ($cache = cache_get('opportunity_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('opportunity_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+        $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_workflow_status', 'w', 'n.nid = w.entity_id');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+        $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+        $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('contact', array('field_contacts_value'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('w', array('field_workflow_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->fields('mail', array('field_email_value'))
+          ->fields('source', array('field_source_value'))
+          ->fields('btype', array('field_type_of_business_value'))
+          ->fields('pos', array('field_position_value'))
+          ->fields('pp', array('field_profile_picture_fid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'opportunity', '=')
+          ->execute()
+          ->fetchAll();
+
+        cache_set('opportunity_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
-      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $query->leftJoin('field_data_field_workflow_status', 'w', 'n.nid = w.entity_id');
-      $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
-      $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
-      $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid', 'title'))
-        ->fields('contact', array('field_contacts_value'))
-        ->fields('type', array('field_account_status_value'))
-        ->fields('w', array('field_workflow_status_value'))
-        ->fields('fname', array('field_firstname_value'))
-        ->fields('mname', array('field_middle_name_value'))
-        ->fields('lname', array('field_lastname_value'))
-        ->fields('mail', array('field_email_value'))
-        ->fields('source', array('field_source_value'))
-        ->fields('btype', array('field_type_of_business_value'))
-        ->fields('pos', array('field_position_value'))
-        ->fields('pp', array('field_profile_picture_fid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'opportunity', '=')
-        ->execute()
-        ->fetchAll();
+      if ($cache = cache_get('opportunity_accounts_listing_producer')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+        $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
+        $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_workflow_status', 'w', 'n.nid = w.entity_id');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'n.nid = contact.entity_id');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
+        $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
+        $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('contact', array('field_contacts_value'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('w', array('field_workflow_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->fields('mail', array('field_email_value'))
+          ->fields('source', array('field_source_value'))
+          ->fields('btype', array('field_type_of_business_value'))
+          ->fields('pos', array('field_position_value'))
+          ->fields('pp', array('field_profile_picture_fid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'opportunity', '=')
+          ->condition('producer.field_visibility_value', $be->uid, '=')
+          ->execute()
+          ->fetchAll();
 
-      cache_set('opportunity_accounts_listing', $accounts, 'cache');
+        cache_set('opportunity_accounts_listing_producer', $accounts, 'cache');
+      }
     }
 
     return $accounts;
@@ -1050,22 +1198,55 @@ class Bullseye {
    * Count all deals account.
    */
   static function countDealsAccnt() {
-    if ($cache = cache_get('count_deals_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('count_deals_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'deal_in_progress', '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('count_deals_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'deal_in_progress', '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('count_deals_accounts_listing_producer')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'deal_in_progress', '=')
+          ->condition($or)
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('count_deals_accounts_listing', $accounts, 'cache');
+        cache_set('count_deals_accounts_listing_producer', $accounts, 'cache');
+      }
     }
 
     return $accounts;
