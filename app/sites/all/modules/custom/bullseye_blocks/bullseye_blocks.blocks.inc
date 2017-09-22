@@ -486,7 +486,7 @@ function bullseye_blocks_render_be_deals_in_progress() {
  * Closed Deals Block (Table).
  */
 function bullseye_blocks_render_be_closed_deals() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -496,6 +496,13 @@ function bullseye_blocks_render_be_closed_deals() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+  }
 
   $output = theme('be_closed_deals', $vars);
 
