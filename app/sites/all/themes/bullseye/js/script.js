@@ -668,14 +668,17 @@
               var assign_link = $('#producer-assign-link').attr('href');
               var delete_link = $('#delete-accounts-link').attr('href');
               var rfp_delete_link = $('#delete-rfps-link').attr('href');
+              var proposal_delete_link = $('#delete-proposals-link').attr('href');
               if ($(this).is(':checked')) {
                 assign_link = assign_link + id + ',';
                 delete_link = delete_link + contact_id + ',';
                 rfp_delete_link = rfp_delete_link + id + ',';
+                proposal_delete_link = proposal_delete_link + id + ',';
               }
               $('#producer-assign-link').attr('href', assign_link);
               $('#delete-accounts-link').attr('href', delete_link);
               $('#delete-rfps-link').attr('href', rfp_delete_link);
+              $('#delete-proposals-link').attr('href', proposal_delete_link);
             });
           });
         }

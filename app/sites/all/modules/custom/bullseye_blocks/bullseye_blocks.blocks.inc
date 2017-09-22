@@ -573,10 +573,12 @@ function bullseye_blocks_render_be_proposals() {
   }
 
   $vars['add_proposal'] = TRUE;
+  $vars['delete_proposal'] = TRUE;
 
   // Hide the add proposal button to other roles.
   if ($producer) {
     $vars['add_proposal'] = FALSE;
+    $vars['delete_proposal'] = FALSE;
   }
 
   $output = theme('be_proposals', $vars);

@@ -12,6 +12,11 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <?php if ($delete_proposal) : ?>
+            <a href="/proposals/delete?&ids=" rel="lightframe" id="delete-proposals-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -43,7 +48,9 @@
           <?php $has = Bullseye::isBenefitActive($data->field_benefits['und']); ?>
           <?php $val = $data->field_priority[LANGUAGE_NONE][0]['value']; ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $proposal->nid; ?>">
+            </td>
             <td>
               <a href="/proposals/edit/<?php print $proposal->nid; ?>" rel="lightframe">
                 <span class="orange-font">

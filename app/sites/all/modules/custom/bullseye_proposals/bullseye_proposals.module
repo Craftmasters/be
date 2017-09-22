@@ -25,6 +25,14 @@ function bullseye_proposals_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['proposals/delete'] = array(
+    'title' => t('Delete Items'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('proposals_delete_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['proposals/send-email'] = array(
     'title' => 'Send Proposal',
     'page callback' => 'drupal_get_form',
@@ -46,6 +54,109 @@ function bullseye_proposals_permission() {
       'description' => t('Allow user to add new proposals.'),
     ),
   );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Delete proposals form.
+ */
+function proposals_delete_form($form, &$form_state) {
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if (isset($_GET['ids']) && !empty($_GET['ids'])) {
+
+    $ids = $_GET['ids'];
+    $ids = explode(',', $ids);
+
+    // Removing empty values.
+    foreach ($ids as $key => $value) {
+      if ($value == '') {
+        unset($ids[$key]);
+      }
+    }
+    $ids = array_unique($ids);
+
+    $items_div = '';
+
+    foreach ($ids as $key => $value) {
+      $node = node_load($value);
+      $title = $node->title;
+      $markup = $value . ' - Proposal for ' . $title;
+      $items_div .= '<div class="be-item">' . $markup . '</div>';
+    }
+
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Are you sure you want to delete the following items?') . '</h2>',
+    );
+
+    $form['items'] = array(
+      '#prefix' => '<div class="be-items-multiple">',
+      '#markup' => $items_div,
+      '#suffix' => '</div>',
+    );
+    
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
+
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Delete'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  } 
+
+  return $form;
+}
+
+/**
+ * Submit handler for Delete proposals form.
+ */
+function proposals_delete_form_submit($form, &$form_state) {
+  $ids = $_GET['ids'];
+  $ids = explode(',', $ids);
+
+  // Removing empty values.
+  foreach ($ids as $key => $value) {
+    if ($value == '') {
+      unset($ids[$key]);
+    }
+  }
+  $ids = array_unique($ids);
+
+  node_delete_multiple($ids);
+
+  cache_clear_all('proposals_listing_sent', 'cache');
+
+  drupal_set_message('Successfully deleted items.');
+
 }
 
 /**
