@@ -33,9 +33,11 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
-          <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
-            <img src="<?php print $single_user_gray; ?>">
-          </a>
+          <?php if ($assign_producers) : ?>
+            <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+              <img src="<?php print $single_user_gray; ?>">
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

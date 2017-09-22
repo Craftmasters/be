@@ -1,7 +1,7 @@
 <div class="be-table-block">
   <div class="be-table-top-header">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-8">
         <span class="account-count"><?php print t('All Deals in Progress (' . $total . ')'); ?></span>
         <a class="be-table-button" data-toggle="modal" data-target="#add-new-account"><?php print t('Add New Deal in Progress'); ?></a>
 
@@ -30,12 +30,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
-          <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
-            <img src="<?php print $single_user_gray; ?>">
-          </a>
+          <?php if ($assign_producers) : ?>
+            <a href="/producer/assign?ids=" rel="lightframe" id="producer-assign-link">
+              <img src="<?php print $single_user_gray; ?>">
+            </a>
+          <?php endif; ?>
         </div>
         
       </div>
