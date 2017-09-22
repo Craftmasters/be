@@ -12,7 +12,7 @@
 		var tableObj = $(this),
 			searchText = (options.searchText)?options.searchText:'Search: ',
 			searchPlaceHolder = (options.searchPlaceHolder)?options.searchPlaceHolder:'',
-			divObj = $('<div class="be-table-search-filter" style="float:right;">'+searchText+'</div>'),
+			divObj = $('<div class="be-table-search-filter">'+searchText+'</div>'),
 			inputObj = $('<input type="text" placeholder="'+searchPlaceHolder+'" />'),
 			caseSensitive = (options.caseSensitive===true)?true:false,
 			searchFieldVal = '',
@@ -30,7 +30,7 @@
 				});
 			});
 		});
-		tableObj.before(divObj.append(inputObj));
+		$('.be-table-right-icons a:first-child').before(divObj.append(inputObj));
 		return tableObj;
 	}
 }(jQuery));
