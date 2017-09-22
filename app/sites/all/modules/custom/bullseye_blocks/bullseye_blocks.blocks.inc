@@ -246,7 +246,8 @@ function bullseye_blocks_render_be_prospects() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['prospects'] = Bullseye::getProspectsAccounts();
-  $vars['total'] = Bullseye::countProspectsAccnt();
+  //$vars['total'] = Bullseye::countProspectsAccnt();
+  $vars['total'] = count(Bullseye::getProspectsAccounts());
 
   $vars['aliases'] = array();
   $vars['profile_pictures'] = array();
