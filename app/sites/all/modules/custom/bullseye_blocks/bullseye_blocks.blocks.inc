@@ -613,6 +613,13 @@ function bullseye_blocks_render_be_producers() {
   // Total number of producers.
   $vars['total'] = Bullseye::totalProducers();
 
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_producer'] = TRUE;
+  if ($producer) {
+    $vars['delete_producer'] = FALSE;
+  }
+
   $output = theme('be_producers', $vars);
 
   return array(

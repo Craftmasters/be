@@ -196,6 +196,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
     'accounts_delete_form',
     'rfps_delete_form',
     'proposals_delete_form',
+    'producers_delete_form',
   );
 
   // Default drupal forms.

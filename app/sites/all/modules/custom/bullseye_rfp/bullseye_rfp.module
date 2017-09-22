@@ -187,6 +187,7 @@ function rfps_delete_form_submit($form, &$form_state) {
   node_delete_multiple($ids);
 
   cache_clear_all('rfp_listing', 'cache');
+  cache_clear_all('total_rfps', 'cache');
 
   drupal_set_message('Successfully deleted items.');
 
