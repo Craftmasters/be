@@ -599,13 +599,11 @@ function bullseye_blocks_render_be_producers_pending() {
 function bullseye_blocks_render_be_carriers() {
   global $base_url, $user;
 
-  $be = new Bullseye($user);
-
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
   // Get the producers.
-  $vars['carriers'] = $be->getCarriers();
+  $vars['carriers'] = Bullseye::getCarriers();
   $vars['total_carriers'] = Bullseye::countCarriers();
 
   // Shortened variables.
