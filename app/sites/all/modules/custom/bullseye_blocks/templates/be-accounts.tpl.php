@@ -40,7 +40,7 @@
             </a>
           <?php endif; ?>
           <?php if ($delete_accounts) : ?>
-            <a href="/accounts/delete?ids=" rel="lightframe" id="delete-accounts-link">
+            <a href="/accounts/delete?from=accounts&ids=" rel="lightframe" id="delete-accounts-link">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
           <?php endif; ?>
@@ -66,7 +66,9 @@
       <tbody>
         <?php foreach ($accounts as $key => $a): ?>
           <tr>
-            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $a->nid; ?>"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $a->nid; ?>" data-contact-id="<?php print $a->field_contacts_value; ?>">
+            </td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $a->edit_link; ?>" rel="lightframe">

@@ -2275,6 +2275,20 @@ class Bullseye {
   }
 
   /**
+   * Get the company id of the contact.
+   */
+  static function getCompanyNidOfContact($cid) {
+    $query = db_select('field_data_field_contacts', 'con');
+    $company = $query
+        ->fields('con', array('entity_id'))
+        ->condition('con.field_contacts_value', $cid, '=')
+        ->execute()
+        ->fetchField();
+
+    return $company;
+  }
+
+  /**
    * Get the primary contact of an account.
    */
   static function getAccountPrimaryContact($nid) {

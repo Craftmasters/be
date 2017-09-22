@@ -14,7 +14,7 @@
             </a>
           <?php endif; ?>
           <?php if ($delete_accounts) : ?>
-            <a href="/accounts/delete?ids=" rel="lightframe" id="delete-accounts-link">
+            <a href="/accounts/delete?from=closed_deals&ids=" rel="lightframe" id="delete-accounts-link">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
           <?php endif; ?>
@@ -44,7 +44,7 @@
       <tbody>
       <!--
         <tr>
-          <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value=""></td>
+          <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="" data-contact-id=""></td>
           <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
           <td><span class="gray-font">Chris Devon</span></td>
           <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>

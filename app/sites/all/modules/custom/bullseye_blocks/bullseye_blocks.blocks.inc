@@ -92,81 +92,6 @@ function bullseye_blocks_render_be_bottom_header() {
 }
 
 /**
- * Leads Block (Table).
- */
-function bullseye_blocks_render_be_leads() {
-  global $base_url, $user;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
-
-  $vars = array();
-
-  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
-  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
-  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
-  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['leads'] = Bullseye::getLeadsAccounts();
-  $vars['total'] = Bullseye::countLeadsAccnt();
-
-  $vars['aliases'] = array();
-  $vars['profile_pictures'] = array();
-
-  foreach ($vars['leads'] as $key => $value) {
-    $nid = $value->nid;
-    $account_status = $value->field_account_status_value;
-    if ($account_status == '') {
-      $account_status = 'lead';
-    }
-    $alias = drupal_get_path_alias('node/' . $nid);
-    $alias = substr($alias, 8);
-    $vars['aliases'][$nid] = array(
-      'alias' => $alias,
-      'status' => $account_status,
-    );
-
-    // Getting the profile picture of contact.
-    if ($value->field_profile_picture_fid != '') {
-      $fid = $value->field_profile_picture_fid;
-      $pic = file_load($fid);
-      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
-    }
-    else {
-      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
-    }
-
-    $account_status = $value->field_account_status_value;
-    if ($account_status == '') {
-      $vars['accounts'][$key]->field_account_status_value = 'lead';
-      $account_status = 'lead';
-    }
-
-    // build the edit contact person link.
-    $edit_link = '/edit/contact-person?';
-    $edit_link .= 'existing_company=' . $value->nid;
-    $edit_link .= '&account_status=' . $account_status;
-    $edit_link .= '&contact_id=' . $value->field_contacts_value;
-
-    $vars['leads'][$key]->edit_link = $edit_link;
-  }
-
-  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
-
-  $vars['assign_producers'] = TRUE;
-  $vars['delete_accounts'] = TRUE;
-  if ($producer) {
-    $vars['assign_producers'] = FALSE;
-    $vars['delete_accounts'] = FALSE;
-  }
-
-  $output = theme('be_leads', $vars);
-
-  return array(
-    'subject' => '',
-    'content' => $output,
-  );
-}
-
-/**
  * Accounts Block (Table).
  */
 function bullseye_blocks_render_be_accounts() {
@@ -235,6 +160,81 @@ function bullseye_blocks_render_be_accounts() {
   }
 
   $output = theme('be_accounts', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Leads Block (Table).
+ */
+function bullseye_blocks_render_be_leads() {
+  global $base_url, $user;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['leads'] = Bullseye::getLeadsAccounts();
+  $vars['total'] = Bullseye::countLeadsAccnt();
+
+  $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
+
+  foreach ($vars['leads'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['leads'][$key]->edit_link = $edit_link;
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
+  }
+
+  $output = theme('be_leads', $vars);
 
   return array(
     'subject' => '',

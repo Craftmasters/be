@@ -185,10 +185,42 @@ function accounts_delete_form($form, &$form_state) {
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
   if (isset($_GET['ids']) && !empty($_GET['ids'])) {
+
+    $ids = $_GET['ids'];
+    $ids = explode(',', $ids);
+
+    // Removing empty values.
+    foreach ($ids as $key => $value) {
+      if ($value == '') {
+        unset($ids[$key]);
+      }
+    }
+    $ids = array_unique($ids);
+
+    $items_div = '';
+
+    foreach ($ids as $key => $value) {
+      $contact = Bullseye::getContactDetailsById($value);
+      $company_nid = Bullseye::getCompanyNidOfContact($value);
+      $company_name = Bullseye::getCompanyNameByNid($company_nid);
+      $firstname = $contact['field_firstname_value'];
+      $lastname = $contact['field_lastname_value'];
+      $name = $firstname . ' ' . $lastname;
+      $position = $contact['field_position_value'];
+      $markup = $name . ' (' . $position . ', ' . $company_name . ')';
+      $items_div .= '<div class="be-item">' . $markup . '</div>';
+    }
+
     $form['form_title'] = array(
       '#prefix' => '<div class="form-title">',
       '#suffix' => '</div>',
       '#markup' => '<h2>' . t('Are you sure you want to delete the following items?') . '</h2>',
+    );
+
+    $form['items'] = array(
+      '#prefix' => '<div class="be-items-multiple">',
+      '#markup' => $items_div,
+      '#suffix' => '</div>',
     );
     
     $form['submit_container'] = array(
@@ -226,6 +258,55 @@ function accounts_delete_form($form, &$form_state) {
     
 
   return $form;
+}
+
+/**
+ * Submit handler for Delete accounts form.
+ */
+function accounts_delete_form_submit($form, &$form_state) {
+  $ids = $_GET['ids'];
+  $from = $_GET['from'];
+  $ids = explode(',', $ids);
+
+  // Removing empty values.
+  foreach ($ids as $key => $value) {
+    if ($value == '') {
+      unset($ids[$key]);
+    }
+  }
+  $ids = array_unique($ids);
+
+  foreach ($ids as $key => $value) {
+    entity_delete('field_collection_item', $value);
+  }
+
+  if ($from == 'accounts') {
+    cache_clear_all('leads_accounts_listing', 'cache');
+    cache_clear_all('prospect_accounts_listing', 'cache');
+    cache_clear_all('opportunity_accounts_listing', 'cache');
+    cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+    cache_clear_all('closed_deals_accounts_listing', 'cache');
+  }
+  elseif ($from == 'leads') {
+    cache_clear_all('leads_accounts_listing', 'cache');
+  }
+  elseif ($from == 'prospects') {
+    cache_clear_all('prospect_accounts_listing', 'cache');
+  }
+  elseif ($from == 'opportunities') {
+    cache_clear_all('opportunity_accounts_listing', 'cache');
+  }
+  elseif ($from == 'deals_in_progress') {
+    cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+  }
+  elseif ($from == 'closed_deals') {
+    cache_clear_all('closed_deals_accounts_listing', 'cache');
+  }
+
+  cache_clear_all('accounts_listing', 'cache');
+
+  drupal_set_message('Successfully deleted items.');
+
 }
 
 /**
