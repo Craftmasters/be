@@ -91,6 +91,13 @@
         parent_iframe.contents().find('html').addClass('be-lightbox-html');
         $(window.frameElement).parent().find('iframe#lightboxFrame').css('visibility', 'visible');
 
+        if ($('#be-lightbox-close').length) {
+          $('#be-lightbox-close').click(function () {
+            //parent.location.reload();
+            parent.Lightbox.end();
+          });
+        }
+
         // For adding new account modal.
         if ($('#add-new-account').length) {
           $('#company-exists-no').click(function() {
