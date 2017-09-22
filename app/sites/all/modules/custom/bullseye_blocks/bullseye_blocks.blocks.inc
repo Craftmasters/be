@@ -949,7 +949,7 @@ function bullseye_blocks_render_be_header_progress() {
  * RFPs Block (Table).
  */
 function bullseye_blocks_render_be_rfps() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -975,6 +975,13 @@ function bullseye_blocks_render_be_rfps() {
       'alias' => $alias,
       'status' => $account_status,
     );
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_rfps'] = TRUE;
+  if ($producer) {
+    $vars['delete_rfps'] = FALSE;
   }
 
   $output = theme('be_rfps', $vars);

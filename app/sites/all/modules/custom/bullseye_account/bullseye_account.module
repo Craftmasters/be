@@ -276,9 +276,7 @@ function accounts_delete_form_submit($form, &$form_state) {
   }
   $ids = array_unique($ids);
 
-  foreach ($ids as $key => $value) {
-    entity_delete('field_collection_item', $value);
-  }
+  entity_delete_multiple('field_collection_item', $ids);
 
   if ($from == 'accounts') {
     cache_clear_all('leads_accounts_listing', 'cache');
