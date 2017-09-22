@@ -649,6 +649,7 @@
             searchText:'Search',
             searchPlaceHolder:'Enter keyword here ..'
           });
+          $('.be-tables').stickyTableHeaders({scrollableArea: $('.be-table-content')});
         }
 
         // For checkbox in leads and prospects.

@@ -128,6 +128,7 @@ function bullseye_preprocess_page(&$vars, $hook) {
 
   // Add JS for table search.
   drupal_add_js($theme_directory . '/js/html-table-search.js');
+  drupal_add_js($theme_directory . '/js/jquery.stickytableheaders.min.js');
 }
 
 
