@@ -17,6 +17,14 @@ function bullseye_proposals_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['proposals/edit'] = array(
+    'title' => 'Edit Proposal Details',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_proposals_form'),
+    'access arguments' => array('add proposal'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['proposals/send-email'] = array(
     'title' => 'Send Proposal',
     'page callback' => 'drupal_get_form',
@@ -46,14 +54,75 @@ function bullseye_proposals_permission() {
  * Add proposal form.
  */
 function bullseye_proposals_form($form, &$form_state) {
-  $form = array();
+  $form = array(); 
+
+  $form['#parents'] = array();
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $account = '';
+  $priority = '';
+  $due_date = '';
+  $proposal_attachment = '';
+  $benefits = array();
+  $major_medical = 0;
+  $limited_medical = 0;
+  $teledoc = 0;
+  $mec = 0;
+  $life = 0;
+  $short_term_disability = 0;
+  $dental = 0;
+  $vision = 0;
+  $retirement = 0;
+  $special_benefits = 0;
+  $special_benefits_text = '';
+
+  $form_title = t('Send New Proposal');
+  if (arg(1) == 'edit') {
+    $form_title = t('Edit Proposal Details');
+    $proposal = Bullseye::getProposalDetailsByNid(arg(2));
+    $account = $proposal['field_account_nid'];
+    $priority = $proposal['field_priority_value'];
+    $due_date = $proposal['field_due_date_value'];
+    $proposal_attachment = $proposal['field_attached_proposal_fid'];
+    $benefits = $proposal['field_benefits_value'];
+    if (in_array('major_medical', $benefits)) {
+      $major_medical = 1;
+    }
+    if (in_array('limited_medical', $benefits)) {
+      $limited_medical = 1;
+    }
+    if (in_array('teledoc', $benefits)) {
+      $teledoc = 1;
+    }
+    if (in_array('mec', $benefits)) {
+      $mec = 1;
+    }
+    if (in_array('life', $benefits)) {
+      $life = 1;
+    }
+    if (in_array('short_term_disability', $benefits)) {
+      $short_term_disability = 1;
+    }
+    if (in_array('dental', $benefits)) {
+      $dental = 1;
+    }
+    if (in_array('vision', $benefits)) {
+      $vision = 1;
+    }
+    if (in_array('retirement', $benefits)) {
+      $retirement = 1;
+    }
+    if (in_array('special_benefits', $benefits)) {
+      $special_benefits = 1;
+    }
+    $special_benefits_text = $proposal['field_special_benefits_value'];
+  }
 
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Send New Proposal') . '</h2>',
+    '#markup' => '<h2>' . $form_title . '</h2>',
   );
 
   $form['account'] = array(
@@ -87,12 +156,13 @@ function bullseye_proposals_form($form, &$form_state) {
     '#type' => 'select',
     '#description' => "Select the priority level.",
     '#options' => $form['type_options']['#value'],
+    '#default_value' => $priority,
   );
 
   $form['due_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#default_value' => $due_date,
     '#date_year_range' => '0:+3',
     '#required' => true,
     '#title' => t('Due Date'),
@@ -106,51 +176,61 @@ function bullseye_proposals_form($form, &$form_state) {
   $form['benefits_container']['benefits']['major_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Major Medical'),
+    '#default_value' => $major_medical,
   );
 
   $form['benefits_container']['benefits']['limited_medical'] = array(
     '#type' => 'checkbox',
     '#title' => t('Limited Medical'),
+    '#default_value' => $limited_medical,
   );
 
   $form['benefits_container']['benefits']['teledoc'] = array(
     '#type' => 'checkbox',
     '#title' => t('Telemedicine'),
+    '#default_value' => $teledoc,
   );
 
   $form['benefits_container']['benefits']['mec'] = array(
     '#type' => 'checkbox',
     '#title' => t('MEC'),
+    '#default_value' => $mec,
   );
 
   $form['benefits_container']['benefits']['life'] = array(
     '#type' => 'checkbox',
     '#title' => t('Life & AD&D'),
+    '#default_value' => $life,
   );
 
   $form['benefits_container']['benefits']['short_term_disability'] = array(
     '#type' => 'checkbox',
     '#title' => t('Short Term Disability'),
+    '#default_value' => $short_term_disability,
   );
 
   $form['benefits_container']['benefits']['dental'] = array(
     '#type' => 'checkbox',
     '#title' => t('Dental'),
+    '#default_value' => $dental,
   );
 
   $form['benefits_container']['benefits']['vision'] = array(
     '#type' => 'checkbox',
     '#title' => t('Vision'),
+    '#default_value' => $vision,
   );
 
   $form['benefits_container']['benefits']['retirement'] = array(
     '#type' => 'checkbox',
     '#title' => t('Retirement'),
+    '#default_value' => $retirement,
   );
 
   $form['benefits_container']['benefits']['special_benefits'] = array(
     '#type' => 'checkbox',
     '#title' => t('Special Benefits'),
+    '#default_value' => $special_benefits,
   );
 
   $form['special_benefits_text'] = array(
@@ -158,11 +238,13 @@ function bullseye_proposals_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Enter special benefit'),
     ),
+    '#default_value' => $special_benefits_text,
   );
 
   $form['attach_proposal'] = array(
     '#title' => t('Attach Proposal'),
     '#type' => 'managed_file',
+    '#default_value' => $proposal_attachment,
   );
 
   $form['submit_container'] = array(
@@ -197,6 +279,7 @@ function bullseye_proposals_form_submit($form, &$form_state) {
 
   $be = new Bullseye($user);
   $data = $form_state['values'];
+  $data['complete form'] = $form_state['complete form'];
 
   // Build the data for email.
   $account = node_load($data['account']['entity_id']);
@@ -262,12 +345,14 @@ function bullseye_proposals_email_form($form, &$form_state) {
 
   $form['subject'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#title' => t('Subject:'),
     '#default_value' => 'Plan Proposal for ' . $company_name . ' ' . format_date(time(), 'custom', t('m/d/Y')),
   );
 
   $form['to'] = array(
     '#type' => 'textfield',
+    '#required' => TRUE,
     '#title' => t('To:'),
     '#default_value' => $_SESSION['proposal_recipient']['to'],
   );

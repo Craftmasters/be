@@ -1164,6 +1164,48 @@ class Bullseye {
     return $proposals;
   }
 
+  /**
+   * Get all prospects account.
+   */
+  static function getProposalDetailsByNid($nid) {
+    if ($cache = cache_get('proposal_details_' . $nid)) {
+      $proposal = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->join('field_data_field_account', 'account', 'n.nid = account.entity_id');
+      $query->join('field_data_field_due_date', 'dd', 'n.nid = dd.entity_id');
+      $query->join('field_data_field_priority', 'pr', 'n.nid = pr.entity_id');
+      $query->join('field_data_field_special_benefits', 'sb', 'n.nid = sb.entity_id');
+      $query->join('field_data_field_attached_proposal', 'ap', 'n.nid = ap.entity_id');
+      $proposal = $query
+        ->fields('n', array('nid'))
+        ->fields('account', array('field_account_nid'))
+        ->fields('dd', array('field_due_date_value'))
+        ->fields('pr', array('field_priority_value'))
+        ->fields('sb', array('field_special_benefits_value'))
+        ->fields('ap', array('field_attached_proposal_fid'))
+        ->condition('n.type', 'proposal', '=')
+        ->condition('n.status', 1, '=')
+        ->execute()
+        ->fetchAssoc();
+
+      $query1 = db_select('node', 'n');
+      $query1->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
+      $benefits = $query1
+        ->distinct()
+        ->fields('benefits', array('field_benefits_value'))
+        ->condition('n.nid', $nid, '=')
+        ->execute()
+        ->fetchCol();
+
+      $proposal['field_benefits_value'] = $benefits;
+      cache_set('proposal_details_' . $nid, $proposal, 'cache');
+    }
+
+    return $proposal;
+  }
+
 
   /**
    * Get the workflow status of an account.
@@ -2160,15 +2202,34 @@ class Bullseye {
   function createProposal($data) {
     global $user;
 
+    // Get the account data.
     $account = node_load($data['account']['entity_id']);
-    $company = $account->title;
+    $proposal_title = $account->title;
+    $account_nid = $data['account']['entity_id'];
+    $due_date = strtotime($data['due_date']);
+    $priority = $data['priority'];
+    $proposal_status = 'sent';
+    $attached_proposal = array();
+    $benefits = array();
+    $special_benefits_text = $data['special_benefits_text'];
 
-    // Map the data to plan specs storage entity.
+    foreach ($data['complete form']['benefits_container']['benefits'] as $key => $value) {
+      if (isset($value['#value']) && $value['#value'] == 1) {
+        $benefits[] = $key;
+      }
+    }
+
+    // Attched proposal.
+    if ($data['attach_proposal'] != 0) {
+      $attached_proposal = file_load($data['attach_proposal']);
+      $attached_proposal->display = 1;
+      $attached_proposal = file_copy($attached_proposal, 'public://');
+      $attached_proposal = (array) $attached_proposal;
+    }
+
     $node = new stdClass();
-
-    $node->title = $company;
-
-    $node->type = "proposal";
+    $node->title = $proposal_title;
+    $node->type = 'proposal';
     node_object_prepare($node);
     $node->language = LANGUAGE_NONE;
     $node->uid = $user->uid;
@@ -2176,76 +2237,25 @@ class Bullseye {
     $node->promote = 0;
     $node->comment = 0;
 
-    $lang = $node->language;
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $wrapper->title->set($proposal_title);
+    $wrapper->field_account->set($account_nid);
+    $wrapper->field_due_date->set($due_date);
+    $wrapper->field_priority->set($priority);
+    $wrapper->field_benefits->set($benefits);
+    $wrapper->field_special_benefits->set($special_benefits_text);
+    $wrapper->field_others->set($special_benefits_text);
+    $wrapper->field_proposal_status->set($proposal_status);
+    $wrapper->field_attached_proposal->set($attached_proposal);
 
-    // Due date.
-    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
-
-    // Priority field.
-    $node->field_priority[$lang][0]['value'] = $data['priority'];
-
-    // Account field.
-    $node->field_account[$lang][0]['nid'] = $data['account']['entity_id'];
-    $node->field_account[$lang][0]['target_type'] = 'node';
-
-    // Benefits field.
-    if ($data['major_medical'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'major_medical';
-    }
-    if ($data['limited_medical'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'limited_medical';
-    }
-    if ($data['teledoc'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'teledoc';
-    }
-    if ($data['mec'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'mec';
-    }
-    if ($data['dental'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'dental';
-    }
-    if ($data['vision'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'vision';
-    }
-    if ($data['life'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'life';
-    }
-    if ($data['short_term_disability'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'short_term_disability';
-    }
-    if ($data['retirement'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'retirement';
-    }
-    if ($data['special_benefits'] == 1) {
-      $node->field_benefits[$lang][]['value'] = 'special_benefits';
-    }
-    // Other benefit.
-    if (!empty($data['special_benefits_text'])) {
-      $node->field_others[$lang][0]['value'] = $data['special_benefits_text'];
-    }
-
-    // Attched proposal.
-    if ($data['attach_proposal'] != 0) {
-      $proposal_file = file_load($data['attach_proposal']);
-      $proposal_file->display = 1;
-      $proposal_file = file_copy($proposal_file, 'public://');
-      $node->field_attached_proposal[$lang][0] = (array) $proposal_file;
-    }
-
-    // Due date.
-    $node->field_due_date[$lang][0]['value'] = $data['due_date'];
-
-    // Status.
-    $node->field_proposal_status[$lang][0]['value'] = 'sent';
-
-    // Save the carrier in the storage.
-    $node = node_submit($node);
-    node_save($node);
+    $wrapper->save();
 
     // Clear listing page items.
     cache_clear_all('proposals_listing_sent', 'cache');
 
-    return $node->nid;
+    $nid = $wrapper->getIdentifier();
+
+    return $nid;
   }
 
   /**

@@ -45,9 +45,11 @@
           <tr>
             <td class="cell-check"><input type="checkbox"></td>
             <td>
-              <span class="orange-font">
-                <?php print $proposal->nid; ?>
-              </span>
+              <a href="/proposals/edit/<?php print $proposal->nid; ?>" rel="lightframe">
+                <span class="orange-font">
+                  <?php print $proposal->nid; ?>
+                </span>
+              </a>  
             </td>
             <td>
               <a href="/company/<?php print $aliases[$proposal->field_account_nid]['alias'];?>?from=<?php print $aliases[$proposal->field_account_nid]['status'];?>">

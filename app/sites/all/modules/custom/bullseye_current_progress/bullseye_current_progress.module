@@ -1231,6 +1231,7 @@ function send_proposal_email($form, &$form_state) {
   );
 
   $data = $form_state['values'];
+  $data['complete form'] = $form_state['complete form'];
 
   $to = $form_state['values']['to'];
   $from = 'bullseye@archerjordan.com';
