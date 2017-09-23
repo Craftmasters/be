@@ -2960,26 +2960,6 @@ class Bullseye {
   }
 
   /**
-   * Get the total accounts under producer.
-   *
-   * @param int $uid
-   *   The producer user id.
-   */
-  public static function totalAccounts($uid) {
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
-    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-    $nids = $query
-      ->fields('n', array('nid'))
-      ->condition('producer.field_visibility_value', $uid, '=')
-      ->condition('n.type', 'accounts', '=')
-      ->execute()
-      ->fetchAll();
-
-    return count($nids);
-  }
-
-  /**
    * Save the activity.
    */
   static function createSystemGeneratedActivity($type, $nid) {
