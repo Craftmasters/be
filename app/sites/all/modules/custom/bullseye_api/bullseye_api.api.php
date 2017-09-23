@@ -889,7 +889,7 @@ class Bullseye {
           ->execute()
           ->fetchAll();
 
-        cache_set('leads_isting', $accounts, 'cache');
+        cache_set('leads_listing', $accounts, 'cache');
       }
     }
     else {
