@@ -966,7 +966,7 @@ class Bullseye {
       }
       else {
         $query = db_select('node', 'n');
-        $query->leftJoin('field_data_field_visibility', 'uid', 'producer.entity_id = n.nid');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
         $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
         $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
         $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
