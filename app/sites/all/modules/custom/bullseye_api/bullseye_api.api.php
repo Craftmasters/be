@@ -742,7 +742,7 @@ class Bullseye {
     }
 
     if ($be->hasRole('producer', $roles)) {
-      if ($cache = cache_get('accounts_listing_producer_' $be->uid)) {
+      if ($cache = cache_get('accounts_listing_producer_' . $be->uid)) {
         $accounts = $cache->data;
       }
       else {
