@@ -856,7 +856,7 @@ class Bullseye {
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
     if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
-      if ($cache = cache_get('leads_accounts_listing')) {
+      if ($cache = cache_get('leads_listing')) {
         $accounts = $cache->data;
       }
       else {
@@ -889,7 +889,7 @@ class Bullseye {
           ->execute()
           ->fetchAll();
 
-        cache_set('leads_accounts_listing', $accounts, 'cache');
+        cache_set('leads_isting', $accounts, 'cache');
       }
     }
     else {
