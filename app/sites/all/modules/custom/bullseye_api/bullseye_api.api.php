@@ -595,18 +595,17 @@ class Bullseye {
   /**
    * Get all the carriers.
    */
-  static function getCarriers() {
-
+  public static function getCarriers() {
     if ($cache = cache_get('carriers_listing')) {
       $carriers = $cache->data;
     }
     else {
       $query = db_select('node', 'n');
-      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
-      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
-      $query->join('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
-      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
-      $query->join('field_data_field_street', 'st', 'n.nid = st.entity_id');
+      $query->leftJoin('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'n.nid = email.entity_id');
+      $query->leftJoin('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
+      $query->leftJoin('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->leftJoin('field_data_field_street', 'st', 'n.nid = st.entity_id');
       $carriers = $query
         ->distinct()
         ->fields('n', array('nid', 'title'))
@@ -615,6 +614,7 @@ class Bullseye {
         ->fields('email', array('field_email_value'))
         ->fields('priority', array('field_priority_value'))
         ->fields('st', array('field_street_value'))
+        ->groupBy('n.nid')
         ->condition('n.type', 'carrier', '=')
         ->condition('n.status', 1, '=')
         ->execute()
@@ -634,6 +634,7 @@ class Bullseye {
 
       cache_set('carriers_listing', $carriers, 'cache');
     }
+
     return $carriers;
   }
 
@@ -690,12 +691,11 @@ class Bullseye {
   public static function countCarriers() {
     if ($cache = cache_get('count_carriers')) {
         $carrier = $cache->data;
-      }
-      else {
-        $carrier = db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
+    }
+    else {
+      $carrier = db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
 
-        cache_set('count_carriers', $carrier, 'cache');
-      }
+      cache_set('count_carriers', $carrier, 'cache');
     }
     return $carrier;
   }
