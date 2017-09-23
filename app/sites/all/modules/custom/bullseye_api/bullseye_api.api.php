@@ -688,7 +688,16 @@ class Bullseye {
    * Count all the carriers.
    */
   public static function countCarriers() {
-    return db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
+    if ($cache = cache_get('count_carriers')) {
+        $carrier = $cache->data;
+      }
+      else {
+        $carrier = db_query("SELECT COUNT(nid) AS 'total' FROM {node} WHERE type = :type", array(':type' => 'carrier'))->fetchObject();
+
+        cache_set('count_carriers', $carrier, 'cache');
+      }
+    }
+    return $carrier;
   }
 
   /**
