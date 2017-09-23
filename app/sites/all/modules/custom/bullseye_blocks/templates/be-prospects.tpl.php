@@ -38,6 +38,11 @@
               <img src="<?php print $single_user_gray; ?>">
             </a>
           <?php endif; ?>
+          <?php if ($delete_accounts) : ?>
+            <a href="/accounts/delete?from=prospects&ids=" rel="lightframe" id="delete-accounts-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -60,7 +65,9 @@
       <tbody>
         <?php foreach ($prospects as $key => $p): ?>
           <tr>
-            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $p->nid; ?>"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $p->nid; ?>" data-contact-id="<?php print $p->field_contacts_value; ?>">
+            </td>
             <td>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $p->edit_link; ?>" rel="lightframe">

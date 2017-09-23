@@ -38,6 +38,11 @@
               <img src="<?php print $single_user_gray; ?>">
             </a>
           <?php endif; ?>
+          <?php if ($delete_accounts) : ?>
+            <a href="/accounts/delete?from=deals_in_progress&ids=" rel="lightframe" id="delete-accounts-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
         
       </div>
@@ -60,7 +65,9 @@
       <tbody>
         <?php foreach ($deals as $d): ?>
           <tr>
-            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="<?php print $d->nid; ?>"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $d->nid; ?>" data-contact-id="<?php print $d->field_contacts_value; ?>">
+            </td>
             <td class="be-dot-td"><span class="dot-priority red"></span></td>
             <td>
               <span class="orange-font">

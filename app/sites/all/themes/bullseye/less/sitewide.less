@@ -424,6 +424,10 @@
 /*
  * Lightbox Modal.
  */
+  .lighbox-close-container {
+    display: none;
+  }
+
   html.be-lightbox-html {
     height: 100vh;
     width: 100%;
@@ -450,6 +454,21 @@
     }
     .right-content {
       width: 100%;
+    }
+    .lighbox-close-container {
+      display: block;
+      position: relative;
+      z-index: 1000000;
+      a {
+        position: absolute;
+        display: inline-block;
+        right: -65px;
+        top: -27px;
+        i {
+          color: #fff;
+          font-size: 21px;
+        }
+      }
     }
   }
 
@@ -486,6 +505,8 @@
       display: none !important;
     }
   }
+
+
 
 /*
  * BE Forms.
@@ -727,8 +748,16 @@
       display: inline-block;
       vertical-align: middle;
       margin-left: 15px;
+      color: #929292;
       img {
         width: 17px;
+      }
+      i {
+        font-size: 25px;
+        margin-top: 2px;
+      }
+      &:hover {
+        color: #929292;
       }
     }
   }

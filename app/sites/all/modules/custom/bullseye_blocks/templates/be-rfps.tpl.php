@@ -8,7 +8,13 @@
       <div class="col-md-6">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <?php if ($delete_rfps) : ?>
+            <a href="/rfps/delete?ids=" rel="lightframe" id="delete-rfps-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
+        
       </div>
     </div>
   </div>
@@ -37,7 +43,9 @@
         <?php foreach($rfps as $rfp): ?>
           <?php $data = node_load($rfp->nid); ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $rfp->nid; ?>">
+            </td>
             <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
             <td>
               <a href="/company/<?php print $rfp->alias_details['alias'];?>?from=<?php print $rfp->alias_details['status'];?>">

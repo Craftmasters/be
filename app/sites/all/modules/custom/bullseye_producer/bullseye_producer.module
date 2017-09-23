@@ -33,6 +33,14 @@ function bullseye_producer_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['producers/delete'] = array(
+    'title' => t('Delete Items'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('producers_delete_form'),
+    'access arguments' => array('add account'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['producer/get-pending-count'] = array(
     'title' => 'Count pending producers',
     'page callback' => 'producer_get_pending_count',
@@ -53,6 +61,118 @@ function bullseye_producer_permission() {
       'description' => t('Allow user to add new producer account.'),
     ),
   );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Delete producers form.
+ */
+function producers_delete_form($form, &$form_state) {
+  global $user;
+
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if (isset($_GET['ids']) && !empty($_GET['ids'])) {
+
+    $ids = $_GET['ids'];
+    $ids = explode(',', $ids);
+
+    // Removing empty values.
+    foreach ($ids as $key => $value) {
+      if ($value == '') {
+        unset($ids[$key]);
+      }
+    }
+    $ids = array_unique($ids);
+
+    $items_div = '';
+
+    foreach ($ids as $key => $value) {
+      $be = new Bullseye($user);
+      $producer = $be->getProducerDetails($value);
+      $type = $producer['field_producer_type'][LANGUAGE_NONE][0]['value'];
+      $firstname = $producer['field_first_name'][LANGUAGE_NONE][0]['value'];
+      $lastname = $producer['field_last_name'][LANGUAGE_NONE][0]['value'];
+      $name = $firstname . ' ' . $lastname;
+      if ($type == 'company') {
+        $company = $producer['field_producer_name'][LANGUAGE_NONE][0]['value'];
+        $name = $name . ' (' . $company . ')';
+      }
+      $items_div .= '<div class="be-item">' . $name . '</div>';
+    }
+
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Are you sure you want to delete the following items?') . '</h2>',
+    );
+
+    $form['items'] = array(
+      '#prefix' => '<div class="be-items-multiple">',
+      '#markup' => $items_div,
+      '#suffix' => '</div>',
+    );
+    
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
+
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Delete'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  } 
+
+  return $form;
+}
+
+/**
+ * Submit handler for Delete producers form.
+ */
+function producers_delete_form_submit($form, &$form_state) {
+  $ids = $_GET['ids'];
+  $ids = explode(',', $ids);
+
+  // Removing empty values.
+  foreach ($ids as $key => $value) {
+    if ($value == '') {
+      unset($ids[$key]);
+    }
+  }
+  $ids = array_unique($ids);
+
+  user_delete_multiple($ids);
+
+  cache_clear_all('producers_listings_1', 'cache');
+  cache_clear_all('total_producers_1', 'cache');
+
+  drupal_set_message('Successfully deleted items.');
+
 }
 
 /**

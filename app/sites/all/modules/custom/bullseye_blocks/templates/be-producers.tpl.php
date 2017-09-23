@@ -9,7 +9,13 @@
       <div class="col-md-4">
         <div class="be-table-right-icons">
           <a href="#"><img src="<?php print $magnifying_glass; ?>"></a>
+          <?php if ($delete_producer) : ?>
+            <a href="/producers/delete?&ids=" rel="lightframe" id="delete-producers-link">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          <?php endif; ?>
         </div>
+          
       </div>
     </div>
   </div>
@@ -31,7 +37,9 @@
       <tbody>
         <?php foreach ($producers as $producer): ?>
           <tr>
-            <td class="cell-check"><input type="checkbox"></td>
+            <td class="cell-check">
+              <input class="be-table-checkbox" type="checkbox" value="<?php print $producer->uid; ?>">
+            </td>
             <td class="td-width-80px">
               <a class="light-gray-font" href="/producer/edit/<?php print $producer->uid; ?>" rel="lightframe">
                 <?php print $producer->uid; ?>

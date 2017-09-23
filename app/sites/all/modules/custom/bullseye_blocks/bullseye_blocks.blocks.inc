@@ -92,6 +92,82 @@ function bullseye_blocks_render_be_bottom_header() {
 }
 
 /**
+ * Accounts Block (Table).
+ */
+function bullseye_blocks_render_be_accounts() {
+  global $base_url, $user;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
+  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
+  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
+  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+  $vars['accounts'] = Bullseye::getAllAccounts();
+  //$vars['total'] = Bullseye::countAllAccnt();
+  $vars['total'] = count(Bullseye::getAllAccounts());
+
+  $vars['aliases'] = array();
+  $vars['profile_pictures'] = array();
+
+  foreach ($vars['accounts'] as $key => $value) {
+    $nid = $value->nid;
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+
+    // Getting the profile picture of contact.
+    if ($value->field_profile_picture_fid != '') {
+      $fid = $value->field_profile_picture_fid;
+      $pic = file_load($fid);
+      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
+    }
+    else {
+      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
+    }
+
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $vars['accounts'][$key]->field_account_status_value = 'lead';
+      $account_status = 'lead';
+    }
+
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['accounts'][$key]->edit_link = $edit_link;
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
+  if ($producer) {
+    $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
+  }
+
+  $output = theme('be_accounts', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
  * Leads Block (Table).
  */
 function bullseye_blocks_render_be_leads() {
@@ -152,77 +228,13 @@ function bullseye_blocks_render_be_leads() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_leads', $vars);
-
-  return array(
-    'subject' => '',
-    'content' => $output,
-  );
-}
-
-/**
- * Accounts Block (Table).
- */
-function bullseye_blocks_render_be_accounts() {
-  global $base_url, $user;
-
-  $theme_directory = path_to_theme('theme', 'bullseye');
-
-  $vars = array();
-
-  $vars['magnifying_glass'] = $base_url . '/' . $theme_directory . '/images/icons/magnifying_glass_gray.svg';
-  $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
-  $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
-  $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
-  $vars['accounts'] = Bullseye::getAllAccounts();
-  $vars['total'] = Bullseye::countAllAccnt();
-
-  $vars['aliases'] = array();
-  $vars['profile_pictures'] = array();
-
-  foreach ($vars['accounts'] as $key => $value) {
-    $nid = $value->nid;
-    $account_status = $value->field_account_status_value;
-    if ($account_status == '') {
-      $account_status = 'lead';
-    }
-    $alias = drupal_get_path_alias('node/' . $nid);
-    $alias = substr($alias, 8);
-    $vars['aliases'][$nid] = array(
-      'alias' => $alias,
-      'status' => $account_status,
-    );
-
-    // Getting the profile picture of contact.
-    if ($value->field_profile_picture_fid != '') {
-      $fid = $value->field_profile_picture_fid;
-      $pic = file_load($fid);
-      $vars['profile_pictures'][] = image_style_url('profile_picture', $pic->uri);
-    }
-    else {
-      $vars['profile_pictures'][] = '/sites/all/themes/bullseye/images/default-user.png';
-    }
-
-    $account_status = $value->field_account_status_value;
-    if ($account_status == '') {
-      $vars['accounts'][$key]->field_account_status_value = 'lead';
-      $account_status = 'lead';
-    }
-
-    // build the edit contact person link.
-    $edit_link = '/edit/contact-person?';
-    $edit_link .= 'existing_company=' . $value->nid;
-    $edit_link .= '&account_status=' . $account_status;
-    $edit_link .= '&contact_id=' . $value->field_contacts_value;
-
-    $vars['accounts'][$key]->edit_link = $edit_link;
-  }
-
-  $output = theme('be_accounts', $vars);
 
   return array(
     'subject' => '',
@@ -291,8 +303,10 @@ function bullseye_blocks_render_be_prospects() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_prospects', $vars);
@@ -389,8 +403,10 @@ function bullseye_blocks_render_be_opportunities() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_opportunities', $vars);
@@ -469,8 +485,10 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_deals_in_progress', $vars);
@@ -499,8 +517,10 @@ function bullseye_blocks_render_be_closed_deals() {
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
 
   $vars['assign_producers'] = TRUE;
+  $vars['delete_accounts'] = TRUE;
   if ($producer) {
     $vars['assign_producers'] = FALSE;
+    $vars['delete_accounts'] = FALSE;
   }
 
   $output = theme('be_closed_deals', $vars);
@@ -553,10 +573,12 @@ function bullseye_blocks_render_be_proposals() {
   }
 
   $vars['add_proposal'] = TRUE;
+  $vars['delete_proposal'] = TRUE;
 
   // Hide the add proposal button to other roles.
   if ($producer) {
     $vars['add_proposal'] = FALSE;
+    $vars['delete_proposal'] = FALSE;
   }
 
   $output = theme('be_proposals', $vars);
@@ -590,6 +612,13 @@ function bullseye_blocks_render_be_producers() {
 
   // Total number of producers.
   $vars['total'] = Bullseye::totalProducers();
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_producer'] = TRUE;
+  if ($producer) {
+    $vars['delete_producer'] = FALSE;
+  }
 
   $output = theme('be_producers', $vars);
 
@@ -656,6 +685,13 @@ function bullseye_blocks_render_be_carriers() {
   $vars['three_bars'] = $base_url . '/' . $theme_directory . '/images/icons/three_bars.svg';
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_carrier'] = TRUE;
+  if ($producer) {
+    $vars['delete_carrier'] = FALSE;
+  }
 
   $output = theme('be_carriers', $vars);
 
@@ -929,7 +965,7 @@ function bullseye_blocks_render_be_header_progress() {
  * RFPs Block (Table).
  */
 function bullseye_blocks_render_be_rfps() {
-  global $base_url;
+  global $base_url, $user;
 
   $theme_directory = path_to_theme('theme', 'bullseye');
 
@@ -955,6 +991,13 @@ function bullseye_blocks_render_be_rfps() {
       'alias' => $alias,
       'status' => $account_status,
     );
+  }
+
+  $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
+
+  $vars['delete_rfps'] = TRUE;
+  if ($producer) {
+    $vars['delete_rfps'] = FALSE;
   }
 
   $output = theme('be_rfps', $vars);

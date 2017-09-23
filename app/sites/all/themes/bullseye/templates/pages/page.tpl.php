@@ -96,8 +96,8 @@
     </div>
   </div>
 <?php else : ?>
-  <div class="container">
 
+  <div class="container">
     <div class="bullseye-wrapper row">
       <div class="col-md-2 left-sidebar">
         <?php if ($logo): ?>
@@ -123,6 +123,9 @@
           <?php print render($page['bottom_header']); ?>
         </div>
         <div class="content-region">
+          <div class="lighbox-close-container">
+            <a href="#" id="be-lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a>
+          </div>
           <div id="ajax-result"></div>
           <?php print $messages; ?>
           <?php if ($column == 'one-col') : ?>
@@ -219,7 +222,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="suggestion-box-container">
