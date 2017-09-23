@@ -781,7 +781,7 @@ class Bullseye {
           ->execute()
           ->fetchAll();
 
-        cache_set('accounts_listing_producer_' $be->uid, $accounts, 'cache');
+        cache_set('accounts_listing_producer_' . $be->uid, $accounts, 'cache');
       }
     }
 
