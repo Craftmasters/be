@@ -191,7 +191,6 @@ function bullseye_carriers_form($form, &$form_state) {
   if (arg(1) == 'edit') {
     $form_title = t('Edit Carrier Details');
     $carrier = Bullseye::getCarrierDetails(arg(2));
-    krumo($carrier);
     $carrier_name = $carrier['title'];
     $primary_contact_name = $carrier['field_primary_contact_value'];
     $primary_contact_email = $carrier['field_email_value'];

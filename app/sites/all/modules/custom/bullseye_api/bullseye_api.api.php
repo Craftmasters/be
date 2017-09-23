@@ -671,8 +671,6 @@ class Bullseye {
       cache_set('carrier_info_' . $nid, $carriers, 'cache');
     }
 
-    krumo($carriers);
-
     $query = db_select('node', 'n');
     $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
     $benefits = $query
