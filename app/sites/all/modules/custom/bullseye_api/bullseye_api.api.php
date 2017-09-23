@@ -647,12 +647,12 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->join('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
-      $query->join('field_data_field_email', 'email', 'n.nid = email.entity_id');
-      $query->join('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
-      $query->join('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
-      $query->join('field_data_field_street', 'st', 'n.nid = st.entity_id');
-      $query->join('field_data_field_special_benefits', 'sb', 'n.nid = sb.entity_id');
+      $query->leftJoin('field_data_field_primary_contact', 'contact', 'n.nid = contact.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'n.nid = email.entity_id');
+      $query->leftJoin('field_data_field_contact_number', 'cn', 'n.nid = cn.entity_id');
+      $query->leftJoin('field_data_field_priority', 'priority', 'n.nid = priority.entity_id');
+      $query->leftJoin('field_data_field_street', 'st', 'n.nid = st.entity_id');
+      $query->leftJoin('field_data_field_special_benefits', 'sb', 'n.nid = sb.entity_id');
       $carriers = $query
         ->distinct()
         ->fields('n', array('nid', 'title'))
@@ -670,6 +670,8 @@ class Bullseye {
 
       cache_set('carrier_info_' . $nid, $carriers, 'cache');
     }
+
+    krumo($carriers);
 
     $query = db_select('node', 'n');
     $query->join('field_data_field_benefits', 'benefits', 'n.nid = benefits.entity_id');
