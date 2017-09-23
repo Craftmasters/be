@@ -891,22 +891,55 @@ class Bullseye {
    * Count all leads account.
    */
   static function countLeadsAccnt() {
-    if ($cache = cache_get('count_leads_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('admin_leads')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'lead', '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('admin_leads', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'lead', '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('producer_leads_' . $be->uid)) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'lead', '=')
+          ->condition($or)
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('count_leads_accounts_listing', $accounts, 'cache');
+        cache_set('producer_leads_' . $be->uid, $accounts, 'cache');
+      }
     }
 
     return $accounts;
