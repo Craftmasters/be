@@ -484,7 +484,7 @@ class Bullseye {
     }
     else {
       $dc = (int) Bullseye::getDealsClosed($uid);
-      $accounts = (int) Bullseye::totalAccounts($uid);
+      $accounts = (int) Bullseye::countAllAccnt($uid);
     }
 
     if ($dc == 0 && $accounts == 0) {
@@ -799,12 +799,17 @@ class Bullseye {
 
   /**
    * Count all accounts.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  static function countAllAccnt() {
+  static function countAllAccnt($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -827,14 +832,14 @@ class Bullseye {
       }
     }
     else {
-      if ($cache = cache_get('producer_total_accounts_' . $be->uid)) {
+      if ($cache = cache_get('producer_total_accounts_' . $uid)) {
         $accounts = $cache->data;
       }
       else {
         $query = db_select('node', 'n');
         $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
         $or = db_or();
-        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', $uid, '=');
         $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->fields('n', array('nid'))
@@ -846,7 +851,7 @@ class Bullseye {
           ->execute()
           ->fetchField();
 
-        cache_set('producer_total_accounts_' . $be->uid, $accounts, 'cache');
+        cache_set('producer_total_accounts_' . $uid, $accounts, 'cache');
       }
     }
 
