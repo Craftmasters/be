@@ -792,20 +792,53 @@ class Bullseye {
    * Count all accounts.
    */
   static function countAllAccnt() {
-    if ($cache = cache_get('count_accounts_listing')) {
-      $accounts = $cache->data;
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('count_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->groupBy('.n.nid')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('count_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $accounts = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('count_accounts_listing_producer')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition($or)
+          ->groupBy('.n.nid')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('count_accounts_listing', $accounts, 'cache');
+        cache_set('count_accounts_listing_producer', $accounts, 'cache');
+      }
     }
 
     return $accounts;
@@ -906,9 +939,6 @@ class Bullseye {
         $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
         $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
         $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
-        $or = db_or();
-        $or->condition('uid.field_visibility_value', $be->uid, '=');
-        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->fields('n', array('nid', 'title'))
           ->fields('contact', array('field_contacts_value'))
@@ -936,7 +966,7 @@ class Bullseye {
       }
       else {
         $query = db_select('node', 'n');
-        $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'producer.entity_id = n.nid');
         $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
         $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
         $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
@@ -947,6 +977,9 @@ class Bullseye {
         $query->leftJoin('field_data_field_email', 'mail', 'contact.field_contacts_value = mail.entity_id');
         $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
         $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->fields('n', array('nid', 'title'))
           ->fields('contact', array('field_contacts_value'))
@@ -962,7 +995,7 @@ class Bullseye {
           ->condition('n.type', 'accounts', '=')
           ->condition('n.status', 1, '=')
           ->condition('type.field_account_status_value', 'prospect', '=')
-          ->condition('producer.field_visibility_value', $be->uid, '=')
+          ->condition($or)
           ->execute()
           ->fetchAll();
 

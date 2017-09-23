@@ -106,8 +106,7 @@ function bullseye_blocks_render_be_accounts() {
   $vars['single_user_gray'] = $base_url . '/' . $theme_directory . '/images/icons/single_user_gray.svg';
   $vars['gray_gear'] = $base_url . '/' . $theme_directory . '/images/icons/gray_gear.svg';
   $vars['accounts'] = Bullseye::getAllAccounts();
-  //$vars['total'] = Bullseye::countAllAccnt();
-  $vars['total'] = count(Bullseye::getAllAccounts());
+  $vars['total'] = Bullseye::countAllAccnt();
 
   $vars['aliases'] = array();
   $vars['profile_pictures'] = array();
