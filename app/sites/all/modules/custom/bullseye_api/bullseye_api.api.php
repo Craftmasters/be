@@ -818,7 +818,7 @@ class Bullseye {
       }
     }
     else {
-      if ($cache = cache_get('count_accounts_listing_producer')) {
+      if ($cache = cache_get('producer_total_accounts_' . $be->uid)) {
         $accounts = $cache->data;
       }
       else {
@@ -837,7 +837,7 @@ class Bullseye {
           ->execute()
           ->fetchField();
 
-        cache_set('count_accounts_listing_producer', $accounts, 'cache');
+        cache_set('producer_total_accounts_' . $be->uid, $accounts, 'cache');
       }
     }
 
