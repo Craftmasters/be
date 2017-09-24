@@ -480,7 +480,7 @@ class Bullseye {
     $roles = $be->getAccountRole();
     if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
       $dc = (int) Bullseye::getDealsClosed($uid);
-      $accounts = (int) Bullseye::totalAccounts($uid);
+      $accounts = (int) Bullseye::countAllAccnt($uid);
     }
     else {
       $dc = (int) Bullseye::getDealsClosed($uid);
@@ -1140,8 +1140,8 @@ class Bullseye {
       }
       else {
         $query = db_select('node', 'n');
-        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
         $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
         $or = db_or();
         $or->condition('uid.field_visibility_value', $be->uid, '=');
         $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
@@ -2778,7 +2778,7 @@ class Bullseye {
    * @param string $producer
    *   The producer account.
    */
-  public static function getLeadsAssigned($producer) {
+  public static function getLeadsAssigned($uid = NULL) {
     global $user;
 
     // Initialize the class.
@@ -2798,11 +2798,13 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('uid.field_visibility_value', $be->uid, '=');
+      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $producer, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'lead', '=')
         ->execute()
