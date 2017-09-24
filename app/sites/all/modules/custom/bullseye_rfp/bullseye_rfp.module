@@ -132,7 +132,7 @@ function rfps_delete_form($form, &$form_state) {
       '#markup' => $items_div,
       '#suffix' => '</div>',
     );
-    
+
     $form['submit_container'] = array(
       '#type' => 'container',
     );
@@ -163,7 +163,7 @@ function rfps_delete_form($form, &$form_state) {
     $form['submit_container']['cancel'] = array(
       '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
     );
-  } 
+  }
 
   return $form;
 }
@@ -2326,9 +2326,15 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
     $contact = field_collection_item_load($fcid);
 
     $vars['company'] = $account->title;
-    $vars['email'] = $contact->field_email[LANGUAGE_NONE][0]['value'];
-    $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
-    $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
+    if ($contact->field_email[LANGUAGE_NONE]) {
+      $vars['email'] = $contact->field_email[LANGUAGE_NONE][0]['value'];
+    }
+    if ($account->field_work_phone[LANGUAGE_NONE]) {
+      $vars['phone'] = $account->field_work_phone[LANGUAGE_NONE][0]['value'];
+    }
+    if ($account->field_work_website[LANGUAGE_NONE]) {
+      $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
+    }
     $street = $account->field_street[LANGUAGE_NONE][0]['value'];
     $city = $account->field_city[LANGUAGE_NONE][0]['value'];
     $state = $account->field_state_code[LANGUAGE_NONE][0]['value'];
@@ -2484,7 +2490,7 @@ function generate_rfp_major_medical($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-    
+
   }
 }
 
@@ -2595,7 +2601,7 @@ function generate_rfp_limited_medical($form, &$form_state) {
       Bullseye::sendEmail($to, $user->mail, $params);
     }
 
-    
+
   }
 }
 
@@ -3253,7 +3259,7 @@ function generate_rfp_short_term_disability($form, &$form_state) {
 
       Bullseye::sendEmail($to, $user->mail, $params);
     }
-    
+
   }
 }
 
