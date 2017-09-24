@@ -98,9 +98,11 @@
               <span class="dot-priority <?php Bullseye::priorityClass(); ?>"></span>
             </td>
             <td>
-              <span class="light-gray-font">
-                <?php Bullseye::getAuthor($rfp->uid); ?>
-              </span>
+              <a href="/user/<?php print $rfp->uid; ?>">
+                <span class="light-gray-font">
+                  <?php Bullseye::getAuthor($rfp->uid); ?>
+                </span>
+              </a>
             </td>
           </tr>
         <?php endforeach; ?>
