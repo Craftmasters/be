@@ -279,49 +279,68 @@ function accounts_delete_form_submit($form, &$form_state) {
   entity_delete_multiple('field_collection_item', $ids);
 
   if ($from == 'accounts') {
-    cache_clear_all('leads_accounts_listing', 'cache');
-    cache_clear_all('prospect_accounts_listing', 'cache');
-    cache_clear_all('opportunity_accounts_listing', 'cache');
-    cache_clear_all('deal_in_progress_accounts_listing', 'cache');
-    cache_clear_all('closed_deals_accounts_listing', 'cache');
 
-    
-    cache_clear_all('count_leads_accounts_listing', 'cache');
+    // For Admin
+    cache_clear_all('leads_listing', 'cache');
+    cache_clear_all('admin_leads', 'cache');
+    cache_clear_all('prospect_accounts_listing', 'cache');
     cache_clear_all('count_prospect_accounts_listing', 'cache');
-    cache_clear_all('count_prospect_accounts_listing_producer', 'cache');
+    cache_clear_all('opportunity_accounts_listing', 'cache');
     cache_clear_all('count_opportunity_accounts_listing', 'cache');
+    cache_clear_all('deal_in_progress_accounts_listing', 'cache');
     cache_clear_all('count_deals_accounts_listing', 'cache');
-    cache_clear_all('count_deals_accounts_listing_producer', 'cache');
+    cache_clear_all('closed_deals_accounts_listing', 'cache');
     cache_clear_all('count_closed_deals_accounts_listing', 'cache');
+    
+
+    // For Producer
+    cache_clear_all('producer_leads_listing', 'cache', TRUE);
+    cache_clear_all('producer_leads', 'cache', TRUE);
+    cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('closed_deals_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_closed_deals_accounts_listing_producer', 'cache', TRUE);
+    
   }
   elseif ($from == 'leads') {
-    cache_clear_all('leads_accounts_listing', 'cache');
-    cache_clear_all('count_leads_accounts_listing', 'cache');
-    cache_clear_all('count_leads_accounts_listing_producer', 'cache');
+    cache_clear_all('leads_listing', 'cache');
+    cache_clear_all('admin_leads', 'cache');
+    cache_clear_all('producer_leads_listing', 'cache', TRUE);
+    cache_clear_all('producer_leads', 'cache', TRUE);
   }
   elseif ($from == 'prospects') {
     cache_clear_all('prospect_accounts_listing', 'cache');
     cache_clear_all('count_prospect_accounts_listing', 'cache');
-    cache_clear_all('count_prospect_accounts_listing_producer', 'cache');
+    cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
   }
   elseif ($from == 'opportunities') {
     cache_clear_all('opportunity_accounts_listing', 'cache');
     cache_clear_all('count_opportunity_accounts_listing', 'cache');
-    cache_clear_all('count_opportunity_accounts_listing_producer', 'cache');
+    cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
   }
   elseif ($from == 'deals_in_progress') {
     cache_clear_all('deal_in_progress_accounts_listing', 'cache');
     cache_clear_all('count_deals_accounts_listing', 'cache');
-    cache_clear_all('count_deals_accounts_listing_producer', 'cache');
+    cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
   }
   elseif ($from == 'closed_deals') {
     cache_clear_all('closed_deals_accounts_listing', 'cache');
     cache_clear_all('count_closed_deals_accounts_listing', 'cache');
-    cache_clear_all('count_closed_deals_accounts_listing_producer', 'cache');
+    cache_clear_all('closed_deals_accounts_listing_producer', 'cache', TRUE);
+    cache_clear_all('count_closed_deals_accounts_listing_producer', 'cache', TRUE);
   }
 
   cache_clear_all('count_accounts_listing', 'cache');
   cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
 
   drupal_set_message('Successfully deleted items.');
 

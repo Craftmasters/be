@@ -257,10 +257,18 @@ function convert_to_prospect($form, &$form_state) {
   // Clear the leads and prospects listing cache so that
   // the new account changes will reflect to the 
   // corresponding list.
-  cache_clear_all('leads_accounts_listing', 'cache');
-  cache_clear_all('count_leads_accounts_listing', 'cache');
+  cache_clear_all('count_accounts_listing', 'cache');
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
+  cache_clear_all('leads_listing', 'cache');
+  cache_clear_all('admin_leads', 'cache');
+  cache_clear_all('producer_leads_listing', 'cache', TRUE);
+  cache_clear_all('producer_leads', 'cache', TRUE);
   cache_clear_all('prospect_accounts_listing', 'cache');
   cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('contacts_' . $form_state['values']['nid'], 'cache');
 
   // Refresh the page.
@@ -456,8 +464,12 @@ function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   // corresponding list.
   cache_clear_all('prospect_accounts_listing', 'cache');
   cache_clear_all('count_prospect_accounts_listing', 'cache');
+  cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('opportunity_accounts_listing', 'cache');
   cache_clear_all('count_opportunity_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
 
   // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
@@ -1308,8 +1320,12 @@ function convert_to_deal($form, &$form_state) {
   // corresponding list.
   cache_clear_all('opportunity_accounts_listing', 'cache');
   cache_clear_all('count_opportunity_accounts_listing', 'cache');
+  cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('deal_in_progress_accounts_listing', 'cache');
   cache_clear_all('count_deals_accounts_listing', 'cache');
+  cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
 
   $wrapper->save();
 

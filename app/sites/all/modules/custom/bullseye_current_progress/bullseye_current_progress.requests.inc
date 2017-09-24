@@ -189,7 +189,14 @@ function be_cp_save_exit_vpc() {
     $wrapper->save();
   }
 
-  cache_clear_all('leads_accounts_listing', 'cache');
+  cache_clear_all('count_accounts_listing', 'cache');
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
+  cache_clear_all('leads_listing', 'cache');
+  cache_clear_all('admin_leads', 'cache');
+  cache_clear_all('producer_leads_listing', 'cache', TRUE);
+  cache_clear_all('producer_leads', 'cache', TRUE);
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
@@ -200,6 +207,14 @@ function be_cp_save_exit_vpc() {
  * Delete the contact from vpc.
  */
 function be_cp_delete_contact() {
+  cache_clear_all('count_accounts_listing', 'cache');
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
+  cache_clear_all('leads_listing', 'cache');
+  cache_clear_all('admin_leads', 'cache');
+  cache_clear_all('producer_leads_listing', 'cache', TRUE);
+  cache_clear_all('producer_leads', 'cache', TRUE);
   $item_id = $_POST['item_id'];
 
   $result = entity_delete('field_collection_item', $item_id);
@@ -264,7 +279,14 @@ function be_cp_lead_set_priority() {
     $wrapper->save();
   }
 
-  cache_clear_all('leads_accounts_listing', 'cache');
+  cache_clear_all('count_accounts_listing', 'cache');
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
+  cache_clear_all('leads_listing', 'cache');
+  cache_clear_all('admin_leads', 'cache');
+  cache_clear_all('producer_leads_listing', 'cache', TRUE);
+  cache_clear_all('producer_leads', 'cache', TRUE);
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
