@@ -291,7 +291,6 @@ function accounts_delete_form_submit($form, &$form_state) {
     cache_clear_all('count_deals_accounts_listing', 'cache');
     cache_clear_all('closed_deals_accounts_listing', 'cache');
     cache_clear_all('count_closed_deals_accounts_listing', 'cache');
-    
 
     // For Producer
     cache_clear_all('producer_leads_listing', 'cache', TRUE);
@@ -826,62 +825,99 @@ function bullseye_account_new_form_submit($form, &$form_state) {
 
   $cwrapper->save();
 
+  cache_clear_all('count_accounts_listing', 'cache');
   cache_clear_all('accounts_listing', 'cache');
-  cache_clear_all('contacts_' . $nid, 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
 
   if (isset($_GET['account_status']) && !empty($_GET['account_status']) && !isset($_GET['contact_id'])) {
     if ($_GET['account_status'] == 'lead') {
       drupal_set_message('Successfully added new lead.');
-      cache_clear_all('leads_accounts_listing', 'cache');
+      cache_clear_all('leads_listing', 'cache');
+      cache_clear_all('admin_leads', 'cache');
+      cache_clear_all('producer_leads_listing', 'cache', TRUE);
+      cache_clear_all('producer_leads', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'prospect') {
       drupal_set_message('Successfully added new prospect.');
       cache_clear_all('prospect_accounts_listing', 'cache');
+      cache_clear_all('count_prospect_accounts_listing', 'cache');
+      cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'opportunity') {
       drupal_set_message('Successfully added new opportunity.');
       cache_clear_all('opportunity_accounts_listing', 'cache');
+      cache_clear_all('count_opportunity_accounts_listing', 'cache');
+      cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'deal_in_progress') {
-      drupal_set_message('Successfully added new deal in progress.');
       cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+      cache_clear_all('count_deals_accounts_listing', 'cache');
+      cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     }
   }
   elseif (isset($_GET['account_status']) && !empty($_GET['account_status']) && isset($_GET['contact_id'])) {
     if ($_GET['account_status'] == 'lead') {
       drupal_set_message('Successfully updated lead.');
-      cache_clear_all('leads_accounts_listing', 'cache');
+      cache_clear_all('leads_listing', 'cache');
+      cache_clear_all('admin_leads', 'cache');
+      cache_clear_all('producer_leads_listing', 'cache', TRUE);
+      cache_clear_all('producer_leads', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'prospect') {
       drupal_set_message('Successfully updated prospect.');
       cache_clear_all('prospect_accounts_listing', 'cache');
+      cache_clear_all('count_prospect_accounts_listing', 'cache');
+      cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'opportunity') {
       drupal_set_message('Successfully updated opportunity.');
       cache_clear_all('opportunity_accounts_listing', 'cache');
+      cache_clear_all('count_opportunity_accounts_listing', 'cache');
+      cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
     }
     elseif ($_GET['account_status'] == 'deal_in_progress') {
       drupal_set_message('Successfully updated deal in progress.');
       cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+      cache_clear_all('count_deals_accounts_listing', 'cache');
+      cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     }
     cache_clear_all('contact_details_' . $_GET['contact_id'], 'cache');
   }
   else {
     if (arg(2) == 'lead') {
       drupal_set_message('Successfully added new lead.');
-      cache_clear_all('leads_accounts_listing', 'cache');
+      cache_clear_all('leads_listing', 'cache');
+      cache_clear_all('admin_leads', 'cache');
+      cache_clear_all('producer_leads_listing', 'cache', TRUE);
+      cache_clear_all('producer_leads', 'cache', TRUE);
     }
     elseif (arg(2) == 'prospect') {
       drupal_set_message('Successfully added new prospect.');
       cache_clear_all('prospect_accounts_listing', 'cache');
+      cache_clear_all('count_prospect_accounts_listing', 'cache');
+      cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
     }
     elseif (arg(2) == 'opportunity') {
       drupal_set_message('Successfully added new opportunity.');
       cache_clear_all('opportunity_accounts_listing', 'cache');
+      cache_clear_all('count_opportunity_accounts_listing', 'cache');
+      cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
     }
     elseif (arg(2) == 'deal-in-progress') {
       drupal_set_message('Successfully added new deal in progress.');
       cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+      cache_clear_all('count_deals_accounts_listing', 'cache');
+      cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+      cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     }
   }
 }

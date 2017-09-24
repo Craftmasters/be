@@ -14,9 +14,10 @@ function be_cp_lead_verify() {
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
   $account_status = $wrapper->field_account_status->value();
+  $as_condition = ($account_status == 'lead' || $account_status == 'unqualified');
 
   if ($sca_dbra == 'yes_sca' || $sca_dbra == 'yes_dbra' || $sca_dbra == 'yes_both') {
-    if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
+    if ($as_condition && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
       $wrapper->field_action_status->set('classify_to_group');
     }
   }
@@ -38,9 +39,10 @@ function be_cp_plan_to_work_sca_dbra() {
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
   $account_status = $wrapper->field_account_status->value();
+  $as_condition = ($account_status == 'lead' || $account_status == 'unqualified');
 
   if ($plan_to_work_sca_dbra == 'yes') {
-    if ($account_status == 'lead' && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
+    if ($as_condition && $workflow_status == 'verification' && $action_status == 'verify_sca_dbra') {
       $wrapper->field_action_status->set('classify_to_group');
     }
   }
@@ -48,6 +50,35 @@ function be_cp_plan_to_work_sca_dbra() {
   $wrapper->save();
 
   drupal_json_output($wrapper);
+}
+
+
+/**
+ * For updating the status to unqualified.
+ */
+function be_cp_unqualified() {
+  $nid = $_POST['nid'];
+
+  // Setting the new statuses of the account.
+  $wrapper = entity_metadata_wrapper('node', $nid);
+  $wrapper->field_account_status->set('unqualified');
+  $wrapper->field_action_status->set('verify_sca_dbra');
+  $wrapper->field_workflow_status->set('verification');
+  $wrapper->save();
+
+  // Clear the leads and prospects listing cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('count_accounts_listing', 'cache');
+  cache_clear_all('accounts_listing', 'cache');
+  cache_clear_all('accounts_listing_producer_', 'cache', TRUE);
+  cache_clear_all('producer_total_accounts_', 'cache', TRUE);
+  cache_clear_all('leads_listing', 'cache');
+  cache_clear_all('admin_leads', 'cache');
+  cache_clear_all('producer_leads_listing', 'cache', TRUE);
+  cache_clear_all('producer_leads', 'cache', TRUE);
+
+  drupal_json_output('hey');
 }
 
 /**

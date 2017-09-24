@@ -15,6 +15,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/unqualified'] = array(
+    'page callback' => 'be_cp_unqualified',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   $items['be-cp/lead/validate-point-of-contact'] = array(
     'page callback' => 'be_cp_lead_validate_point_of_contact',
     'access arguments' => array('access content'),

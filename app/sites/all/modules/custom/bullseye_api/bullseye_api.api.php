@@ -742,6 +742,7 @@ class Bullseye {
           ->fields('pp', array('field_profile_picture_fid'))
           ->fields('contact', array('field_contacts_value'))
           ->condition('n.type', 'accounts', '=')
+          ->condition('astatus.field_account_status_value', 'unqualified', '<>')
           ->condition('n.status', 1, '=')
           ->execute()
           ->fetchAll();
@@ -785,6 +786,7 @@ class Bullseye {
           ->fields('pp', array('field_profile_picture_fid'))
           ->fields('contact', array('field_contacts_value'))
           ->condition('n.type', 'accounts', '=')
+          ->condition('astatus.field_account_status_value', 'unqualified', '<>')
           ->condition('n.status', 1, '=')
           ->condition($or)
           ->execute()

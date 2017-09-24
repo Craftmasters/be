@@ -9,70 +9,94 @@
 		</div>
 	</div>
 
-	<div id="div-vsd" class="cp-step row <?php print $class_verify_sca_dbra; ?>">
-		<div class="col-xs-2">
-			<span class="indicator"></span>
+	<?php if ($account_status == 'unqualified') : ?>
+		<div class="cp-step row done-step">
+			<div class="col-xs-2">
+				<span class="indicator"></span>
+			</div>
+			<div class="col-xs-10">
+				<a href="#" class="cp-link">
+					<span><?php print t('Verify if SCA/DBRA'); ?></span>
+				</a>
+			</div>
 		</div>
-		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_vsd; ?>" data-target="#verify-sca-dbra">
-				<span><?php print t('Verify if SCA/DBRA'); ?></span>
-			</a>
-		</div>
-	</div>
 
-	<div id="div-ctg" class="cp-step row <?php print $class_classify_to_group; ?>">
-		<div class="col-xs-2">
-			<span class="indicator"></span>
-		</div>
-		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_ctg; ?>" data-target="#classify-to-group">
-				<span><?php print t('Classify to group'); ?></span>
-			</a>
-		</div>
-	</div>
-
-	<div id="div-vpc" class="cp-step row <?php print $class_validate_point_of_contact; ?>">
-		<div class="col-xs-2">
-			<span class="indicator"></span>
-		</div>
-		<div class="col-xs-10">
-			<a href="#" class="cp-link gray" data-toggle="<?php print $modal_access_vpc; ?>" data-target="#validate-contacts">
-				<span><?php print t('Validate point of contact'); ?></span>
-			</a>
-		</div>
-	</div>
-
-	<div id="div-sp" class="cp-step row <?php print $class_set_priority; ?>">
-		<div class="col-xs-2">
-			<span class="indicator"></span>
-		</div>
-		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_sp; ?>" data-target="#set-priority">
-				<span><?php print t('Set Priority'); ?></span>	
-			</a>
-		</div>
-	</div>
-
-	<div id="div-ctp" class="cp-step row <?php print $class_convert_to_prospect; ?>">
-		<div class="col-xs-2">
-			<span class="indicator end"></span>
-		</div>
-		<div class="col-xs-10">
-				
-			<?php if ($account_status == 'prospect' || $account_status == 'opportunity' || $account_status == 'deal_in_progress') : ?>
+		<div id="div-ctp" class="cp-step row no-check">
+			<div class="col-xs-2">
+				<span class="indicator end"></span>
+			</div>
+			<div class="col-xs-10">	
 				<a href="#" class="cp-link big-step">
-					<span><?php print t('Converted to Prospect!'); ?></span>
+					<span><?php print t('Lead is Unqualified'); ?></span>
 				</a>
-				<a href="/company/<?php print arg(1); ?>?from=prospect" class="cp-link orange">
-					<span><?php print t('Go to Prospect Page'); ?></span>
-				</a>
-			<?php else: ?>
-				<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_ctp; ?>" data-target="#convert-to-prospect">
-					<span><?php print t('Convert to Prospect'); ?></span>
-				</a>
-			<?php endif; ?>
+			</div>
 		</div>
-	</div>
+	<?php else : ?>
+		<div id="div-vsd" class="cp-step row <?php print $class_verify_sca_dbra; ?>">
+			<div class="col-xs-2">
+				<span class="indicator"></span>
+			</div>
+			<div class="col-xs-10">
+				<a href="#" class="cp-link" data-toggle="<?php print $modal_access_vsd; ?>" data-target="#verify-sca-dbra">
+					<span><?php print t('Verify if SCA/DBRA'); ?></span>
+				</a>
+			</div>
+		</div>
+
+		<div id="div-ctg" class="cp-step row <?php print $class_classify_to_group; ?>">
+			<div class="col-xs-2">
+				<span class="indicator"></span>
+			</div>
+			<div class="col-xs-10">
+				<a href="#" class="cp-link" data-toggle="<?php print $modal_access_ctg; ?>" data-target="#classify-to-group">
+					<span><?php print t('Classify to group'); ?></span>
+				</a>
+			</div>
+		</div>
+
+		<div id="div-vpc" class="cp-step row <?php print $class_validate_point_of_contact; ?>">
+			<div class="col-xs-2">
+				<span class="indicator"></span>
+			</div>
+			<div class="col-xs-10">
+				<a href="#" class="cp-link gray" data-toggle="<?php print $modal_access_vpc; ?>" data-target="#validate-contacts">
+					<span><?php print t('Validate point of contact'); ?></span>
+				</a>
+			</div>
+		</div>
+
+		<div id="div-sp" class="cp-step row <?php print $class_set_priority; ?>">
+			<div class="col-xs-2">
+				<span class="indicator"></span>
+			</div>
+			<div class="col-xs-10">
+				<a href="#" class="cp-link" data-toggle="<?php print $modal_access_sp; ?>" data-target="#set-priority">
+					<span><?php print t('Set Priority'); ?></span>	
+				</a>
+			</div>
+		</div>
+
+		<div id="div-ctp" class="cp-step row <?php print $class_convert_to_prospect; ?>">
+			<div class="col-xs-2">
+				<span class="indicator end"></span>
+			</div>
+			<div class="col-xs-10">
+					
+				<?php if ($account_status == 'prospect' || $account_status == 'opportunity' || $account_status == 'deal_in_progress') : ?>
+					<a href="#" class="cp-link big-step">
+						<span><?php print t('Converted to Prospect!'); ?></span>
+					</a>
+					<a href="/company/<?php print arg(1); ?>?from=prospect" class="cp-link orange">
+						<span><?php print t('Go to Prospect Page'); ?></span>
+					</a>
+				<?php else: ?>
+					<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_ctp; ?>" data-target="#convert-to-prospect">
+						<span><?php print t('Convert to Prospect'); ?></span>
+					</a>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
 
 	<div id="verify-sca-dbra" class="modal be-bs-modal" role="dialog">
 	  <div class="modal-dialog">
@@ -158,7 +182,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button id="btn-plan-sca-dbra-yes" type="button" class="green-btn" data-toggle="modal" data-target="#classify-to-group" data-dismiss="modal"><?php print t('Yes'); ?></button>
-		        	<button id="btn-plan-sca-dbra-no" type="button" class="gray-btn" data-toggle="modal" data-target="#lead-unqualified" data-dismiss="modal"><?php print t('No'); ?></button>
+		        	<button id="btn-plan-sca-dbra-no" type="button" class="gray-btn"  data-toggle="modal" data-target="#lead-unqualified" data-dismiss="modal"><?php print t('No'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -202,7 +226,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-save-exit-lu" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#verify-sca-dbra" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        </div>
 		      </div>

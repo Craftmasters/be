@@ -80,10 +80,32 @@
               }
             });
           });
-        } 
+        }
 
         refreshCheckboxEvents();
         refreshHeaderClasses(nid);
+
+        // function to get value of paramater from url.
+        var getUrlParameter = function getUrlParameter(sParam) {
+          var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+              sURLVariables = sPageURL.split('&'),
+              sParameterName,
+              i;
+
+          for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+          }
+        };
+
+        // Check page if it is from lead unqualified modal.
+        var from_unqualified = getUrlParameter('unqualified');
+        if (from_unqualified) {
+          $('#lead-unqualified').modal('show');
+        }
 
         // Lead - Verification - Verify SCA/DBRA - Yes, SCA
         $('#btn-verify-yes-sca').click(function() {
@@ -162,6 +184,23 @@
               refreshClasses(nid);
             },
           });
+        });
+
+        $('#btn-plan-sca-dbra-no').click(function() {
+          $.ajax({
+            url: '/be-cp/unqualified',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+            },
+          });
+        });
+
+        $('#btn-save-exit-lu').click(function() {
+          window.location.reload(true);
         });
 
         // Lead - Verification - Plan to work SCA/DBRA - No
