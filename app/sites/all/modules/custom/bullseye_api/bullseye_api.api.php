@@ -505,7 +505,7 @@ class Bullseye {
    *
    * Story: https://trello.com/c/0SopuNrp
    */
-  public static function dashboardWinRatio($uid = NULL) {
+  public static function winRatioDashboard($uid = NULL) {
     global $user;
 
     // Initialize the class.
@@ -513,18 +513,8 @@ class Bullseye {
 
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
-    $dip = 0;
-    $ro = 0;
-    $wr = 0;
-
-    // Check if the account is administrator.
-    $roles = $be->getAccountRole();
-    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
-      $dip = Bullseye::getDealsAccounts();
-    }
-    else {
-
-    }
+    $dip = Bullseye::countDealsInProgress();
+    $ro = Bullseye::getOpportunitiesCovered();
 
     // Calculate win ration by diving deals in progress
     // by itself plus remaining opportunities.
@@ -1321,7 +1311,7 @@ class Bullseye {
   }
 
   /**
-   * Get all deals account.
+   * Get all deals in progress account.
    */
   function getDealsAccounts() {
     if ($cache = cache_get('deal_in_progress_accounts_listing')) {
@@ -1375,7 +1365,7 @@ class Bullseye {
     // Initialize the class.
     $be = new Bullseye($user);
 
-    $uid = (is_null($uid)) ? $be->uid : $uid;.
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -2894,14 +2884,16 @@ class Bullseye {
   /**
    * Get Opportunities covered.
    *
-   * @param string $producer
-   *   The producer account.
+   * @param string $uid
+   *   The producer account user id.
    */
-  public static function getOpportunitiesCovered($producer) {
+  public static function getOpportunitiesCovered($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -2921,7 +2913,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $producer, '=')
+        ->condition('producer.field_visibility_value', $uid, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
         ->execute()
