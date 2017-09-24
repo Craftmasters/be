@@ -3025,33 +3025,58 @@ class Bullseye {
 
   /**
    * Get the revenue.
+   *
+   * @param int $uid
+   *   The user id. Null by default.
    */
-  public static function getRevenue($uid) {
+  public static function getRevenue($uid = NULL) {
     global $user;
 
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
     if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-      $nids = $query
-        ->fields('n', array('nid'))
+      $query->leftJoin('field_data_field_value', 'value', 'value.entity_id = n.nid');
+      $or = db_or();
+      $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
+      $or->condition('status.field_account_status_value', 'closed_deal', '=');
+      $nodes = $query
+        ->distinct()
+        ->fields('value', array('field_value_value'))
         ->condition('n.type', 'accounts', '=')
-        ->condition('status.field_account_status_value', 'closed_deal', '=')
+        ->condition($or)
         ->execute()
         ->fetchAll();
     }
     else {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-      $nids = $query
-        ->fields('n', array('nid'))
+      $query->leftJoin('field_data_field_value', 'value', 'value.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
+      $or->condition('status.field_account_status_value', 'closed_deal', '=');
+      $nodes = $query
+        ->distinct()
+        ->fields('value', array('field_value_value'))
         ->condition('n.type', 'accounts', '=')
-        ->condition('status.field_account_status_value', 'closed_deal', '=')
+        ->condition('uid.field_visibility_value', $be->uid, '=')
+        ->condition($or)
         ->execute()
-        ->fetchAll();
+        ->fetchObject();
     }
+
+    $revenue = 0;
+
+    foreach ($nodes as $node) {
+      $revenue += $node->field_value_value;
+    }
+
+    return $revenue;
   }
 }
