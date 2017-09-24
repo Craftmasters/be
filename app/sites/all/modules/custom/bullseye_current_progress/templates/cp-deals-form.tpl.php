@@ -318,7 +318,7 @@
 		      <div class="modal-body">
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner">
-		      			<h3><?php print t('Singed contract received?'); ?></h3>
+		      			<h3><?php print t('Signed contract received?'); ?></h3>
 		      		</div>
 		      	</div>
 		      </div>
