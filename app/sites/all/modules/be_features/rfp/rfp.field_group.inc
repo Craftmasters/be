@@ -58,16 +58,16 @@ function rfp_field_group_info() {
     'label' => 'Benefits',
     'weight' => '3',
     'children' => array(
-      0 => 'group_major_medical',
-      1 => 'group_limited_medical',
-      2 => 'group_telemedicine',
-      3 => 'group_mec',
-      4 => 'group_dental',
-      5 => 'group_vision',
-      6 => 'group_life',
-      7 => 'group_short_term_disability',
-      8 => 'group_retirement',
-      9 => 'group_special_benefits',
+      0 => 'group_dental',
+      1 => 'group_life',
+      2 => 'group_limited_medical',
+      3 => 'group_major_medical',
+      4 => 'group_mec',
+      5 => 'group_retirement',
+      6 => 'group_short_term_disability',
+      7 => 'group_special_benefits',
+      8 => 'group_telemedicine',
+      9 => 'group_vision',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -196,6 +196,7 @@ function rfp_field_group_info() {
       5 => 'field_city',
       6 => 'field_frp_state',
       7 => 'field_zip_code',
+      8 => 'field_due_date',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -286,8 +287,8 @@ function rfp_field_group_info() {
       1 => 'field_lf_years_current_carrier',
       2 => 'field_lf_renewal_current_plan_be',
       3 => 'field_lf_waiting_period',
-      4 => 'group_lf_year_to_quote',
-      5 => 'group_lf_percentage_contribution',
+      4 => 'group_lf_percentage_contribution',
+      5 => 'group_lf_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -320,8 +321,8 @@ function rfp_field_group_info() {
       1 => 'field_lm_years_current_carrier',
       2 => 'field_lm_renewal_current_plan_be',
       3 => 'field_lm_waiting_period',
-      4 => 'group_lm_year_to_quote',
-      5 => 'group_lm_percentage_contribution',
+      4 => 'group_lm_percentage_contribution',
+      5 => 'group_lm_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -412,8 +413,8 @@ function rfp_field_group_info() {
       1 => 'field_mm_years_current_carrier',
       2 => 'field_mm_renewal_current_plan_be',
       3 => 'field_mm_waiting_period',
-      4 => 'group_mm_year_to_quote',
-      5 => 'group_mm_percentage_contribution',
+      4 => 'group_mm_percentage_contribution',
+      5 => 'group_mm_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -504,8 +505,8 @@ function rfp_field_group_info() {
       1 => 'field_mec_years_current_carrier',
       2 => 'field_mc_renewal_current_plan_be',
       3 => 'field_mc_waiting_period',
-      4 => 'group_mec_year_to_quote',
-      5 => 'group_mc_percentage_contribution',
+      4 => 'group_mc_percentage_contribution',
+      5 => 'group_mec_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -777,7 +778,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_short_term_disability';
   $field_group->data = array(
     'label' => 'Percentage of Employer Contribution',
-    'weight' => '22',
+    'weight' => '78',
     'children' => array(
       0 => 'field_sd_contrib_single',
       1 => 'field_sd_contrib_family',
@@ -812,8 +813,8 @@ function rfp_field_group_info() {
       1 => 'field_std_years_current_carrier',
       2 => 'field_sd_renewal_current_plan_be',
       3 => 'field_sd_waiting_period',
-      4 => 'group_std_year_to_quote',
-      5 => 'group_sd_percentage_contribution',
+      4 => 'group_sd_percentage_contribution',
+      5 => 'group_std_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -846,8 +847,8 @@ function rfp_field_group_info() {
       1 => 'field_sb_years_current_carrier',
       2 => 'field_sb_renewal_current_plan_be',
       3 => 'field_sb_waiting_period',
-      4 => 'group_sb_year_to_quote',
-      5 => 'group_sb_percentage_contribution',
+      4 => 'group_sb_percentage_contribution',
+      5 => 'group_sb_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -874,7 +875,7 @@ function rfp_field_group_info() {
   $field_group->parent_name = 'group_short_term_disability';
   $field_group->data = array(
     'label' => 'Plan Year to Quote',
-    'weight' => '20',
+    'weight' => '76',
     'children' => array(
       0 => 'field_std_plan_start',
       1 => 'field_std_plan_end',
@@ -1001,8 +1002,8 @@ function rfp_field_group_info() {
       1 => 'field_vs_years_current_carrier',
       2 => 'field_vs_renewal_current_plan_be',
       3 => 'field_vs_waiting_period',
-      4 => 'group_vs_year_to_quote',
-      5 => 'group_vs_percentage_contribution',
+      4 => 'group_vs_percentage_contribution',
+      5 => 'group_vs_year_to_quote',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

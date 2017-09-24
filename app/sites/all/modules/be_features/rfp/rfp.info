@@ -172,6 +172,7 @@ features[field_instance][] = node-rfp-field_dn_contrib_family
 features[field_instance][] = node-rfp-field_dn_contrib_single
 features[field_instance][] = node-rfp-field_dn_renewal_current_plan_be
 features[field_instance][] = node-rfp-field_dn_waiting_period
+features[field_instance][] = node-rfp-field_due_date
 features[field_instance][] = node-rfp-field_email
 features[field_instance][] = node-rfp-field_employee_census
 features[field_instance][] = node-rfp-field_fringe_rate
