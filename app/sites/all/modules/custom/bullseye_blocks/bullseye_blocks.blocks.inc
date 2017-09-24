@@ -1067,7 +1067,7 @@ function bullseye_blocks_render_be_dashboard_statistics() {
   //$vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
   $vars['opportunities_total'] = Bullseye::getOpportunitiesCovered($user->uid);
   //$vars['deals_total'] = Bullseye::countDealsAccnt();
-  $vars['deals_total'] = Bullseye::geDealsInProgress($user->uid);
+  $vars['deals_total'] = Bullseye::getDealsInProgress($user->uid);
   //$vars['closed_deals_total'] = Bullseye::countClosedDeals();
   $vars['closed_deals_total'] = Bullseye::getDealsClosed($user->uid);
 

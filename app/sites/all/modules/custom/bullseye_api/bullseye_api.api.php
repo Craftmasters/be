@@ -498,6 +498,42 @@ class Bullseye {
   }
 
   /**
+   * Win ration calculation in dashboard.
+   *
+   * @param int $uid
+   *   The user id. Null be default.
+   *
+   * Story: https://trello.com/c/0SopuNrp
+   */
+  public static function dashboardWinRatio($uid = NULL) {
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    $dip = 0;
+    $ro = 0;
+    $wr = 0;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      $dip = Bullseye::getDealsAccounts();
+    }
+    else {
+
+    }
+
+    // Calculate win ration by diving deals in progress
+    // by itself plus remaining opportunities.
+    $wr = $dip / $dip + $ro;
+
+    return $wr;
+  }
+
+  /**
    * Get producer primary contact.
    *
    * @param string $producer
@@ -1727,13 +1763,6 @@ class Bullseye {
   }
 
   /**
-   * Total revenue.
-   */
-  function revenue() {
-    return $revenue;
-  }
-
-  /**
    * Average deal size won.
    */
   function averageDealsSizeWon() {
@@ -2900,14 +2929,16 @@ class Bullseye {
   /**
    * Get deals in progress.
    *
-   * @param string $producer
-   *   The producer account.
+   * @param string $uid
+   *   The producer user id.
    */
-  public static function geDealsInProgress($producer) {
+  public static function getDealsInProgress($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -2927,7 +2958,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $producer, '=')
+        ->condition('producer.field_visibility_value', $uid, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'deal_in_progress', '=')
         ->execute()
@@ -3028,6 +3059,8 @@ class Bullseye {
    *
    * @param int $uid
    *   The user id. Null by default.
+   *
+   * Story: https://trello.com/c/x5YOGTxu
    */
   public static function getRevenue($uid = NULL) {
     global $user;
