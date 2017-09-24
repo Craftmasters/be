@@ -274,9 +274,34 @@ function accounts_delete_form_submit($form, &$form_state) {
       unset($ids[$key]);
     }
   }
-  $ids = array_unique($ids);
 
+  // Collect the IDS of the contact for deletion.
+  $ids = array_unique($ids);
+  $nids = array();
+
+  // Get the company nids of the contact 
+  foreach ($ids as $key1 => $value1) {
+    $nid = Bullseye::getCompanyNidOfContact($value1);
+    $nids[] = $nid;
+  }
+
+  // Delete the selected contacts.
   entity_delete_multiple('field_collection_item', $ids);
+
+  // Loop through the company nids and check
+  // wether they still have contacts or not.
+  foreach ($nids as $key2 => $value2) {
+    // Clear the cache first before checking.
+    cache_clear_all('contacts_' . $value2, 'cache');
+
+    $contacts = Bullseye::getAccountPeople($value2);
+    $count = count($contacts);
+
+    if ($count == 0 || empty($count)) {
+      // Delete the account if there is no more contacts.
+      node_delete($value2);
+    }
+  }
 
   if ($from == 'accounts') {
 
@@ -858,6 +883,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
       cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
       cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     }
+    cache_clear_all('contacts_' . $nid, 'cache');
   }
   elseif (isset($_GET['account_status']) && !empty($_GET['account_status']) && isset($_GET['contact_id'])) {
     if ($_GET['account_status'] == 'lead') {
