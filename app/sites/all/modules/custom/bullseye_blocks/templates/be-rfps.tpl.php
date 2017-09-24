@@ -46,7 +46,13 @@
             <td class="cell-check">
               <input class="be-table-checkbox" type="checkbox" value="<?php print $rfp->nid; ?>">
             </td>
-            <td><span class="orange-font"><?php print $rfp->title; ?></span></td>
+            <td>
+              <a href="/content/<?php print $rfp->title; ?>">
+                <span class="orange-font">
+                  <?php print $rfp->title; ?>
+                </span>
+              </a>
+            </td>
             <td>
               <a href="/company/<?php print $rfp->alias_details['alias'];?>?from=<?php print $rfp->alias_details['status'];?>">
                 <span class="gray-font">
