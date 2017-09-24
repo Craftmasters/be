@@ -657,6 +657,7 @@
             searchPlaceHolder:'Enter keyword here ..'
           });
           $('.be-tables').stickyTableHeaders({scrollableArea: $('.be-table-content')});
+          $('.be-tables').tablesorter(); 
         }
 
         // For checkbox in listings.
