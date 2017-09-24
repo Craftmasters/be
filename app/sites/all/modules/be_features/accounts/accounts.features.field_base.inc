@@ -53,6 +53,7 @@ function accounts_field_default_field_bases() {
         'opportunity' => 'Opportunity',
         'deal_in_progress' => 'Deal in Progress',
         'closed_deal' => 'Closed Deal',
+        'unqualified' => 'Unqualified',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
@@ -700,6 +701,7 @@ function accounts_field_default_field_bases() {
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'text',
