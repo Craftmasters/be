@@ -14,7 +14,7 @@
             </a>
           <?php endif; ?>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -83,7 +83,9 @@
             </td>
             <td>
               <span class="light-gray-font">
-                <?php print date('Y-d-m', strtotime($data->field_due_date[LANGUAGE_NONE][0]['value'])); ?>
+                <?php if (isset($data->field_due_date[LANGUAGE_NONE])): ?>
+                  <?php print date('Y-d-m', strtotime($data->field_due_date[LANGUAGE_NONE][0]['value'])); ?>
+                <?php endif; ?>
               </span>
             </td>
             <td class="be-dot-td">
