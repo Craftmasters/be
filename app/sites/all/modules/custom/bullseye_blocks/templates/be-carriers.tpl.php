@@ -63,7 +63,7 @@
               </span>
             </td>
             <td>
-              <span class="light-gray-font">
+              <span class="email light-gray-font" title="<?php print $carrier->field_email_value; ?>">
                 <?php print $carrier->field_email_value; ?>
               </span>
             </td>

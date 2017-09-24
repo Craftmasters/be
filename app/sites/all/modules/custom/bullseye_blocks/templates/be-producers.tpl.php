@@ -27,7 +27,7 @@
           <th class="td-width-80px"><?php print t('ID'); ?></th>
           <th><?php print t('Producer Name'); ?></th>
           <th><?php print t('Primary Contact'); ?></th>
-          <th><?php print t('Email Address'); ?></th>
+          <th class="email"><?php print t('Email Address'); ?></th>
           <th class="td-width-80px"><?php print t('Leads Assigned'); ?></th>
           <th class="td-width-80px"><?php print t('Opportunities Covered'); ?></th>
           <th class="td-width-80px"><?php print t('Deals Closed'); ?></th>
@@ -60,7 +60,7 @@
               </span>
             </td>
             <td>
-              <span class="light-gray-font">
+              <span class="email light-gray-font">
                 <?php print $producer->mail; ?>
               </span>
             </td>
