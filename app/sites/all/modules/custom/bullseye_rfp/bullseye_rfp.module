@@ -2934,7 +2934,10 @@ function generate_rfp_dental($form, &$form_state) {
     $dompdf->render();
     // Saving pdf to server.
     $output = $dompdf->output();
-    file_put_contents('public://' . $pdf_data['filename'], $output);
+    $pdf_file = file_save_data($output, 'public://' . $pdf_data['filename']);
+
+    // Add the PDF to attachments.
+    $attachments[] = file_load($pdf_file->fid);
 
     // Send the email to specified recipients.
     foreach ($recipients as $to) {
