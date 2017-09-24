@@ -126,9 +126,11 @@ function bullseye_preprocess_page(&$vars, $hook) {
   // Add Vuejs library.
   drupal_add_js('https://unpkg.com/vue@2.4.4/dist/vue.js', 'external');
 
-  // Add JS for table search.
+  // Add JS for table search and sort.
   drupal_add_js($theme_directory . '/js/html-table-search.js');
   drupal_add_js($theme_directory . '/js/jquery.stickytableheaders.min.js');
+  drupal_add_js($theme_directory . '/js/jquery.tablesorter.min.js');
+  
 }
 
 
@@ -304,55 +306,6 @@ function bullseye_preprocess_bullseye_rfp_form(&$vars) {
   $vars['bt']['title_vision'] = 'Vision';
   $vars['bt']['title_retirement'] = 'Retirement';
   $vars['bt']['title_special_benefits'] = 'Special Benefits';
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_rfps(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_prospects(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_leads(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_carriers(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_accounts(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_producers(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
-}
-
-/**
- * Implements template_preprocess_THEME().
- */
-function bullseye_preprocess_be_opportunities(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'bullseye_rfp') . '/lib/sorttable.js');
 }
 
 /**
