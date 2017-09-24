@@ -437,7 +437,7 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $vars['arrow_gray'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-gray.svg';
   $vars['arrow_orange'] = $base_url . '/' . $theme_directory . '/images/icons/be-table-arrow-orange.svg';
   $vars['deals'] = $be->getDealsAccounts();
-  $vars['total'] = $be->countDealsAccnt();
+  $vars['total'] = $be->countDealsInProgress();
   $vars['be'] = $be;
 
   $vars['aliases'] = array();
@@ -1066,7 +1066,7 @@ function bullseye_blocks_render_be_dashboard_statistics() {
   $vars['prospects_total'] = Bullseye::getProspects($user->uid);
   //$vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
   $vars['opportunities_total'] = Bullseye::getOpportunitiesCovered($user->uid);
-  //$vars['deals_total'] = Bullseye::countDealsAccnt();
+  //$vars['deals_total'] = Bullseye::countDealsInProgress($user->uid);
   $vars['deals_total'] = Bullseye::getDealsInProgress($user->uid);
   //$vars['closed_deals_total'] = Bullseye::countClosedDeals();
   $vars['closed_deals_total'] = Bullseye::getDealsClosed($user->uid);

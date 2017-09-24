@@ -1364,13 +1364,18 @@ class Bullseye {
   }
 
   /**
-   * Count all deals account.
+   * Count all deals in progress.
+   *
+   * @param int $uid
+   *   The producer user id. Null by default.
    */
-  static function countDealsAccnt() {
+  public static function countDealsInProgress($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;.
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -1394,7 +1399,7 @@ class Bullseye {
       }
     }
     else {
-      if ($cache = cache_get('count_deals_accounts_listing_producer')) {
+      if ($cache = cache_get('count_deals_accounts_listing_producer_' . $uid)) {
         $accounts = $cache->data;
       }
       else {
@@ -1402,7 +1407,7 @@ class Bullseye {
         $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
         $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
         $or = db_or();
-        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', $uid, '=');
         $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->fields('n', array('nid'))
@@ -1414,7 +1419,7 @@ class Bullseye {
           ->execute()
           ->fetchField();
 
-        cache_set('count_deals_accounts_listing_producer', $accounts, 'cache');
+        cache_set('count_deals_accounts_listing_producer_' . $uid, $accounts, 'cache');
       }
     }
 
