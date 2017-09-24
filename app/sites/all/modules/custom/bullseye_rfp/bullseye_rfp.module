@@ -2335,10 +2335,18 @@ function bullseye_rfp_pdf_generate($benefit_title, $values, $form_values) {
     if ($account->field_work_website[LANGUAGE_NONE]) {
       $vars['website'] = $account->field_work_website[LANGUAGE_NONE][0]['value'];
     }
-    $street = $account->field_street[LANGUAGE_NONE][0]['value'];
-    $city = $account->field_city[LANGUAGE_NONE][0]['value'];
-    $state = $account->field_state_code[LANGUAGE_NONE][0]['value'];
-    $code = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
+    if ($account->field_street[LANGUAGE_NONE]) {
+      $street = $account->field_street[LANGUAGE_NONE][0]['value'];
+    }
+    if ($account->field_city[LANGUAGE_NONE]) {
+      $city = $account->field_city[LANGUAGE_NONE][0]['value'];
+    }
+    if ($account->field_state_code[LANGUAGE_NONE]) {
+      $state = $account->field_state_code[LANGUAGE_NONE][0]['value'];
+    }
+    if ($account->field_postal_code[LANGUAGE_NONE]) {
+      $code = $account->field_postal_code[LANGUAGE_NONE][0]['value'];
+    }
     $vars['address'] = $street . ', ' . $city . ', ' . $state . ' ' . $code;
   }
 
