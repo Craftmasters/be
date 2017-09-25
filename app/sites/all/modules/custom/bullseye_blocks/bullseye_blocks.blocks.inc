@@ -1086,7 +1086,7 @@ function bullseye_blocks_render_be_dashboard_revenue() {
 
   $vars = array();
 
-  $vars['revenue'] = Bullseye::getRevenue();krumo($vars['revenue']);
+  $vars['revenue'] = Bullseye::getRevenue();
   $output = theme('be_dashboard_revenue', $vars);
 
   return array(
@@ -1102,10 +1102,6 @@ function bullseye_blocks_render_be_dashboard_performance() {
 
   $vars = array();
 
-  $vars['wr'] = 0;
-  if (Bullseye::winRatioDashboard()) {
-    $vars['wr'] = Bullseye::winRatioDashboard();
-  }
   $output = theme('be_dashboard_performance', $vars);
 
   return array(
