@@ -74,7 +74,7 @@ function bullseye_plan_specs_form($form, &$form_state) {
     $company_name = $node->title;
     $contact = Bullseye::getAccountPrimaryContact($nid);
     $primary_contact = $contact['field_email_value'];
-    $title = $contact;['field_position_value'];
+    $title = $contact['field_position_value'];
     $contact_number = $contact['field_mobile_phone_value'];
 
     // Check if account has existing plan specs submitted.
