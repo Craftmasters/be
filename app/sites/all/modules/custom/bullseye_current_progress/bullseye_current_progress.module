@@ -1568,6 +1568,18 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_closed_d
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
 
+  // For the csv template files.
+  $vars['benefit_template'] = variable_get('benefit_setup_template');
+  if (!empty($vars['benefit_template'])) {
+    $vars['benefit_template'] = file_load($vars['benefit_template']);
+    $vars['benefit_template'] = file_create_url($vars['benefit_template']->uri);
+  }
+  $vars['payable_template'] = variable_get('payable_setup_template');
+  if (!empty($vars['payable_template'])) {
+    $vars['payable_template'] = file_load($vars['payable_template']);
+    $vars['payable_template'] = file_create_url($vars['payable_template']->uri);
+  }
+
 }
 
 

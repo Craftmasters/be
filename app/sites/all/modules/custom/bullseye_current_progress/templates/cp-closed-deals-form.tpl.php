@@ -58,14 +58,22 @@
 		      				<div class="col-xs-5 left"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
 		      				<div class="col-xs-7 right">
 		      					<h2>Benefit Setup document.</h2>
-		      					<a href="/path/to/template.csv"><?php print t('Click here for the template.'); ?></a>
+		      					<?php if (!empty($benefit_template)) : ?>
+		      						<a href="<?php print $benefit_template; ?>" download>
+		      							<?php print t('Click here for the template.'); ?>	
+		      						</a>
+		      					<?php endif; ?>
 		      				</div>
 		      			</div>
 		      			<div class="row prepare-docs">
 		      				<div class="col-xs-5 left"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
 		      				<div class="col-xs-7 right">
 		      					<h2>Payable Setup document</h2>
-		      					<a href="/path/to/template.csv"><?php print t('Click here for the template.'); ?></a>
+		      					<?php if (!empty($payable_template)) : ?>
+		      						<a href="<?php print $payable_template; ?>" download>
+		      							<?php print t('Click here for the template.'); ?>	
+		      						</a>
+		      					<?php endif; ?>
 		      				</div>
 		      			</div>
 		      		</div>

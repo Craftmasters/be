@@ -237,6 +237,16 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_rfp',
   );
 
+  // Exported permission: 'administer bullseye config'.
+  $permissions['administer bullseye config'] = array(
+    'name' => 'administer bullseye config',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'bullseye_misc',
+  );
+
   // Exported permission: 'administer rfp settings'.
   $permissions['administer rfp settings'] = array(
     'name' => 'administer rfp settings',
