@@ -107,8 +107,38 @@
           });
         }
 
+
+
         // For Create RFP page.
         if ($('.page-rfps-add').length) {
+
+          function refreshAttachmentSummary() {
+            // Build the summary block for Attachments block.
+            $('.attachment-summary').html('');
+            $('.attachment-row').each(function() {
+              var attach_label = $(this).find('label').html();
+              var attach_class = $(this).find('label').attr('for');
+              var attach_label = '<span class="attach-label">' + attach_label + '</span>';
+
+              if ($(this).find('input[type="file"]').length) {
+                var attach_file = $(this).find('input[type="file"]').val();
+                attach_file = attach_file.replace(/.*[\/\\]/, '');
+              }
+              else {
+                var attach_file = $(this).find('span.file').find('a').text();
+              }
+              
+              if (attach_file == '') {
+                attach_file = 'No Attachment';
+              }
+              var attach_file = '<span class="attach-file ' + attach_class + '">' + attach_file + '</span>';
+
+              var attach_div = '<div class="attachment-summary-row">' + attach_label + attach_file + '</div>';
+              $('.attachment-summary').append(attach_div);
+            });
+          }
+
+          refreshAttachmentSummary();
 
           $('em.placeholder').each(function() {
             if ($(this).text() == 'FontLib\\AdobeFontMetrics->write()') {
@@ -279,22 +309,7 @@
 
             });
 
-            // Build the summary block for Attachments block.
-            $('.attachment-row').each(function() {
-              var attach_label = $(this).find('label').html();
-              var attach_class = $(this).find('label').attr('for');
-              var attach_label = '<span class="attach-label">' + attach_label + '</span>';
-
-              var attach_file = $(this).find('input[type="file"]').val();
-              var attach_file = attach_file.replace(/.*[\/\\]/, '');
-              if (attach_file == '') {
-                attach_file = 'No Attachment';
-              }
-              var attach_file = '<span class="attach-file ' + attach_class + '">' + attach_file + '</span>';
-
-              var attach_div = '<div class="attachment-summary-row">' + attach_label + attach_file + '</div>';
-              $('.attachment-summary').append(attach_div);
-            });
+            refreshAttachmentSummary();
 
           });
 
