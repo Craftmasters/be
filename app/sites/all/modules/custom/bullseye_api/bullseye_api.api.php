@@ -3153,7 +3153,7 @@ class Bullseye {
 
     foreach ($nodes as $node) {
       if (is_object($node)) {
-        $revenue += $node->field_value_value;
+        $revenue += $node->field_account_estimate_value_value;
       }
     }
 
