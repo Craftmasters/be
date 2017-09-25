@@ -3216,7 +3216,7 @@ class Bullseye {
     $or = db_or();
     $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
     $or->condition('status.field_account_status_value', 'closed_deal', '=');
-    $result = $query
-      ->fields()
+    //$result = $query
+    //  ->fields()
   }
 }
