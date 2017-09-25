@@ -3209,6 +3209,19 @@ class Bullseye {
    * Get revenue by month.
    */
   public static function revenueByMonth($date = NULL) {
+    $jan_rev = 0;
+    $feb_rev = 0;
+    $mar_rev = 0;
+    $apr_rev = 0;
+    $may_rev = 0;
+    $jun_rev = 0;
+    $jul_rev = 0;
+    $aug_rev = 0;
+    $sep_rev = 0;
+    $oct_rev = 0;
+    $nov_rev = 0;
+    $dec_rev = 0;
+
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
     $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
@@ -3220,10 +3233,27 @@ class Bullseye {
     $result = $query
       ->fields('value', array('field_account_estimate_value_value'))
       ->condition('contract.field_contract_date_value', db_like("2017-09-") . '%', 'LIKE')
-      ->condition('n.type', 'account', '=')
+      ->condition('n.type', 'accounts', '=')
       ->condition('n.status', 1, '=')
       ->condition($or)
       ->execute()
       ->fetchAll();
+
+    $months = array(
+      'jan' => $jan_rev,
+      'feb' => $feb_rev,
+      'mar' => $mar_rev,
+      'apr' => $apr_rev,
+      'may' => $may_rev,
+      'jun' => $jun_rev,
+      'jul' => $jul_rev,
+      'aug' => $aug_rev,
+      'sep' => $sep_rev,
+      'oct' => $oct_rev,
+      'nov' => $nov_rev,
+      'dec' => $dec_rev,
+    );
+
+    return $result;
   }
 }
