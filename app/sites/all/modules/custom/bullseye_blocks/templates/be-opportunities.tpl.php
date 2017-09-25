@@ -105,7 +105,9 @@
             <td>
               <span class="light-gray-font">
                 <?php if (!is_null(Bullseye::getLatestRfp($o->nid))): ?>
-                  <?php print Bullseye::getLatestRfp($o->nid); ?>
+                  <a href="<?php print "/content/" . Bullseye::getLatestRfp($o->nid); ?>">
+                    <?php print Bullseye::getLatestRfp($o->nid); ?>
+                  </a>
                 <?php endif; ?>
               </span>
             </td>
