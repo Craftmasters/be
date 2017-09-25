@@ -1086,7 +1086,7 @@ function bullseye_blocks_render_be_dashboard_revenue() {
 
   $vars = array();
 
-  $vars['revenue'] = Bullseye::getRevenue();
+  $vars['revenue'] = Bullseye::getRevenue();krumo($vars['revenue']);
   $output = theme('be_dashboard_revenue', $vars);
 
   return array(
