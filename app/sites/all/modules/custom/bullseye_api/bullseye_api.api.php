@@ -2917,15 +2917,33 @@ class Bullseye {
     // Initialize the class.
     $be = new Bullseye($user);
 
-    $uid = (is_null($uid)) ? $be->uid : $uid;
-
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
-    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+    if (is_null($uid) && (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles))) {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('uid.field_visibility_value', $be->uid, '=');
+      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
       $nids = $query
         ->fields('n', array('nid'))
+        ->condition('n.type', 'accounts', '=')
+        ->condition('status.field_account_status_value', 'opportunity', '=')
+        ->condition($or)
+        ->execute()
+        ->fetchAll();
+    }
+    elseif (is_null($uid) && Bullseye::hasRole('producer', $roles)) {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('uid.field_visibility_value', $be->uid, '=');
+      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+      $nids = $query
+        ->fields('n', array('nid'))
+        ->condition($or)
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
         ->execute()
@@ -2933,13 +2951,16 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_visibility', 'producer', 'producer.entity_id = n.nid');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('uid.field_visibility_value', $uid, '=');
+      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $uid, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
+        ->condition($or)
         ->execute()
         ->fetchAll();
     }
