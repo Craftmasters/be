@@ -28,6 +28,9 @@ function bullseye_misc_config_form($form, &$form_state) {
     '#title' => t('Benefit Setup Template file.'),
     '#description' => t('This shows up on the deal-in-progress current progress phase of an account.'),
     '#default_value' => variable_get('benefit_setup_template'),
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('gif png jpg jpeg csv JPG JPEG PNG doc docx xls xlsx'),
+    ),
   );
 
   $form['files']['payable_setup'] = array(
@@ -36,6 +39,9 @@ function bullseye_misc_config_form($form, &$form_state) {
     '#title' => t('Payable Setup Template file.'),
     '#description' => t('This shows up on the deal-in-progress current progress phase of an account.'),
     '#default_value' => variable_get('payable_setup_template'),
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('gif png jpg jpeg csv JPG JPEG PNG doc docx xls xlsx'),
+    ),
   );
 
   $form['submit'] = array(
