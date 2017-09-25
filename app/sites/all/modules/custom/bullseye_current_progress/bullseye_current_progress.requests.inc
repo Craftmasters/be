@@ -734,9 +734,11 @@ function be_cp_accept_proposal_yes() {
 
   $nid = $_POST['nid'];
   $account_estimate_value = $_POST['account_estimate_value'];
+  $contract_date_value = strtotime($_POST['contract_date_value']);
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_account_estimate_value->set($account_estimate_value);
+  $wrapper->field_contract_date->set($contract_date_value);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
@@ -879,10 +881,12 @@ function be_cp_receive_feedback_opportunity() {
 function be_cp_save_exit_rf_op() {
 
   $nid = $_POST['nid'];
+  $contract_date_value = strtotime($_POST['contract_date_value']);
   $account_estimate_value = $_POST['account_estimate_value'];
 
   $wrapper = entity_metadata_wrapper('node', $nid);
   $wrapper->field_account_estimate_value->set($account_estimate_value);
+  $wrapper->field_contract_date->set($contract_date_value);
 
   $wrapper->save();
 

@@ -569,8 +569,8 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   if (isset($node->field_account_estimate_value[LANGUAGE_NONE][0]['value'])) {
     $account_estimate_value = $node->field_account_estimate_value[LANGUAGE_NONE][0]['value'];
   }
-  if (isset($node->field_contract_date_value[LANGUAGE_NONE][0]['value'])) {
-    $contract_date = $node->field_contract_date_value[LANGUAGE_NONE][0]['value'];
+  if (isset($node->field_contract_date[LANGUAGE_NONE][0]['value'])) {
+    $contract_date = $node->field_contract_date[LANGUAGE_NONE][0]['value'];
   }
 
   // Check for submitted plan specs.
