@@ -3209,18 +3209,18 @@ class Bullseye {
    * Get revenue by month.
    */
   public static function revenueByMonth($date = NULL) {
-    $jan_rev = 0;
-    $feb_rev = 0;
-    $mar_rev = 0;
-    $apr_rev = 0;
-    $may_rev = 0;
-    $jun_rev = 0;
-    $jul_rev = 0;
-    $aug_rev = 0;
-    $sep_rev = 0;
-    $oct_rev = 0;
-    $nov_rev = 0;
-    $dec_rev = 0;
+    $jan_rev = 01;
+    $feb_rev = 02;
+    $mar_rev = 03;
+    $apr_rev = 04;
+    $may_rev = 05;
+    $jun_rev = 06;
+    $jul_rev = 07;
+    $aug_rev = 08;
+    $sep_rev = 09;
+    $oct_rev = 10;
+    $nov_rev = 11;
+    $dec_rev = 12;
 
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
