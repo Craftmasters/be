@@ -1283,20 +1283,23 @@ function send_proposal_email($form, &$form_state) {
     $attached_proposal = (array) $attached_proposal;
   }
 
+  if ($proposal_title == '') {
+    $proposal_title = 'Proposal';
+  }
+
   // Create an Entity
   $e = entity_create('node', array('type' => 'proposal'));
   $e->uid = $user->uid;
   $wrapper = entity_metadata_wrapper('node', $e);
-  $wrapper->title->set($proposal_title);
-  $wrapper->field_account->set($account_nid);
-  $wrapper->field_due_date->set($due_date);
-  $wrapper->field_priority->set($priority);
-  $wrapper->field_benefits->set($benefits);
-  $wrapper->field_special_benefits->set($special_benefits_text);
-  $wrapper->field_others->set($special_benefits_text);
-  $wrapper->field_proposal_status->set($proposal_status);
-  $wrapper->field_attached_proposal->set($attached_proposal);
-
+  $wrapper->title = $proposal_title;
+  $wrapper->field_account = $account_nid;
+  $wrapper->field_due_date = $due_date;
+  $wrapper->field_priority = $priority;
+  $wrapper->field_benefits = $benefits;
+  $wrapper->field_special_benefits = $special_benefits_text;
+  $wrapper->field_others = $special_benefits_text;
+  $wrapper->field_proposal_status = $proposal_status;
+  $wrapper->field_attached_proposal = $attached_proposal;
   $wrapper->save();
 
   // Clear listing page items.
