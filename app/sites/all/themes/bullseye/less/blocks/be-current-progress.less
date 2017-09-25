@@ -366,6 +366,8 @@
   		position: relative;
   	}
   	label {
+  		width: 170px;
+  		padding-right: 10px;
   		&::after {
   			content: '$';
   			position: absolute;
@@ -379,6 +381,31 @@
   	}
   }
 
+  .contract-date {
+		margin-top: 20px;
+		label {
+			width: 170px;
+			text-align: right;
+		}
+		label, .date-padding {
+  		display: inline-block;
+  		vertical-align: middle;
+  		position: relative;
+  	}
+  	.date-padding {
+  		label {
+  			display: none;
+  		}
+  		input {
+  			width: 150px;
+	  		background-color: transparent;
+	  		padding-left: 17px;
+  		}
+  		.help-block {
+  			display: none;
+  		}
+  	}	
+  }
   .be-forms.setup-fee {
   	table {
   		width: 100%;

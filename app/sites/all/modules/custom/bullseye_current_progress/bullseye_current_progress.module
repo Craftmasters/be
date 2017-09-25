@@ -565,8 +565,12 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $path = drupal_lookup_path('source', $alias);
   $node = menu_get_object('node', 1, $path);
   $account_estimate_value = '';
+  $contract_date = '';
   if (isset($node->field_account_estimate_value[LANGUAGE_NONE][0]['value'])) {
     $account_estimate_value = $node->field_account_estimate_value[LANGUAGE_NONE][0]['value'];
+  }
+  if (isset($node->field_contract_date_value[LANGUAGE_NONE][0]['value'])) {
+    $contract_date = $node->field_contract_date_value[LANGUAGE_NONE][0]['value'];
   }
 
   // Check for submitted plan specs.
@@ -684,8 +688,6 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#date_year_range' => '0:+3',
     '#title' => t('Proposed Effective Date'),
   );
-
-
 
   // Other Work Locations and Zip Codes.
   $form['other_work_locations'] = array(
@@ -1095,6 +1097,14 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Account Estimate Value'),
     '#default_value' => $account_estimate_value,
+  );
+
+  $form['contract_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm/d/Y',
+    '#default_value' => $contract_date,
+    '#date_year_range' => '0:+3',
+    '#title' => t('Contract Date'),
   );
 
   $form['send_link_email'] = array(

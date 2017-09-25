@@ -567,6 +567,9 @@
 		      			<div class="account-estimate">
 		      				<?php print render($form['account_estimate_value']); ?>
 		      			</div>
+		      			<div class="contract-date">
+		      				<?php print render($form['contract_date']); ?>
+		      			</div>
 		      		</div>
 		      	</div>
 		      </div>
