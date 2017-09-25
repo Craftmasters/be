@@ -3204,4 +3204,11 @@ class Bullseye {
 
     return $node;
   }
+
+  /**
+   * Get revenue by month.
+   */
+  public static function revenueByMonth() {
+
+  }
 }
