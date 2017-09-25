@@ -46,7 +46,7 @@
         });
 
         $('.block-superfish li.active-trail').each(function() {
-          $(this).addClass('sf-expanded');          
+          $(this).addClass('sf-expanded');
         });
 
       }
@@ -214,7 +214,7 @@
                 if (car_email != '') {
                   carriers_input = carriers_input + '<span>' + carrier_trimmed + ', ' + car_email + '</span>';
                 }
-                
+
               });
               var carriers_send = '<span class="label">Carriers to send RFP:</span><span class="value">' + carriers_input + '</span>';
               var carriers_send = '<div class="ben-detail-row">' + carriers_send + '</div>';
@@ -409,7 +409,7 @@
           $('.add-carriers-to-send-link').each(function() {
             $(this).click(function(e) {
               var b_section = $(this).closest('.accordion_in').attr('data-benefit');
-              var c_count = 0; 
+              var c_count = 0;
               $('div[data-benefit="' + b_section + '"] div[class*="-carrier-to-send-"] input[type="text"]').each(function () {
                 var number = $(this).attr('id');
                 var number = number[number.length -1];
@@ -441,7 +441,7 @@
         // For current progress pages.
         if ($('#block-bullseye-blocks-be-current-progress').length) {
           $(window).keydown(function(event){
-            
+
             if(event.keyCode == 13) {
               event.preventDefault();
               return false;
@@ -562,7 +562,7 @@
                 font: 'Proximanova-Semibold'
               },
               subtitle: {
-                text: '0%',
+                text: settings.dashboard.win_ratio + '%',
                 color: '#6c6c6c',
                 fontSize: 40,
                 font: 'Proximanova-Light'
@@ -657,7 +657,7 @@
             searchPlaceHolder:'Enter keyword here ..'
           });
           $('.be-tables').stickyTableHeaders({scrollableArea: $('.be-table-content')});
-          $('.be-tables').tablesorter(); 
+          $('.be-tables').tablesorter();
         }
 
         // For checkbox in listings.
@@ -700,7 +700,7 @@
               $("a:contains('Producers').sf-depth-1").parent().prepend(result);
             },
           }).fail(function(jqXHR, textStatus) {
-            
+
           });
         }
 
@@ -724,7 +724,7 @@
         $('.left-sidebar').css('min-height', $(document).height() + 'px');
       });
 
-        
+
     }
   };
 
