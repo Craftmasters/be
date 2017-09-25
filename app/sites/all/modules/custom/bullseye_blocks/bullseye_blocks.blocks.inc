@@ -1087,7 +1087,13 @@ function bullseye_blocks_render_be_dashboard_revenue() {
   $vars = array();
 
   $vars['revenue'] = Bullseye::getRevenue();
-  $vars['rev_month'] = Bullseye::revenueByMonth();
+  drupal_add_js(
+    array(
+      'revenue_dip' => Bullseye::revenueByMonth('deal_in_progress'),
+      'revenue_cds' => Bullseye::revenueByMonth('closed_deal'),
+    ),
+    array('type' =>'setting')
+  );
   $output = theme('be_dashboard_revenue', $vars);
 
   return array(

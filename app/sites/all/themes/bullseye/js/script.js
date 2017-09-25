@@ -127,7 +127,7 @@
               else {
                 var attach_file = $(this).find('span.file').find('a').text();
               }
-              
+
               if (attach_file == '') {
                 attach_file = 'No Attachment';
               }
@@ -386,7 +386,7 @@
 
           // For carriers to send email.
           $('div[class*="-carrier-to-send-"] input[type="text"]').each(function() {
-            
+
             $(this, context).bind('autocompleteSelect', function() {
               var current_element = $(this);
               var carrier = $(this).val();
@@ -418,7 +418,7 @@
             });
 
             if ($(this).val() != '') {
-              
+
               var current_element = $(this);
               var number = $(this).attr('id');
               var number = number[number.length -1];
@@ -549,11 +549,37 @@
             datasets: [{
               label: 'Closed Deals',
               backgroundColor: '#f58a3e',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              data: [
+                settings.revenue_cds.jan,
+                settings.revenue_cds.feb,
+                settings.revenue_cds.mar,
+                settings.revenue_cds.apr,
+                settings.revenue_cds.may,
+                settings.revenue_cds.jun,
+                settings.revenue_cds.july,
+                settings.revenue_cds.aug,
+                settings.revenue_cds.sept,
+                settings.revenue_cds.oct,
+                settings.revenue_cds.nov,
+                settings.revenue_cds.dec
+              ],
             }, {
               label: 'Deals in Progress',
               backgroundColor: '#ffbc34',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              data: [
+                settings.revenue_dip.jan,
+                settings.revenue_dip.feb,
+                settings.revenue_dip.mar,
+                settings.revenue_dip.apr,
+                settings.revenue_dip.may,
+                settings.revenue_dip.jun,
+                settings.revenue_dip.july,
+                settings.revenue_dip.aug,
+                settings.revenue_dip.sept,
+                settings.revenue_dip.oct,
+                settings.revenue_dip.nov,
+                settings.revenue_dip.dec
+              ],
             }]
           };
           var options = {

@@ -3208,7 +3208,7 @@ class Bullseye {
   /**
    * Get revenue by month.
    */
-  public static function revenueByMonth($date = NULL) {
+  public static function revenueByMonth($status) {
     $months = array(
       'jan' => "01",
       'feb' => "02",
@@ -3232,15 +3232,12 @@ class Bullseye {
       $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
       $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
       $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-      $or = db_or();
-      $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
-      $or->condition('status.field_account_status_value', 'closed_deal', '=');
       $results = $query
         ->fields('value', array('field_account_estimate_value_value'))
         ->condition('contract.field_contract_date_value', db_like("2017-" . $month . "-") . '%', 'LIKE')
         ->condition('n.type', 'accounts', '=')
         ->condition('n.status', 1, '=')
-        ->condition($or)
+        ->condition('status.field_account_status_value', $status, '=')
         ->execute()
         ->fetchAll();
 
