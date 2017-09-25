@@ -515,3 +515,13 @@ function bullseye_deploy_update_7044() {
 function bullseye_deploy_update_7045() {
   module_enable(array('bullseye_dashboard'), TRUE);
 }
+
+/**
+ * Install bullseye_misc and variable_extra module.
+ */
+function bullseye_deploy_update_7046() {
+  module_enable(array(
+    'variable_extra',
+    'bullseye_misc',
+  ), TRUE);
+}

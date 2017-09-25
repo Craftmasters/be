@@ -1,0 +1,13 @@
+<?php
+/**
+ * Bullseye misc module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_misc_menu() {
+  $items = array();
+
+  return $items;
+}

@@ -1,0 +1,5 @@
+name = BullsEye Miscellaneous Configurations
+description = BullsEye module that handles custom configurations for the system.
+package = BullsEye
+core = 7.x
+version = 7.x-1.0
