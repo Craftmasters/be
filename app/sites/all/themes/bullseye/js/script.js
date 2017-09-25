@@ -93,7 +93,6 @@
 
         if ($('#be-lightbox-close').length) {
           $('#be-lightbox-close').click(function () {
-            //parent.location.reload();
             parent.Lightbox.end();
           });
         }
@@ -372,6 +371,7 @@
 
           // For carriers to send email.
           $('div[class*="-carrier-to-send-"] input[type="text"]').each(function() {
+            
             $(this, context).bind('autocompleteSelect', function() {
               var current_element = $(this);
               var carrier = $(this).val();
@@ -393,7 +393,6 @@
                 },
                 success: function(result){
                   console.log(result);
-                  email_input.attr('value', result);email_input.attr('value', result);
                   email_input.attr('value', result);
                   email_input.val(result).change();
                   email_input.prop('readonly', true);
@@ -401,8 +400,41 @@
               }).fail(function(jqXHR, textStatus) {
                 email_input.val('No email address').change();
               });
-
             });
+
+            if ($(this).val() != '') {
+              
+              var current_element = $(this);
+              var number = $(this).attr('id');
+              var number = number[number.length -1];
+              var carrier = $(this).val();
+              var s = carrier.replace(/\(/g, '.');
+              s = s.replace(/\)/g, '');
+              var numbersArray = s.split('.');
+              var carrier_nid = '';
+              var email_input = current_element.closest('.carriers-to-send').find('input.carrier-email-' + number);
+              $.each(numbersArray, function(i, item) {
+                carrier_nid = item;
+              });
+              $.ajax({
+                url: '/get-carrier-email',
+                method: 'POST',
+                data: {
+                  carrier_nid: carrier_nid,
+                },
+                success: function(result){
+                  console.log(result);
+                  email_input.attr('value', result);email_input.attr('value', result);
+                  email_input.attr('value', result);
+                  email_input.val(result).change();
+                  email_input.prop('readonly', true);
+                  current_element.closest('div[class*="-carrier-to-send-"]').show();
+                  email_input.show();
+                },
+              }).fail(function(jqXHR, textStatus) {
+                email_input.val('No email address').change();
+              });
+            }
           });
 
           // for adding another carriers to send email.
