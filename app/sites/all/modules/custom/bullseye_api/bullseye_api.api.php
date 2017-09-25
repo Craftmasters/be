@@ -3125,7 +3125,7 @@ class Bullseye {
       $or->condition('status.field_account_status_value', 'closed_deal', '=');
       $nodes = $query
         ->distinct()
-        ->fields('value', array('field_value_value'))
+        ->fields('value', array('field_account_estimate_value_value'))
         ->condition('n.type', 'accounts', '=')
         ->condition($or)
         ->execute()
