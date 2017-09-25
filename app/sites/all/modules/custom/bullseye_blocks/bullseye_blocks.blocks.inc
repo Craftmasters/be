@@ -1102,7 +1102,10 @@ function bullseye_blocks_render_be_dashboard_performance() {
 
   $vars = array();
 
-  $vars['wr'] = Bullseye::winRatioDashboard();
+  $vars['wr'] = 0;
+  if (Bullseye::winRatioDashboard()) {
+    $vars['wr'] = Bullseye::winRatioDashboard();
+  }
   $output = theme('be_dashboard_performance', $vars);
 
   return array(
