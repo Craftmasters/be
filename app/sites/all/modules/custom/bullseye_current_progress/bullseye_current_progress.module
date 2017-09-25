@@ -1252,23 +1252,57 @@ function send_proposal_email($form, &$form_state) {
   global $user;
   $be = new Bullseye($user);
 
-  $form_state['values']['account'] = array(
-    'entity_id' => $form_state['values']['nid'],
-    'entity_label' => $form_state['values']['account_title'],
-    'entity_type' => 'node',
-    'entity_bundle' => 'accounts',
-  );
-
-  $data = $form_state['values'];
-  $data['complete form'] = $form_state['complete form'];
-
   $to = $form_state['values']['to'];
   $from = 'bullseye@archerjordan.com';
   $message = $form_state['values']['message'];
   $subject = $form_state['values']['subject'];
   
   // Save the proposal to Proposal entity storage.
-  $nid = $be->createProposal($data);
+  // Get the account data.
+  $account = node_load($form_state['values']['nid']);
+  $proposal_title = $form_state['values']['company_name'];
+  $account_nid = $form_state['values']['nid'];
+  $due_date = strtotime($form_state['values']['due_date']);
+  $priority = $form_state['values']['priority'];
+  $proposal_status = 'sent';
+  $attached_proposal = NULL;
+  $benefits = array();
+  $special_benefits_text = $form_state['values']['special_benefits_text'];
+
+  foreach ($form_state['complete form']['benefits_container']['benefits'] as $key => $value) {
+    if (isset($value['#value']) && $value['#value'] == 1) {
+      $benefits[] = $key;
+    }
+  }
+
+  // Attched proposal.
+  if ($form_state['values']['attach_proposal'] != 0) {
+    $attached_proposal = file_load($form_state['values']['attach_proposal']);
+    $attached_proposal->display = 1;
+    $attached_proposal = file_copy($attached_proposal, 'public://');
+    $attached_proposal = (array) $attached_proposal;
+  }
+
+  // Create an Entity
+  $e = entity_create('node', array('type' => 'proposal'));
+  $e->uid = $user->uid;
+  $wrapper = entity_metadata_wrapper('node', $e);
+  $wrapper->title->set($proposal_title);
+  $wrapper->field_account->set($account_nid);
+  $wrapper->field_due_date->set($due_date);
+  $wrapper->field_priority->set($priority);
+  $wrapper->field_benefits->set($benefits);
+  $wrapper->field_special_benefits->set($special_benefits_text);
+  $wrapper->field_others->set($special_benefits_text);
+  $wrapper->field_proposal_status->set($proposal_status);
+  $wrapper->field_attached_proposal->set($attached_proposal);
+
+  $wrapper->save();
+
+  // Clear listing page items.
+  cache_clear_all('proposals_listing_sent', 'cache');
+
+  $nid = $wrapper->getIdentifier();
 
   // Load the proposal entity.
   $node = node_load($nid);
