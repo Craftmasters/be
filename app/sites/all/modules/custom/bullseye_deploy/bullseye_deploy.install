@@ -508,3 +508,10 @@ function bullseye_deploy_update_7043() {
 function bullseye_deploy_update_7044() {
   module_enable(array('find_content'), TRUE);
 }
+
+/**
+ * Install bullseye_dashboard module.
+ */
+function bullseye_deploy_update_7045() {
+  module_enable(array('bullseye_dashboard'), TRUE);
+}

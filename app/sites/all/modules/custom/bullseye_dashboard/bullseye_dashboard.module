@@ -1,0 +1,18 @@
+<?php
+/**
+ * Dashboard module file.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function bullseye_dashboard_init() {
+  drupal_add_js(
+    array(
+      'dashboard' => array(
+        'win_ratio' => Bullseye::winRatioDashboard(),
+      ),
+    ),
+    array('type' =>'setting')
+  );
+}

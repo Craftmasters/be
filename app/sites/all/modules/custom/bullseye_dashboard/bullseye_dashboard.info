@@ -1,0 +1,6 @@
+name = Bullseye Dashboard
+description = Bullseye module for Dashboard.
+core = 7.x
+package = BullsEye
+version = 7.x-1.0
+dependencies[] = bullseye_api
