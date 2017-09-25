@@ -556,9 +556,9 @@
                 settings.revenue_cds.apr,
                 settings.revenue_cds.may,
                 settings.revenue_cds.jun,
-                settings.revenue_cds.july,
+                settings.revenue_cds.jul,
                 settings.revenue_cds.aug,
-                settings.revenue_cds.sept,
+                settings.revenue_cds.sep,
                 settings.revenue_cds.oct,
                 settings.revenue_cds.nov,
                 settings.revenue_cds.dec
@@ -573,9 +573,9 @@
                 settings.revenue_dip.apr,
                 settings.revenue_dip.may,
                 settings.revenue_dip.jun,
-                settings.revenue_dip.july,
+                settings.revenue_dip.jul,
                 settings.revenue_dip.aug,
-                settings.revenue_dip.sept,
+                settings.revenue_dip.sep,
                 settings.revenue_dip.oct,
                 settings.revenue_dip.nov,
                 settings.revenue_dip.dec
