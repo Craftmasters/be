@@ -386,12 +386,14 @@
 
         $('#btn-save-exit-receive-feedback').click(function() {
           var account_estimate_value = $('#edit-account-estimate-value').val();
+          var contract_date_value = $('#edit-contract-date-datepicker-popup-0').val();
           $.ajax({
             url: '/be-cp/save-exit-rf-op',
             method: 'POST',
             data: {
               nid: nid,
               account_estimate_value: account_estimate_value,
+              contract_date_value: contract_date_value,
             },
             success: function(result){
               console.log(result);
@@ -403,12 +405,14 @@
 
         $('#btn-accept-proposal-yes').click(function() {
           var account_estimate_value = $('#edit-account-estimate-value').val();
+          var contract_date_value = $('#edit-contract-date-datepicker-popup-0').val();
           $.ajax({
             url: '/be-cp/accept-proposal-yes',
             method: 'POST',
             data: {
               nid: nid,
               account_estimate_value: account_estimate_value,
+              contract_date_value: contract_date_value,
             },
             success: function(result){
               console.log(result);
