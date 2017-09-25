@@ -2599,7 +2599,8 @@ class Bullseye {
   function sendProposal($data) {
     global $user;
 
-    $attachment = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
+    $attachments = array();
+    $attachments[] = file_load($_SESSION['proposal_recipient']['attachments'][0]['fid']);
 
     $params = array(
       'key' => 'bullseye',
@@ -2607,7 +2608,7 @@ class Bullseye {
       'from' => $user->mail,
       'subject' => $data['subject'],
       'body' => $data['message'],
-      'attachment' => $attachment,
+      'attachments' => $attachments,
     );
 
     $this->sendEmail($data['to'], $user->mail, $params);
