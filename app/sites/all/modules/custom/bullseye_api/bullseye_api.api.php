@@ -3209,51 +3209,48 @@ class Bullseye {
    * Get revenue by month.
    */
   public static function revenueByMonth($date = NULL) {
-    $jan_rev = 01;
-    $feb_rev = 02;
-    $mar_rev = 03;
-    $apr_rev = 04;
-    $may_rev = 05;
-    $jun_rev = 06;
-    $jul_rev = 07;
-    $aug_rev = 08;
-    $sep_rev = 09;
-    $oct_rev = 10;
-    $nov_rev = 11;
-    $dec_rev = 12;
-
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-    $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
-    $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
-    $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-    $or = db_or();
-    $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
-    $or->condition('status.field_account_status_value', 'closed_deal', '=');
-    $result = $query
-      ->fields('value', array('field_account_estimate_value_value'))
-      ->condition('contract.field_contract_date_value', db_like("2017-09-") . '%', 'LIKE')
-      ->condition('n.type', 'accounts', '=')
-      ->condition('n.status', 1, '=')
-      ->condition($or)
-      ->execute()
-      ->fetchAll();
-
     $months = array(
-      'jan' => $jan_rev,
-      'feb' => $feb_rev,
-      'mar' => $mar_rev,
-      'apr' => $apr_rev,
-      'may' => $may_rev,
-      'jun' => $jun_rev,
-      'jul' => $jul_rev,
-      'aug' => $aug_rev,
-      'sep' => $sep_rev,
-      'oct' => $oct_rev,
-      'nov' => $nov_rev,
-      'dec' => $dec_rev,
+      'jan' => "01",
+      'feb' => "02",
+      'mar' => "03",
+      'apr' => "04",
+      'may' => "05",
+      'jun' => "06",
+      'jul' => "07",
+      'aug' => "08",
+      'sep' => "09",
+      'oct' => "10",
+      'nov' => "11",
+      'dec' => "12",
     );
 
-    return $result;
+    $revenue = array();
+    foreach ($months as $key => $month) {
+      $mr = 0;
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+      $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
+      $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
+      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+      $or = db_or();
+      $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
+      $or->condition('status.field_account_status_value', 'closed_deal', '=');
+      $results = $query
+        ->fields('value', array('field_account_estimate_value_value'))
+        ->condition('contract.field_contract_date_value', db_like("2017-" . $month . "-") . '%', 'LIKE')
+        ->condition('n.type', 'accounts', '=')
+        ->condition('n.status', 1, '=')
+        ->condition($or)
+        ->execute()
+        ->fetchAll();
+
+      foreach ($results as $result) {
+        $mr += $result->field_account_estimate_value_value;
+      }
+
+      $revenue[$key] = $mr;
+    }
+
+    return $revenue;
   }
 }
