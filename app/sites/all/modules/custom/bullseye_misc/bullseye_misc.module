@@ -9,5 +9,27 @@
 function bullseye_misc_menu() {
   $items = array();
 
+  $items['admin/be-config'] = array(
+    'title' => t('BullsEye Custom Configurations'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_misc_config_form'),
+    'access arguments' => array('administer bullseye config'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'bullseye_misc.admin.inc',
+  );
+
   return $items;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function bullseye_misc_permission() {
+  return array(
+    'administer bullseye config' => array(
+      'title' => t('Bullseye Custom Configuration'),
+      'description' => t('Have access to the Bullseye config page.'),
+    ),
+  );
+}
+

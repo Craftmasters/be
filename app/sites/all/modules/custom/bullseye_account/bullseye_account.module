@@ -279,7 +279,7 @@ function accounts_delete_form_submit($form, &$form_state) {
   $ids = array_unique($ids);
   $nids = array();
 
-  // Get the company nids of the contact 
+  // Get the company nids of the contact.
   foreach ($ids as $key1 => $value1) {
     $nid = Bullseye::getCompanyNidOfContact($value1);
     $nids[] = $nid;

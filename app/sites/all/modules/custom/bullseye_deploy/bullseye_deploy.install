@@ -525,3 +525,13 @@ function bullseye_deploy_update_7046() {
     'bullseye_misc',
   ), TRUE);
 }
+
+/**
+ * Install re-enable bullseye_misc and variable_file module.
+ */
+function bullseye_deploy_update_7047() {
+  module_enable(array(
+    'variable_file',
+    'bullseye_misc',
+  ), TRUE);
+}
