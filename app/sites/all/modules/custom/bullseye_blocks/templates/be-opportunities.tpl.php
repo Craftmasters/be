@@ -65,7 +65,6 @@
       </thead>
       <tbody>
         <?php foreach ($opportunities as $o): ?>
-          <tr>
             <td class="cell-check">
               <input class="be-table-checkbox" type="checkbox" value="<?php print $o->nid; ?>" data-contact-id="<?php print $o->field_contacts_value; ?>">
             </td>
@@ -103,7 +102,13 @@
             <td class="be-table-arrow-td">
               <img src="<?php print $o->convert_td; ?>">
             </td>
-            <td><span class="light-gray-font">RFP389910</span></td>
+            <td>
+              <span class="light-gray-font">
+                <?php if (!is_null(Bullseye::getLatestRfp($o->nid))): ?>
+                  <?php print Bullseye::getLatestRfp($o->nid); ?>
+                <?php endif; ?>
+              </span>
+            </td>
             <td><span class="light-gray-font">389910</span></td>
           </tr>
         <?php endforeach; ?>
