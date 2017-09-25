@@ -516,6 +516,9 @@ class Bullseye {
     $dip = Bullseye::countDealsInProgress();
     $ro = Bullseye::getOpportunitiesCovered();
 
+    if ($dip == 0 && $ro == 0) {
+      return FALSE;
+    }
     // Calculate win ration by diving deals in progress
     // by itself plus remaining opportunities.
     $wr = $dip / $dip + $ro;
