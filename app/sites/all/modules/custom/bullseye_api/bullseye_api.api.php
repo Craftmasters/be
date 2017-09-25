@@ -3212,5 +3212,11 @@ class Bullseye {
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
     $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
+    $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+    $or = db_or();
+    $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
+    $or->condition('status.field_account_status_value', 'closed_deal', '=');
+    $result = $query
+      ->fields()
   }
 }
