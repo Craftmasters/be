@@ -2241,6 +2241,9 @@ function bullseye_rfp_form_submit($form, &$form_state) {
     $node->field_census_must_inclusions[$lang][][$val] = 9;
   }
 
+  // Save the node id.
+  $node->field_account_id[$lang][][$val] = $data['account_id'];
+
   // Save the carrier in the storage.
   $node = node_submit($node);
   node_save($node);

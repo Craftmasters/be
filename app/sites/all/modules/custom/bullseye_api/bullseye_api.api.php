@@ -3196,7 +3196,7 @@ class Bullseye {
    * @param int $uid
    *   The user id. Null by default.
    */
-  public static function getLatestProposal($uid = NULL) {
+  public static function getLatestProposal($account, $uid = NULL) {
     global $user;
 
     $be = new Bullseye($user);
@@ -3204,19 +3204,16 @@ class Bullseye {
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
     $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-    $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
-    $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-    $or = db_or();
-    $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
-    $or->condition('status.field_account_status_value', 'closed_deal', '=');
-    $nodes = $query
+    $node = $query
       ->distinct()
-      ->fields('value', array('field_account_estimate_value_value'))
-      ->condition('n.type', 'accounts', '=')
-      ->condition('uid.field_visibility_value', $be->uid, '=')
+      ->fields('n', array('title', 'nid'))
+      ->addExpression('MAX(n.nid)', 'nid')
+      ->condition('n.type', 'rfp', '=')
+      ->condition('n.uid', $uid, '=')
       ->condition($or)
       ->execute()
-      ->fetchObject();
+      ->fetchAll();
+
+    return $node;
   }
 }
