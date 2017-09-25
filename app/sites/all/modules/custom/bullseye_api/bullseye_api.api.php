@@ -3208,15 +3208,22 @@ class Bullseye {
   /**
    * Get revenue by month.
    */
-  public static function revenueByMonth() {
+  public static function revenueByMonth($date = NULL) {
     $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
     $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
     $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
     $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
     $or = db_or();
     $or->condition('status.field_account_status_value', 'deal_in_progress', '=');
     $or->condition('status.field_account_status_value', 'closed_deal', '=');
-    //$result = $query
-    //  ->fields()
+    $result = $query
+      ->fields('value', array('field_account_estimate_value_value'))
+      ->condition('contract.field_contract_date_value', db_like("2017-09-") . '%', 'LIKE')
+      ->condition('n.type', 'account', '=')
+      ->condition('n.status', 1, '=')
+      ->condition($or)
+      ->execute()
+      ->fetchAll();
   }
 }
