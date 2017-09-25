@@ -607,8 +607,8 @@
                   fontFamily: 'Proximanova-Bold',
                   fontSize: 14,
                   min: 0,
-                  max: 50000,
-                  fixedStepSize: 25000,
+                  max: 100000,
+                  fixedStepSize: 20000,
                   callback: function(value, index, values) {
                     var value_comma = value.toLocaleString();
                     return '$' + value_comma;
