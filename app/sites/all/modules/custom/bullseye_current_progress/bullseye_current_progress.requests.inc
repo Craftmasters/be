@@ -1012,3 +1012,12 @@ function be_cp_save_plan_specs() {
 
 }
 
+/**
+ * Refresh the classes in the deals in progress current progress.
+ */
+function be_cp_refresh_classes_deals() {
+
+}
+
+
+

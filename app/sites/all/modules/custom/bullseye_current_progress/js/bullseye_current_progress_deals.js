@@ -17,7 +17,7 @@
         // Refresh classes of current progress block.
         /*function refreshClasses(nid) {
           $.ajax({
-            url: '/be-cp/refresh-classes-opportunity',
+            url: '/be-cp/refresh-classes-deals',
             method: 'POST',
             data: {
               nid: nid,
@@ -33,20 +33,21 @@
               $('#div-cp').removeClass('current-step done-step');
               $('#div-ctcd').removeClass('gray-check no-check green-check');
 
-              $('#div-gta').addClass(result['class_plan_specs']);
-              $('#div-dd').addClass(result['class_request_specs']);
-              $('#div-gsfi').addClass(result['class_receive_plan']);
-              $('#div-sd').addClass(result['class_rfp']);
-              $('#div-poa').addClass(result['class_generate_rfp']);
-              $('#div-rsd').addClass(result['class_recieve_quote']);
-              $('#div-cp').addClass(result['class_plan_presentation']);
-              $('#div-ctcd').addClass(result['class_send_proposal']);
+              $('#div-gta').addClass(result['class_gts']);
+              $('#div-dd').addClass(result['class_dd']);
+              $('#div-gsfi').addClass(result['class_gsfi']);
+              $('#div-sd').addClass(result['class_sd']);
+              $('#div-poa').addClass(result['class_poa']);
+              $('#div-rsd').addClass(result['class_rsd']);
+              $('#div-cp').addClass(result['class_cp']);
+              $('#div-ctcd').addClass(result['class_ctcd']);
 
-              $('#div-dd a.cp-link').attr('data-toggle', result['modal_access_rs']);
-              $('#div-gsfi a.cp-link').attr('data-toggle', result['modal_access_rp']);
-              $('#div-sd a.cp-link').attr('data-toggle', result['modal_access_gr']);
-              $('#div-rsd a.cp-link').attr('data-toggle', result['modal_access_rq']);
-              $('#div-ctcd a.cp-link').attr('data-toggle', result['modal_access_sp']);
+              $('#div-dd a.cp-link').attr('data-toggle', result['modal_access_dd']);
+              $('#div-gsfi a.cp-link').attr('data-toggle', result['modal_access_gsfi']);
+              $('#div-sd a.cp-link').attr('data-toggle', result['modal_access_sd']);
+              $('#div-rsd a.cp-link').attr('data-toggle', result['modal_access_rsd']);
+              $('#div-cp a.cp-link').attr('data-toggle', result['modal_access_cp']);
+              $('#div-ctcd a.cp-link').attr('data-toggle', result['modal_access_ctcd']);
 
             },
           });

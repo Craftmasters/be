@@ -176,6 +176,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-deals'] = array(
+    'page callback' => 'be_cp_refresh_classes_deals',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1577,6 +1584,86 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['class_gta'] = 'gray-check';
+  $vars['class_dd'] = '';
+  $vars['class_gsfi'] = '';
+  $vars['class_sd'] = '';
+  $vars['class_poa'] = 'gray-check';
+  $vars['class_rsd'] = '';
+  $vars['class_cp'] = '';
+  $vars['class_ctcd'] = 'gray-check';
+
+  $vars['modal_access_dd'] = '';
+  $vars['modal_access_gsfi'] = '';
+  $vars['modal_access_sd'] = '';
+  $vars['modal_access_rsd'] = '';
+  $vars['modal_access_cp'] = '';
+  $vars['modal_access_ctcd'] = '';
+
+  if ($workflow_status == 'generate_trust_agreement') {
+    $vars['class_gta'] = 'gray-check';
+    if ($action_status == 'draw_documents') {
+      $vars['class_dd'] = 'current-step';
+      $vars['modal_access_dd'] = 'modal';
+    }
+    if ($action_status == 'generate_setup_fee_invoice') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = 'modal';
+    }
+    if ($action_status == 'send_documents') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'done-step';
+      $vars['class_sd'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = '';
+      $vars['modal_access_sd'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'proof_of_agreement') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['modal_access_dd'] = '';
+    $vars['modal_access_gsfi'] = '';
+    $vars['modal_access_sd'] = '';
+    $vars['class_poa'] = 'gray-check';
+    if ($action_status == 'receive_signed_documents') {
+      $vars['class_rsd'] = 'current-step';
+      $vars['modal_access_rsd'] = 'modal';
+    }
+    if ($action_status == 'collect_premium') {
+      $vars['class_rsd'] = 'done-step';
+      $vars['class_cp'] = 'current-step';
+      $vars['modal_access_rsd'] = '';
+      $vars['modal_access_cp'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'convert_to_closed_deals') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'no-check current-step';
+    $vars['modal_access_ctcd'] = 'modal';
+  }
+  
+  if ($vars['account_status'] == 'closed_deal') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'green-check';
+  }
 
   $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
 }
