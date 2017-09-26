@@ -15,7 +15,7 @@
         var nid = $('.current-progress-main').attr('node-id');
 
         // Refresh classes of current progress block.
-        /*function refreshClasses(nid) {
+        function refreshClasses(nid) {
           $.ajax({
             url: '/be-cp/refresh-classes-deals',
             method: 'POST',
@@ -53,9 +53,31 @@
           });
         }
 
+        function refreshHeaderClasses(nid) {
+          $.ajax({
+            url: '/be-cp/header-classes',
+            method: 'POST',
+            data: {
+              nid: nid,
+              status: 'deal_in_progress',
+            },
+            success: function(result){
+              console.log(result);
+              $('#hp_gta').removeClass('be-blue be-gray be-green');
+              $('#hp_poa').removeClass('be-blue be-gray be-green');
+              $('#hp_ctcd').removeClass('be-blue be-gray be-green');
+              $('#hp_gta').addClass(result['hp_gta']);
+              $('#hp_poa').addClass(result['hp_poa']);
+              $('#hp_ctcd').addClass(result['hp_ctcd']);
+            },
+          });
+        };
+
+        refreshHeaderClasses(nid);
+
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
-        });*/
+        });
 
       });
    
