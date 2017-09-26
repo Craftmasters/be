@@ -3016,14 +3016,16 @@ class Bullseye {
   /**
    * Get Deals closed.
    *
-   * @param string $producer
-   *   The producer account.
+   * @param string $uid
+   *   The producer account id.
    */
-  public static function getDealsClosed($producer) {
+  public static function getDealsClosed($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -3043,7 +3045,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $producer, '=')
+        ->condition('producer.field_visibility_value', $uid, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'closed_deal', '=')
         ->execute()
