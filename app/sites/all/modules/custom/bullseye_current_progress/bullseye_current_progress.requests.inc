@@ -1134,5 +1134,101 @@ function be_cp_refresh_classes_deals() {
   drupal_json_output($vars);
 }
 
+/**
+ * Set the action status to generate invoice.
+ */
+function be_cp_dip_generate_invoice() {
+  $nid = $_POST['nid'];
 
+  $wrapper = entity_metadata_wrapper('node', $nid);
 
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'draw_documents') {
+    $wrapper->field_action_status->set('generate_setup_fee_invoice');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set the action status to send documents.
+ */
+function be_cp_dip_send_documents() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
+    $wrapper->field_action_status->set('send_documents');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+/**
+ * Generate the pdf invoice and send to client.
+ */
+function be_cp_dip_send_documents_files() {
+  global $user;
+  $nid = $_POST['nid'];
+  $filename = $_POST['filename'];
+  $attachments = array();
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml('Hello World!');
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+
+  // Saving pdf to server.
+  $output = $dompdf->output();
+  $pdf_file = file_save_data($output, 'public://'. $filename, FILE_EXISTS_REPLACE);
+  $pdf_field = file_load($pdf_file->fid);
+
+  $node = node_load($nid);
+  file_usage_add($pdf_field, 'file', 'node', $node->nid); // Don't forget to add this line.
+  $node->field_setup_fee_invoice[LANGUAGE_NONE][0] = array(
+    'fid' => $pdf_field->fid,
+    'filename' => $pdf_field->filename,
+    'filemime' => $pdf_field->filemime,
+    'uid' => $user->uid,
+    'uri' => $pdf_field->uri,
+    'status' => 1,
+    'display' => 1,
+  );
+  node_save($node);
+
+  // Add the PDF to attachments.
+  $attachments[] = file_load($pdf_file->fid);
+
+  // Send the email to specified recipients.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => 'ruthieborces@outlook.com',
+    'from' => 'mrborces@gmail.com',
+    'subject' => 'test invoice pdf',
+    'body' => 'test invoice pdf',
+    'attachments' => $attachments,
+  );
+
+  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  
+  drupal_json_output($wrapper);
+
+}

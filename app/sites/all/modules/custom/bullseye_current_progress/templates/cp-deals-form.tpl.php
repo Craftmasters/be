@@ -125,7 +125,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Next: Generate Invoice'); ?></button>
+		        	<button id="btn-next-generate-invoice" type="button" class="green-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Next: Generate Invoice'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -203,7 +203,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#draw-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button id="btn-next-send-documents"type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -285,7 +285,54 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button type="button" class="orange-btn" data-toggle="modal" data-target="#send-documents-email" data-dismiss="modal"><?php print t('Send Invoice'); ?></button>
+		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="send-documents-email" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Send Documents'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner be-forms send-documents-email">
+		      			<div class="form-title"><h2><?php print t('Send Invoice'); ?></h2></div>
+		      			<?php print render($form['subject']); ?>
+		      			<?php print render($form['to']); ?>
+		      			<?php print render($form['show_attachment']); ?>
+		      			<?php print render($form['message']); ?>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-send-documents" type="button" class="green-btn"><?php print t('Send'); ?></button>
 		        </div>
 		      </div>
 		    </div>

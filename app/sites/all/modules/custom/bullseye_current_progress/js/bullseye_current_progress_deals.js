@@ -33,7 +33,7 @@
               $('#div-cp').removeClass('current-step done-step');
               $('#div-ctcd').removeClass('gray-check no-check green-check');
 
-              $('#div-gta').addClass(result['class_gts']);
+              $('#div-gta').addClass(result['class_gta']);
               $('#div-dd').addClass(result['class_dd']);
               $('#div-gsfi').addClass(result['class_gsfi']);
               $('#div-sd').addClass(result['class_sd']);
@@ -77,6 +77,53 @@
 
         $('.be-bs-modal').on('hidden.bs.modal', function () {
           refreshClasses(nid);
+        });
+
+        // DIP - Set status to generate invoice.
+        $('#btn-next-generate-invoice').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-generate-invoice',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        // DIP - Set status to send documents.
+        $('#btn-next-send-documents').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-send-documents',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        // DIP - Set status to send documents.
+        $('#btn-send-documents').click(function() {
+          var filename = $('.show-attachment a').text();
+          $.ajax({
+            url: '/be-cp/dip-send-documents-files',
+            method: 'POST',
+            data: {
+              nid: nid,
+              filename: filename,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
         });
 
       });
