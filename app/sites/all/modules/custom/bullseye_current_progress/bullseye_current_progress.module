@@ -1830,6 +1830,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
     'template' => 'cp-closed-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
   );
+  $items['invoice_pdf'] = array(
+    'render element' => 'form',
+    'template' => 'invoice-pdf',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
+  );
   return $items;
 }
 

@@ -1183,16 +1183,25 @@ use Dompdf\Options;
  * Generate the pdf invoice and send to client.
  */
 function be_cp_dip_send_documents_files() {
-  global $user;
+  global $base_url, $user;
   $nid = $_POST['nid'];
   $filename = $_POST['filename'];
   $attachments = array();
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['bootstrap_css'] = $base_url . '/' . $theme_directory . '/bootstrap/css/bootstrap.css';
+  $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
+
+  $html = theme('invoice_pdf', $vars);
 
   // Generate the PDF.
   $options = new Options();
   $options->set('isRemoteEnabled', TRUE);
   $dompdf = new Dompdf($options);
-  $dompdf->loadHtml('Hello World!');
+  $dompdf->loadHtml($html);
   $dompdf->setPaper('A4', 'portrait');
   $dompdf->render();
 
