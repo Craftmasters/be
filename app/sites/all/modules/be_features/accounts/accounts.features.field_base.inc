@@ -987,6 +987,8 @@ function accounts_field_default_field_bases() {
         'plan_presentation' => 'Plan Presentation',
         'convert_to_deals_in_progress' => 'Convert to Deals in Progress',
         'generate_trust_agreement' => 'Generate Trust Agreement',
+        'proof_of_agreement' => 'Proof of Agreement',
+        'convert_to_closed_deals' => 'Convert to Closed Deals',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,

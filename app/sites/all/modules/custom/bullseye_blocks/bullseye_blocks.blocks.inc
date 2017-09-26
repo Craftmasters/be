@@ -440,6 +440,28 @@ function bullseye_blocks_render_be_deals_in_progress() {
   $vars['total'] = $be->countDealsInProgress();
   $vars['be'] = $be;
 
+  foreach ($vars['deals'] as $key1 => $value1) {
+    $workflow_status = Bullseye::getWorkflowStatusByNid($value1->nid);
+    $vars['deals'][$key1]->gta_td = $vars['arrow_gray'];
+    $vars['deals'][$key1]->pa_td = $vars['arrow_gray'];
+    $vars['deals'][$key1]->ccd_td = $vars['arrow_gray'];
+    if ($workflow_status == 'generate_trust_agreement') {
+      $vars['deals'][$key1]->gta_td = $vars['arrow_orange'];
+      $vars['deals'][$key1]->pa_td = $vars['arrow_gray'];
+      $vars['deals'][$key1]->ccd_td = $vars['arrow_gray'];
+    }
+    if ($workflow_status == 'proof_of_agreement') {
+      $vars['deals'][$key1]->gta_td = $vars['arrow_green'];
+      $vars['deals'][$key1]->pa_td = $vars['arrow_orange'];
+      $vars['deals'][$key1]->ccd_td = $vars['arrow_gray'];
+    }
+    if ($workflow_status == 'convert_to_closed_deals') {
+      $vars['deals'][$key1]->gta_td = $vars['arrow_green'];
+      $vars['deals'][$key1]->pa_td = $vars['arrow_green'];
+      $vars['deals'][$key1]->ccd_td = $vars['arrow_orange'];
+    }
+  }
+
   $vars['aliases'] = array();
   $vars['profile_pictures'] = array();
 

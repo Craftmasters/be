@@ -83,9 +83,9 @@
                 </span>
               </a>
             </td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_green; ?>"></td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_orange; ?>"></td>
-            <td class="be-table-arrow-td"><img src="<?php print $arrow_gray; ?>"></td>
+            <td class="be-table-arrow-td"><img src="<?php print $d->gta_td; ?>"></td>
+            <td class="be-table-arrow-td"><img src="<?php print $d->pa_td; ?>"></td>
+            <td class="be-table-arrow-td"><img src="<?php print $d->ccd_td; ?>"></td>
             <td><span class="light-gray-font"><a href="#" class="light-gray-font">Pitbull.pdf</a></span></td>
           </tr>
         <?php endforeach; ?>
