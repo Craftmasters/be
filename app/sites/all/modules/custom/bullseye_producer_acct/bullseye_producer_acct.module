@@ -350,7 +350,7 @@ function bullseye_producer_acct_delete() {
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
   }
-  drupal_json_output(NULL);
+  drupal_json_output(TRUE);
 }
 
 /**
