@@ -151,4 +151,10 @@ DirectoryIndex index.php index.html index.htm
 <IfModule mod_headers.c>
   # Disable content sniffing, since it's an attack vector.
   Header always set X-Content-Type-Options nosniff
+
+  # Hide some info for security.
+  Header always unset X-Generator
+  Header always unset X-Drupal-Cache
+  Header always unset X-Powered-By
+  Header always unset Server
 </IfModule>
