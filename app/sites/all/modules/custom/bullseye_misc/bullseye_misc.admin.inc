@@ -1,4 +1,4 @@
-<?php
+  <?php
 /**
  * bullseye_misc admin file.
  */
@@ -28,6 +28,7 @@ function bullseye_misc_config_form($form, &$form_state) {
     '#title' => t('Benefit Setup Template file.'),
     '#description' => t('This shows up on the deal-in-progress current progress phase of an account.'),
     '#default_value' => variable_get('benefit_setup_template'),
+    '#upload_location' => 'public://',
     '#upload_validators' => array(
       'file_validate_extensions' => array('gif png jpg jpeg csv JPG JPEG PNG doc docx xls xlsx'),
     ),
@@ -39,6 +40,7 @@ function bullseye_misc_config_form($form, &$form_state) {
     '#title' => t('Payable Setup Template file.'),
     '#description' => t('This shows up on the deal-in-progress current progress phase of an account.'),
     '#default_value' => variable_get('payable_setup_template'),
+    '#upload_location' => 'public://',
     '#upload_validators' => array(
       'file_validate_extensions' => array('gif png jpg jpeg csv JPG JPEG PNG doc docx xls xlsx'),
     ),
@@ -56,6 +58,15 @@ function bullseye_misc_config_form($form, &$form_state) {
  * Submit handler for Bullseye misc config form.
  */
 function bullseye_misc_config_form_submit($form, &$form_state) {
+
+  $file = file_load($form_state['values']['files']['benefit_setup']);
+  $file->status = FILE_STATUS_PERMANENT;
+  file_save($file);
+
+  $file = file_load($form_state['values']['files']['payable_setup']);
+  $file->status = FILE_STATUS_PERMANENT;
+  file_save($file);
+
   variable_set('benefit_setup_template', $form_state['values']['files']['benefit_setup']);
   variable_set('payable_setup_template', $form_state['values']['files']['payable_setup']);
   drupal_set_message('Successfully saved configuration.');
