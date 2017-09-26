@@ -557,7 +557,7 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
 
   $form = array();
 
-  //$form['#parents'] = array();
+  $benefits = array();
 
   $form['#attributes']['class'][] = 'be-forms be-cp-form';
 
@@ -571,6 +571,21 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   }
   if (isset($node->field_contract_date[LANGUAGE_NONE][0]['value'])) {
     $contract_date = $node->field_contract_date[LANGUAGE_NONE][0]['value'];
+  }
+
+  if (!isset($_SESSION['cp_opportunity'])) {
+    $_SESSION['cp_opportunity'] = array(
+      'account_id' => $node->nid,
+      'company_name' => $node->title,
+    );
+  }
+  else {
+    if ($node->nid != $_SESSION['cp_opportunity']['account_id'] && $node->nid != '') {
+      $_SESSION['cp_opportunity'] = array(
+        'account_id' => $node->nid,
+        'company_name' => $node->title,
+      );
+    }
   }
 
   // Check for submitted plan specs.
@@ -1259,9 +1274,9 @@ function send_proposal_email($form, &$form_state) {
   
   // Save the proposal to Proposal entity storage.
   // Get the account data.
-  $account = node_load($form_state['values']['nid']);
-  $proposal_title = $form_state['values']['company_name'];
-  $account_nid = $form_state['values']['nid'];
+  $account = node_load($_SESSION['cp_opportunity']['account_id']);
+  $proposal_title = $_SESSION['cp_opportunity']['company_name'];
+  $account_nid = $_SESSION['cp_opportunity']['account_id'];
   $due_date = strtotime($form_state['values']['due_date']);
   $priority = $form_state['values']['priority'];
   $proposal_status = 'sent';
