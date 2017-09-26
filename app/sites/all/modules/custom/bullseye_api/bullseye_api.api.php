@@ -3208,7 +3208,13 @@ class Bullseye {
   /**
    * Get revenue by month.
    */
-  public static function revenueByMonth($status) {
+  public static function revenueByMonth($status, $uid = NULL) {
+    global $user;
+
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
     $months = array(
       'jan' => "01",
       'feb' => "02",
@@ -3225,27 +3231,57 @@ class Bullseye {
     );
 
     $revenue = array();
-    foreach ($months as $key => $month) {
-      $mr = 0;
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-      $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
-      $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
-      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-      $results = $query
-        ->fields('value', array('field_account_estimate_value_value'))
-        ->condition('contract.field_contract_date_value', db_like("2017-" . $month . "-") . '%', 'LIKE')
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('status.field_account_status_value', $status, '=')
-        ->execute()
-        ->fetchAll();
 
-      foreach ($results as $result) {
-        $mr += $result->field_account_estimate_value_value;
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      foreach ($months as $key => $month) {
+        $mr = 0;
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+        $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
+        $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+        $results = $query
+          ->fields('value', array('field_account_estimate_value_value'))
+          ->condition('contract.field_contract_date_value', db_like("2017-" . $month . "-") . '%', 'LIKE')
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('status.field_account_status_value', $status, '=')
+          ->execute()
+          ->fetchAll();
+
+        foreach ($results as $result) {
+          $mr += $result->field_account_estimate_value_value;
+        }
+
+        $revenue[$key] = $mr;
       }
+    }
+    else {
+      foreach ($months as $key => $month) {
+        $mr = 0;
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+        $query->leftJoin('field_data_field_contract_date', 'contract', 'contract.entity_id = n.nid');
+        $query->leftJoin('field_data_field_account_estimate_value', 'value', 'value.entity_id = n.nid');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+        $results = $query
+          ->fields('value', array('field_account_estimate_value_value'))
+          ->condition('contract.field_contract_date_value', db_like("2017-" . $month . "-") . '%', 'LIKE')
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('status.field_account_status_value', $status, '=')
+          ->condition('uid.field_visibility_value', $uid, '=')
+          ->execute()
+          ->fetchAll();
 
-      $revenue[$key] = $mr;
+        foreach ($results as $result) {
+          $mr += $result->field_account_estimate_value_value;
+        }
+
+        $revenue[$key] = $mr;
+      }
     }
 
     return $revenue;
