@@ -1843,7 +1843,7 @@ class Bullseye {
    *
    * Top performers are producer account.
    */
-  public static function topPerformers($uid = NULL) {
+  public static function topPerformers($uid, $month) {
     $query = db_select('users' , 'u');
     $query->join('users_roles', 'ur', 'u.uid = ur.uid');
     $query->join('role', 'r', 'r.rid = ur.rid');
@@ -1861,14 +1861,20 @@ class Bullseye {
     // Total remaining opportunities in the current month.
     $tro = 0;
     if (Bullseye::totalRemainingOpportunities($uid)) {
-      $tro = Bullseye::totalRemainingOpportunities($uid);
+      $tro = Bullseye::totalRemainingOpportunities($uid, $month);
     }
+
+    // Get the total deals in progress converted in the corrent month.
 
     // Get the total deals closed.
     $dip = 0;
+    if (Bullseye::getDealsClosed($uid)) {
+      $dip = Bullseye::getDealsClosed($uid);
+    }
+
     $perf = 0;
     if ($tro != 0 && $dip != 0) {
-      $perf = $tro / ($tro + $dip);
+      $perf = $dip / ($dip + $tro);
 
       return $perf;
     }
