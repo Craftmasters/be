@@ -1,6 +1,6 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
 	
-	<div id="div-plan-specs" class="cp-step row gray-check">
+	<div id="div-migration" class="cp-step row <?php print $class_migration; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
 		</div>
@@ -9,19 +9,19 @@
 		</div>
 	</div>
 
-	<div id="div-request-specs" class="cp-step row current-step">
+	<div id="div-setup" class="cp-step row <?php print $class_setup; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10" style="position:relative;">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#setup-account">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_toggle; ?>" data-target="<?php print $modal_access; ?>">
 				<span><?php print t('Setup Account'); ?></span>
 			</a>
 			<a href="https://arrow.archerjordan.com/" class="secondary-link">https://arrow.archerjordan.com/</a>
 		</div>
 	</div>
 
-	<div id="div-convert-to-deals" class="cp-step row no-check">
+	<div id="div-congrats" class="cp-step row <?php print $class_congrats; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
@@ -55,7 +55,9 @@
 		      		<div class="modal-body-inner setup-account">
 		      			<h3><?php print t('You are almost done! Prepare the following to setup the account in Arrow Cloud.'); ?></h3>
 		      			<div class="row prepare-docs">
-		      				<div class="col-xs-5 left"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+		      				<div class="col-xs-5 left">
+		      					<i class="fa fa-check-circle <?php print $file_color; ?>" aria-hidden="true"></i>
+		      				</div>
 		      				<div class="col-xs-7 right">
 		      					<h2>Benefit Setup document.</h2>
 		      					<?php if (!empty($benefit_template)) : ?>
@@ -66,7 +68,9 @@
 		      				</div>
 		      			</div>
 		      			<div class="row prepare-docs">
-		      				<div class="col-xs-5 left"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+		      				<div class="col-xs-5 left">
+		      					<i class="fa fa-check-circle <?php print $file_color; ?>" aria-hidden="true"></i>
+		      				</div>
 		      				<div class="col-xs-7 right">
 		      					<h2>Payable Setup document</h2>
 		      					<?php if (!empty($payable_template)) : ?>
@@ -82,7 +86,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" data-dismiss="modal"><?php print t('Cancel'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#migrate-to-arrow" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button id="btn-next-mta" type="button" class="green-btn" data-toggle="modal" data-target="#migrate-to-arrow" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -119,7 +123,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#setup-account" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#migrate-to-arrow-1" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button id="btn-next-login-arrow" type="button" class="green-btn" data-toggle="modal" data-target="#migrate-to-arrow-1" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -156,7 +160,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#migrate-to-arrow" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#migrate-success" data-dismiss="modal"><?php print t('Done'); ?></button>
+		        	<button id="btn-next-congrats" type="button" class="green-btn" data-toggle="modal" data-target="#migrate-success" data-dismiss="modal"><?php print t('Done'); ?></button>
 		        </div>
 		      </div>
 		    </div>

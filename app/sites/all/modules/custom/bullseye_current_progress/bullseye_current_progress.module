@@ -239,6 +239,34 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-cdeals'] = array(
+    'page callback' => 'be_cp_cd_refresh_classes',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/cd-migrate'] = array(
+    'page callback' => 'be_cp_cd_migrate_to_arrow',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/cd-login-arrow'] = array(
+    'page callback' => 'be_cp_cd_login_arrow',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/cd-congrats'] = array(
+    'page callback' => 'be_cp_cd_congrats',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1901,30 +1929,33 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_closed_d
   }
 
   $vars['class_migration'] = 'gray-check';
-  $vars['class_setup'] = '';
+  $vars['class_setup'] = 'current-step';
   $vars['class_congrats'] = 'no-check';
 
-  $vars['modal_access_setup'] = '';
+  $vars['modal_access'] = '';
+  $vars['modal_access_toggle'] = 'modal';
+
+  $vars['file_color'] = '';
 
   if ($workflow_status == 'migration') {
     $vars['class_migration'] = 'gray-check';
     if ($action_status == 'setup_files') {
-
+      $vars['modal_access'] = '#setup-account';
     }
     if ($action_status == 'migration_to_arrow') {
-
+      $vars['modal_access'] = '#migrate-to-arrow';
+      $vars['file_color'] = 'green';
     }
     if ($action_status == 'login_to_arrow') {
-
-    }
-    if ($action_status == 'closed') {
-
+      $vars['modal_access'] = '#migrate-to-arrow-1';
     }
   }
   elseif ($workflow_status == 'congratulations') {
     $vars['class_migration'] = 'green-check';
-    $vars['class_setup'] = '';
+    $vars['class_setup'] = 'done-step';
     $vars['class_congrats'] = 'green-check';
+    $vars['modal_access_toggle'] = '';
+    $vars['file_color'] = 'green';
   }
 
 }

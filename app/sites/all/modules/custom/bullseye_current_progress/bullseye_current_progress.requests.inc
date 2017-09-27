@@ -876,6 +876,21 @@ function be_cp_header_classes() {
     }
   }
 
+  if ($status == 'closed_deal') {
+    $vars['hp_migration'] = 'be-blue';
+    $vars['hp_congrats'] = 'be-gray';
+    if ($account_status == 'closed_deal') {
+      if ($workflow_status == 'migration') {
+        $vars['hp_migration'] = 'be-blue';
+        $vars['hp_congrats'] = 'be-gray';
+      }
+      if ($workflow_status == 'congratulations') {
+        $vars['hp_migration'] = 'be-green';
+        $vars['hp_congrats'] = 'be-green';
+      } 
+    }
+  }
+
   drupal_json_output($vars);
 
 }
@@ -1379,6 +1394,118 @@ function be_cp_dip_convert_to_closed_deal() {
   }
 
   cache_clear_all('workflow_status_' . $nid, 'cache');
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Refresh classes for closed deal status.
+ */
+function be_cp_cd_refresh_classes() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  $vars['class_migration'] = 'gray-check';
+  $vars['class_setup'] = 'current-step';
+  $vars['class_congrats'] = 'no-check';
+
+  $vars['modal_access'] = '';
+  $vars['modal_access_toggle'] = 'modal';
+
+  $vars['file_color'] = '';
+
+  if ($workflow_status == 'migration') {
+    $vars['class_migration'] = 'gray-check';
+    if ($action_status == 'setup_files') {
+      $vars['modal_access'] = '#setup-account';
+    }
+    if ($action_status == 'migration_to_arrow') {
+      $vars['modal_access'] = '#migrate-to-arrow';
+      $vars['file_color'] = 'green';
+    }
+    if ($action_status == 'login_to_arrow') {
+      $vars['modal_access'] = '#migrate-to-arrow-1';
+    }
+  }
+  elseif ($workflow_status == 'congratulations') {
+    $vars['class_migration'] = 'green-check';
+    $vars['class_setup'] = 'done-step';
+    $vars['class_congrats'] = 'green-check';
+    $vars['modal_access'] = '';
+    $vars['modal_access_toggle'] = '';
+    $vars['file_color'] = 'green';
+  }
+
+  drupal_json_output($vars);
+}
+
+/**
+ * Update status to migrate to arrow.
+ */
+function be_cp_cd_migrate_to_arrow() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'closed_deal' && $workflow_status == 'migration' && $action_status == 'setup_files') {
+    $wrapper->field_action_status->set('migration_to_arrow');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Update status to login to arrow.
+ */
+function be_cp_cd_login_arrow() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'closed_deal' && $workflow_status == 'migration' && $action_status == 'migration_to_arrow') {
+    $wrapper->field_action_status->set('login_to_arrow');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Update workflow status to congrats.
+ */
+function be_cp_cd_congrats() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'closed_deal' && $workflow_status == 'migration' && $action_status == 'login_to_arrow') {
+    $wrapper->field_action_status->set('closed');
+    $wrapper->field_workflow_status->set('congratulations');
+  }
 
   $wrapper->save();
 
