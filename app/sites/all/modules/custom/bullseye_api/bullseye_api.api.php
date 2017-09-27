@@ -1850,7 +1850,7 @@ class Bullseye {
     $query->join('profile', 'p', 'p.uid = u.uid');
     $query->leftJoin('field_data_field_account', 'account', 'account.field_account_nid = p.pid');
     $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
-    $producers = $query
+    $puids = $query
       ->fields('u', array('uid'))
       ->condition('r.name', 'producer', '=')
       ->condition('u.uid', $uid, '=')
