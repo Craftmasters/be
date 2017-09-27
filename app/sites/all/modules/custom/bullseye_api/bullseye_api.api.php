@@ -1799,15 +1799,8 @@ class Bullseye {
       $query->join('users_roles', 'ur', 'u.uid = ur.uid');
       $query->join('role', 'r', 'r.rid = ur.rid');
       $query->join('profile', 'p', 'p.uid = u.uid');
-      $query->leftJoin('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
-      $query->leftJoin('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
-      $query->leftJoin('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
-      $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
-      $query->leftJoin('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
-      $query->leftJoin('field_data_field_phone_number', 'phone', 'phone.entity_id = p.pid');
-      $query->leftJoin('field_data_field_producer_website', 'site', 'site.entity_id = p.pid');
-      $query->leftJoin('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
-      $query->leftJoin('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
+      $query->leftJoin('field_data_field_account', 'account', 'account.field_account_nid = p.pid');
+
       $producers = $query
         ->fields('u', array('mail', 'uid'))
         ->fields('ptype', array('field_producer_type_value'))
@@ -1823,6 +1816,13 @@ class Bullseye {
         ->condition('u.status', $status, '=')
         ->execute()
         ->fetchAll();
+
+    // Total remaining opportunities in the current month.
+    $tro = Bullseye::totalRemainingOpportunities($uid);
+
+    // Get the total deals closed.
+
+    $perf = $tro / ($tro + $dip);
 
     return $query;
   }
