@@ -1776,14 +1776,38 @@ class Bullseye {
 
   /**
    * Get the three top performers.
+   *
+   * Top performers are producer account.
    */
   public static function topPerformers() {
-    $query = db_select('node', 'n');
-    $query
-      ->fields('n', array('nid', 'title'))
-      ->condition('n.type', 'accounts', '=')
-      ->execute()
-      ->fetchAll();
+    $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $query->join('profile', 'p', 'p.uid = u.uid');
+      $query->leftJoin('field_data_field_producer_name', 'producer', 'producer.entity_id = p.pid');
+      $query->leftJoin('field_data_field_first_name', 'fname', 'fname.entity_id = p.pid');
+      $query->leftJoin('field_data_field_last_name', 'lname', 'lname.entity_id = p.pid');
+      $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
+      $query->leftJoin('field_data_field_primary_contact', 'contact', 'contact.entity_id = p.pid');
+      $query->leftJoin('field_data_field_phone_number', 'phone', 'phone.entity_id = p.pid');
+      $query->leftJoin('field_data_field_producer_website', 'site', 'site.entity_id = p.pid');
+      $query->leftJoin('field_data_field_health_and_life', 'hl', 'hl.entity_id = p.pid');
+      $query->leftJoin('field_data_field_errors_omission_insurance', 'eoi', 'eoi.entity_id = p.pid');
+      $producers = $query
+        ->fields('u', array('mail', 'uid'))
+        ->fields('ptype', array('field_producer_type_value'))
+        ->fields('producer', array('field_producer_name_value'))
+        ->fields('fname', array('field_first_name_value'))
+        ->fields('lname', array('field_last_name_value'))
+        ->fields('contact', array('field_primary_contact_value'))
+        ->fields('phone', array('field_phone_number_value'))
+        ->fields('site', array('field_producer_website_value'))
+        ->fields('hl', array('field_health_and_life_fid'))
+        ->fields('eoi', array('field_errors_omission_insurance_fid'))
+        ->condition('r.name', 'producer', '=')
+        ->condition('u.status', $status, '=')
+        ->execute()
+        ->fetchAll();
 
     return $query;
   }
