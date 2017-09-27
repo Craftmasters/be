@@ -42,7 +42,9 @@
     <div class="row performance-bottom">
       <div class="col-xs-4">
         <h2><?php print t('Deals Closed'); ?></h2>
-        <h1><?php print Bullseye::getDealsClosed(); ?></h1>
+        <?php (Bullseye::getDealsClosed()): ?>
+          <h1><?php print Bullseye::getDealsClosed(); ?></h1>
+        <?php endif; ?>
       </div>
       <div class="col-xs-4">
         <h2><?php print t('AVE Deal Size Won'); ?></h2>
