@@ -1635,8 +1635,12 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     $invoice = file_load($invoice);
     $invoice_number = str_replace('.pdf', '', $invoice->filename);
   }
-
   $filename = $invoice_number . '.pdf';
+
+  $invoice_due_date = Bullseye::getInvoiceDueDateByNid($node->nid);
+  if (empty($invoice_due_date)) {
+    $invoice_due_date = '';
+  }
 
   $form['nid'] = array(
     '#type' => 'hidden',
@@ -1651,7 +1655,7 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
   $form['invoice_due_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => Bullseye::getContractDateByNid($node->nid),
+    '#default_value' => $invoice_due_date,
     '#title' => t('Due Date'),
   );
 

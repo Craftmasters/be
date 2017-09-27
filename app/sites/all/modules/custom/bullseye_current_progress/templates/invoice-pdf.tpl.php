@@ -151,7 +151,7 @@
 	      						<tr>
 	      							<td class="top-right-label">Due Date</td>
 	      							<td class="top-right-colon">:</td>
-	      							<td class="top-right-value"><?php print date('m/d/Y', strtotime(Bullseye::getContractDateByNid($nid))); ?></td>
+	      							<td class="top-right-value"><?php print date('m/d/Y', strtotime(Bullseye::getInvoiceDueDateByNid($nid))); ?></td>
 	      						</tr>
 	      						<tr>
 	      							<td class="top-right-label">Account no</td>

@@ -1073,7 +1073,7 @@ function be_cp_refresh_classes_deals() {
   $vars['class_poa'] = 'gray-check';
   $vars['class_rsd'] = '';
   $vars['class_cp'] = '';
-  $vars['class_ctcd'] = 'gray-check';
+  $vars['class_ctcd'] = 'no-check';
 
   $vars['modal_access_dd'] = '';
   $vars['modal_access_gsfi'] = '';
@@ -1190,6 +1190,7 @@ function be_cp_dip_save_exit_sfi() {
   $old_sfi = $_POST['old_sfi'];
   $send_document = $_POST['send_document'];
   $invoice_notes = $_POST['invoice_notes'];
+  $invoice_due_date = strtotime($_POST['invoice_due_date']);
 
   $node = node_load($nid);
   $item_ids = array();
@@ -1228,6 +1229,7 @@ function be_cp_dip_save_exit_sfi() {
   $account_status = $wrapper->field_account_status->value();
 
   $wrapper->field_setup_fee_notes->set($invoice_notes);
+  $wrapper->field_due_date->set($invoice_due_date);
 
   if ($send_document == 'yes') {
     if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
