@@ -1852,10 +1852,11 @@ class Bullseye {
     $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
     $puids = $query
       ->fields('u', array('uid'))
+      ->fields('ptype', array('field_producer_type_value'))
       ->condition('r.name', 'producer', '=')
       ->condition('u.uid', $uid, '=')
       ->execute()
-      ->fetchField();
+      ->fetchAll();
 
     // Total remaining opportunities in the current month.
     $tro = 0;
