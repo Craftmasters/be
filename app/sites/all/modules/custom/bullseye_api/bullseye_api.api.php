@@ -1858,7 +1858,10 @@ class Bullseye {
         ->fetchAll();
 
     // Total remaining opportunities in the current month.
-    $tro = Bullseye::totalRemainingOpportunities($uid);
+    $tro = 0;
+    if (Bullseye::totalRemainingOpportunities($uid)) {
+      $tro = Bullseye::totalRemainingOpportunities($uid);
+    }
 
     // Get the total deals closed.
 
