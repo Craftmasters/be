@@ -303,7 +303,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-toggle="modal" data-target="#send-documents-email" data-dismiss="modal"><?php print t('Send Invoice'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
+		        	<button id="btn-next-receive-signed-docs" type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -397,7 +397,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#collect-premium" data-dismiss="modal"><?php print t('Next: Collect Premium'); ?></button>
+		        	<button id="btn-next-collect-premium" type="button" class="green-btn" data-toggle="modal" data-target="#collect-premium" data-dismiss="modal"><?php print t('Next: Collect Premium'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -437,7 +437,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#convert-to-closed-deal" data-dismiss="modal"><?php print t('Next: Convert to Closed Deal'); ?></button>
+		        	<button id="btn-next-ctcd" type="button" class="green-btn" data-toggle="modal" data-target="#convert-to-closed-deal" data-dismiss="modal"><?php print t('Next: Convert to Closed Deal'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -475,7 +475,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
-		        	<button type="button" class="green-btn" data-dismiss="modal"><?php print t('Yes'); ?></button>
+		        	<?php print render($form['submit']); ?>
 		        	<button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        </div>
 		      </div>

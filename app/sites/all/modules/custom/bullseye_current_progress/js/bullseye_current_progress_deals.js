@@ -318,6 +318,50 @@
           });
         });
 
+        $('#btn-next-receive-signed-docs').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-receive-signed-docs',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-next-collect-premium').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-collect-premium',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-next-ctcd').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-convert-to-cd',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
+            },
+          });
+        });
+
       });
    
     }

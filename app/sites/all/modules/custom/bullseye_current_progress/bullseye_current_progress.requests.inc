@@ -1214,15 +1214,13 @@ function be_cp_dip_save_exit_sfi() {
 
   $wrapper->field_setup_fee_notes->set($invoice_notes);
 
-  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
-    $wrapper->field_action_status->set('send_documents');
+  if ($send_document == 'yes') {
+    if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
+      $wrapper->field_action_status->set('send_documents');
+    }
   }
 
   $wrapper->save();
-
-  if ($send_document == 'yes') {
-    
-  }
 
   drupal_json_output($_POST);
 }
@@ -1317,4 +1315,68 @@ function be_cp_dip_send_documents_files() {
   
   drupal_json_output(TRUE);
 
+}
+
+/**
+ * set the action status to receive signed docs.
+ */
+function be_cp_dip_receive_signed_docs() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'send_documents') {
+    $wrapper->field_action_status->set('receive_signed_documents');
+    $wrapper->field_workflow_status->set('proof_of_agreement');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * set the action status to collect premium.
+ */
+function be_cp_dip_collect_premium() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'proof_of_agreement' && $action_status == 'receive_signed_documents') {
+    $wrapper->field_action_status->set('collect_premium');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * set the workflow status to convert to closed deals.
+ */
+function be_cp_dip_convert_to_closed_deal() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'proof_of_agreement' && $action_status == 'collect_premium') {
+    $wrapper->field_workflow_status->set('convert_to_closed_deals');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
 }
