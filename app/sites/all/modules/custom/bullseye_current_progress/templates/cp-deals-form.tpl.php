@@ -161,30 +161,41 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner be-forms setup-fee">
 		      			<div class="form-title"><h2><?php print t('Setup Fee'); ?></h2></div>
-		      			<table>
+		      			<table class="table-sfi">
 		      				<thead>
 		      					<tr>
-		      						<th><?php print t('Item Description'); ?></th>
-		      						<th><?php print t('Quantity'); ?></th>
-		      						<th><?php print t('Amount'); ?></th>
-		      					</tr>
+			      					<th><?php print t('Item Description'); ?></th>
+			      					<th><?php print t('Quantity'); ?></th>
+			      					<th><?php print t('Amount'); ?></th>
+			      					<th></th>
+			      				</tr>
 		      				</thead>
 		      				<tbody>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
+			      				<?php if (!empty($setup_fee_items)) : ?>
+			      					<?php foreach ($setup_fee_items as $key => $value) : ?>
+			      						<tr sfi-id="<?php print $value['item_id']; ?>" class="old-data">
+			      							<td><input type="text" class="sfi-description" value="<?php print $value['description']; ?>"></td>
+			      							<td><input type="text" class="sfi-quantity" value="<?php print $value['quantity']; ?>"></td>
+			      							<td><input type="text" class="sfi-amount" value="<?php print $value['amount']; ?>"></td>
+			      							<td>
+			      								<button type="button" class="sfi-delete">
+			      									<i class="fa fa-times" aria-hidden="true"></i>
+			      								</button>
+			      							</td>
+			      						</tr>
+			      					<?php endforeach; ?>
+			      				<?php else: ?>
+			      					<tr class="new-data">
+			      						<td><input type="text" class="sfi-description" value=""></td>
+			      						<td><input type="text" class="sfi-quantity" value=""></td>
+		      							<td><input type="text" class="sfi-amount" value=""></td>
+		      							<td>
+		      								<button type="button" class="sfi-delete-new">
+		      									<i class="fa fa-times" aria-hidden="true"></i>
+		      								</button>
+		      							</td>
+			      					</tr>
+			      				<?php endif; ?>
 		      				</tbody>
 		      			</table>
 		      			<div class="setup-fee-add-container">
@@ -202,7 +213,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#draw-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-save-exit-sfi" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button id="btn-next-send-documents"type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>

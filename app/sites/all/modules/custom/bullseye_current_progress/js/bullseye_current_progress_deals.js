@@ -94,19 +94,188 @@
           });
         });
 
-        // DIP - Set status to send documents.
-        $('#btn-next-send-documents').click(function() {
+        // Add setup fee item.
+        $('.setup-fee-add-container a').click(function(e) {
+          var random_num = Math.floor((Math.random() * 10000000) + 1);
+          var description_td = '<td><input type="text" class="sfi-description" value=""></td>';
+          var quantity_td = '<td><input type="text" class="sfi-quantity" value=""></td>';
+          var amount_td = '<td><input type="text" class="sfi-amount" value=""></td>';
+          var delete_td = '<td><button type="button" class="sfi-delete-new"><i class="fa fa-times" aria-hidden="true"></i></button></td>';
+          var tr = '<tr class="new-data" tr-num="' + random_num + '">' + description_td + quantity_td + amount_td + delete_td + '</tr>';
+          $('table.table-sfi tbody').append(tr);
+
+          $('tr[tr-num="' + random_num + '"] button.sfi-delete-new').click(function(a) {
+            $(this).closest('tr').remove();
+            a.preventDefault();
+          });
+          e.preventDefault();
+        });
+
+        // Delete event for delete button..
+        $('.sfi-delete').each(function() {
+          $(this).click(function(e) {
+            var item_id = $(this).closest('tr').attr('sfi-id');
+            $.ajax({
+              url: '/be-cp/delete-sfi',
+              method: 'POST',
+              data: {
+                item_id: item_id,
+              },
+              success: function(result){
+                console.log(result);
+                if (result == 'success') {
+                  $('tr[sfi-id="' + item_id + '"]').remove();
+                }
+              },
+            });
+            e.preventDefault();
+          });
+        });
+
+        // Delete event for delete button.
+        $('.sfi-delete-new').click(function(e) {
+          $(this).closest('tr').remove();
+          e.preventDefault();
+        });
+
+        // Save the setup fee items.
+        $('#btn-save-exit-sfi').click(function(e) {
+          // Get the setup fee items data.
+          var sfi = [];
+          $('.table-sfi .new-data').each(function() {
+            var obj = {
+              'description': $(this).find('.sfi-description').val(),
+              'quantity': $(this).find('.sfi-quantity').val(),
+              'amount': $(this).find('.sfi-amount').val(),
+            };
+            sfi.push(obj);
+          });
+
+          var old_sfi = [];
+          $('.table-sfi .old-data').each(function() {
+            var obj = {
+              'description': $(this).find('.sfi-description').val(),
+              'quantity': $(this).find('.sfi-quantity').val(),
+              'amount': $(this).find('.sfi-amount').val(),
+              'id': $(this).attr('sfi-id'),
+            };
+            old_sfi.push(obj);
+          });
+
+          // Saving the setup fee items.
           $.ajax({
-            url: '/be-cp/dip-send-documents',
+            url: '/be-cp/save-exit-sfi',
             method: 'POST',
             data: {
               nid: nid,
+              sfi: sfi,
+              old_sfi: old_sfi,
+              send_document: 'no',
             },
             success: function(result){
               console.log(result);
+              $.each(result, function(i, item) {
+                $('tr.new-data').eq(i).attr('contact-id', item);
+                $('tr.new-data').eq(i).addClass('old-data');
+                $('tr.new-data').eq(i).removeAttr('tr-num');
+              });
+
+              // Binding delete event to newly added elements.
+              $('tr.old-data').each(function() {
+                var item_id = $(this).attr('sfi-id');
+                $(this).removeClass('new-data');
+                $(this).find('button.sfi-delete-new').addClass('sfi-delete');
+                $(this).find('button.sfi-delete').removeClass('sfi-delete-new');
+                $(this).find('button.sfi-delete').click(function() {
+                  $.ajax({
+                    url: '/be-cp/delete-sfi',
+                    method: 'POST',
+                    data: {
+                      item_id: item_id,
+                    },
+                    success: function(result){
+                      console.log(result);
+                      if (result == 'success') {
+                        $('tr[sfi-id="' + item_id + '"]').remove();
+                      }
+                    },
+                  });
+                });
+              });
+
+            },
+          });
+        });
+
+        // DIP - Set status to send documents.
+        $('#btn-next-send-documents').click(function() {
+          // Get the setup fee items data.
+          var sfi = [];
+          $('.table-sfi .new-data').each(function() {
+            var obj = {
+              'description': $(this).find('.sfi-description').val(),
+              'quantity': $(this).find('.sfi-quantity').val(),
+              'amount': $(this).find('.sfi-amount').val(),
+            };
+            sfi.push(obj);
+          });
+
+          var old_sfi = [];
+          $('.table-sfi .old-data').each(function() {
+            var obj = {
+              'description': $(this).find('.sfi-description').val(),
+              'quantity': $(this).find('.sfi-quantity').val(),
+              'amount': $(this).find('.sfi-amount').val(),
+              'id': $(this).attr('sfi-id'),
+            };
+            old_sfi.push(obj);
+          });
+
+          // Saving the setup fee items.
+          $.ajax({
+            url: '/be-cp/save-exit-sfi',
+            method: 'POST',
+            data: {
+              nid: nid,
+              sfi: sfi,
+              old_sfi: old_sfi,
+              send_document: 'yes',
+            },
+            success: function(result){
+              console.log(result);
+              $.each(result, function(i, item) {
+                $('tr.new-data').eq(i).attr('contact-id', item);
+                $('tr.new-data').eq(i).addClass('old-data');
+                $('tr.new-data').eq(i).removeAttr('tr-num');
+              });
+
+              // Binding delete event to newly added elements.
+              $('tr.old-data').each(function() {
+                var item_id = $(this).attr('sfi-id');
+                $(this).removeClass('new-data');
+                $(this).find('button.sfi-delete-new').addClass('sfi-delete');
+                $(this).find('button.sfi-delete').removeClass('sfi-delete-new');
+                $(this).find('button.sfi-delete').click(function() {
+                  $.ajax({
+                    url: '/be-cp/delete-sfi',
+                    method: 'POST',
+                    data: {
+                      item_id: item_id,
+                    },
+                    success: function(result){
+                      console.log(result);
+                      if (result == 'success') {
+                        $('tr[sfi-id="' + item_id + '"]').remove();
+                      }
+                    },
+                  });
+                });
+              });
+
               refreshClasses(nid);
             },
           });
+
         });
 
         // DIP - Set status to send documents.

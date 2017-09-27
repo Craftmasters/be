@@ -1156,24 +1156,70 @@ function be_cp_dip_generate_invoice() {
 }
 
 /**
- * Set the action status to send documents.
+ * Delete the setup fee invoice item.
  */
-function be_cp_dip_send_documents() {
+function be_cp_dip_delete_sfi() {
+  $item_id = $_POST['item_id'];
+
+  $result = entity_delete('field_collection_item', $item_id);
+
+  drupal_json_output('success');
+}
+
+/**
+ * Generate the pdf invoice and send to client.
+ */
+function be_cp_dip_save_exit_sfi() {
   $nid = $_POST['nid'];
+  $sfi = $_POST['sfi'];
+  $old_sfi = $_POST['old_sfi'];
+  $send_document = $_POST['send_document'];
 
-  $wrapper = entity_metadata_wrapper('node', $nid);
+  $node = node_load($nid);
+  $item_ids = array();
 
-  $action_status = $wrapper->field_action_status->value();
-  $workflow_status = $wrapper->field_workflow_status->value();
-  $account_status = $wrapper->field_account_status->value();
+  foreach ($sfi as $key => $value) {
 
-  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
-    $wrapper->field_action_status->set('send_documents');
+    // Create the collection entity and set it's "host".
+    $collection = entity_create('field_collection_item', array('field_name' => 'field_setup_fee_items'));
+    $collection->setHostEntity('node', $node);
+
+    // Now define the collection parameters.
+    $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    $cwrapper->field_item_description->set($value['description']);
+    $cwrapper->field_item_quantity->set($value['quantity']);
+    $cwrapper->field_item_amount->set($value['amount']);
+
+    // Save the field collection entity.
+    $cwrapper->save();
+
+    $item_ids[] = $collection->item_id;
   }
 
-  $wrapper->save();
+  foreach ($old_sfi as $key1 => $value1) {
+    $collection = field_collection_item_load($value1['id']);
+    $wrapper = entity_metadata_wrapper('field_collection_item', $collection);
+    $wrapper->field_item_description->set($value1['description']);
+    $wrapper->field_item_quantity->set($value1['quantity']);
+    $wrapper->field_item_amount->set($value1['amount']);
+    $wrapper->save();
+  }
 
-  drupal_json_output($wrapper);
+  if ($send_document == 'yes') {
+    $wrapper = entity_metadata_wrapper('node', $nid);
+
+    $action_status = $wrapper->field_action_status->value();
+    $workflow_status = $wrapper->field_workflow_status->value();
+    $account_status = $wrapper->field_account_status->value();
+
+    if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
+      $wrapper->field_action_status->set('send_documents');
+    }
+
+    $wrapper->save();
+  }
+
+  drupal_json_output($_POST);
 }
 
 use Dompdf\Dompdf;
