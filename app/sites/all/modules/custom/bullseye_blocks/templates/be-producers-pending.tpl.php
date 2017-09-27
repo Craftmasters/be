@@ -85,8 +85,8 @@
               <a>
             </td>
             <td>
-              <a href="#" class="be-table-button green" data-toggle="modal" data-target="#approve-modal-1"><?php print t('Approve'); ?></a>
-              <div id="approve-modal-1" class="modal be-bs-modal" role="dialog">
+              <a href="#" class="be-table-button green" data-toggle="modal" data-target="#approve-modal-<?php print $p->uid; ?>"><?php print t('Approve'); ?></a>
+              <div id="approve-modal-<?php print $p->uid; ?>" class="modal be-bs-modal" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-inner">
@@ -103,7 +103,7 @@
                       <div class="modal-footer">
                         <div class="be-custom-actions">
                           <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Cancel'); ?></button>
-                          <button id="btn-approve-producer-1" type="button" class="green-btn approve" data-uid="<?php print $p->uid; ?>" data-toggle="modal" data-target="#producer-add-success" data-dismiss="modal"><?php print t('Approve'); ?></button>
+                          <button id="btn-approve-producer-<?php print $p->uid; ?>" type="button" class="green-btn approve" data-uid="<?php print $p->uid; ?>" data-toggle="modal" data-target="#producer-add-success" data-dismiss="modal"><?php print t('Approve'); ?></button>
                         </div>
                       </div>
                     </div>
@@ -112,8 +112,8 @@
               </div>
             </td>
             <td>
-              <a href="#" class="be-table-button red" data-toggle="modal" data-target="#deny-modal-1"><?php print t('Deny'); ?></a>
-              <div id="deny-modal-1" class="modal be-bs-modal" role="dialog">
+              <a href="#" class="be-table-button red" data-toggle="modal" data-target="#deny-modal-<?php print $p->uid; ?>"><?php print t('Deny'); ?></a>
+              <div id="deny-modal-<?php print $p->uid; ?>" class="modal be-bs-modal" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-inner">
@@ -130,7 +130,7 @@
                       <div class="modal-footer">
                         <div class="be-custom-actions">
                           <button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Cancel'); ?></button>
-                          <button id="btn-delete-producer-1" type="button" class="green-btn delete" data-uid="<?php print $p->uid; ?>" data-dismiss="modal"><?php print t('yes'); ?></button>
+                          <button id="btn-delete-producer-<?php print $p->uid; ?>" type="button" class="green-btn delete" data-uid="<?php print $p->uid; ?>" data-dismiss="modal"><?php print t('yes'); ?></button>
                         </div>
                       </div>
                     </div>

@@ -334,7 +334,7 @@ function bullseye_producer_acct_approved() {
     cache_clear_all('visibility_options', 'cache');
   }
   unset($_POST['producer_uid']);
-  drupal_json_output(NULL);
+  drupal_json_output(TRUE);
 }
 
 /**
@@ -350,7 +350,7 @@ function bullseye_producer_acct_delete() {
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
   }
-  drupal_json_output(NULL);
+  drupal_json_output(TRUE);
 }
 
 /**

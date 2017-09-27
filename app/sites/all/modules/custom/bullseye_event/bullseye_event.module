@@ -63,7 +63,6 @@ function bullseye_event_save_activity() {
   $contact_name = $firstname . ' ' . $lastname;
   $event_type = $_POST['event_type'];
 
-
   $node = new stdClass();
   $node->type = 'task';
   $node->uid = $user->uid;

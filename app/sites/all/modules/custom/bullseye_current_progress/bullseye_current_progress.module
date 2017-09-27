@@ -176,6 +176,34 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/refresh-classes-deals'] = array(
+    'page callback' => 'be_cp_refresh_classes_deals',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-generate-invoice'] = array(
+    'page callback' => 'be_cp_dip_generate_invoice',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-send-documents'] = array(
+    'page callback' => 'be_cp_dip_send_documents',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-send-documents-files'] = array(
+    'page callback' => 'be_cp_dip_send_documents_files',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1518,6 +1546,8 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
  * Current Progress for Deals Form.
  */
 function bullseye_current_progress_deals_form($form, &$form_state) {
+  global $user;
+
   $form = array();
 
   $form['#parents'] = array();
@@ -1527,6 +1557,17 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
   $alias  = 'content/' . arg(1);
   $path = drupal_lookup_path('source', $alias);
   $node = menu_get_object('node', 1, $path);
+
+  // Get the primary contact for recipient.
+  $primary_contact = Bullseye::getAccountPrimaryContact($node->nid);
+  $recipient_email = '';
+  if (!empty($primary_contact)) {
+    if ($primary_contact['field_email_value'] != '') {
+      $recipient_email = $primary_contact['field_email_value'];
+    }
+  }
+
+  $filename = 'INVOICE-' . date('mdYHis') . '-' . $user->uid . '.pdf';
 
   $form['nid'] = array(
     '#type' => 'hidden',
@@ -1545,6 +1586,40 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     '#title' => t('Notes'),
     '#attributes' => array(
       'placeholder' => t('Thank you for your business.'),
+    ),
+  );
+
+  $form['subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject:'),
+    '#default_value' => 'SETUP FEE INVOICE for ' . $node->title,
+  );
+
+  $sl_description = '';
+  if ($recipient_email == '') {
+    $sl_description = t('No email address available for recipient. Please set the primary contact for this account or manually enter the recipient of the email above.');
+  }
+
+  $form['to'] = array(
+    '#type' => 'textfield',
+    '#title' => t('To:'),
+    '#default_value' => $recipient_email,
+    '#description' => $sl_description,
+    '#attributes' => array(
+      'placeholder' => t('Enter email address'),
+    ),
+  );
+
+  $form['show_attachment'] = array(
+    '#prefix' => '<div class="show-attachment">',
+    '#suffix' => '</div>',
+    '#markup' => '<span class="label">Attachment:</span> <a href="#" class="orange-font">' . $filename . '</a>',
+  );
+
+  $form['message'] = array(
+    '#type' => 'textarea',
+    '#attributes' => array(
+      'placeholder' => t('Enter message here ..'),
     ),
   );
 
@@ -1575,8 +1650,89 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
+  $vars['account_name'] = $wrapper->title->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['class_gta'] = 'gray-check';
+  $vars['class_dd'] = '';
+  $vars['class_gsfi'] = '';
+  $vars['class_sd'] = '';
+  $vars['class_poa'] = 'gray-check';
+  $vars['class_rsd'] = '';
+  $vars['class_cp'] = '';
+  $vars['class_ctcd'] = 'gray-check';
+
+  $vars['modal_access_dd'] = '';
+  $vars['modal_access_gsfi'] = '';
+  $vars['modal_access_sd'] = '';
+  $vars['modal_access_rsd'] = '';
+  $vars['modal_access_cp'] = '';
+  $vars['modal_access_ctcd'] = '';
+
+  if ($workflow_status == 'generate_trust_agreement') {
+    $vars['class_gta'] = 'gray-check';
+    if ($action_status == 'draw_documents') {
+      $vars['class_dd'] = 'current-step';
+      $vars['modal_access_dd'] = 'modal';
+    }
+    if ($action_status == 'generate_setup_fee_invoice') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = 'modal';
+    }
+    if ($action_status == 'send_documents') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'done-step';
+      $vars['class_sd'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = '';
+      $vars['modal_access_sd'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'proof_of_agreement') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['modal_access_dd'] = '';
+    $vars['modal_access_gsfi'] = '';
+    $vars['modal_access_sd'] = '';
+    $vars['class_poa'] = 'gray-check';
+    if ($action_status == 'receive_signed_documents') {
+      $vars['class_rsd'] = 'current-step';
+      $vars['modal_access_rsd'] = 'modal';
+    }
+    if ($action_status == 'collect_premium') {
+      $vars['class_rsd'] = 'done-step';
+      $vars['class_cp'] = 'current-step';
+      $vars['modal_access_rsd'] = '';
+      $vars['modal_access_cp'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'convert_to_closed_deals') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'no-check current-step';
+    $vars['modal_access_ctcd'] = 'modal';
+  }
+  
+  if ($vars['account_status'] == 'closed_deal') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'green-check';
+  }
 
   $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
 }
@@ -1673,6 +1829,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
     'render element' => 'form',
     'template' => 'cp-closed-deals-form',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates/',
+  );
+  $items['invoice_pdf'] = array(
+    'render element' => 'form',
+    'template' => 'invoice-pdf',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
   );
   return $items;
 }

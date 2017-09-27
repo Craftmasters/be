@@ -92,6 +92,10 @@ function accounts_field_default_field_bases() {
         'send_plan_proposal' => 'Send Plan Proposal',
         'receive_feedback_opportunity' => 'Receive Feedback (Opportunity Phase)',
         'draw_documents' => 'Draw Documents',
+        'generate_setup_fee_invoice' => 'Generate Setup Fee Invoice',
+        'send_documents' => 'Send Documents',
+        'receive_signed_documents' => 'Receive Signed Documents',
+        'collect_premium' => 'Collect Premium',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
@@ -647,6 +651,30 @@ function accounts_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_setup_fee_invoice'.
+  $field_bases['field_setup_fee_invoice'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_setup_fee_invoice',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'file',
+    'settings' => array(
+      'display_default' => 0,
+      'display_field' => 0,
+      'profile2_private' => FALSE,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'file',
+  );
+
   // Exported field_base: 'field_source'.
   $field_bases['field_source'] = array(
     'active' => 1,
@@ -987,6 +1015,8 @@ function accounts_field_default_field_bases() {
         'plan_presentation' => 'Plan Presentation',
         'convert_to_deals_in_progress' => 'Convert to Deals in Progress',
         'generate_trust_agreement' => 'Generate Trust Agreement',
+        'proof_of_agreement' => 'Proof of Agreement',
+        'convert_to_closed_deals' => 'Convert to Closed Deals',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,

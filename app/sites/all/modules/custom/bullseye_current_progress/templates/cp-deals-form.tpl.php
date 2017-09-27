@@ -1,6 +1,6 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
 	
-	<div id="div-gta" class="cp-step row gray-check">
+	<div id="div-gta" class="cp-step row <?php print $class_gta; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
 		</div>
@@ -9,40 +9,40 @@
 		</div>
 	</div>
 
-	<div id="div-dd" class="cp-step row current-step">
+	<div id="div-dd" class="cp-step row <?php print $class_dd; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#draw-documents">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_dd; ?>" data-target="#draw-documents">
 				<span><?php print t('Draw documents'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div id="div-gsfi" class="cp-step row">
+	<div id="div-gsfi" class="cp-step row <?php print $class_gsfi; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#generate-invoice">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_gsfi; ?>" data-target="#generate-invoice">
 				<span><?php print t('Generate set-up fee invoice'); ?></span>
 			</a>
 		</div>
 	</div>
 	
-	<div id="div-sd" class="cp-step row">
+	<div id="div-sd" class="cp-step row <?php print $class_sd; ?>">
 		<div class="col-xs-2">
 			<span class="indicator "></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#send-documents">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_sd; ?>" data-target="#send-documents">
 				<span><?php print t('Send documents'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div id="div-poa" class="cp-step row gray-check">
+	<div id="div-poa" class="cp-step row <?php print $class_poa; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
@@ -51,43 +51,42 @@
 		</div>
 	</div>
 
-	<div id="div-rsd" class="cp-step row">
+	<div id="div-rsd" class="cp-step row <?php print $class_rsd; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#receive-signed-documents">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_rsd; ?>" data-target="#receive-signed-documents">
 				<span><?php print t('Receive signed documents'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div id="div-cp" class="cp-step row">
+	<div id="div-cp" class="cp-step row <?php print $class_cp; ?>">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
 		<div class="col-xs-10">
-			<a href="#" class="cp-link" data-toggle="modal" data-target="#collect-premium">
+			<a href="#" class="cp-link" data-toggle="<?php print $modal_access_cp; ?>" data-target="#collect-premium">
 				<span><?php print t('Collect Premium'); ?></span>
 			</a>
 		</div>
 	</div>
 
-	<div id="div-ctcd" class="cp-step row no-check">
+	<div id="div-ctcd" class="cp-step row <?php print $class_ctcd; ?>">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
 		<div class="col-xs-10">
-			<?php $account_status = 'closed_deal'; ?>
-			<?php if ($account_status != 'lead' && $account_status != 'prospect' && $account_status != 'opportunity' && $account_status != 'deal_in_progress') : ?>
-				<a href="#" class="cp-link big-step"  data-toggle="modal" data-target="#convert-to-closed-deal">
-					<span><?php print t('Convert to Closed Deal'); ?></span>
+			<?php if ($account_status != 'lead' && $account_status != 'prospect' && $account_status != 'opportunity' && $account_status != 'deal_in_progress' && $account_status != '') : ?>
+				<a href="#" class="cp-link big-step">
+					<span><?php print t('Converted to Closed Deal!'); ?></span>
 				</a>
 				<a href="/company/<?php print arg(1); ?>?from=closed_deal" class="cp-link orange">
 					<span><?php print t('Go to Closed Deal Page'); ?></span>
 				</a>
 			<?php else: ?>
-				<a href="#" class="cp-link big-step"><span><?php print t('Convert to Closed Deal'); ?></span></a>
+				<a href="#" class="cp-link big-step" data-toggle="<?php print $modal_access_ctcd; ?>" data-target="#convert-to-closed-deal"><span><?php print t('Convert to Closed Deal'); ?></span></a>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -126,7 +125,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Next: Generate Invoice'); ?></button>
+		        	<button id="btn-next-generate-invoice" type="button" class="green-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Next: Generate Invoice'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -204,7 +203,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#draw-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button id="btn-next-send-documents"type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -286,7 +285,54 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
+		        	<button type="button" class="orange-btn" data-toggle="modal" data-target="#send-documents-email" data-dismiss="modal"><?php print t('Send Invoice'); ?></button>
+		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="send-documents-email" class="modal be-bs-modal" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+		    <div class="modal-inner">
+		    	<div class="modal-header">
+		        <a href="#" class="close" data-dismiss="modal">&times;</a>
+		        <div class="be-bs-modal-progress">
+		        	<div class="be-bs-modal-progress-items">
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        			<h3><?php print t('Send Documents'); ?></h3>
+		        		</div>
+		        		<div class="modal-progress-item">
+		        			<div class="pr-line"><span></span></div>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="modal-body-wrap">
+		      		<div class="modal-body-inner be-forms send-documents-email">
+		      			<div class="form-title"><h2><?php print t('Send Invoice'); ?></h2></div>
+		      			<?php print render($form['subject']); ?>
+		      			<?php print render($form['to']); ?>
+		      			<?php print render($form['show_attachment']); ?>
+		      			<?php print render($form['message']); ?>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <div class="be-custom-actions">
+		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
+		        	<button id="btn-send-documents" type="button" class="green-btn"><?php print t('Send'); ?></button>
 		        </div>
 		      </div>
 		    </div>

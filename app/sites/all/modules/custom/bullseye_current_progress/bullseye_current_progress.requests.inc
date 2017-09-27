@@ -848,7 +848,32 @@ function be_cp_header_classes() {
       $vars['hp_plan_presentation'] = 'be-green';
       $vars['hp_convert_to_deal'] = 'be-green';
     }
-    $vars['status'] = 'deal_in_progress';
+    $vars['status'] = 'opportunity';
+  }
+
+  if ($status == 'deal_in_progress') {
+    $vars['hp_gta'] = 'be-gray';
+    $vars['hp_poa'] = 'be-gray';
+    $vars['hp_ctcd'] = 'be-gray';
+    if ($account_status == 'deal_in_progress') {
+      if ($workflow_status == 'generate_trust_agreement') {
+        $vars['hp_gta'] = 'be-blue';
+      }
+      if ($workflow_status == 'proof_of_agreement') {
+        $vars['hp_gta'] = 'be-green';
+        $vars['hp_poa'] = 'be-blue';
+      }
+      if ($workflow_status == 'convert_to_closed_deals') {
+        $vars['hp_gta'] = 'be-green';
+        $vars['hp_poa'] = 'be-green';
+        $vars['hp_ctcd'] = 'be-blue';
+      }
+    }
+    if ($account_status == 'closed_deal') {
+      $vars['hp_gta'] = 'be-green';
+      $vars['hp_poa'] = 'be-green';
+      $vars['hp_ctcd'] = 'be-green';
+    }
   }
 
   drupal_json_output($vars);
@@ -1012,3 +1037,207 @@ function be_cp_save_plan_specs() {
 
 }
 
+/**
+ * Refresh the classes in the deals in progress current progress.
+ */
+function be_cp_refresh_classes_deals() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $vars = array();
+
+  $vars['class_gta'] = 'gray-check';
+  $vars['class_dd'] = '';
+  $vars['class_gsfi'] = '';
+  $vars['class_sd'] = '';
+  $vars['class_poa'] = 'gray-check';
+  $vars['class_rsd'] = '';
+  $vars['class_cp'] = '';
+  $vars['class_ctcd'] = 'gray-check';
+
+  $vars['modal_access_dd'] = '';
+  $vars['modal_access_gsfi'] = '';
+  $vars['modal_access_sd'] = '';
+  $vars['modal_access_rsd'] = '';
+  $vars['modal_access_cp'] = '';
+  $vars['modal_access_ctcd'] = '';
+
+  if ($workflow_status == 'generate_trust_agreement') {
+    $vars['class_gta'] = 'gray-check';
+    if ($action_status == 'draw_documents') {
+      $vars['class_dd'] = 'current-step';
+      $vars['modal_access_dd'] = 'modal';
+    }
+    if ($action_status == 'generate_setup_fee_invoice') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = 'modal';
+    }
+    if ($action_status == 'send_documents') {
+      $vars['class_dd'] = 'done-step';
+      $vars['class_gsfi'] = 'done-step';
+      $vars['class_sd'] = 'current-step';
+      $vars['modal_access_dd'] = '';
+      $vars['modal_access_gsfi'] = '';
+      $vars['modal_access_sd'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'proof_of_agreement') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['modal_access_dd'] = '';
+    $vars['modal_access_gsfi'] = '';
+    $vars['modal_access_sd'] = '';
+    $vars['class_poa'] = 'gray-check';
+    if ($action_status == 'receive_signed_documents') {
+      $vars['class_rsd'] = 'current-step';
+      $vars['modal_access_rsd'] = 'modal';
+    }
+    if ($action_status == 'collect_premium') {
+      $vars['class_rsd'] = 'done-step';
+      $vars['class_cp'] = 'current-step';
+      $vars['modal_access_rsd'] = '';
+      $vars['modal_access_cp'] = 'modal';
+    }
+  }
+  elseif ($workflow_status == 'convert_to_closed_deals') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'no-check current-step';
+    $vars['modal_access_ctcd'] = 'modal';
+  }
+  
+  if ($account_status == 'closed_deal') {
+    $vars['class_gta'] = 'green-check';
+    $vars['class_dd'] = 'done-step';
+    $vars['class_gsfi'] = 'done-step';
+    $vars['class_sd'] = 'done-step';
+    $vars['class_poa'] = 'green-check';
+    $vars['class_rsd'] = 'done-step';
+    $vars['class_cp'] = 'done-step';
+    $vars['class_ctcd'] = 'green-check';
+  }
+
+  drupal_json_output($vars);
+}
+
+/**
+ * Set the action status to generate invoice.
+ */
+function be_cp_dip_generate_invoice() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'draw_documents') {
+    $wrapper->field_action_status->set('generate_setup_fee_invoice');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Set the action status to send documents.
+ */
+function be_cp_dip_send_documents() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
+    $wrapper->field_action_status->set('send_documents');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+/**
+ * Generate the pdf invoice and send to client.
+ */
+function be_cp_dip_send_documents_files() {
+  global $base_url, $user;
+  $nid = $_POST['nid'];
+  $filename = $_POST['filename'];
+  $attachments = array();
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $vars['bootstrap_css'] = $base_url . '/' . $theme_directory . '/bootstrap/css/bootstrap.css';
+  $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
+
+  $html = theme('invoice_pdf', $vars);
+
+  // Generate the PDF.
+  $options = new Options();
+  $options->set('isRemoteEnabled', TRUE);
+  $dompdf = new Dompdf($options);
+  $dompdf->loadHtml($html);
+  $dompdf->setPaper('A4', 'portrait');
+  $dompdf->render();
+
+  // Saving pdf to server.
+  $output = $dompdf->output();
+  $pdf_file = file_save_data($output, 'public://'. $filename, FILE_EXISTS_REPLACE);
+  $pdf_field = file_load($pdf_file->fid);
+
+  $node = node_load($nid);
+  file_usage_add($pdf_field, 'file', 'node', $node->nid); // Don't forget to add this line.
+  $node->field_setup_fee_invoice[LANGUAGE_NONE][0] = array(
+    'fid' => $pdf_field->fid,
+    'filename' => $pdf_field->filename,
+    'filemime' => $pdf_field->filemime,
+    'uid' => $user->uid,
+    'uri' => $pdf_field->uri,
+    'status' => 1,
+    'display' => 1,
+  );
+  node_save($node);
+
+  // Add the PDF to attachments.
+  $attachments[] = file_load($pdf_file->fid);
+
+  // Send the email to specified recipients.
+  $params = array(
+    'key' => 'bullseye',
+    'to' => 'ruthieborces@outlook.com',
+    'from' => 'mrborces@gmail.com',
+    'subject' => 'test invoice pdf',
+    'body' => 'test invoice pdf',
+    'attachments' => $attachments,
+  );
+
+  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  
+  drupal_json_output($wrapper);
+
+}

@@ -52,13 +52,13 @@
 	  <div class="be-progress be-start be-green">
 	    <?php print t('Deal in Progress'); ?>
 	  </div>
-	  <div class="be-progress be-end be-blue">
+	  <div id="hp_gta" class="be-progress be-end be-blue">
 	    <?php print t('Generate Trust Agreement'); ?>
 	  </div>
-	  <div class="be-progress be-end be-gray">
+	  <div id="hp_poa" class="be-progress be-end be-gray">
 	    <?php print t('Proof of Agreement'); ?>
 	  </div>
-	  <div class="be-progress be-end be-gray">
+	  <div id="hp_ctcd" class="be-progress be-end be-gray">
 	    <?php print t('Convert to Closed Deal'); ?>
 	  </div>
 	</div>
