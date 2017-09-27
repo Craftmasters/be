@@ -1871,8 +1871,6 @@ class Bullseye {
       ->execute()
       ->fetchAll();
 
-    krumo($puids);
-
     // Total remaining opportunities in the current month.
     $tro = 0;
     if (Bullseye::totalRemainingOpportunities($uid)) {
