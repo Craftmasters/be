@@ -1574,17 +1574,23 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     }
   }
 
-  $filename = 'INVOICE-' . date('mdYHis') . '-' . $user->uid . '.pdf';
+  $invoice_number = 'INV-' . date('mdYHis') . $user->uid;
+  $filename = $invoice_number . '.pdf';
 
   $form['nid'] = array(
     '#type' => 'hidden',
     '#value' => $node->nid,
   );
 
+  $form['invoice_number'] = array(
+    '#type' => 'hidden',
+    '#value' => $invoice_number,
+  );
+
   $form['invoice_due_date'] = array(
     '#type' => 'date_popup',
     '#date_format' => 'm/d/Y',
-    '#default_value' => 'YYYY-MM-DD 00:00:00',
+    '#default_value' => Bullseye::getContractDateByNid($node->nid),
     '#title' => t('Due Date'),
   );
 
@@ -1660,6 +1666,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $vars['account_name'] = $wrapper->title->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+  $vars['invoice_number'] = $vars['form']['invoice_number']['#value'];
 
   $vars['setup_fee_items'] = array();
 
