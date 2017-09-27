@@ -11,7 +11,7 @@
       <div class="col-md-7 top-performers-wrapper">
         <div class="top-performers">
           <h3><?php print t('Top Performers'); ?></h3>
-          <?php foreach ($performers as $p): ?>
+          <?php //foreach ($performers as $p): ?>
             <div class="row performer">
               <div class="col-xs-7 perf-name"><?php print t('ARCHER JORDAN'); ?></div>
               <div class="col-xs-5 perf-score">
@@ -33,7 +33,7 @@
                 <span class="score">0%</span>
               </div>
             </div>
-          <?php endforeach; ?>
+          <?php //endforeach; ?>
         </div>
       </div>
     </div>
