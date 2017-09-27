@@ -89,13 +89,21 @@ function producers_delete_form($form, &$form_state) {
     $ids = array_unique($ids);
 
     $items_div = '';
+    $firstname = '';
+    $lastname = '';
 
     foreach ($ids as $key => $value) {
       $be = new Bullseye($user);
       $producer = $be->getProducerDetails($value);
-      $type = $producer['field_producer_type'][LANGUAGE_NONE][0]['value'];
-      $firstname = $producer['field_first_name'][LANGUAGE_NONE][0]['value'];
-      $lastname = $producer['field_last_name'][LANGUAGE_NONE][0]['value'];
+      if (isset($producer['field_producer_type'][LANGUAGE_NONE])) {
+        $type = $producer['field_producer_type'][LANGUAGE_NONE][0]['value'];
+      }
+      if (isset($producer['field_first_name'][LANGUAGE_NONE])) {
+        $firstname = $producer['field_first_name'][LANGUAGE_NONE][0]['value'];
+      }
+      if (isset($producer['field_last_name'][LANGUAGE_NONE])) {
+        $lastname = $producer['field_last_name'][LANGUAGE_NONE][0]['value'];
+      }
       $name = $firstname . ' ' . $lastname;
       if ($type == 'company') {
         $company = $producer['field_producer_name'][LANGUAGE_NONE][0]['value'];
@@ -115,7 +123,7 @@ function producers_delete_form($form, &$form_state) {
       '#markup' => $items_div,
       '#suffix' => '</div>',
     );
-    
+
     $form['submit_container'] = array(
       '#type' => 'container',
     );
@@ -146,7 +154,7 @@ function producers_delete_form($form, &$form_state) {
     $form['submit_container']['cancel'] = array(
       '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
     );
-  } 
+  }
 
   return $form;
 }
