@@ -204,6 +204,21 @@ class Bullseye {
   }
 
   /**
+   * Get Contract Date by nid.
+   */
+  static function getContractDateByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_contract_date', 'cd', 'n.nid = cd.entity_id');
+    $date = $query
+      ->fields('cd', array('field_contract_date_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $date;
+  }
+
+  /**
    * Get Phone Number by nid.
    */
   static function getPhoneNumberByNid($nid) {

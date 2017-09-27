@@ -161,30 +161,41 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner be-forms setup-fee">
 		      			<div class="form-title"><h2><?php print t('Setup Fee'); ?></h2></div>
-		      			<table>
+		      			<table class="table-sfi">
 		      				<thead>
 		      					<tr>
-		      						<th><?php print t('Item Description'); ?></th>
-		      						<th><?php print t('Quantity'); ?></th>
-		      						<th><?php print t('Amount'); ?></th>
-		      					</tr>
+			      					<th><?php print t('Item Description'); ?></th>
+			      					<th><?php print t('Quantity'); ?></th>
+			      					<th><?php print t('Amount'); ?></th>
+			      					<th></th>
+			      				</tr>
 		      				</thead>
 		      				<tbody>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
-		      					<tr>
-		      						<td><input type="text" placeholder="Item Name"></td>
-		      						<td><input type="text" placeholder="101"></td>
-		      						<td><input type="text" placeholder="$100"></td>
-		      					</tr>
+			      				<?php if (!empty($setup_fee_items)) : ?>
+			      					<?php foreach ($setup_fee_items as $key => $value) : ?>
+			      						<tr sfi-id="<?php print $value['item_id']; ?>" class="old-data">
+			      							<td><input type="text" class="sfi-description" value="<?php print $value['description']; ?>"></td>
+			      							<td><input type="text" class="sfi-quantity" value="<?php print $value['quantity']; ?>"></td>
+			      							<td><input type="text" class="sfi-amount" value="<?php print $value['amount']; ?>"></td>
+			      							<td>
+			      								<button type="button" class="sfi-delete">
+			      									<i class="fa fa-times" aria-hidden="true"></i>
+			      								</button>
+			      							</td>
+			      						</tr>
+			      					<?php endforeach; ?>
+			      				<?php else: ?>
+			      					<tr class="new-data">
+			      						<td><input type="text" class="sfi-description" value=""></td>
+			      						<td><input type="text" class="sfi-quantity" value=""></td>
+		      							<td><input type="text" class="sfi-amount" value=""></td>
+		      							<td>
+		      								<button type="button" class="sfi-delete-new">
+		      									<i class="fa fa-times" aria-hidden="true"></i>
+		      								</button>
+		      							</td>
+			      					</tr>
+			      				<?php endif; ?>
 		      				</tbody>
 		      			</table>
 		      			<div class="setup-fee-add-container">
@@ -202,7 +213,7 @@
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#draw-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
-		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
+		        	<button id="btn-save-exit-sfi" type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
 		        	<button id="btn-next-send-documents"type="button" class="green-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Next'); ?></button>
 		        </div>
 		      </div>
@@ -229,17 +240,24 @@
                     <div class="pdf-body-content">
                     	<h1><?php print t('Invoice'); ?></h1>
                     	<div class="row company-info">
-                    		<div class="col-md-6">
-                    			<div class="person-name">Jeff Smith</div>
-                    			<div class="title">CEO</div>
-                    			<div class="company-name">ABC Company</div>
-                    			<div class="company-street">680 My Drive</div>
-                    			<div class="company-add">Garden City, NY, 11530</div>
+                    		<div class="col-md-5">
+                    			<?php $contact = Bullseye::getAccountPrimaryContact($nid); ?>
+                    			<div class="person-name">
+                    				<?php print $contact['field_firstname_value'] . ' ' . $contact['field_lastname_value']; ?>
+                    			</div>
+                    			<div class="title"><?php print $contact['field_position_value']; ?></div>
+                    			<div class="company-name"><?php print Bullseye::getCompanyNameByNid($nid); ?></div>
+                    			<div class="company-street"><?php print Bullseye::getStreetAddressByNid($nid); ?></div>
+                    			<div class="company-add">
+	                    			<?php print Bullseye::getCityByNid($nid); ?>, <?php print Bullseye::getStateByNid($nid); ?>, <?php print Bullseye::getZipCodeByNid($nid); ?>
+	                    		</div>
                     		</div>
-                    		<div class="col-md-6 other-info">
-                    			<div class="invoice-no"><span>Invoice no</span><span>INV-20000044</span></div>
-                    			<div class="invoice-due-date"><span>Due Date</span><span>12/01/2018</span></div>
-                    			<div class="account-no"><span>Account no</span><span>20123334569</span></div>
+                    		<div class="col-md-7 other-info">
+                    			<div class="invoice-no"><span>Invoice no</span><span><?php print $invoice_number; ?></span></div>
+                    			<div class="invoice-due-date">
+                    				<span>Due Date</span><span><?php print date('m/d/Y', strtotime(Bullseye::getContractDateByNid($nid))); ?></span>
+                    			</div>
+                    			<div class="account-no"><span>Account no</span><span><?php print $nid; ?></span></div>
                     		</div>
                     	</div>
                     	<table>
