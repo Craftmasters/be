@@ -42,7 +42,7 @@
     <div class="row performance-bottom">
       <div class="col-xs-4">
         <h2><?php print t('Deals Closed'); ?></h2>
-        <?php (Bullseye::getDealsClosed()): ?>
+        <?php if (Bullseye::getDealsClosed()): ?>
           <h1><?php print Bullseye::getDealsClosed(); ?></h1>
         <?php endif; ?>
       </div>
