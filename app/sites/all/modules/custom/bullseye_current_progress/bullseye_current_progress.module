@@ -1572,7 +1572,6 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_opportun
     $vars['class_receive_feedback'] = 'done-step';
     $vars['class_convert_deals'] = 'green-check';
   }
-
 }
 
 /**
@@ -1700,7 +1699,7 @@ function convert_to_closed_deal($form, &$form_state) {
   $account_status = $wrapper->field_account_status->value();
 
   if ($account_status == 'deal_in_progress' && $workflow_status == 'convert_to_closed_deals') {
-    $wrapper->field_action_status->set('migration_to_arrow');
+    $wrapper->field_action_status->set('setup_files');
     $wrapper->field_workflow_status->set('migration');
     $wrapper->field_account_status->set('closed_deal');
   }
@@ -1764,7 +1763,7 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $vars['class_poa'] = 'gray-check';
   $vars['class_rsd'] = '';
   $vars['class_cp'] = '';
-  $vars['class_ctcd'] = 'gray-check';
+  $vars['class_ctcd'] = 'no-check';
 
   $vars['modal_access_dd'] = '';
   $vars['modal_access_gsfi'] = '';
@@ -1899,6 +1898,33 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_closed_d
   if (!empty($vars['payable_template'])) {
     $vars['payable_template'] = file_load($vars['payable_template']);
     $vars['payable_template'] = file_create_url($vars['payable_template']->uri);
+  }
+
+  $vars['class_migration'] = 'gray-check';
+  $vars['class_setup'] = '';
+  $vars['class_congrats'] = 'no-check';
+
+  $vars['modal_access_setup'] = '';
+
+  if ($workflow_status == 'migration') {
+    $vars['class_migration'] = 'gray-check';
+    if ($action_status == 'setup_files') {
+
+    }
+    if ($action_status == 'migration_to_arrow') {
+
+    }
+    if ($action_status == 'login_to_arrow') {
+
+    }
+    if ($action_status == 'closed') {
+
+    }
+  }
+  elseif ($workflow_status == 'congratulations') {
+    $vars['class_migration'] = 'green-check';
+    $vars['class_setup'] = '';
+    $vars['class_congrats'] = 'green-check';
   }
 
 }
