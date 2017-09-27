@@ -1845,17 +1845,16 @@ class Bullseye {
    */
   public static function topPerformers($uid = NULL) {
     $query = db_select('users' , 'u');
-      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
-      $query->join('role', 'r', 'r.rid = ur.rid');
-      $query->join('profile', 'p', 'p.uid = u.uid');
-      $query->leftJoin('field_data_field_account', 'account', 'account.field_account_nid = p.pid');
-
-      $producers = $query
-        ->fields('u', array('mail', 'uid'))
-        ->condition('r.name', 'producer', '=')
-        ->condition('u.uid', $uid, '=')
-        ->execute()
-        ->fetchAll();
+    $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+    $query->join('role', 'r', 'r.rid = ur.rid');
+    $query->join('profile', 'p', 'p.uid = u.uid');
+    $query->leftJoin('field_data_field_account', 'account', 'account.field_account_nid = p.pid');
+    $producers = $query
+      ->fields('u', array('mail', 'uid'))
+      ->condition('r.name', 'producer', '=')
+      ->condition('u.uid', $uid, '=')
+      ->execute()
+      ->fetchAll();
 
     // Total remaining opportunities in the current month.
     $tro = 0;
@@ -1864,7 +1863,7 @@ class Bullseye {
     }
 
     // Get the total deals closed.
-
+    $dip = 0;
     $perf = $tro / ($tro + $dip);
 
     return $query;
