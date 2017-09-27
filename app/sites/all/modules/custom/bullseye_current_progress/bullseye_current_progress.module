@@ -190,15 +190,22 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
-  $items['be-cp/dip-send-documents'] = array(
-    'page callback' => 'be_cp_dip_send_documents',
+  $items['be-cp/dip-send-documents-files'] = array(
+    'page callback' => 'be_cp_dip_send_documents_files',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
-  $items['be-cp/dip-send-documents-files'] = array(
-    'page callback' => 'be_cp_dip_send_documents_files',
+  $items['be-cp/delete-sfi'] = array(
+    'page callback' => 'be_cp_dip_delete_sfi',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/save-exit-sfi'] = array(
+    'page callback' => 'be_cp_dip_save_exit_sfi',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
     'file' => 'bullseye_current_progress.requests.inc',
@@ -1653,6 +1660,26 @@ function bullseye_current_progress_preprocess_bullseye_current_progress_deals_fo
   $vars['account_name'] = $wrapper->title->value();
   $vars['account_status'] = $wrapper->field_account_status->value();
   $vars['nid'] = $vars['form']['nid']['#value'];
+
+  $vars['setup_fee_items'] = array();
+
+  foreach ($wrapper->field_setup_fee_items->value() as $key => $value) {
+    $item = array();
+    $item['item_id'] = $value->item_id;
+    $item['description'] = '';
+    $item['quantity'] = '';
+    $item['amount'] = '';
+    if (isset($value->field_item_description[LANGUAGE_NONE][0]['value'])) {
+      $item['description'] = $value->field_item_description[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_item_quantity[LANGUAGE_NONE][0]['value'])) {
+      $item['quantity'] = $value->field_item_quantity[LANGUAGE_NONE][0]['value'];
+    }
+    if (isset($value->field_item_amount[LANGUAGE_NONE][0]['value'])) {
+      $item['amount'] = $value->field_item_amount[LANGUAGE_NONE][0]['value'];
+    }
+    $vars['setup_fee_items'][] = $item;
+  }
 
   $vars['class_gta'] = 'gray-check';
   $vars['class_dd'] = '';
