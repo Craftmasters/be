@@ -1790,6 +1790,26 @@ class Bullseye {
   }
 
   /**
+   * Get the total invoice.
+   *
+   * @param int $aid
+   *   The account id.
+   */
+  public static function totalInvoice($aid) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_item_amount', 'amount', 'amount.entity_id = n.nid');
+    $results = $query
+      ->fields('n', array('nid'))
+      ->condition('n.type', 'accounts', '=')
+      ->execute()
+      ->fetchAll();
+
+    // Sum of invoices.
+
+    return $results;
+  }
+
+  /**
    * Total producers.
    */
   public static function totalProducers($status = 1) {
