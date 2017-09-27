@@ -577,8 +577,15 @@ class Bullseye {
 
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
-    $dip = Bullseye::countDealsInProgress();
-    $ro = Bullseye::getOpportunitiesCovered();
+    $dip = 0;
+    $ro = 0;
+
+    if (Bullseye::countDealsInProgress() != 0) {
+      $dip = Bullseye::countDealsInProgress();
+    }
+    if (Bullseye::getOpportunitiesCovered() != 0) {
+      $ro = Bullseye::getOpportunitiesCovered();
+    }
 
     if ($dip == 0 && $ro == 0) {
       return FALSE;
@@ -1864,6 +1871,8 @@ class Bullseye {
       ->execute()
       ->fetchAll();
 
+    krumo($puids);
+
     // Total remaining opportunities in the current month.
     $tro = 0;
     if (Bullseye::totalRemainingOpportunities($uid)) {
@@ -3057,15 +3066,10 @@ class Bullseye {
     if (is_null($uid) && (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles))) {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-      $or = db_or();
-      $or->condition('uid.field_visibility_value', $be->uid, '=');
-      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
       $nids = $query
         ->fields('n', array('nid'))
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
-        ->condition($or)
         ->execute()
         ->fetchAll();
     }
