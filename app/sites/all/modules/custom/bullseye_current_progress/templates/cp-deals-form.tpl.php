@@ -225,6 +225,13 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 		    <div class="modal-inner">
+		    	<div class="send-documents modal-loading">
+		    		<div class="loading-container">
+		    			<div class="loading-container-inner">
+		    				<img src="/sites/all/themes/bullseye/images/loading.gif">
+		    			</div>
+		    		</div>
+		    	</div>
 		    	<div class="modal-header">
 		        <a href="#" class="close" data-dismiss="modal">&times;</a>
 		      </div>

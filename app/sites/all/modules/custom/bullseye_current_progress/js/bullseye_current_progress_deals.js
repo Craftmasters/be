@@ -207,6 +207,7 @@
                 });
               });
 
+              $('#sfi-pdf-load').load('/be-cp/dip-load-sfi', {nid: nid});
             },
           });
         });
@@ -217,6 +218,7 @@
 
         // DIP - Set status to send documents.
         $('#btn-next-send-documents').click(function() {
+          $('.send-documents.modal-loading').show();
           var invoice_notes = $('#edit-invoice-notes').val();
           // Get the setup fee items data.
           var sfi = [];
@@ -283,6 +285,10 @@
               });
 
               refreshClasses(nid);
+
+              $('#sfi-pdf-load').load('/be-cp/dip-load-sfi', {nid: nid}, function() {
+                $('.send-documents.modal-loading').hide();
+              });
             },
           });
 
