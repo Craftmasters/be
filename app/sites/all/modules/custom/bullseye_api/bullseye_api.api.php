@@ -590,7 +590,7 @@ class Bullseye {
     if ($dip == 0 && $ro == 0) {
       return FALSE;
     }
-    // Calculate win ration by diving deals in progress
+    // Calculate win ratio by diving deals in progress
     // by itself plus remaining opportunities.
     $wr = $dip / $dip + $ro;
 
