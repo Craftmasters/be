@@ -1,5 +1,4 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
-	
 	<div id="div-gta" class="cp-step row <?php print $class_gta; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
@@ -268,7 +267,7 @@
 					      						<th><?php print t('Amount'); ?></th>
 					      					</tr>
 					      				</thead>
-					      				<tbody>
+					      				<tbody id="sfi-pdf-load">
 					      					<tr><td></td><td></td><td></td></tr>
 					      					<tr>
 					      						<td>Item 1</td>
@@ -316,6 +315,13 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 		    <div class="modal-inner">
+		    	<div class="send-document-email modal-loading">
+		    		<div class="loading-container">
+		    			<div class="loading-container-inner">
+		    				<img src="/sites/all/themes/bullseye/images/loading.gif">
+		    			</div>
+		    		</div>
+		    	</div>
 		    	<div class="modal-header">
 		        <a href="#" class="close" data-dismiss="modal">&times;</a>
 		        <div class="be-bs-modal-progress">
@@ -340,6 +346,7 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner be-forms send-documents-email">
 		      			<div class="form-title"><h2><?php print t('Send Invoice'); ?></h2></div>
+		      			<div class="sei-error-container"></div>
 		      			<?php print render($form['subject']); ?>
 		      			<?php print render($form['to']); ?>
 		      			<?php print render($form['show_attachment']); ?>

@@ -211,6 +211,13 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/dip-load-sfi'] = array(
+    'page callback' => 'be_cp_dip_load_sfi',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1575,6 +1582,12 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
   }
 
   $invoice_number = 'INV-' . date('mdYHis') . $user->uid;
+  $invoice = Bullseye::getSetupFeeInvoice($node->nid);
+  if (!empty($invoice) || $invoice != '' || $invoice != NULL) {
+    $invoice = file_load($invoice);
+    $invoice_number = str_replace('.pdf', '', $invoice->filename);
+  }
+
   $filename = $invoice_number . '.pdf';
 
   $form['nid'] = array(
@@ -1600,6 +1613,7 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Thank you for your business.'),
     ),
+    '#default_value' => Bullseye::getInvoiceNotesByNid($node->nid),
   );
 
   $form['subject'] = array(
@@ -1867,6 +1881,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['invoice_pdf'] = array(
     'render element' => 'form',
     'template' => 'invoice-pdf',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
+  );
+  $items['setup_fee_items_rows'] = array(
+    'render element' => 'form',
+    'template' => 'sfi-items-rows',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
   );
   return $items;
