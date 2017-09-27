@@ -1843,7 +1843,7 @@ class Bullseye {
    *
    * Top performers are producer account.
    */
-  public static function topPerformers() {
+  public static function topPerformers($uid = NULL) {
     $query = db_select('users' , 'u');
       $query->join('users_roles', 'ur', 'u.uid = ur.uid');
       $query->join('role', 'r', 'r.rid = ur.rid');
@@ -1933,6 +1933,11 @@ class Bullseye {
     }
 
     return $total;
+  }
+
+  // Get the total number of remaining opportunities.
+  public static function totalRemainingOpportunities($uid = NULL) {
+    return $uid;
   }
 
   /**
