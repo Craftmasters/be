@@ -1843,7 +1843,13 @@ class Bullseye {
    *
    * Top performers are producer account.
    */
-  public static function topPerformers($uid, $month) {
+  public static function topPerformers($month, $uid = NULL) {
+    global $user;
+
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
     $query = db_select('users' , 'u');
     $query->join('users_roles', 'ur', 'u.uid = ur.uid');
     $query->join('role', 'r', 'r.rid = ur.rid');
