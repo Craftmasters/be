@@ -1,5 +1,4 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
-	
 	<div id="div-gta" class="cp-step row <?php print $class_gta; ?>">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
@@ -268,7 +267,7 @@
 					      						<th><?php print t('Amount'); ?></th>
 					      					</tr>
 					      				</thead>
-					      				<tbody>
+					      				<tbody id="sfi-pdf-load">
 					      					<tr><td></td><td></td><td></td></tr>
 					      					<tr>
 					      						<td>Item 1</td>
@@ -304,7 +303,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#generate-invoice" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-toggle="modal" data-target="#send-documents-email" data-dismiss="modal"><?php print t('Send Invoice'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
+		        	<button id="btn-next-receive-signed-docs" type="button" class="green-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Next: Receive Signed Documents'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -316,6 +315,13 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 		    <div class="modal-inner">
+		    	<div class="send-document-email modal-loading">
+		    		<div class="loading-container">
+		    			<div class="loading-container-inner">
+		    				<img src="/sites/all/themes/bullseye/images/loading.gif">
+		    			</div>
+		    		</div>
+		    	</div>
 		    	<div class="modal-header">
 		        <a href="#" class="close" data-dismiss="modal">&times;</a>
 		        <div class="be-bs-modal-progress">
@@ -340,6 +346,7 @@
 		      	<div class="modal-body-wrap">
 		      		<div class="modal-body-inner be-forms send-documents-email">
 		      			<div class="form-title"><h2><?php print t('Send Invoice'); ?></h2></div>
+		      			<div class="sei-error-container"></div>
 		      			<?php print render($form['subject']); ?>
 		      			<?php print render($form['to']); ?>
 		      			<?php print render($form['show_attachment']); ?>
@@ -390,7 +397,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#send-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#collect-premium" data-dismiss="modal"><?php print t('Next: Collect Premium'); ?></button>
+		        	<button id="btn-next-collect-premium" type="button" class="green-btn" data-toggle="modal" data-target="#collect-premium" data-dismiss="modal"><?php print t('Next: Collect Premium'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -430,7 +437,7 @@
 		        <div class="be-custom-actions">
 		        	<button type="button" class="gray-btn" data-toggle="modal" data-target="#receive-signed-documents" data-dismiss="modal"><?php print t('Back'); ?></button>
 		        	<button type="button" class="orange-btn" data-dismiss="modal"><?php print t('Save and Exit'); ?></button>
-		        	<button type="button" class="green-btn" data-toggle="modal" data-target="#convert-to-closed-deal" data-dismiss="modal"><?php print t('Next: Convert to Closed Deal'); ?></button>
+		        	<button id="btn-next-ctcd" type="button" class="green-btn" data-toggle="modal" data-target="#convert-to-closed-deal" data-dismiss="modal"><?php print t('Next: Convert to Closed Deal'); ?></button>
 		        </div>
 		      </div>
 		    </div>
@@ -468,7 +475,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <div class="be-custom-actions">
-		        	<button type="button" class="green-btn" data-dismiss="modal"><?php print t('Yes'); ?></button>
+		        	<?php print render($form['submit']); ?>
 		        	<button type="button" class="gray-btn" data-dismiss="modal"><?php print t('Not Now'); ?></button>
 		        </div>
 		      </div>

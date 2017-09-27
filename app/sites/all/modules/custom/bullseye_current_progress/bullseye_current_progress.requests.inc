@@ -1174,6 +1174,7 @@ function be_cp_dip_save_exit_sfi() {
   $sfi = $_POST['sfi'];
   $old_sfi = $_POST['old_sfi'];
   $send_document = $_POST['send_document'];
+  $invoice_notes = $_POST['invoice_notes'];
 
   $node = node_load($nid);
   $item_ids = array();
@@ -1205,21 +1206,39 @@ function be_cp_dip_save_exit_sfi() {
     $wrapper->save();
   }
 
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  $wrapper->field_setup_fee_notes->set($invoice_notes);
+
   if ($send_document == 'yes') {
-    $wrapper = entity_metadata_wrapper('node', $nid);
-
-    $action_status = $wrapper->field_action_status->value();
-    $workflow_status = $wrapper->field_workflow_status->value();
-    $account_status = $wrapper->field_account_status->value();
-
     if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'generate_setup_fee_invoice') {
       $wrapper->field_action_status->set('send_documents');
     }
-
-    $wrapper->save();
   }
 
+  $wrapper->save();
+
   drupal_json_output($_POST);
+}
+
+/**
+ * Load the setup fee items.
+ */
+function be_cp_dip_load_sfi() {
+  $nid = $_POST['nid'];
+
+  $vars = array();
+
+  $vars['items'] = Bullseye::getSetupFeeItemsByNid($nid);
+  $vars['invoice_notes'] = Bullseye::getInvoiceNotesByNid($nid);
+
+  $output = theme('setup_fee_items_rows', $vars);
+
+  echo $output;
 }
 
 use Dompdf\Dompdf;
@@ -1232,6 +1251,9 @@ function be_cp_dip_send_documents_files() {
   global $base_url, $user;
   $nid = $_POST['nid'];
   $filename = $_POST['filename'];
+  $subject = $_POST['subject'];
+  $to = $_POST['to'];
+  $body = $_POST['body'];
   $attachments = array();
 
   $theme_directory = path_to_theme('theme', 'bullseye');
@@ -1240,6 +1262,13 @@ function be_cp_dip_send_documents_files() {
 
   $vars['bootstrap_css'] = $base_url . '/' . $theme_directory . '/bootstrap/css/bootstrap.css';
   $vars['pdf_logo'] = $base_url . '/' . $theme_directory . '/images/archer-pdf-logo.png';
+
+  $vars['items'] = Bullseye::getSetupFeeItemsByNid($nid);
+  $vars['invoice_notes'] = Bullseye::getInvoiceNotesByNid($nid);
+  $vars['nid'] = $nid;
+  $vars['invoice_number'] = str_replace('.pdf', '', $filename);
+
+  $vars['output'] = theme('setup_fee_items_rows', $vars);
 
   $html = theme('invoice_pdf', $vars);
 
@@ -1275,15 +1304,79 @@ function be_cp_dip_send_documents_files() {
   // Send the email to specified recipients.
   $params = array(
     'key' => 'bullseye',
-    'to' => 'ruthieborces@outlook.com',
-    'from' => 'mrborces@gmail.com',
-    'subject' => 'test invoice pdf',
-    'body' => 'test invoice pdf',
+    'to' => $to,
+    'from' => 'bullseye@archerjordan.com',
+    'subject' => $subject,
+    'body' => $body,
     'attachments' => $attachments,
   );
 
-  Bullseye::sendEmail('ruthieborces@outlook.com', 'mrborces@gmail.com', $params);
+  Bullseye::sendEmail($to, 'bullseye@archerjordan.com', $params);
   
-  drupal_json_output($wrapper);
+  drupal_json_output(TRUE);
 
+}
+
+/**
+ * set the action status to receive signed docs.
+ */
+function be_cp_dip_receive_signed_docs() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'generate_trust_agreement' && $action_status == 'send_documents') {
+    $wrapper->field_action_status->set('receive_signed_documents');
+    $wrapper->field_workflow_status->set('proof_of_agreement');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * set the action status to collect premium.
+ */
+function be_cp_dip_collect_premium() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'proof_of_agreement' && $action_status == 'receive_signed_documents') {
+    $wrapper->field_action_status->set('collect_premium');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * set the workflow status to convert to closed deals.
+ */
+function be_cp_dip_convert_to_closed_deal() {
+  $nid = $_POST['nid'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'proof_of_agreement' && $action_status == 'collect_premium') {
+    $wrapper->field_workflow_status->set('convert_to_closed_deals');
+  }
+
+  $wrapper->save();
+
+  drupal_json_output($wrapper);
 }

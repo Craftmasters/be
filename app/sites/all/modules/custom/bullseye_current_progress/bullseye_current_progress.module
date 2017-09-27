@@ -211,6 +211,34 @@ function bullseye_current_progress_menu() {
     'file' => 'bullseye_current_progress.requests.inc',
   );
 
+  $items['be-cp/dip-load-sfi'] = array(
+    'page callback' => 'be_cp_dip_load_sfi',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-receive-signed-docs'] = array(
+    'page callback' => 'be_cp_dip_receive_signed_docs',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-collect-premium'] = array(
+    'page callback' => 'be_cp_dip_collect_premium',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
+  $items['be-cp/dip-convert-to-cd'] = array(
+    'page callback' => 'be_cp_dip_convert_to_closed_deal',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'bullseye_current_progress.requests.inc',
+  );
+
   return $items;
 }
 
@@ -1575,6 +1603,12 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
   }
 
   $invoice_number = 'INV-' . date('mdYHis') . $user->uid;
+  $invoice = Bullseye::getSetupFeeInvoice($node->nid);
+  if (!empty($invoice) || $invoice != '' || $invoice != NULL) {
+    $invoice = file_load($invoice);
+    $invoice_number = str_replace('.pdf', '', $invoice->filename);
+  }
+
   $filename = $invoice_number . '.pdf';
 
   $form['nid'] = array(
@@ -1600,6 +1634,7 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     '#attributes' => array(
       'placeholder' => t('Thank you for your business.'),
     ),
+    '#default_value' => Bullseye::getInvoiceNotesByNid($node->nid),
   );
 
   $form['subject'] = array(
@@ -1636,14 +1671,14 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
     ),
   );
 
-  /*$form['submit'] = array(
+  $form['submit'] = array(
     '#type' => 'submit',
     '#submit' => array('convert_to_closed_deal'),
     '#attributes' => array(
       'class' => array('green-btn'),
     ),
     '#value' => t('Yes'),
-  );*/
+  );
 
   // Attach js for ajax requests
   $form['#attached']['js'] = array(
@@ -1651,6 +1686,40 @@ function bullseye_current_progress_deals_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Form submit for current progress prospects form.
+ */
+function convert_to_closed_deal($form, &$form_state) {
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+
+  $action_status = $wrapper->field_action_status->value();
+  $workflow_status = $wrapper->field_workflow_status->value();
+  $account_status = $wrapper->field_account_status->value();
+
+  if ($account_status == 'deal_in_progress' && $workflow_status == 'convert_to_closed_deals') {
+    $wrapper->field_action_status->set('migration_to_arrow');
+    $wrapper->field_workflow_status->set('migration');
+    $wrapper->field_account_status->set('closed_deal');
+  }
+
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('convert_to_closed_deal', $form_state['values']['nid']);
+
+  // Clear the deals in progress listing and closed deals cache so that
+  // the new account changes will reflect to the 
+  // corresponding list.
+  cache_clear_all('deal_in_progress_accounts_listing', 'cache');
+  cache_clear_all('count_deals_accounts_listing', 'cache');
+  cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
+
+  $wrapper->save();
+
+  // Refresh the page.
+  drupal_goto('company/' . arg(1), array('query' => array('from' => 'deal_in_progress')));
 }
 
 /**
@@ -1867,6 +1936,11 @@ function bullseye_current_progress_theme($existing, $type, $theme, $path) {
   $items['invoice_pdf'] = array(
     'render element' => 'form',
     'template' => 'invoice-pdf',
+    'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
+  );
+  $items['setup_fee_items_rows'] = array(
+    'render element' => 'form',
+    'template' => 'sfi-items-rows',
     'path' => drupal_get_path('module', 'bullseye_current_progress') . '/templates',
   );
   return $items;

@@ -14,6 +14,8 @@
       $(document).ready(function() {
         var nid = $('.current-progress-main').attr('node-id');
 
+        $('#sfi-pdf-load').load('/be-cp/dip-load-sfi', {nid: nid});
+
         // Refresh classes of current progress block.
         function refreshClasses(nid) {
           $.ajax({
@@ -140,6 +142,7 @@
 
         // Save the setup fee items.
         $('#btn-save-exit-sfi').click(function(e) {
+          var invoice_notes = $('#edit-invoice-notes').val();
           // Get the setup fee items data.
           var sfi = [];
           $('.table-sfi .new-data').each(function() {
@@ -171,6 +174,7 @@
               sfi: sfi,
               old_sfi: old_sfi,
               send_document: 'no',
+              invoice_notes: invoice_notes,
             },
             success: function(result){
               console.log(result);
@@ -207,8 +211,13 @@
           });
         });
 
+        $('#div-sd a.cp-link').click(function(e) {
+          $('#sfi-pdf-load').load('/be-cp/dip-load-sfi', {nid: nid});
+        });
+
         // DIP - Set status to send documents.
         $('#btn-next-send-documents').click(function() {
+          var invoice_notes = $('#edit-invoice-notes').val();
           // Get the setup fee items data.
           var sfi = [];
           $('.table-sfi .new-data').each(function() {
@@ -240,6 +249,7 @@
               sfi: sfi,
               old_sfi: old_sfi,
               send_document: 'yes',
+              invoice_notes: invoice_notes,
             },
             success: function(result){
               console.log(result);
@@ -276,21 +286,78 @@
             },
           });
 
+          $('#sfi-pdf-load').load('/be-cp/dip-load-sfi', {nid: nid});
         });
 
         // DIP - Set status to send documents.
         $('#btn-send-documents').click(function() {
           var filename = $('.show-attachment a').text();
+          $('.send-document-email.modal-loading').show();
           $.ajax({
             url: '/be-cp/dip-send-documents-files',
             method: 'POST',
             data: {
               nid: nid,
               filename: filename,
+              subject: $('#edit-subject').val(),
+              to: $('#edit-to').val(),
+              body: $('#edit-message').val(),
             },
             success: function(result){
               console.log(result);
               refreshClasses(nid);
+              $('.send-document-email.modal-loading').hide();
+              var message = 'Invoice successfully sent to client.'
+              var close = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+              var div = '<div class="alert alert-success">' + close + message + '</div>';
+              $('.sei-error-container').html(div);
+            },
+          }).fail(function(jqXHR, textStatus) {
+            console.log('fail');
+            $('.send-document-email.modal-loading').hide();
+          });
+        });
+
+        $('#btn-next-receive-signed-docs').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-receive-signed-docs',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-next-collect-premium').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-collect-premium',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+            },
+          });
+        });
+
+        $('#btn-next-ctcd').click(function() {
+          $.ajax({
+            url: '/be-cp/dip-convert-to-cd',
+            method: 'POST',
+            data: {
+              nid: nid,
+            },
+            success: function(result){
+              console.log(result);
+              refreshClasses(nid);
+              refreshHeaderClasses(nid);
             },
           });
         });
