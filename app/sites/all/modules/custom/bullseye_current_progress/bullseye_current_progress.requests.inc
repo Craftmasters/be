@@ -1334,6 +1334,8 @@ function be_cp_dip_receive_signed_docs() {
     $wrapper->field_workflow_status->set('proof_of_agreement');
   }
 
+  cache_clear_all('workflow_status_' . $nid, 'cache');
+
   $wrapper->save();
 
   drupal_json_output($wrapper);
@@ -1375,6 +1377,8 @@ function be_cp_dip_convert_to_closed_deal() {
   if ($account_status == 'deal_in_progress' && $workflow_status == 'proof_of_agreement' && $action_status == 'collect_premium') {
     $wrapper->field_workflow_status->set('convert_to_closed_deals');
   }
+
+  cache_clear_all('workflow_status_' . $nid, 'cache');
 
   $wrapper->save();
 
