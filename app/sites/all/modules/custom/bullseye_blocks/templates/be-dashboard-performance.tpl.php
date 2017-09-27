@@ -11,27 +11,29 @@
       <div class="col-md-7 top-performers-wrapper">
         <div class="top-performers">
           <h3><?php print t('Top Performers'); ?></h3>
-          <div class="row performer">
-            <div class="col-xs-7 perf-name"><?php print t('ARCHER JORDAN'); ?></div>
-            <div class="col-xs-5 perf-score">
-              <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-              <span class="score">0%</span>
+          <?php foreach ($performers as $p): ?>
+            <div class="row performer">
+              <div class="col-xs-7 perf-name"><?php print t('ARCHER JORDAN'); ?></div>
+              <div class="col-xs-5 perf-score">
+                <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                <span class="score">0%</span>
+              </div>
             </div>
-          </div>
-          <div class="row performer">
-            <div class="col-xs-7 perf-name">Szerlip Co.</div>
-            <div class="col-xs-5 perf-score">
-              <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-              <span class="score">0%</span>
+            <div class="row performer">
+              <div class="col-xs-7 perf-name">Szerlip Co.</div>
+              <div class="col-xs-5 perf-score">
+                <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                <span class="score">0%</span>
+              </div>
             </div>
-          </div>
-          <div class="row performer">
-            <div class="col-xs-7 perf-name">Adam Smith</div>
-            <div class="col-xs-5 perf-score">
-              <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-              <span class="score">0%</span>
+            <div class="row performer">
+              <div class="col-xs-7 perf-name">Adam Smith</div>
+              <div class="col-xs-5 perf-score">
+                <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                <span class="score">0%</span>
+              </div>
             </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
