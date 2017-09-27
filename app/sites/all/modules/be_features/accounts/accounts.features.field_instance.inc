@@ -506,6 +506,111 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance:
+  // 'field_collection_item-field_setup_fee_items-field_item_amount'.
+  $field_instances['field_collection_item-field_setup_fee_items-field_item_amount'] = array(
+    'bundle' => 'field_setup_fee_items',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_item_amount',
+    'label' => 'Item Amount',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_setup_fee_items-field_item_description'.
+  $field_instances['field_collection_item-field_setup_fee_items-field_item_description'] = array(
+    'bundle' => 'field_setup_fee_items',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_item_description',
+    'label' => 'Item Description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_setup_fee_items-field_item_quantity'.
+  $field_instances['field_collection_item-field_setup_fee_items-field_item_quantity'] = array(
+    'bundle' => 'field_setup_fee_items',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_item_quantity',
+    'label' => 'Item Quantity',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_account_estimate_value'.
   $field_instances['node-accounts-field_account_estimate_value'] = array(
     'bundle' => 'accounts',
@@ -1162,6 +1267,49 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_setup_fee_items'.
+  $field_instances['node-accounts-field_setup_fee_items'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'field_collection',
+        'settings' => array(
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_view',
+        'weight' => 45,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_setup_fee_items',
+    'label' => 'Setup Fee Items',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 31,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_source'.
   $field_instances['node-accounts-field_source'] = array(
     'bundle' => 'accounts',
@@ -1693,6 +1841,9 @@ function accounts_field_default_field_instances() {
   t('Facebook Personal');
   t('Firstname');
   t('If Primary Contact');
+  t('Item Amount');
+  t('Item Description');
+  t('Item Quantity');
   t('Lastname');
   t('LinkedIn Personal');
   t('Mandate Category');
@@ -1710,6 +1861,7 @@ function accounts_field_default_field_instances() {
   t('Referral Partners');
   t('Set Priority');
   t('Setup Fee Invoice');
+  t('Setup Fee Items');
   t('Source');
   t('State Code');
   t('States');
