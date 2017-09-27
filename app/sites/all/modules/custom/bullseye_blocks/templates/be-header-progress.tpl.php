@@ -69,11 +69,11 @@
 	  <div class="be-progress be-start be-green">
 	    <?php print t('Closed Deal'); ?>
 	  </div>
-	  <div class="be-progress be-end be-blue">
-	    <?php print t('Setup Account'); ?>
+	  <div id="hp_migration" class="be-progress be-end be-blue">
+	    <?php print t('Migration'); ?>
 	  </div>
-	  <div class="be-progress be-end be-gray">
-	    <?php print t('Migrate to Arrow Cloud'); ?>
+	  <div id="hp_congrats" class="be-progress be-end be-gray">
+	    <?php print t('Congratulations!'); ?>
 	  </div>
 	</div>
 

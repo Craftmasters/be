@@ -1,6 +1,6 @@
 <div class="current-progress-main" node-id="<?php print $nid; ?>">
 	
-	<div id="div-plan-specs" class="cp-step row green-check">
+	<div id="div-plan-specs" class="cp-step row gray-check">
 		<div class="col-xs-2">
 			<span class="indicator initial"></span>
 		</div>
@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<div id="div-request-specs" class="cp-step row done-step">
+	<div id="div-request-specs" class="cp-step row current-step">
 		<div class="col-xs-2">
 			<span class="indicator"></span>
 		</div>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div id="div-convert-to-deals" class="cp-step row green-check">
+	<div id="div-convert-to-deals" class="cp-step row no-check">
 		<div class="col-xs-2">
 			<span class="indicator end"></span>
 		</div>
