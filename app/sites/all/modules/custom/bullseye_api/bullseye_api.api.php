@@ -1779,7 +1779,6 @@ class Bullseye {
    */
   public static function topPerformers() {
     $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_', '', '');
     $query
       ->fields('n', array('nid', 'title'))
       ->condition('n.type', 'accounts', '=')
