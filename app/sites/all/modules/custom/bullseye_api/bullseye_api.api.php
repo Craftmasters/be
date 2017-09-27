@@ -1852,17 +1852,8 @@ class Bullseye {
 
       $producers = $query
         ->fields('u', array('mail', 'uid'))
-        ->fields('ptype', array('field_producer_type_value'))
-        ->fields('producer', array('field_producer_name_value'))
-        ->fields('fname', array('field_first_name_value'))
-        ->fields('lname', array('field_last_name_value'))
-        ->fields('contact', array('field_primary_contact_value'))
-        ->fields('phone', array('field_phone_number_value'))
-        ->fields('site', array('field_producer_website_value'))
-        ->fields('hl', array('field_health_and_life_fid'))
-        ->fields('eoi', array('field_errors_omission_insurance_fid'))
         ->condition('r.name', 'producer', '=')
-        ->condition('u.status', $status, '=')
+        ->condition('u.uid', $uid, '=')
         ->execute()
         ->fetchAll();
 
