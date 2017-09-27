@@ -219,6 +219,55 @@ class Bullseye {
   }
 
   /**
+   * Get Setup fee invoice by nid.
+   */
+  static function getSetupFeeInvoice($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_setup_fee_invoice', 'inv', 'n.nid = inv.entity_id');
+    $inv = $query
+      ->fields('inv', array('field_setup_fee_invoice_fid'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $inv;
+  }
+
+  /**
+   * Get Invoice notes by nid.
+   */
+  static function getInvoiceNotesByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_setup_fee_notes', 'inv', 'n.nid = inv.entity_id');
+    $date = $query
+      ->fields('inv', array('field_setup_fee_notes_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $date;
+  }
+
+  /**
+   * Get Setup fee items by nid.
+   */
+  static function getSetupFeeItemsByNid($nid) {
+    $query = db_select('field_data_field_setup_fee_items', 'sfi');
+    $query->leftJoin('field_data_field_item_description', 'description', 'sfi.field_setup_fee_items_value = description.entity_id');
+    $query->leftJoin('field_data_field_item_quantity', 'quantity', 'sfi.field_setup_fee_items_value = quantity.entity_id');
+    $query->leftJoin('field_data_field_item_amount', 'amount', 'sfi.field_setup_fee_items_value = amount.entity_id');
+    $items = $query
+      ->fields('description', array('field_item_description_value'))
+      ->fields('quantity', array('field_item_quantity_value'))
+      ->fields('amount', array('field_item_amount_value'))
+      ->condition('sfi.entity_id', $nid, '=')
+      ->execute()
+      ->fetchAll();
+
+    return $items;
+  }
+
+  /**
    * Get Phone Number by nid.
    */
   static function getPhoneNumberByNid($nid) {

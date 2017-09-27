@@ -4,7 +4,7 @@
 		<title>INVOICE</title>
 		<link rel="stylesheet" type="text/css" href="<?php print $bootstrap_css; ?>">
 		<style>
-			div, td, h1, h2, h3, span, p {
+			div, td, h1, h2, h3, h4, span, p {
 				font-family: 'Helvetica';
 			}
 			.pdf-header {
@@ -21,15 +21,7 @@
 			  padding: 20px 0px 50px;
 			}
 			.pdf-body-header {
-			  padding: 0px 0px 40px;
-			}
-			.row {
-			  margin-left: -10px;
-			  margin-right: -10px;
-			}
-			h1, h2 {
-			  text-align: center;
-			  width: 100%;
+			  padding: 0px 0px 0px;
 			}
 			h1 {
 			  font-size: 25px;
@@ -37,21 +29,6 @@
 			  display: block;
 			  text-transform: uppercase;
 			  text-align: left;
-			}
-			span {
-		    display: inline;
-		    border-bottom: 2px solid #F58A3E;
-		  	padding-bottom: 10px;
-		  }
-			h2 {
-			  font-size: 24px;
-			  color: #000;
-			  padding-top: 40px;
-			}
-			h3 {
-			  text-transform: uppercase;
-			  font-size: 13px;
-			  margin-bottom: 20px;
 			}
 			div[class*="col-xs-"] {
 			  font-size: 11px;
@@ -63,7 +40,6 @@
 			  float: none;
 			  clear: both;
 			}
-
 			.pdf-footer {
 			  border-top: 3px solid #F58A3E;
 			  text-align: center;
@@ -77,40 +53,65 @@
 			  color: #7b7b7b;
 			  margin: 0px;
 			}
-			.table-fields {
+			table {
 				width: 100%;
 			}
-			.table-fields td {
-				vertical-align: top;
-				width: 50%;
-				padding: 5px 0px;
-				font-size: 12px;
-				padding-right: 15px
+			.invoice-title {
+				border-bottom: 1px solid #a0a0a0;
+				padding-bottom: 5px;
+				margin-bottom: 20px;
 			}
-			.td-col {
-				vertical-align: top;
-				width: 50%;
+			.top-left {
+				width: 59%;
 			}
-			.td-col-left {
-				padding-right: 10px;
+			.top-right {
+				width: 39%;
 			}
-			.td-col-right {
-				padding-left: 10px;
+			.top-right-label {
+				color: #f58a3e;
+				text-transform: uppercase;
+				width: 110px;
 			}
-			.table-border {
-				width: 100%;
+			.top-right-value {
+				text-align: right;
 			}
-			.table-border td {
-				width: 33.33%;
-			}
-			.td-border {
-				border-bottom: 2px solid #F58A3E;
+			.top-right-colon {
+				width: 2%;
 			}
 			.td-center {
 				text-align: center;
 			}
-			table {
-				width: 100%;
+			.td-right {
+				text-align: right;
+			}
+			.sfi-items-th th {
+				border-bottom: 2px solid #f58a3e;
+				text-transform: uppercase;
+				padding: 10px;
+			}
+			.padding-10px {
+				padding: 10px;
+			}
+			.color-gray-bg {
+				background-color: #f5f5f5;
+			}
+			.td-none {
+				height: 10px;
+			}
+			.color-orange-bg {
+				background-color: #f58a3e;
+				color: #fff;
+			}
+			.h4-invoice {
+				padding: 0px;
+				margin: 0px;
+				color: #f58a3e;
+				font-size: 13px;
+			}
+			p {
+				margin: 0px;
+				padding: 0px;
+				font-size: 13px;
 			}
 		</style>
 	</head>
@@ -121,37 +122,59 @@
 	    </div>
 	    <div class="pdf-body">
 	      <div class="pdf-body-header">
-	        <h1><?php print t('Invoice'); ?></h1>
+	        <h1 class="invoice-title"><?php print t('Invoice'); ?></h1>
 	      </div>
-	      
+
 	      <table>
+	      	<tbody>
+	      		<tr>
+	      			<td class="top-left">
+	      				<?php $contact = Bullseye::getAccountPrimaryContact($nid); ?>
+          			<div class="person-name">
+          				<?php print $contact['field_firstname_value'] . ' ' . $contact['field_lastname_value']; ?>
+          			</div>
+          			<div class="title"><?php print $contact['field_position_value']; ?></div>
+          			<div class="company-name"><?php print Bullseye::getCompanyNameByNid($nid); ?></div>
+          			<div class="company-street"><?php print Bullseye::getStreetAddressByNid($nid); ?></div>
+          			<div class="company-add">
+            			<?php print Bullseye::getCityByNid($nid); ?>, <?php print Bullseye::getStateByNid($nid); ?>, <?php print Bullseye::getZipCodeByNid($nid); ?>
+            		</div>
+	      			</td>
+	      			<td class="top-right">
+	      				<table>
+	      					<tbody>
+	      						<tr>
+	      							<td class="top-right-label">Invoice no</td>
+	      							<td class="top-right-colon">:</td>
+	      							<td class="top-right-value"><?php print $invoice_number; ?></td>
+	      						</tr>
+	      						<tr>
+	      							<td class="top-right-label">Due Date</td>
+	      							<td class="top-right-colon">:</td>
+	      							<td class="top-right-value"><?php print date('m/d/Y', strtotime(Bullseye::getContractDateByNid($nid))); ?></td>
+	      						</tr>
+	      						<tr>
+	      							<td class="top-right-label">Account no</td>
+	      							<td class="top-right-colon">:</td>
+	      							<td class="top-right-value"><?php print $nid; ?></td>
+	      						</tr>
+	      					</tbody>
+	      				</table>
+	      			</td>
+	      		</tr>
+	      	</tbody>
+	      </table>
+	      
+	      <table style="margin-top: 50px;">
   				<thead>
-  					<tr>
+  					<tr class="sfi-items-th">
   						<th><?php print t('Item Description'); ?></th>
   						<th class="td-center"><?php print t('Quantity'); ?></th>
-  						<th class="td-center"><?php print t('Amount'); ?></th>
+  						<th class="td-right"><?php print t('Amount'); ?></th>
   					</tr>
   				</thead>
   				<tbody>
-  					<tr><td></td><td></td><td></td></tr>
-  					<tr>
-  						<td>Item 1</td>
-  						<td class="td-center">1</td>
-  						<td class="td-center">$100.00</td>
-  					</tr>
-  					<tr>
-  						<td>Item 2</td>
-  						<td class="td-center">10</td>
-  						<td class="td-center">$200.00</td>
-  					</tr>
-  					<tr>
-  						<td class="invoice-notes">
-  							<h2>Notes</h2>
-  							<p>Thank you for your business.</p>
-  						</td>
-  						<td class="td-center">Total</td>
-  						<td class="td-center">$300.00</td>
-  					</tr>
+  					<?php print $output; ?>
   				</tbody>
   			</table>
 
