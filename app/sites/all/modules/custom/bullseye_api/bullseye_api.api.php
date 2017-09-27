@@ -1864,9 +1864,14 @@ class Bullseye {
 
     // Get the total deals closed.
     $dip = 0;
-    $perf = $tro / ($tro + $dip);
+    $perf = 0;
+    if ($tro != 0 && $dip != 0) {
+      $perf = $tro / ($tro + $dip);
 
-    return $query;
+      return $perf;
+    }
+
+    return FALSE;
   }
 
   /**
