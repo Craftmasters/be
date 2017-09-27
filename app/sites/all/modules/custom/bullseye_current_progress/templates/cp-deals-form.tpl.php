@@ -240,17 +240,24 @@
                     <div class="pdf-body-content">
                     	<h1><?php print t('Invoice'); ?></h1>
                     	<div class="row company-info">
-                    		<div class="col-md-6">
-                    			<div class="person-name">Jeff Smith</div>
-                    			<div class="title">CEO</div>
-                    			<div class="company-name">ABC Company</div>
-                    			<div class="company-street">680 My Drive</div>
-                    			<div class="company-add">Garden City, NY, 11530</div>
+                    		<div class="col-md-5">
+                    			<?php $contact = Bullseye::getAccountPrimaryContact($nid); ?>
+                    			<div class="person-name">
+                    				<?php print $contact['field_firstname_value'] . ' ' . $contact['field_lastname_value']; ?>
+                    			</div>
+                    			<div class="title"><?php print $contact['field_position_value']; ?></div>
+                    			<div class="company-name"><?php print Bullseye::getCompanyNameByNid($nid); ?></div>
+                    			<div class="company-street"><?php print Bullseye::getStreetAddressByNid($nid); ?></div>
+                    			<div class="company-add">
+	                    			<?php print Bullseye::getCityByNid($nid); ?>, <?php print Bullseye::getStateByNid($nid); ?>, <?php print Bullseye::getZipCodeByNid($nid); ?>
+	                    		</div>
                     		</div>
-                    		<div class="col-md-6 other-info">
-                    			<div class="invoice-no"><span>Invoice no</span><span>INV-20000044</span></div>
-                    			<div class="invoice-due-date"><span>Due Date</span><span>12/01/2018</span></div>
-                    			<div class="account-no"><span>Account no</span><span>20123334569</span></div>
+                    		<div class="col-md-7 other-info">
+                    			<div class="invoice-no"><span>Invoice no</span><span><?php print $invoice_number; ?></span></div>
+                    			<div class="invoice-due-date">
+                    				<span>Due Date</span><span><?php print date('m/d/Y', strtotime(Bullseye::getContractDateByNid($nid))); ?></span>
+                    			</div>
+                    			<div class="account-no"><span>Account no</span><span><?php print $nid; ?></span></div>
                     		</div>
                     	</div>
                     	<table>

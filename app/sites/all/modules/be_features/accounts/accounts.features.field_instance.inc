@@ -1310,6 +1310,46 @@ function accounts_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-accounts-field_setup_fee_notes'.
+  $field_instances['node-accounts-field_setup_fee_notes'] = array(
+    'bundle' => 'accounts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 46,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_setup_fee_notes',
+    'label' => 'Setup Fee Notes',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-accounts-field_source'.
   $field_instances['node-accounts-field_source'] = array(
     'bundle' => 'accounts',
@@ -1862,6 +1902,7 @@ function accounts_field_default_field_instances() {
   t('Set Priority');
   t('Setup Fee Invoice');
   t('Setup Fee Items');
+  t('Setup Fee Notes');
   t('Source');
   t('State Code');
   t('States');
