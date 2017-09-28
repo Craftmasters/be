@@ -1907,7 +1907,7 @@ class Bullseye {
     $total_invoice = Bullseye::totalInvoice($uid);
     $deals_closed = Bullseye::getDealsClosed();
 
-    if (is_numeric($total_invoice) != 0 && is_numeric($deals_closed) != 0) {
+    if ($total_invoice != 0 && $deals_closed != 0) {
       $ave = $total_invoice / $deals_closed;
       return $ave;
     }
