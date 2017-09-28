@@ -1460,7 +1460,9 @@ function send_proposal_email($form, &$form_state) {
  */
 function convert_to_deal($form, &$form_state) {
 
-  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $nid = $_SESSION['cp_opportunity']['account_id'];
+
+  $wrapper = entity_metadata_wrapper('node', $nid);
 
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
