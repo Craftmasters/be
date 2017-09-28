@@ -1869,7 +1869,6 @@ class Bullseye {
   public static function averageDealsSizeWon($uid = NULL) {
     // Total invoice.
     $total_invoice = Bullseye::totalInvoice();
-    krumo($total_invoice);
     $deals_closed = Bullseye::getDealsClosed();
 
     if (is_numeric($total_invoice) != 0 && is_numeric($deals_closed) != 0) {
