@@ -11,6 +11,7 @@
       <div class="col-md-7 top-performers-wrapper">
         <div class="top-performers">
           <h3><?php print t('Top Performers'); ?></h3>
+          <?php krumo($performers); ?>
           <?php if ($performers): ?>
             <?php foreach ($performers as $p): ?>
               <div class="row performer">

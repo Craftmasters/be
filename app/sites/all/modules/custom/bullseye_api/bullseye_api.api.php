@@ -1873,25 +1873,34 @@ class Bullseye {
 
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
-    $query = db_select('users' , 'u');
-    $query->join('users_roles', 'ur', 'u.uid = ur.uid');
-    $query->join('role', 'r', 'r.rid = ur.rid');
-    $query->join('profile', 'p', 'p.uid = u.uid');
-    $query->leftJoin('field_data_field_account', 'account', 'account.field_account_nid = p.pid');
-    $query->leftJoin('field_data_field_producer_type', 'ptype', 'ptype.entity_id = p.pid');
-    $puids = $query
-      ->fields('u', array('uid'))
-      ->fields('ptype', array('field_producer_type_value'))
-      ->condition('r.name', 'producer', '=')
-      ->condition('u.uid', $uid, '=')
-      ->execute()
-      ->fetchAll();
-
-    // Total remaining opportunities in the current month.
-    $tro = 0;
-    if (Bullseye::totalRemainingOpportunities($uid)) {
-      $tro = Bullseye::totalRemainingOpportunities($uid, $month);
+    if ($cache = cache_get('accounts_uids')) {
+      $uids = $cache->data;
     }
+    else {
+      $query = db_select('users' , 'u');
+      $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+      $query->join('role', 'r', 'r.rid = ur.rid');
+      $uids = $query
+        ->fields('u', array('uid'))
+        ->condition('r.name', 'producer', '=')
+        ->execute()
+        ->fetchCol();
+
+      cache_set('accounts_uids', $uids, 'cache');
+    }
+
+    krumo($uids);
+
+    $top = array();
+    foreach ($uids as $uid) {
+      // Total remaining opportunities in the current month.
+      $tro = 0;
+      if (Bullseye::producerRemainingOpportunities($uid)) {
+        $top[$uid] = Bullseye::producerRemainingOpportunities($month, $uid);
+      }
+    }
+
+    krumo($top);
 
     // Get the total deals in progress converted in the corrent month.
 
@@ -1900,6 +1909,7 @@ class Bullseye {
     if (Bullseye::getDealsClosed($uid)) {
       $dip = Bullseye::getDealsClosed($uid);
     }
+    krumo($dip);
 
     $perf = 0;
     if ($tro != 0 && $dip != 0) {
@@ -1979,9 +1989,23 @@ class Bullseye {
     return $total;
   }
 
-  // Get the total number of remaining opportunities.
-  public static function totalRemainingOpportunities($uid = NULL) {
-    return $uid;
+  /**
+   * Get the total number of remaining opportunities per producer.
+   */
+  public static function producerRemainingOpportunities($uid) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
+    $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+    $or = db_or();
+    $or->condition('uid.field_visibility_value', $uid, '=');
+    $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+    $nids = $query
+      ->fields('n', array('nid'))
+      ->condition('n.type', 'accounts', '=')
+      ->condition('status.field_account_status_value', 'opportunity', '=')
+      ->condition($or)
+      ->execute()
+      ->fetchAll();
   }
 
   /**
