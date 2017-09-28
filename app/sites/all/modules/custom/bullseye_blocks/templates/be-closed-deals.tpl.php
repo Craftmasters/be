@@ -42,7 +42,6 @@
         </tr>
       </thead>
       <tbody>
-        <?php krumo($deals_closed); ?>
         <?php foreach ($deals_closed as $dc): ?>
           <tr>
             <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="" data-contact-id=""></td>
