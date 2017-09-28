@@ -544,6 +544,8 @@ function bullseye_blocks_render_be_closed_deals() {
     $vars['delete_accounts'] = FALSE;
   }
 
+  $vars['deals_closed'] = Bullseye::getClosedDeals();
+
   $output = theme('be_closed_deals', $vars);
 
   return array(

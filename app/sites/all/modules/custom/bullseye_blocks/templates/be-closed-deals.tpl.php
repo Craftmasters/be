@@ -42,37 +42,45 @@
         </tr>
       </thead>
       <tbody>
-      <!--
-        <tr>
-          <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="" data-contact-id=""></td>
-          <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
-          <td><span class="gray-font">Chris Devon</span></td>
-          <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></td>
-        </tr>
-        <tr>
-          <td class="cell-check"><input type="checkbox"></td>
-          <td><span class="orange-font"><a href="/company?from=closed_deal" class="orange-font">ABC Company</a></span></td>
-          <td><span class="gray-font">Chris Devon</span></td>
-          <td><span class="light-gray-font"><a href="#" class="light-gray-font">ABC Company.pdf</a></span></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority green"></td>
-          <td class="be-dot-td"><span class="dot-priority gray"></td>
-          <td><a href="#" class="be-table-button green"><?php print t('Visit Arrow Cloud Page'); ?></a></td>
-        </tr>-->
+        <?php krumo($deals_closed); ?>
+        <?php foreach ($deals_closed as $dc): ?>
+          <tr>
+            <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="" data-contact-id=""></td>
+            <td>
+              <span class="orange-font">
+                <a href="/company?from=closed_deal" class="orange-font">
+                  <?php print $dc->title; ?>
+                </a>
+              </span>
+            </td>
+            <td>
+              <span class="gray-font">
+                <?php
+                  Bullseye::buildAccountName(
+                    $dc->field_firstname_value,
+                    $dc->field_middle_name_value,
+                    $dc->field_lastname_value
+                  );
+                ?>
+              </span>
+            </td>
+            <td>
+              <span class="light-gray-font">
+                <a href="#" class="light-gray-font">ABC Company.pdf</a>
+              </span></td>
+            <td class="be-dot-td">
+              <span class="dot-priority green">
+            </td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority green"></td>
+            <td class="be-dot-td"><span class="dot-priority gray"></td>
+            <td><a href="#" class="be-table-button"><?php print t('Migrate to Arrow Cloud'); ?></a></td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>

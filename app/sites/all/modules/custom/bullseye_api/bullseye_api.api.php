@@ -1497,8 +1497,8 @@ class Bullseye {
       }
       else {
         $query = db_select('node', 'n');
-        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
         $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
         $or = db_or();
         $or->condition('uid.field_visibility_value', $uid, '=');
         $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
@@ -1522,40 +1522,78 @@ class Bullseye {
   /**
    * Get all closed deals account.
    */
-  public static function getClosedDeals() {
-    if ($cache = cache_get('closed_deals_accounts_listing')) {
-      $accounts = $cache->data;
+  public static function getClosedDeals($uid = NULL) {
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('closed_deals_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'contact.entity_id = n.nid');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->fields('comp', array('field_company_value'))
+          ->fields('mail', array('field_email_value'))
+          ->fields('source', array('field_source_value'))
+          ->fields('btype', array('field_type_of_business_value'))
+          ->fields('title', array('field_title_value'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'closed_deal', '=')
+          ->execute()
+          ->fetchAll();
+
+        cache_set('closed_deals_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_firstname', 'fname', 'n.nid = fname.entity_id');
-      $query->leftJoin('field_data_field_middle_name', 'mname', 'n.nid = mname.entity_id');
-      $query->leftJoin('field_data_field_lastname', 'lname', 'n.nid = lname.entity_id');
-      $query->leftJoin('field_data_field_prefix', 'pfix', 'n.nid = pfix.entity_id');
-      $query->leftJoin('field_data_field_title', 'title', 'n.nid = title.entity_id');
-      $query->leftJoin('field_data_field_company', 'comp', 'n.nid = comp.entity_id');
-      $query->leftJoin('field_data_field_email', 'mail', 'n.nid = mail.entity_id');
-      $query->leftJoin('field_data_field_source', 'source', 'n.nid = source.entity_id');
-      $query->leftJoin('field_data_field_type_of_business', 'btype', 'n.nid = btype.entity_id');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid', 'title'))
-        ->fields('type', array('field_account_status_value'))
-        ->fields('fname', array('field_firstname_value'))
-        ->fields('mname', array('field_middle_name_value'))
-        ->fields('lname', array('field_lastname_value'))
-        ->fields('comp', array('field_company_value'))
-        ->fields('mail', array('field_email_value'))
-        ->fields('source', array('field_source_value'))
-        ->fields('btype', array('field_type_of_business_value'))
-        ->fields('title', array('field_title_value'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'closed_deal', '=')
-        ->execute()
-        ->fetchAll();
+      if ($cache = cache_get('closed_deals_accounts_listing_' . $uid)) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_contacts', 'contact', 'contact.entity_id = n.nid');
+        $query->leftJoin('field_data_field_firstname', 'fname', 'contact.field_contacts_value = fname.entity_id');
+        $query->leftJoin('field_data_field_middle_name', 'mname', 'contact.field_contacts_value = mname.entity_id');
+        $query->leftJoin('field_data_field_lastname', 'lname', 'contact.field_contacts_value = lname.entity_id');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+        $or = db_or();
+        $or->condition('uid.field_visibility_value', $uid, '=');
+        $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
+        $accounts = $query
+          ->fields('n', array('nid', 'title'))
+          ->fields('type', array('field_account_status_value'))
+          ->fields('fname', array('field_firstname_value'))
+          ->fields('mname', array('field_middle_name_value'))
+          ->fields('lname', array('field_lastname_value'))
+          ->condition('uid.field_visibility_value', $uid, '=')
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'closed_deal', '=')
+          ->condition($or)
+          ->execute()
+          ->fetchAll();
 
-      cache_set('closed_deals_accounts_listing', $accounts, 'cache');
+        cache_set('closed_deals_accounts_listing_' . $uid, $accounts, 'cache');
+      }
     }
 
     return $accounts;
@@ -1872,7 +1910,6 @@ class Bullseye {
     $uid = (is_null($uid)) ? $user->uid : $uid;
     // Total invoice.
     $total_invoice = Bullseye::totalInvoice($uid);
-    dsm($total_invoice);
     $deals_closed = Bullseye::getDealsClosed();
 
     if (is_numeric($total_invoice) != 0 && is_numeric($deals_closed) != 0) {
