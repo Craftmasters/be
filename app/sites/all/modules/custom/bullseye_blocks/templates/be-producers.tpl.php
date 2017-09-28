@@ -15,7 +15,7 @@
             </a>
           <?php endif; ?>
         </div>
-          
+
       </div>
     </div>
   </div>
@@ -71,12 +71,12 @@
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print Bullseye::getOpportunitiesCovered($producer->uid); ?>
+                <?php print Bullseye::getOpportunitiesCovered($producer->uid, TRUE); ?>
               </span>
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php print Bullseye::getDealsClosed($producer->uid); ?>
+                <?php print Bullseye::getDealsClosed($producer->uid, TRUE); ?>
               </span>
             </td>
             <td class="td-width-80px">
