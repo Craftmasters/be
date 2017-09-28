@@ -1869,6 +1869,7 @@ class Bullseye {
   public static function averageDealsSizeWon($uid = NULL) {
     // Total invoice.
     $total_invoice = Bullseye::totalInvoice();
+    // krumo($total_invoice);
     $deals_closed = Bullseye::getDealsClosed();
 
     if (is_numeric($total_invoice) != 0 && is_numeric($deals_closed) != 0) {
@@ -2181,6 +2182,9 @@ class Bullseye {
 
           break;
       }
+      // Clear the listing cache and the counter.
+      cache_clear_all('producers_listings_0', 'cache');
+      cache_clear_all('total_producers_0', 'cache');
     }
     else {
       $message = t('The email you are trying to use is already taken.');
