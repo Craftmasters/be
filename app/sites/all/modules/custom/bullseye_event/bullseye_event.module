@@ -268,6 +268,7 @@ function bullseye_event_load_activities() {
 	    $lastname = substr($contact['field_lastname_value'], 0, 1);
 	    $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
 	    $value->description = $value->title . ' - ';
+      $value->usercolor = 'orange-font';
 
 	    // For the icon and description.
 	    if ($value->field_task_type_value == 'phone_call') {
@@ -292,13 +293,18 @@ function bullseye_event_load_activities() {
 	      $value->description = $value->title . ' by ';
 	    }
 
+      if ($value->field_event_type_value == 'task') {
+        $value->usercolor = 'green-font';
+      }
+
 	    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
 	    $sorted[$date . '-' . $value->nid] = $value;
 	  }
 
 	  krsort($sorted);
 	}
-	 
+	
+  $vars['nid'] = $nid;
   $vars['activities'] = $sorted;
 
   $output = theme('be_recent_activities_rows', $vars);

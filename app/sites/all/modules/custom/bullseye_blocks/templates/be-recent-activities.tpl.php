@@ -4,6 +4,7 @@
   	<option value="all"><?php print t('All Events'); ?></option>
     <option value="phone_call"><?php print t('Phone Calls'); ?></option>
     <option value="meeting"><?php print t('Meetings'); ?></option>
+    <option value="email"><?php print t('Emails'); ?></option>
     <option value="others"><?php print t('Others'); ?></option>
   </select>
   <div class="be-block-main" id="recent-activities-container">
