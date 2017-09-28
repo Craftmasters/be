@@ -581,7 +581,7 @@ class Bullseye {
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
     if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
-      $dc = (int) Bullseye::getDealsClosed($uid);
+      $dc = (int) Bullseye::getDealsClosed($uid, TRUE);
       $accounts = (int) Bullseye::countAllAccnt($uid);
     }
     else {
