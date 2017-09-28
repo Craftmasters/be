@@ -644,16 +644,6 @@ class Bullseye {
   }
 
   /**
-   * Total number of producer opportunities covered.
-   *
-   * @param string $producer
-   *   The producer name.
-   */
-  function producerOpportunitiesCovered($producer) {
-    return $opportunities_covered;
-  }
-
-  /**
    * Total number of producer deals closed.
    *
    * @param string $producer
