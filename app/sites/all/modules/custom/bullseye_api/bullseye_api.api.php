@@ -587,6 +587,9 @@ class Bullseye {
       $ro = Bullseye::getOpportunitiesCovered();
     }
 
+    //krumo($dip);
+    //krumo($ro);
+
     if ($dip == 0 && $ro == 0) {
       return FALSE;
     }
