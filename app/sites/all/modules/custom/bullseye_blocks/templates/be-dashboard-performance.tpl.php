@@ -30,6 +30,8 @@
         <h2><?php print t('Deals Closed'); ?></h2>
         <?php if (Bullseye::getDealsClosed()): ?>
           <h1><?php print Bullseye::getDealsClosed(); ?></h1>
+        <?php else: ?>
+          <h1>0</h1>
         <?php endif; ?>
       </div>
       <div class="col-xs-4">

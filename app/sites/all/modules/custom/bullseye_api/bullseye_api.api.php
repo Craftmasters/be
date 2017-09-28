@@ -2031,14 +2031,6 @@ class Bullseye {
   }
 
   /**
-   * Get total number of deals closed by the producer.
-   */
-  function dealsClosed($producer) {
-    $total = 1;
-    return $total;
-  }
-
-  /**
    * Total number of proposals.
    */
   function countProposals() {
