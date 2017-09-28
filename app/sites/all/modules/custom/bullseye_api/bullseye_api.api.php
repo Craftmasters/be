@@ -218,6 +218,22 @@ class Bullseye {
     return $date;
   }
 
+
+  /**
+   * Get Contract Date by nid.
+   */
+  static function getInvoiceDueDateByNid($nid) {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_due_date', 'cd', 'n.nid = cd.entity_id');
+    $date = $query
+      ->fields('cd', array('field_due_date_value'))
+      ->condition('n.nid', $nid, '=')
+      ->execute()
+      ->fetchField();
+
+    return $date;
+  }
+
   /**
    * Get Setup fee invoice by nid.
    */
