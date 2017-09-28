@@ -81,10 +81,10 @@
             </td>
             <td class="td-width-80px">
               <span class="gray-font">
-                <?php if (!Bullseye::winRatio($producer->uid)): ?>
+                <?php if (!Bullseye::winRatio($producer->uid, TRUE)): ?>
                   0.00%
                 <?php else: ?>
-                  <?php print Bullseye::winRatio($producer->uid); ?>%
+                  <?php print Bullseye::winRatio($producer->uid, TRUE); ?>%
                 <?php endif; ?>
               </span>
             </td>
