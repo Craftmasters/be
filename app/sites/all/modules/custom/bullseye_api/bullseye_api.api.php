@@ -631,6 +631,7 @@ class Bullseye {
     // Calculate win ratio by diving deals in progress
     // by itself plus remaining opportunities.
     $wr = $dip / ($dip + $ro);
+    $wr = number_format($wr, 2);
 
     return $wr;
   }
