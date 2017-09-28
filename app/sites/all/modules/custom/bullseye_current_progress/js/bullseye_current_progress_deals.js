@@ -143,6 +143,7 @@
         // Save the setup fee items.
         $('#btn-save-exit-sfi').click(function(e) {
           var invoice_notes = $('#edit-invoice-notes').val();
+          var invoice_due_date = $('#edit-invoice-due-date-datepicker-popup-0').val();
           // Get the setup fee items data.
           var sfi = [];
           $('.table-sfi .new-data').each(function() {
@@ -175,6 +176,7 @@
               old_sfi: old_sfi,
               send_document: 'no',
               invoice_notes: invoice_notes,
+              invoice_due_date: invoice_due_date
             },
             success: function(result){
               console.log(result);
@@ -220,6 +222,8 @@
         $('#btn-next-send-documents').click(function() {
           $('.send-documents.modal-loading').show();
           var invoice_notes = $('#edit-invoice-notes').val();
+          var invoice_due_date = $('#edit-invoice-due-date-datepicker-popup-0').val();
+          $('.invoice-due-date .idd-value').text(invoice_due_date);
           // Get the setup fee items data.
           var sfi = [];
           $('.table-sfi .new-data').each(function() {
@@ -252,6 +256,7 @@
               old_sfi: old_sfi,
               send_document: 'yes',
               invoice_notes: invoice_notes,
+              invoice_due_date: invoice_due_date,
             },
             success: function(result){
               console.log(result);

@@ -261,7 +261,7 @@
                     		<div class="col-md-7 other-info">
                     			<div class="invoice-no"><span>Invoice no</span><span><?php print $invoice_number; ?></span></div>
                     			<div class="invoice-due-date">
-                    				<span>Due Date</span><span><?php print date('m/d/Y', strtotime(Bullseye::getContractDateByNid($nid))); ?></span>
+                    				<span>Due Date</span><span class="idd-value"><?php print date('m/d/Y', strtotime(Bullseye::getInvoiceDueDateByNid($nid))); ?></span>
                     			</div>
                     			<div class="account-no"><span>Account no</span><span><?php print $nid; ?></span></div>
                     		</div>
