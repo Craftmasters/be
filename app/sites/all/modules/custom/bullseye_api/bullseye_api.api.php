@@ -219,21 +219,6 @@ class Bullseye {
   }
 
   /**
-   * Get Contract Date by nid.
-   */
-  static function getInvoiceDueDateByNid($nid) {
-    $query = db_select('node', 'n');
-    $query->join('field_data_field_due_date', 'cd', 'n.nid = cd.entity_id');
-    $date = $query
-      ->fields('cd', array('field_due_date_value'))
-      ->condition('n.nid', $nid, '=')
-      ->execute()
-      ->fetchField();
-
-    return $date;
-  }
-
-  /**
    * Get Setup fee invoice by nid.
    */
   static function getSetupFeeInvoice($nid) {
@@ -602,15 +587,12 @@ class Bullseye {
       $ro = Bullseye::getOpportunitiesCovered();
     }
 
-    //krumo($dip);
-    //krumo($ro);
-
-    if ($dip == 0 && $ro == 0) {
+    if ($dip == 0 || $ro == 0) {
       return FALSE;
     }
     // Calculate win ratio by diving deals in progress
     // by itself plus remaining opportunities.
-    $wr = $dip / $dip + $ro;
+    $wr = $dip / ($dip + $ro);
 
     return $wr;
   }
