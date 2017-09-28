@@ -1862,9 +1862,23 @@ class Bullseye {
 
   /**
    * Average deal size won.
+   *
+   * @param int $uid
+   *   The user id.
    */
-  function averageDealsSizeWon() {
-    return;
+  public static function averageDealsSizeWon($uid = NULL) {
+    // Total invoice.
+    $total_invoice = Bullseye::totalInvoice();
+    krumo($total_invoice);
+    $deals_closed = Bullseye::getDealsClosed();
+
+    if (is_numeric($total_invoice) != 0 && is_numeric($deals_closed) != 0) {
+      $ave = $total_invoice / $deals_closed;
+      return $ave;
+    }
+    else {
+      return FALSE;
+    }
   }
 
   /**
@@ -1938,12 +1952,18 @@ class Bullseye {
    * @param int $aid
    *   The account id.
    */
-  public static function totalInvoice($aid) {
+  public static function totalInvoice($uid = NULL) {
+    global $user;
+
+    $uid = (is_null($uid)) ? $user->uid : $uid;
+
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_item_amount', 'amount', 'amount.entity_id = n.nid');
+    $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
     $results = $query
       ->fields('n', array('nid'))
       ->condition('n.type', 'accounts', '=')
+      ->condition('uid.field_visibility_value', $uid, '=')
       ->execute()
       ->fetchAll();
 

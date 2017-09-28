@@ -36,7 +36,7 @@
       </div>
       <div class="col-xs-4">
         <h2><?php print t('AVE Deal Size Won'); ?></h2>
-        <h1>$0</h1>
+        <h1>$<?php print Bullseye::averageDealsSizeWon(); ?></h1>
       </div>
       <div class="col-xs-4">
         <h2><?php print t('Sales Cycle Time'); ?></h2>
