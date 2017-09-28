@@ -46,6 +46,22 @@ function bullseye_misc_config_form($form, &$form_state) {
     ),
   );
 
+  $form['others'] = array(
+    '#title' => t('Others'),
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+    '#group' => 'be_vertical_tab',
+  );
+
+  $form['others']['producer_agreement_link'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Producer Agreement Link'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('producer_agreement_link'),
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save Configuration'),
@@ -69,5 +85,6 @@ function bullseye_misc_config_form_submit($form, &$form_state) {
 
   variable_set('benefit_setup_template', $form_state['values']['files']['benefit_setup']);
   variable_set('payable_setup_template', $form_state['values']['files']['payable_setup']);
+  variable_set('producer_agreement_link', $form_state['values']['others']['producer_agreement_link']);
   drupal_set_message('Successfully saved configuration.');
 }

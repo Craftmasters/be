@@ -169,7 +169,7 @@ function bullseye_producer_acct_indiv_form($form, &$form_state) {
 
   /*page-2*/
   $form['sign_petition'] = array(
-    '#markup' => 'https://app.hellosign.com/s/ebecac33'
+    '#markup' => variable_get('producer_agreement_link'),
   );
 
   $form['file_health_life'] = array(
