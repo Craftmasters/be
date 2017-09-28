@@ -11,28 +11,13 @@
       <div class="col-md-7 top-performers-wrapper">
         <div class="top-performers">
           <h3><?php print t('Top Performers'); ?></h3>
-          <?php krumo($performers); ?>
           <?php if ($performers): ?>
-            <?php foreach ($performers as $p): ?>
+            <?php foreach ($performers as $uid => $p): ?>
               <div class="row performer">
-                <div class="col-xs-7 perf-name"><?php print t('ARCHER JORDAN'); ?></div>
+                <div class="col-xs-7 perf-name"><?php print Bullseye::accountName($uid); ?></div>
                 <div class="col-xs-5 perf-score">
                   <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-                  <span class="score">0%</span>
-                </div>
-              </div>
-              <div class="row performer">
-                <div class="col-xs-7 perf-name">Szerlip Co.</div>
-                <div class="col-xs-5 perf-score">
-                  <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-                  <span class="score">0%</span>
-                </div>
-              </div>
-              <div class="row performer">
-                <div class="col-xs-7 perf-name">Adam Smith</div>
-                <div class="col-xs-5 perf-score">
-                  <span class="up-down"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
-                  <span class="score">0%</span>
+                  <span class="score"><?php print $p; ?>%</span>
                 </div>
               </div>
             <?php endforeach; ?>

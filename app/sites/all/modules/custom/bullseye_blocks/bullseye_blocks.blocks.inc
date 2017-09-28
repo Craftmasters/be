@@ -1087,9 +1087,9 @@ function bullseye_blocks_render_be_dashboard_statistics() {
   //$vars['prospects_total'] = Bullseye::countProspectsAccnt();
   $vars['prospects_total'] = Bullseye::getProspects($user->uid);
   //$vars['opportunities_total'] = Bullseye::countOpportunityAccnt();
-  $vars['opportunities_total'] = Bullseye::getOpportunitiesCovered($user->uid);
+  $vars['opportunities_total'] = Bullseye::getOpportunitiesCovered();
   //$vars['deals_total'] = Bullseye::countDealsInProgress($user->uid);
-  $vars['deals_total'] = Bullseye::getDealsInProgress($user->uid);
+  $vars['deals_total'] = Bullseye::getDealsInProgress();
   //$vars['closed_deals_total'] = Bullseye::countClosedDeals();
   $vars['closed_deals_total'] = Bullseye::getDealsClosed($user->uid);
 
@@ -1134,9 +1134,9 @@ function bullseye_blocks_render_be_dashboard_performance() {
   $vars['performers'] = array();
 
   // Get the current month.
-  $start = strtotime(date('Y-M-01'));
-  $end = strtotime(date('Y-M-31'));
-  $current_month = array($start, $end);
+  $s = Bullseye::currentMonth('01');
+  $e = Bullseye::currentMonth('31');
+  $current_month = array($s, $e);
   if (Bullseye::topPerformers($current_month)) {
     $vars['performers'] = Bullseye::topPerformers($current_month);
   }

@@ -101,6 +101,28 @@ class Bullseye {
   }
 
   /**
+   * Get the account name.
+   */
+  public static function accountName($uid = 56) {
+    global $user;
+
+    $be = new Bullseye($user);
+    $fname = $be->getAccountFirstName($uid);
+    $lname = $be->getAccountLastName($uid);
+
+    if (empty($fname) && empty($lname)) {
+      //krumo($uid);
+      $username = db_query("SELECT name FROM {users} WHERE uid = :uid", array(':uid' => $uid))->fetchField();
+      //krumo($username);
+
+      return $username;
+    }
+    else {
+      return $fname . ' ' . $lname;
+    }
+  }
+
+  /**
    * Get email.
    */
   function getAccountEmail() {
@@ -1855,13 +1877,17 @@ class Bullseye {
    * Get the three top performers.
    *
    * Top performers are producer account.
+   *
+   * @param array $month
+   *   The start and end of the month.
+   *
+   * @param int $uid
+   *   The account/user id.
    */
-  public static function topPerformers($month, $uid = NULL) {
+  public static function topPerformers($month) {
     global $user;
 
     $be = new Bullseye($user);
-
-    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     if ($cache = cache_get('producer_uids')) {
       $uids = $cache->data;
@@ -1879,36 +1905,30 @@ class Bullseye {
       cache_set('producer_uids', $uids, 'cache');
     }
 
-    krumo($uids);
-
     $top = array();
     foreach ($uids as $uid) {
+      $ro = 0;
+      $dip = 0;
+      $res = 0;
+
       // Total remaining opportunities in the current month.
-      $tro = 0;
       if (Bullseye::producerRemainingOpportunities($month, $uid)) {
-        $top[$uid] = count(Bullseye::producerRemainingOpportunities($month, $uid));
+        $ro = count(Bullseye::producerRemainingOpportunities($month, $uid));
+      }
+      // Get the total deals in progress converted in the corrent month.
+      if (Bullseye::getDealsInProgress($uid)) {
+        $dip = Bullseye::getDealsInProgress($uid);
+      }
+      if (Bullseye::producerRemainingOpportunities($month, $uid) && Bullseye::getDealsInProgress($uid)) {
+        $res = $dip/($ro+$dip);
+        $top[$uid] = number_format($res, 2);
       }
     }
 
-    krumo($top);
-    krumo(Bullseye::producerRemainingOpportunities($month, 56));
+    // Sort the return from higher to lowest.;
+    arsort($top);
 
-    // Get the total deals in progress converted in the corrent month.
-
-    // Get the total deals closed.
-    $dip = 0;
-    if (Bullseye::getDealsClosed($uid)) {
-      $dip = Bullseye::getDealsClosed($uid);
-    }
-
-    $perf = 0;
-    if ($tro != 0 && $dip != 0) {
-      $perf = $dip / ($dip + $tro);
-
-      return $perf;
-    }
-
-    return FALSE;
+    return array_slice($top, 0, 3, true);
   }
 
   /**
@@ -1995,19 +2015,16 @@ class Bullseye {
     // Account status.
     $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = account.field_account_nid');
     $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = account.field_account_nid');
-    // Either the visibility is set to producer to visible to all.
-    $or = db_or();
-    $or->condition('uid.field_visibility_value', $uid, '=');
-    $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
     $nids = $query
       ->distinct()
       ->fields('n', array('nid'))
       ->condition('n.type', 'task', '=')
       ->condition('status.field_account_status_value', 'opportunity', '=')
       ->condition('n.created', $date, 'BETWEEN')
-      ->condition($or)
+      ->condition('uid.field_visibility_value', $uid, '=')
+      ->groupBy('n.nid')
       ->execute()
-      ->fetchAll();
+      ->fetchCol();
 
     return $nids;
   }
@@ -3103,28 +3120,15 @@ class Bullseye {
     // Initialize the class.
     $be = new Bullseye($user);
 
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
-    if (is_null($uid) && (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles))) {
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('status.field_account_status_value', 'opportunity', '=')
-        ->execute()
-        ->fetchAll();
-    }
-    elseif (is_null($uid) && Bullseye::hasRole('producer', $roles)) {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-      $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
-      $or = db_or();
-      $or->condition('uid.field_visibility_value', $be->uid, '=');
-      $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
-      $nids = $query
-        ->fields('n', array('nid'))
-        ->condition($or)
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
         ->execute()
@@ -3139,9 +3143,9 @@ class Bullseye {
       $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
       $nids = $query
         ->fields('n', array('nid'))
+        ->condition($or)
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'opportunity', '=')
-        ->condition($or)
         ->execute()
         ->fetchAll();
     }
@@ -3161,11 +3165,11 @@ class Bullseye {
     // Initialize the class.
     $be = new Bullseye($user);
 
-    $uid = (is_null($uid)) ? $be->uid : $uid;
+    $id = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
-    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+    if ((Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) && is_null($uid)) {
       $query = db_select('node', 'n');
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
@@ -3181,7 +3185,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
       $nids = $query
         ->fields('n', array('nid'))
-        ->condition('producer.field_visibility_value', $uid, '=')
+        ->condition('producer.field_visibility_value', $id, '=')
         ->condition('n.type', 'accounts', '=')
         ->condition('status.field_account_status_value', 'deal_in_progress', '=')
         ->execute()
@@ -3465,5 +3469,12 @@ class Bullseye {
     }
 
     return $revenue;
+  }
+
+  /**
+   * Get the current month.
+   */
+  public static function currentMonth($day) {
+    return strtotime(date('Y-M-' . $day));
   }
 }
