@@ -217,6 +217,8 @@ function bullseye_producer_acct_email_element_validate($element, &$form_state, $
  */
 function bullseye_producer_acct_indiv_form_validate($form, &$form_state){
 
+  $clear_files = FALSE;
+
   // drupal_set_message('<pre>'.print_r($form_state, 1).'</pre>');
   // @see modules/user/user.module, line 1252
   // Trim whitespace from mail, to prevent confusing 'e-mail not valid'
@@ -227,14 +229,25 @@ function bullseye_producer_acct_indiv_form_validate($form, &$form_state){
   // Validate the e-mail address, and check if it is taken by an existing user.
   if ($error = user_validate_mail($form_state['values']['producer_email'])) {
     form_set_error('mail', $error);
+    $clear_files = TRUE;
   }
   elseif ((bool) db_select('users')->fields('users', array('uid'))->condition('mail', db_like($form_state['values']['producer_email']), 'LIKE')->range(0, 1)->execute()->fetchField()) {
+    $clear_files = TRUE;
     form_set_error('mail', t('The e-mail address %email is already taken.', array('%email' => $form_state['values']['producer_email'])));
   }
 
   // check if email already exists
   if (user_validate_mail($form_state['values']['producer_email'])) {
     form_set_error('producer_email', t(''));
+    $clear_files = TRUE;
+  }
+
+  if ($clear_files) {
+    // Clear the file_managed field if there are errors
+    $form_state['complete form']['file_health_life']['#value']['fid'] = '';
+    $form_state['complete form']['file_health_life']['#file'] = '';
+    $form_state['complete form']['file_error_omission_insurance']['#value']['fid'] = '';
+    $form_state['complete form']['file_error_omission_insurance']['#file'] = '';
   }
 }
 
@@ -334,7 +347,7 @@ function bullseye_producer_acct_approved() {
     cache_clear_all('visibility_options', 'cache');
   }
   unset($_POST['producer_uid']);
-  drupal_json_output(TRUE);
+  drupal_json_output(1);
 }
 
 /**
@@ -350,7 +363,7 @@ function bullseye_producer_acct_delete() {
     cache_clear_all('total_producers_1', 'cache');
     cache_clear_all('total_producers_0', 'cache');
   }
-  drupal_json_output(TRUE);
+  drupal_json_output(1);
 }
 
 /**

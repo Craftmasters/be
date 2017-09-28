@@ -186,8 +186,9 @@ A few more things to wrap this up.</h4>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 $('label[for="edit-file-health-life-upload"]').click(function(e){
-  e.preventDefault();
+  
   $('input#edit-file-health-life-upload').click();
+  e.preventDefault();
 })
 
 /*$('#edit-file-health-life-upload').change(function(e) {
@@ -200,8 +201,8 @@ $('label[for="edit-file-health-life-upload"]').click(function(e){
 });*/
 
 $('label[for="edit-file-error-omission-insurance-upload"]').click(function(e){
-  e.preventDefault();
   $('input#edit-file-error-omission-insurance-upload').click();
+  e.preventDefault();
 })
 $('#producer-acct-next-btn').click(function(e){
   e.preventDefault();
