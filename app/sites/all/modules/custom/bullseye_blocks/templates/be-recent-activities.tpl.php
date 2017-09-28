@@ -1,7 +1,7 @@
 <div class="be-regular-block">
-  <h2 class="be-regular-h2"><?php print t('Recent Activities'); ?></h2>
+  <h2 class="be-regular-h2"><?php print t('Recent Events'); ?></h2>
   <select class="select-link" id="event-select-filter">
-  	<option value="all"><?php print t('All Activity'); ?></option>
+  	<option value="all"><?php print t('All Events'); ?></option>
     <option value="phone_call"><?php print t('Phone Calls'); ?></option>
     <option value="meeting"><?php print t('Meetings'); ?></option>
     <option value="others"><?php print t('Others'); ?></option>
@@ -14,7 +14,17 @@
           <div class="img-wrap"><img src="<?php print $value->icon_img; ?>"></div>
         </div>
         <div class="col-xs-7 be-activity-desc">
-          <span class="desc"><?php print $value->description; ?></span> <span class="target orange-font"><?php print $value->contact_name; ?></span>
+          <?php if ($value->field_event_type_value == 'task') : ?>
+            <?php if ($value->field_task_status_value == 'open') : ?>
+              <a href="/be-event/edit-task?nid=<?php print $value->nid; ?>&company=<?php print $nid; ?>" rel="lightframe">
+                <span class="desc"><?php print $value->description; ?></span> <span class="target <?php print $value->usercolor; ?>"><?php print $value->contact_name; ?></span>
+              </a>
+            <?php else : ?>
+              <span class="desc"><?php print $value->description; ?></span> <span class="target <?php print $value->usercolor; ?>"><?php print $value->contact_name; ?></span>
+            <?php endif; ?>
+          <?php else : ?>
+            <span class="desc"><?php print $value->description; ?></span> <span class="target <?php print $value->usercolor; ?>"><?php print $value->contact_name; ?></span>
+          <?php endif; ?>
         </div>
         <div class="col-xs-3 be-activity-date"><?php print $value->formatted_date; ?></div>
       </div>

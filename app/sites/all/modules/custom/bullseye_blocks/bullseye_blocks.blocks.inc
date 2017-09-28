@@ -806,7 +806,7 @@ function bullseye_blocks_render_be_recent_activities() {
 
   $nid = Bullseye::getNidFromPath(arg(1));
   $vars['nid'] = $nid;
-  $activities = Bullseye::getRecentActivitiesByNid($nid);
+  $activities = Bullseye::getRecentEventsByNid($nid);
 
   $sorted = array();
 
@@ -822,6 +822,7 @@ function bullseye_blocks_render_be_recent_activities() {
     $lastname = substr($contact['field_lastname_value'], 0, 1);
     $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
     $value->description = $value->title . ' - ';
+    $value->usercolor = 'orange-font';
 
     // For the icon and description.
     if ($value->field_task_type_value == 'phone_call') {
@@ -844,6 +845,10 @@ function bullseye_blocks_render_be_recent_activities() {
       $lastname = substr($lastname, 0, 1);
       $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
       $value->description = $value->title . ' by ';
+    }
+
+    if ($value->field_event_type_value == 'task') {
+      $value->usercolor = 'green-font';
     }
 
     $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

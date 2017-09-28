@@ -2426,8 +2426,8 @@ class Bullseye {
   /**
    * Get the recent activities of an account.
    */
-  static function getRecentActivitiesByNid($nid) {
-    if ($cache = cache_get('recent_activities_' . $nid)) {
+  static function getRecentEventsByNid($nid) {
+    if ($cache = cache_get('recent_events_' . $nid)) {
       $activities = $cache->data;
     }
     else {
@@ -2439,6 +2439,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
       $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2446,15 +2447,15 @@ class Bullseye {
         ->fields('d', array('field_due_date_value'))
         ->fields('c', array('field_contact_value'))
         ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
         ->condition('n.type', 'task', '=')
-        ->condition('et.field_event_type_value', 'activity', '=')
         ->condition('a.field_account_nid', $nid, '=')
         ->orderBy('d.field_due_date_value', 'DESC')
-        ->range(0, 10)
         ->execute()
         ->fetchAll();
 
-      cache_set('recent_activities_' . $nid, $activities, 'cache');
+      cache_set('recent_events_' . $nid, $activities, 'cache');
     }
 
     return $activities;
@@ -2463,8 +2464,8 @@ class Bullseye {
   /**
    * Get the recent phone call activities of an account.
    */
-  static function getRecentPhoneCallActivitiesByNid($nid) {
-    if ($cache = cache_get('recent_activities_phonecall_' . $nid)) {
+  static function getRecentPhoneCallEventsByNid($nid) {
+    if ($cache = cache_get('recent_events_phonecall_' . $nid)) {
       $activities = $cache->data;
     }
     else {
@@ -2476,6 +2477,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
       $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2483,16 +2485,16 @@ class Bullseye {
         ->fields('d', array('field_due_date_value'))
         ->fields('c', array('field_contact_value'))
         ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
         ->condition('n.type', 'task', '=')
-        ->condition('et.field_event_type_value', 'activity', '=')
         ->condition('t.field_task_type_value', 'phone_call', '=')
         ->condition('a.field_account_nid', $nid, '=')
         ->orderBy('d.field_due_date_value', 'DESC')
-        ->range(0, 10)
         ->execute()
         ->fetchAll();
 
-      cache_set('recent_activities_phonecall_' . $nid, $activities, 'cache');
+      cache_set('recent_events_phonecall_' . $nid, $activities, 'cache');
     }
 
     return $activities;
@@ -2501,8 +2503,8 @@ class Bullseye {
   /**
    * Get the recent meeting activities of an account.
    */
-  static function getRecentMeetingActivitiesByNid($nid) {
-    if ($cache = cache_get('recent_activities_meeting_' . $nid)) {
+  static function getRecentMeetingEventsByNid($nid) {
+    if ($cache = cache_get('recent_events_meeting_' . $nid)) {
       $activities = $cache->data;
     }
     else {
@@ -2514,6 +2516,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
       $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2521,16 +2524,16 @@ class Bullseye {
         ->fields('d', array('field_due_date_value'))
         ->fields('c', array('field_contact_value'))
         ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
         ->condition('n.type', 'task', '=')
-        ->condition('et.field_event_type_value', 'activity', '=')
         ->condition('t.field_task_type_value', 'meeting', '=')
         ->condition('a.field_account_nid', $nid, '=')
         ->orderBy('d.field_due_date_value', 'DESC')
-        ->range(0, 10)
         ->execute()
         ->fetchAll();
 
-      cache_set('recent_activities_meeting_' . $nid, $activities, 'cache');
+      cache_set('recent_events_meeting_' . $nid, $activities, 'cache');
     }
 
     return $activities;
@@ -2539,8 +2542,8 @@ class Bullseye {
   /**
    * Get the recent email activities of an account.
    */
-  static function getRecentEmailActivitiesByNid($nid) {
-    if ($cache = cache_get('recent_activities_email_' . $nid)) {
+  static function getRecentEmailEventsByNid($nid) {
+    if ($cache = cache_get('recent_events_email_' . $nid)) {
       $activities = $cache->data;
     }
     else {
@@ -2552,6 +2555,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
       $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2559,16 +2563,16 @@ class Bullseye {
         ->fields('d', array('field_due_date_value'))
         ->fields('c', array('field_contact_value'))
         ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
         ->condition('n.type', 'task', '=')
-        ->condition('et.field_event_type_value', 'activity', '=')
         ->condition('t.field_task_type_value', 'email', '=')
         ->condition('a.field_account_nid', $nid, '=')
         ->orderBy('d.field_due_date_value', 'DESC')
-        ->range(0, 10)
         ->execute()
         ->fetchAll();
 
-      cache_set('recent_activities_email_' . $nid, $activities, 'cache');
+      cache_set('recent_events_email_' . $nid, $activities, 'cache');
     }
 
     return $activities;
@@ -2577,8 +2581,8 @@ class Bullseye {
   /**
    * Get the recent others activities of an account.
    */
-  static function getRecentOthersActivitiesByNid($nid) {
-    if ($cache = cache_get('recent_activities_others_' . $nid)) {
+  static function getRecentOthersEventsByNid($nid) {
+    if ($cache = cache_get('recent_events_others_' . $nid)) {
       $activities = $cache->data;
     }
     else {
@@ -2590,6 +2594,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
       $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2597,19 +2602,57 @@ class Bullseye {
         ->fields('d', array('field_due_date_value'))
         ->fields('c', array('field_contact_value'))
         ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
         ->condition('n.type', 'task', '=')
-        ->condition('et.field_event_type_value', 'activity', '=')
         ->condition('t.field_task_type_value', 'others', '=')
         ->condition('a.field_account_nid', $nid, '=')
         ->orderBy('d.field_due_date_value', 'DESC')
-        ->range(0, 10)
         ->execute()
         ->fetchAll();
 
-      cache_set('recent_activities_others_' . $nid, $activities, 'cache');
+      cache_set('recent_events_others_' . $nid, $activities, 'cache');
     }
 
     return $activities;
+  }
+
+  /**
+   * Get Details of an event by nid.
+   */
+  static function getEventDetailsByNid($nid) {
+    if ($cache = cache_get('event_details_' . $nid)) {
+      $event = $cache->data;
+    }
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
+      $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+      $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+      $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+      $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+      $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+      $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+      $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
+      $query->leftJoin('field_data_field_priority', 'pr', 'n.nid = pr.entity_id');
+      $event = $query
+        ->fields('n', array('nid', 'title'))
+        ->fields('a', array('field_account_nid'))
+        ->fields('t', array('field_task_type_value'))
+        ->fields('d', array('field_due_date_value'))
+        ->fields('c', array('field_contact_value'))
+        ->fields('sg', array('field_if_system_generated_value'))
+        ->fields('et', array('field_event_type_value'))
+        ->fields('ts', array('field_task_status_value'))
+        ->fields('pr', array('field_priority_value'))
+        ->condition('n.nid', $nid, '=')
+        ->execute()
+        ->fetchAssoc();
+
+      cache_set('event_details_' . $nid, $event, 'cache');
+    }
+
+    return $event;
   }
 
   /**

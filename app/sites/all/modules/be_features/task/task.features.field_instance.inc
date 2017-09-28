@@ -256,6 +256,43 @@ function task_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-task-field_task_status'.
+  $field_instances['node-task-field_task_status'] = array(
+    'bundle' => 'task',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_task_status',
+    'label' => 'Task Status',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-task-field_task_type'.
   $field_instances['node-task-field_task_type'] = array(
     'bundle' => 'task',
@@ -300,6 +337,7 @@ function task_field_default_field_instances() {
   t('Due Date');
   t('Event Type');
   t('Priority');
+  t('Task Status');
   t('Type');
   t('if System Generated');
 

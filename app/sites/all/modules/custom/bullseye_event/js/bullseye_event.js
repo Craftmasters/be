@@ -116,6 +116,7 @@
                 var success = 'Successfully added new task.';
                 var div_success = '<div class="alert alert-success">' + close + success + '</div>';
                 $('.task-event-error-container').html(div_success);
+                refreshRecentActivities('all');
               },
             });
           }

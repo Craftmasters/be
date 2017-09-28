@@ -21,6 +21,14 @@ function bullseye_event_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-event/edit-task'] = array(
+    'title' => 'Send Proposal',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_event_edit_task'),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -72,25 +80,25 @@ function bullseye_event_save_activity() {
   if ($type == 'phone_call') {
   	$title = 'Phone call with ' . $contact_name;
     if ($event_type == 'activity') {
-      cache_clear_all('recent_activities_phonecall_' . $nid, 'cache');
+      cache_clear_all('recent_events_phonecall_' . $nid, 'cache');
     }
   }
   elseif ($type == 'email') {
   	$title = 'Email with ' . $contact_name;
     if ($event_type == 'activity') {
-      cache_clear_all('recent_activities_email_' . $nid, 'cache');
+      cache_clear_all('recent_events_email_' . $nid, 'cache');
     }
   }
   elseif ($type == 'meeting') {
   	$title = 'Meeting with ' . $contact_name;
     if ($event_type == 'activity') {
-      cache_clear_all('recent_activities_meeting_' . $nid, 'cache');
+      cache_clear_all('recent_events_meeting_' . $nid, 'cache');
     }
   }
   elseif ($type == 'others') {
   	$title = $activity_name;
     if ($event_type == 'activity') {
-      cache_clear_all('recent_activities_others_' . $nid, 'cache');
+      cache_clear_all('recent_events_others_' . $nid, 'cache');
     }
   }
 
@@ -102,13 +110,116 @@ function bullseye_event_save_activity() {
   $wrapper->field_priority->set($priority);
   $wrapper->field_account->set($nid);
   $wrapper->field_if_system_generated->set('no');
+  $wrapper->field_task_status->set('closed');
+  if ($event_type == 'task') {
+    $wrapper->field_task_status->set('open');
+  }
   $wrapper->field_event_type->set($event_type);
   
   $wrapper->save();
 
-  cache_clear_all('recent_activities_' . $nid, 'cache');
+  cache_clear_all('recent_events_' . $nid, 'cache');
 
   drupal_json_output($wrapper);
+}
+
+/**
+ * Edit Existing tasks.
+ */
+function bullseye_event_edit_task($form, &$form_state) {
+  $form = array();
+
+  $task_id = $_GET['nid'];
+  $comapny_id = $_GET['company'];
+
+  $contacts = Bullseye::getAccountPeople($comapny_id);
+  $contacts_options = array();
+
+  foreach ($contacts as $key => $value) {
+    $contact_name = $value->field_firstname_value . ' ' . $value->field_lastname_value;
+    $contacts_options[$value->field_contacts_value] = $contact_name;
+  }
+
+  $event = Bullseye::getEventDetailsByNid($task_id);
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['form_title'] = array(
+    '#prefix' => '<div class="form-title">',
+    '#suffix' => '</div>',
+    '#markup' => '<h2>' . t('Edit Task') . '</h2>',
+  );
+
+  $form['task_name'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Task Name'),
+    '#default_value' => '',
+  );
+
+  $form['task_type'] = array(
+    '#title' => t('Type'),
+    '#type' => 'select',
+    '#options' => array(
+      'phone_call' => t('Phone Call'),
+      'meeting' => t('Meeting'),
+      'email' => t('Email'),
+      'others' => t('Others'),
+    ),
+    '#default_value' => '',
+  );
+
+  $form['priority'] = array(
+    '#title' => t('Priority'),
+    '#type' => 'select',
+    '#options' => array(
+      'high' => t('High'),
+      'normal' => t('Normal'),
+      'low' => t('Low'),
+    ),
+    '#default_value' => '',
+  );
+
+  $form['contact'] = array(
+    '#title' => t('Contact'),
+    '#type' => 'select',
+    '#options' => $contacts_options,
+    '#default_value' => '',
+  );
+
+  $form['due_date'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Due Date'),
+    '#default_value' => '',
+  );
+
+  $form['status'] = array(
+    '#title' => t('Status'),
+    '#type' => 'select',
+    '#options' => array(
+      'open' => t('Open'),
+      'closed' => t('Closed'),
+    ),
+    '#default_value' => '',
+  );
+
+  $form['submit_container'] = array(
+    '#type' => 'container',
+  );
+
+  $form['submit_container']['cancel'] = array(
+    '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+  );
+
+  $form['submit_container']['submit'] = array(
+    '#type' => 'submit',
+    '#attributes' => array(
+      'class' => array('green-btn'),
+    ),
+    '#value' => t('Save'),
+  );
+
+  return $form;
 }
 
 /**
@@ -127,19 +238,19 @@ function bullseye_event_load_activities() {
 	$filter = $_POST['filter'];
 
 	if ($filter == 'phone_call') {
-		$activities = Bullseye::getRecentPhoneCallActivitiesByNid($nid);
+		$activities = Bullseye::getRecentPhoneCallEventsByNid($nid);
 	}
 	elseif ($filter == 'meeting') {
-		$activities = Bullseye::getRecentMeetingActivitiesByNid($nid);
+		$activities = Bullseye::getRecentMeetingEventsByNid($nid);
 	}
 	elseif ($filter == 'email') {
-		$activities = Bullseye::getRecentEmailActivitiesByNid($nid);
+		$activities = Bullseye::getRecentEmailEventsByNid($nid);
 	}
 	elseif ($filter == 'others') {
-		$activities = Bullseye::getRecentOthersActivitiesByNid($nid);
+		$activities = Bullseye::getRecentOthersEventsByNid($nid);
 	}
 	else {
-		$activities = Bullseye::getRecentActivitiesByNid($nid);
+		$activities = Bullseye::getRecentEventsByNid($nid);
 	}
 
 	$sorted = array();
