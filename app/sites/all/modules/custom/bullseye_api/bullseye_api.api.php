@@ -1863,7 +1863,7 @@ class Bullseye {
 
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
-    if ($cache = cache_get('accounts_uids')) {
+    if ($cache = cache_get('producer_uids')) {
       $uids = $cache->data;
     }
     else {
@@ -1876,7 +1876,7 @@ class Bullseye {
         ->execute()
         ->fetchCol();
 
-      cache_set('accounts_uids', $uids, 'cache');
+      cache_set('producer_uids', $uids, 'cache');
     }
 
     krumo($uids);
@@ -1885,12 +1885,13 @@ class Bullseye {
     foreach ($uids as $uid) {
       // Total remaining opportunities in the current month.
       $tro = 0;
-      if (Bullseye::producerRemainingOpportunities($uid)) {
-        $top[$uid] = Bullseye::producerRemainingOpportunities($month, $uid);
+      if (Bullseye::producerRemainingOpportunities($month, $uid)) {
+        $top[$uid] = count(Bullseye::producerRemainingOpportunities($month, $uid));
       }
     }
 
     krumo($top);
+    krumo(Bullseye::producerRemainingOpportunities($month, 56));
 
     // Get the total deals in progress converted in the corrent month.
 
@@ -1899,7 +1900,6 @@ class Bullseye {
     if (Bullseye::getDealsClosed($uid)) {
       $dip = Bullseye::getDealsClosed($uid);
     }
-    krumo($dip);
 
     $perf = 0;
     if ($tro != 0 && $dip != 0) {
@@ -1981,21 +1981,35 @@ class Bullseye {
 
   /**
    * Get the total number of remaining opportunities per producer.
+   *
+   * The total remaining opportunities should be from the current month.
+   * To get the total remaining opportunities we have to tap the
+   * event content type as we are creating an event for every convertion
+   * we did.
    */
-  public static function producerRemainingOpportunities($uid) {
+  public static function producerRemainingOpportunities($date, $uid) {
+
     $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
-    $query->leftJoin('field_data_field_visibility', 'uid', 'n.nid = uid.entity_id');
+    // Account field containing account node id.
+    $query->leftJoin('field_data_field_account', 'account', 'account.entity_id = n.nid');
+    // Account status.
+    $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = account.field_account_nid');
+    $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = account.field_account_nid');
+    // Either the visibility is set to producer to visible to all.
     $or = db_or();
     $or->condition('uid.field_visibility_value', $uid, '=');
     $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
     $nids = $query
+      ->distinct()
       ->fields('n', array('nid'))
-      ->condition('n.type', 'accounts', '=')
+      ->condition('n.type', 'task', '=')
       ->condition('status.field_account_status_value', 'opportunity', '=')
+      ->condition('n.created', $date, 'BETWEEN')
       ->condition($or)
       ->execute()
       ->fetchAll();
+
+    return $nids;
   }
 
   /**

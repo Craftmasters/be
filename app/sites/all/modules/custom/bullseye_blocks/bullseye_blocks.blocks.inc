@@ -1134,7 +1134,9 @@ function bullseye_blocks_render_be_dashboard_performance() {
   $vars['performers'] = array();
 
   // Get the current month.
-  $current_month = date('m');
+  $start = strtotime(date('Y-M-01'));
+  $end = strtotime(date('Y-M-31'));
+  $current_month = array($start, $end);
   if (Bullseye::topPerformers($current_month)) {
     $vars['performers'] = Bullseye::topPerformers($current_month);
   }
