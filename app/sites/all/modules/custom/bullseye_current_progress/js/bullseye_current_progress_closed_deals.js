@@ -110,6 +110,7 @@
               console.log(result);
               refreshClasses(nid);
               refreshHeaderClasses(nid);
+              $('#recent-activities-container').load('/be-event/load-activities', {nid: nid, filter: 'all'});
             },
           });
         });

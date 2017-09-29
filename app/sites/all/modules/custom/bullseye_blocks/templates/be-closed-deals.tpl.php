@@ -29,7 +29,6 @@
           <th class="cell-check"><input type="checkbox"></th>
           <th><?php print t('Account'); ?></th>
           <th><?php print t('Contact Person'); ?></th>
-          <th><?php print t('Benefit Guides'); ?></th>
           <th class="be-dot-td"><?php print t('Major Medical'); ?></th>
           <th class="be-dot-td"><?php print t('Limited Medical'); ?></th>
           <th class="be-dot-td"><?php print t('Teledoc'); ?></th>
@@ -47,26 +46,18 @@
             <td class="cell-check"><input class="be-table-checkbox" type="checkbox" value="" data-contact-id=""></td>
             <td>
               <span class="orange-font">
-                <a href="/company?from=closed_deal" class="orange-font">
+                <a href="/company/<?php print $aliases[$dc->nid]['alias'];?>?from=<?php print $aliases[$dc->nid]['status'];?>" class="orange-font">
                   <?php print $dc->title; ?>
                 </a>
               </span>
             </td>
             <td>
-              <span class="gray-font">
-                <?php
-                  Bullseye::buildAccountName(
-                    $dc->field_firstname_value,
-                    $dc->field_middle_name_value,
-                    $dc->field_lastname_value
-                  );
-                ?>
-              </span>
+              <a href="<?php print $dc->edit_link; ?>" rel="lightframe">
+                <span class="gray-font">
+                  <?php Bullseye::buildAccountName($dc->field_firstname_value, $dc->field_middle_name_value, $dc->field_lastname_value); ?>
+                </span>
+              </a>
             </td>
-            <td>
-              <span class="light-gray-font">
-                <a href="#" class="light-gray-font">ABC Company.pdf</a>
-              </span></td>
             <td class="be-dot-td">
               <span class="dot-priority green">
             </td>

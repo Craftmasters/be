@@ -475,6 +475,11 @@ function bullseye_proposals_form_submit($form, &$form_state) {
 
     // Save the proposal to Proposal entity storage and get the nid.
     $nid = $be->createProposal($data);
+
+    // Create an activity.
+    Bullseye::createSystemGeneratedActivity('proposal', $data['account']['entity_id']);
+    cache_clear_all('recent_events_others_' . $data['account']['entity_id'], 'cache');
+    cache_clear_all('recent_events_' . $data['account']['entity_id'], 'cache');
     
   }
 

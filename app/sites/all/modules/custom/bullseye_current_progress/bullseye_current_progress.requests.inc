@@ -1511,5 +1511,10 @@ function be_cp_cd_congrats() {
 
   $wrapper->save();
 
+  // Create an activity.
+  Bullseye::createSystemGeneratedActivity('closed_account', $nid);
+  cache_clear_all('recent_events_others_' . $nid, 'cache');
+  cache_clear_all('recent_events_' . $nid, 'cache');
+
   drupal_json_output($wrapper);
 }

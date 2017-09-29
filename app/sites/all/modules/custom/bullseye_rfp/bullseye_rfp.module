@@ -2254,6 +2254,8 @@ function bullseye_rfp_form_submit($form, &$form_state) {
 
   // Create an activity.
   Bullseye::createSystemGeneratedActivity('rfp', $data['account_id']);
+  cache_clear_all('recent_events_others_' . $data['account_id'], 'cache');
+  cache_clear_all('recent_events_' . $data['account_id'], 'cache');
 
 
   if ($_GET['from_current_progress'] == 1) {

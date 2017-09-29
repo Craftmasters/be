@@ -546,6 +546,31 @@ function bullseye_blocks_render_be_closed_deals() {
 
   $vars['deals_closed'] = Bullseye::getClosedDeals();
 
+  $vars['aliases'] = array();
+
+  foreach ($vars['deals_closed'] as $key => $value) {
+    $nid = $value->nid;
+    kpr($value);
+    $account_status = $value->field_account_status_value;
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $nid);
+    $alias = substr($alias, 8);
+    $vars['aliases'][$nid] = array(
+      'alias' => $alias,
+      'status' => $account_status,
+    );
+    
+    // build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->nid;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $vars['deals_closed'][$key]->edit_link = $edit_link;
+  }
+
   $output = theme('be_closed_deals', $vars);
 
   return array(

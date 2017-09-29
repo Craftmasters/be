@@ -1549,6 +1549,7 @@ class Bullseye {
           ->fields('fname', array('field_firstname_value'))
           ->fields('mname', array('field_middle_name_value'))
           ->fields('lname', array('field_lastname_value'))
+          ->fields('contact', array('field_contacts_value'))
           ->condition('n.type', 'accounts', '=')
           ->condition('n.status', 1, '=')
           ->condition('type.field_account_status_value', 'closed_deal', '=')
@@ -1579,6 +1580,7 @@ class Bullseye {
           ->fields('fname', array('field_firstname_value'))
           ->fields('mname', array('field_middle_name_value'))
           ->fields('lname', array('field_lastname_value'))
+          ->fields('contact', array('field_contacts_value'))
           ->condition('uid.field_visibility_value', $uid, '=')
           ->condition('n.type', 'accounts', '=')
           ->condition('n.status', 1, '=')
@@ -3399,6 +3401,9 @@ class Bullseye {
     }
     elseif ($type == 'convert_to_closed_deal') {
       $activity_title = t('Converted to Closed Deal');
+    }
+    elseif ($type == 'closed_account') {
+      $activity_title = t('Migrated Account to Arrow');
     }
 
     $node = new stdClass();

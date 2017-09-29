@@ -79,27 +79,19 @@ function bullseye_event_save_activity() {
 
   if ($type == 'phone_call') {
   	$title = 'Phone call with ' . $contact_name;
-    if ($event_type == 'activity') {
-      cache_clear_all('recent_events_phonecall_' . $nid, 'cache');
-    }
+    cache_clear_all('recent_events_phonecall_' . $nid, 'cache');
   }
   elseif ($type == 'email') {
   	$title = 'Email with ' . $contact_name;
-    if ($event_type == 'activity') {
-      cache_clear_all('recent_events_email_' . $nid, 'cache');
-    }
+    cache_clear_all('recent_events_email_' . $nid, 'cache');
   }
   elseif ($type == 'meeting') {
   	$title = 'Meeting with ' . $contact_name;
-    if ($event_type == 'activity') {
-      cache_clear_all('recent_events_meeting_' . $nid, 'cache');
-    }
+    cache_clear_all('recent_events_meeting_' . $nid, 'cache');
   }
   elseif ($type == 'others') {
   	$title = $activity_name;
-    if ($event_type == 'activity') {
-      cache_clear_all('recent_events_others_' . $nid, 'cache');
-    }
+    cache_clear_all('recent_events_others_' . $nid, 'cache');
   }
 
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -130,17 +122,24 @@ function bullseye_event_edit_task($form, &$form_state) {
   $form = array();
 
   $task_id = $_GET['nid'];
-  $comapny_id = $_GET['company'];
+  $company_id = $_GET['company'];
 
-  $contacts = Bullseye::getAccountPeople($comapny_id);
+  $contacts = Bullseye::getAccountPeople($company_id);
   $contacts_options = array();
 
   foreach ($contacts as $key => $value) {
     $contact_name = $value->field_firstname_value . ' ' . $value->field_lastname_value;
     $contacts_options[$value->field_contacts_value] = $contact_name;
   }
-
+  
   $event = Bullseye::getEventDetailsByNid($task_id);
+
+  $title = '';
+  if ($event['field_task_type_value'] == 'others') {
+    $title = $event['title'];
+  }
+
+  $date_formatted = date('m/d/Y g:i A', strtotime($event['field_due_date_value']));
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
@@ -152,9 +151,8 @@ function bullseye_event_edit_task($form, &$form_state) {
 
   $form['task_name'] = array(
     '#type' => 'textfield',
-    '#required' => TRUE,
     '#title' => t('Task Name'),
-    '#default_value' => '',
+    '#default_value' => $title,
   );
 
   $form['task_type'] = array(
@@ -166,7 +164,7 @@ function bullseye_event_edit_task($form, &$form_state) {
       'email' => t('Email'),
       'others' => t('Others'),
     ),
-    '#default_value' => '',
+    '#default_value' => $event['field_task_type_value'],
   );
 
   $form['priority'] = array(
@@ -177,7 +175,7 @@ function bullseye_event_edit_task($form, &$form_state) {
       'normal' => t('Normal'),
       'low' => t('Low'),
     ),
-    '#default_value' => '',
+    '#default_value' => $event['field_priority_value'],
   );
 
   $form['contact'] = array(
@@ -190,7 +188,7 @@ function bullseye_event_edit_task($form, &$form_state) {
   $form['due_date'] = array(
     '#type' => 'textfield',
     '#title' => t('Due Date'),
-    '#default_value' => '',
+    '#default_value' => $date_formatted,
   );
 
   $form['status'] = array(
@@ -200,7 +198,7 @@ function bullseye_event_edit_task($form, &$form_state) {
       'open' => t('Open'),
       'closed' => t('Closed'),
     ),
-    '#default_value' => '',
+    '#default_value' => $event['field_task_status_value'],
   );
 
   $form['submit_container'] = array(
@@ -220,6 +218,62 @@ function bullseye_event_edit_task($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Submit handler for edit task form.
+ */
+function bullseye_event_edit_task_submit($form, &$form_state) {
+
+  $task_id = $_GET['nid'];
+  $company_id = $_GET['company'];
+
+  $activity_name = $form_state['values']['task_name'];
+  $type = $form_state['values']['task_type'];
+  $contact = $form_state['values']['contact'];
+  $date = strtotime($form_state['values']['due_date']);
+  $priority = $form_state['values']['priority'];
+  $contact_details = Bullseye::getContactDetailsById($contact);
+  $firstname = $contact_details['field_firstname_value'];
+  $lastname = $contact_details['field_lastname_value'];
+  $contact_name = $firstname . ' ' . $lastname;
+  $event_type = 'task';
+  $status = $form_state['values']['status'];
+
+  if ($type == 'phone_call') {
+    $title = 'Phone call with ' . $contact_name;
+    cache_clear_all('recent_events_phonecall_' . $company_id, 'cache');
+  }
+  elseif ($type == 'email') {
+    $title = 'Email with ' . $contact_name;
+    cache_clear_all('recent_events_email_' . $company_id, 'cache');
+  }
+  elseif ($type == 'meeting') {
+    $title = 'Meeting with ' . $contact_name;
+    cache_clear_all('recent_events_meeting_' . $company_id, 'cache');
+  }
+  elseif ($type == 'others') {
+    $title = $activity_name;
+    cache_clear_all('recent_events_others_' . $company_id, 'cache');
+  }
+
+  $wrapper = entity_metadata_wrapper('node', $task_id);
+  $wrapper->title->set($title);
+  $wrapper->field_task_type->set($type);
+  $wrapper->field_due_date->set($date);
+  $wrapper->field_contact->set($contact);
+  $wrapper->field_priority->set($priority);
+  $wrapper->field_account->set($company_id);
+  $wrapper->field_if_system_generated->set('no');
+  $wrapper->field_task_status->set($status);
+  $wrapper->field_event_type->set($event_type);
+  
+  $wrapper->save();
+
+  cache_clear_all('recent_events_' . $company_id, 'cache');
+  cache_clear_all('event_details_' . $task_id, 'cache');
+
+  drupal_set_message('Successfully updated task.');
 }
 
 /**

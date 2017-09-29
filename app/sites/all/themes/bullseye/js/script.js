@@ -694,6 +694,9 @@
         if ($('#create-event-date-task').length) {
           $('#create-event-date-task').datetimepicker();
         }
+        if ($('#bullseye-event-edit-task').length) {
+          $('#bullseye-event-edit-task #edit-due-date').datetimepicker();
+        }
 
         // For sending the suggestion form.
         if ($('#btn-submit-suggestion').length) {

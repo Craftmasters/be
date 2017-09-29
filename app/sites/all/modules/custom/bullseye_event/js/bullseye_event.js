@@ -118,7 +118,7 @@
               method: 'POST',
               data: {
                 nid: nid,
-                task_name: task_name,
+                activity_name: task_name,
                 type: type,
                 contact: contact,
                 date: date,

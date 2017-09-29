@@ -368,6 +368,8 @@ function convert_to_prospect($form, &$form_state) {
   cache_clear_all('prospect_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('count_prospect_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('contacts_' . $form_state['values']['nid'], 'cache');
+  cache_clear_all('recent_events_others_' . $form_state['values']['nid'], 'cache');
+  cache_clear_all('recent_events_' . $form_state['values']['nid'], 'cache');
 
   // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'lead')));
@@ -568,6 +570,8 @@ function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   cache_clear_all('count_opportunity_accounts_listing', 'cache');
   cache_clear_all('opportunity_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('count_opportunity_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('recent_events_others_' . $form_state['values']['nid'], 'cache');
+  cache_clear_all('recent_events_' . $form_state['values']['nid'], 'cache');
 
   // Refresh the page.
   drupal_goto('company/' . arg(1), array('query' => array('from' => 'prospect')));
@@ -1449,7 +1453,9 @@ function send_proposal_email($form, &$form_state) {
   );
 
   // Create an activity.
-  Bullseye::createSystemGeneratedActivity('proposal', $form_state['values']['nid']);
+  Bullseye::createSystemGeneratedActivity('proposal', $_SESSION['cp_opportunity']['account_id']);
+  cache_clear_all('recent_events_others_' . $_SESSION['cp_opportunity']['account_id'], 'cache');
+  cache_clear_all('recent_events_' . $_SESSION['cp_opportunity']['account_id'], 'cache');
   
   // Refresh the page.
   drupal_goto('company/' . arg(1), $param);
@@ -1475,7 +1481,7 @@ function convert_to_deal($form, &$form_state) {
   }
 
   // Create an activity.
-  Bullseye::createSystemGeneratedActivity('convert_to_deal_in_progress', $form_state['values']['nid']);
+  Bullseye::createSystemGeneratedActivity('convert_to_deal_in_progress', $_SESSION['cp_opportunity']['account_id']);
 
   // Clear the opportunities and deals in progress listing cache so that
   // the new account changes will reflect to the 
@@ -1488,6 +1494,8 @@ function convert_to_deal($form, &$form_state) {
   cache_clear_all('count_deals_accounts_listing', 'cache');
   cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('recent_events_others_' . $_SESSION['cp_opportunity']['account_id'], 'cache');
+  cache_clear_all('recent_events_' . $_SESSION['cp_opportunity']['account_id'], 'cache');
 
   $wrapper->save();
 
@@ -1748,6 +1756,8 @@ function convert_to_closed_deal($form, &$form_state) {
   cache_clear_all('count_deals_accounts_listing', 'cache');
   cache_clear_all('deal_in_progress_accounts_listing_producer', 'cache', TRUE);
   cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
+  cache_clear_all('recent_events_others_' . $form_state['values']['nid'], 'cache');
+  cache_clear_all('recent_events_' . $form_state['values']['nid'], 'cache');
 
   $wrapper->save();
 
