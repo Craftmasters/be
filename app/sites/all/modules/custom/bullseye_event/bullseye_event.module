@@ -96,6 +96,7 @@ function bullseye_event_save_activity() {
 
   $wrapper = entity_metadata_wrapper('node', $node);
   $wrapper->title->set($title);
+  $wrapper->field_event_name->set($activity_name);
   $wrapper->field_task_type->set($type);
   $wrapper->field_due_date->set($date);
   $wrapper->field_contact->set($contact);
@@ -134,11 +135,6 @@ function bullseye_event_edit_task($form, &$form_state) {
   
   $event = Bullseye::getEventDetailsByNid($task_id);
 
-  $title = '';
-  if ($event['field_task_type_value'] == 'others') {
-    $title = $event['title'];
-  }
-
   $date_formatted = date('m/d/Y g:i A', strtotime($event['field_due_date_value']));
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
@@ -152,7 +148,7 @@ function bullseye_event_edit_task($form, &$form_state) {
   $form['task_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Task Name'),
-    '#default_value' => $title,
+    '#default_value' => $event['field_event_name_value'],
   );
 
   $form['task_type'] = array(
@@ -259,6 +255,7 @@ function bullseye_event_edit_task_submit($form, &$form_state) {
 
   $wrapper = entity_metadata_wrapper('node', $task_id);
   $wrapper->title->set($title);
+  $wrapper->field_event_name->set($activity_name);
   $wrapper->field_task_type->set($type);
   $wrapper->field_due_date->set($date);
   $wrapper->field_contact->set($contact);

@@ -2443,7 +2443,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))
@@ -2481,7 +2481,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))
@@ -2520,7 +2520,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))
@@ -2559,7 +2559,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))
@@ -2598,7 +2598,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $activities = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))
@@ -2637,6 +2637,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
       $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
       $query->leftJoin('field_data_field_priority', 'pr', 'n.nid = pr.entity_id');
+      $query->leftJoin('field_data_field_event_name', 'envn', 'n.nid = envn.entity_id');
       $event = $query
         ->fields('n', array('nid', 'title'))
         ->fields('a', array('field_account_nid'))
@@ -2647,6 +2648,7 @@ class Bullseye {
         ->fields('et', array('field_event_type_value'))
         ->fields('ts', array('field_task_status_value'))
         ->fields('pr', array('field_priority_value'))
+        ->fields('envn', array('field_event_name_value'))
         ->condition('n.nid', $nid, '=')
         ->execute()
         ->fetchAssoc();

@@ -550,7 +550,6 @@ function bullseye_blocks_render_be_closed_deals() {
 
   foreach ($vars['deals_closed'] as $key => $value) {
     $nid = $value->nid;
-    kpr($value);
     $account_status = $value->field_account_status_value;
     if ($account_status == '') {
       $account_status = 'lead';
@@ -874,6 +873,12 @@ function bullseye_blocks_render_be_recent_activities() {
 
     if ($value->field_event_type_value == 'task') {
       $value->usercolor = 'green-font';
+      $firstname = $be->getAccountFirstName($value->uid);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($value->uid);
+      $lastname = substr($lastname, 0, 1);
+      $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+      $value->description = $value->title . ' by ';
     }
 
     $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

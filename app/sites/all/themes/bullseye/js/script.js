@@ -692,10 +692,14 @@
           $('#create-event-date-activity').datetimepicker();
         }
         if ($('#create-event-date-task').length) {
-          $('#create-event-date-task').datetimepicker();
+          $('#create-event-date-task').datetimepicker({  
+            minDate: new Date(),
+          });
         }
         if ($('#bullseye-event-edit-task').length) {
-          $('#bullseye-event-edit-task #edit-due-date').datetimepicker();
+          $('#bullseye-event-edit-task #edit-due-date').datetimepicker({  
+            minDate: new Date(),
+          });
         }
 
         // For sending the suggestion form.
