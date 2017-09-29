@@ -18,6 +18,18 @@
           $('#recent-activities-container').load('/be-event/load-activities', {nid: nid, filter: filter});
         }
 
+        function reinitializeLightbox() {
+          $("a.new-loaded-event:not(.lightbox-processed)", context).addClass('lightbox-processed').click(function(e) {
+            if (Lightbox.disableCloseClick) {
+              $('#lightbox').unbind('click');
+              $('#lightbox').click(function() { Lightbox.end('forceClose'); } );
+            }
+            Lightbox.start(this, false, true, false, false);
+            if (e.preventDefault) { e.preventDefault(); }
+            return false;
+          });
+        }
+
         $('#btn-save-activity').click(function(e) {
           var activity_name = $('#activity-name').val();
           var type = $('#activity-type').val();
@@ -62,6 +74,7 @@
                 var div_success = '<div class="alert alert-success">' + close + success + '</div>';
                 $('.event-error-container').html(div_success);
                 refreshRecentActivities('all');
+                reinitializeLightbox();
               },
             });
           }
@@ -117,6 +130,7 @@
                 var div_success = '<div class="alert alert-success">' + close + success + '</div>';
                 $('.task-event-error-container').html(div_success);
                 refreshRecentActivities('all');
+                reinitializeLightbox();
               },
             });
           }
@@ -129,7 +143,10 @@
 
         $('#event-select-filter').change(function() {
           var filter = $(this).val();
-          $('#recent-activities-container').load('/be-event/load-activities', {nid: nid, filter: filter});
+          $('#recent-activities-container').load('/be-event/load-activities', {nid: nid, filter: filter}, function() {
+            reinitializeLightbox();
+          });
+            
         });
 
       });
