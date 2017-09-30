@@ -594,10 +594,6 @@ function bullseye_proposals_email_form_submit($form, &$form_state) {
   $be = new Bullseye($user);
   $be->sendProposal($data);
 
-  $company_id = $_SESSION['proposal_recipient']['company_id'];
-
-  Bullseye::createSystemGeneratedActivity('proposal', $company_id);
-
 }
 
 /**

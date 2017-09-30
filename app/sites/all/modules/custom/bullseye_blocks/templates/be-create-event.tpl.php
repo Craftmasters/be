@@ -129,14 +129,14 @@
           	<div class="col-xs-4">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
-		          		<?php print t('Contact'); ?>
+		          		<?php print t('Assigned to'); ?>
 		          	</div>
 		          	<div class="be-event-input">
                   <?php if (arg(0) == 'company') : ?>
-                    <select id="task-contact">
-                      <?php foreach ($people as $key => $value) : ?>
-                        <option value="<?php print $value->field_contacts_value;?>">
-                          <?php print $value->field_firstname_value . ' ' . $value->field_lastname_value; ?>
+                    <select id="task-assigned-to">
+                      <?php foreach ($users as $key => $value) : ?>
+                        <option value="<?php print $key;?>">
+                          <?php print $value; ?>
                         </option>
                       <?php endforeach; ?>
                     </select>

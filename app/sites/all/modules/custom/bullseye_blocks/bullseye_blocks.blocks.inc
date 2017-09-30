@@ -803,6 +803,7 @@ function bullseye_blocks_render_be_create_event() {
     $nid = Bullseye::getNidFromPath(arg(1));
     $vars['nid'] = $nid;
     $vars['people'] = Bullseye::getAccountPeople($nid);
+    $vars['users'] = Bullseye::getAssignedToField();
   }
 
   $output = theme('be_create_event', $vars);
@@ -839,46 +840,62 @@ function bullseye_blocks_render_be_recent_activities() {
   foreach ($activities as $key => $value) {
     $date = strtotime($value->field_due_date_value);
     $value->icon_img = $send_icon;
-
-    // Contact name.
-    $contact = Bullseye::getContactDetailsById($value->field_contact_value);
-    $firstname = ucwords($contact['field_firstname_value']);
-    $lastname = substr($contact['field_lastname_value'], 0, 1);
-    $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
-    $value->description = $value->title . ' - ';
+    $value->description = $value->field_event_name_value . ' with';
     $value->usercolor = 'orange-font';
 
-    // For the icon and description.
-    if ($value->field_task_type_value == 'phone_call') {
-      $value->icon_img = $call_icon;
-      $value->description = 'Call with';
-    }
-    elseif ($value->field_task_type_value == 'email') {
-      $value->icon_img = $send_icon;
-      $value->description = 'Email with';
-    }
-    elseif ($value->field_task_type_value == 'meeting') {
-      $value->icon_img = $meeting_icon;
-      $value->description = 'Meeting with';
-    }
-
-    if ($value->field_if_system_generated_value == 'yes') {
-      $firstname = $be->getAccountFirstName($value->field_contact_value);
-      $firstname = ucwords($firstname);
-      $lastname = $be->getAccountLastName($value->field_contact_value);
-      $lastname = substr($lastname, 0, 1);
+    if ($value->field_event_type_value == 'activity') {
+      // Contact name.
+      $contact = Bullseye::getContactDetailsById($value->field_contact_value);
+      $firstname = ucwords($contact['field_firstname_value']);
+      $lastname = substr($contact['field_lastname_value'], 0, 1);
       $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
-      $value->description = $value->title . ' by ';
+
+      // For the icon and description.
+      if ($value->field_task_type_value == 'phone_call') {
+        $value->icon_img = $call_icon;
+        $value->description = 'Call with';
+      }
+      elseif ($value->field_task_type_value == 'email') {
+        $value->icon_img = $send_icon;
+        $value->description = 'Email to';
+      }
+      elseif ($value->field_task_type_value == 'meeting') {
+        $value->icon_img = $meeting_icon;
+        $value->description = 'Meeting with';
+      }
+
+      if ($value->field_if_system_generated_value == 'yes') {
+        $firstname = $be->getAccountFirstName($value->field_contact_value);
+        $firstname = ucwords($firstname);
+        $lastname = $be->getAccountLastName($value->field_contact_value);
+        $lastname = substr($lastname, 0, 1);
+        $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+        $value->description = $value->title . ' by ';
+      }
+
     }
 
     if ($value->field_event_type_value == 'task') {
       $value->usercolor = 'green-font';
-      $firstname = $be->getAccountFirstName($value->uid);
+      $firstname = $be->getAccountFirstName($value->field_assigned_to_value);
       $firstname = ucwords($firstname);
-      $lastname = $be->getAccountLastName($value->uid);
+      $lastname = $be->getAccountLastName($value->field_assigned_to_value);
       $lastname = substr($lastname, 0, 1);
       $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
-      $value->description = $value->title . ' by ';
+
+      // For the icon and description.
+      if ($value->field_task_type_value == 'phone_call') {
+        $value->icon_img = $call_icon;
+        $value->description = 'Call with';
+      }
+      elseif ($value->field_task_type_value == 'email') {
+        $value->icon_img = $send_icon;
+        $value->description = 'Email by';
+      }
+      elseif ($value->field_task_type_value == 'meeting') {
+        $value->icon_img = $meeting_icon;
+        $value->description = 'Meeting with';
+      }
     }
 
     $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

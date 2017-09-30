@@ -15,6 +15,12 @@ function bullseye_event_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-event/save-task'] = array(
+    'page callback' => 'bullseye_event_save_task',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['be-event/load-activities'] = array(
     'page callback' => 'bullseye_event_load_activities',
     'access arguments' => array('access content'),
@@ -69,7 +75,6 @@ function bullseye_event_save_activity() {
   $firstname = $contact_details['field_firstname_value'];
   $lastname = $contact_details['field_lastname_value'];
   $contact_name = $firstname . ' ' . $lastname;
-  $event_type = $_POST['event_type'];
 
   $node = new stdClass();
   $node->type = 'task';
@@ -82,7 +87,7 @@ function bullseye_event_save_activity() {
     cache_clear_all('recent_events_phonecall_' . $nid, 'cache');
   }
   elseif ($type == 'email') {
-  	$title = 'Email with ' . $contact_name;
+  	$title = 'Email to ' . $contact_name;
     cache_clear_all('recent_events_email_' . $nid, 'cache');
   }
   elseif ($type == 'meeting') {
@@ -90,7 +95,7 @@ function bullseye_event_save_activity() {
     cache_clear_all('recent_events_meeting_' . $nid, 'cache');
   }
   elseif ($type == 'others') {
-  	$title = $activity_name;
+  	$title = $activity_name . ' with ' . $contact_name;
     cache_clear_all('recent_events_others_' . $nid, 'cache');
   }
 
@@ -104,10 +109,73 @@ function bullseye_event_save_activity() {
   $wrapper->field_account->set($nid);
   $wrapper->field_if_system_generated->set('no');
   $wrapper->field_task_status->set('closed');
-  if ($event_type == 'task') {
-    $wrapper->field_task_status->set('open');
+  $wrapper->field_assigned_to->set('');
+  $wrapper->field_event_type->set('activity');
+  
+  $wrapper->save();
+
+  cache_clear_all('recent_events_' . $nid, 'cache');
+
+  drupal_json_output($wrapper);
+}
+
+/**
+ * Save the task.
+ */
+function bullseye_event_save_task() {
+
+  global $user;
+
+  $be = new Bullseye($user);
+
+  $nid = $_POST['nid'];
+  $task_name = $_POST['task_name'];
+  $type = $_POST['type'];
+  $assigned_to = $_POST['assigned_to'];
+  $date = strtotime($_POST['date']);
+  $priority = $_POST['priority'];
+
+  $firstname = $be->getAccountFirstName($assigned_to);
+  $firstname = ucwords($firstname);
+  $lastname = $be->getAccountLastName($assigned_to);
+  $lastname = ucwords($lastname);
+  $contact_name = $firstname . ' ' . $lastname;
+
+  $node = new stdClass();
+  $node->type = 'task';
+  $node->uid = $user->uid;
+  node_object_prepare($node);
+  $node->language = LANGUAGE_NONE;
+
+  if ($type == 'phone_call') {
+    $title = 'Call with ' . $contact_name;
+    cache_clear_all('recent_events_phonecall_' . $nid, 'cache');
   }
-  $wrapper->field_event_type->set($event_type);
+  elseif ($type == 'email') {
+    $title = 'Email by ' . $contact_name;
+    cache_clear_all('recent_events_email_' . $nid, 'cache');
+  }
+  elseif ($type == 'meeting') {
+    $title = 'Meeting with ' . $contact_name;
+    cache_clear_all('recent_events_meeting_' . $nid, 'cache');
+  }
+  elseif ($type == 'others') {
+    $title = $task_name . ' with ' . $contact_name;
+    cache_clear_all('recent_events_others_' . $nid, 'cache');
+  }
+
+  $wrapper = entity_metadata_wrapper('node', $node);
+  $wrapper->title->set($title);
+  $wrapper->field_event_name->set($task_name);
+  $wrapper->field_task_type->set($type);
+  $wrapper->field_due_date->set($date);
+  $wrapper->field_contact->set('');
+  $wrapper->field_priority->set($priority);
+  $wrapper->field_account->set($nid);
+  $wrapper->field_if_system_generated->set('no');
+  $wrapper->field_task_status->set('open');
+  $wrapper->field_assigned_to->set($assigned_to);
+  $wrapper->field_event_type->set('task');
   
   $wrapper->save();
 
@@ -312,40 +380,61 @@ function bullseye_event_load_activities() {
 		foreach ($activities as $key => $value) {
 	    $date = strtotime($value->field_due_date_value);
 	    $value->icon_img = $send_icon;
-
-	    // Contact name.
-	    $contact = Bullseye::getContactDetailsById($value->field_contact_value);
-	    $firstname = ucwords($contact['field_firstname_value']);
-	    $lastname = substr($contact['field_lastname_value'], 0, 1);
-	    $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
-	    $value->description = $value->title . ' - ';
+      $value->description = $value->field_event_name_value . ' with';
       $value->usercolor = 'orange-font';
 
-	    // For the icon and description.
-	    if ($value->field_task_type_value == 'phone_call') {
-	      $value->icon_img = $call_icon;
-	      $value->description = 'Call with';
-	    }
-	    elseif ($value->field_task_type_value == 'email') {
-	      $value->icon_img = $send_icon;
-	      $value->description = 'Email with';
-	    }
-	    elseif ($value->field_task_type_value == 'meeting') {
-	      $value->icon_img = $meeting_icon;
-	      $value->description = 'Meeting with';
-	    }
+      if ($value->field_event_type_value == 'activity') {
+        // Contact name.
+        $contact = Bullseye::getContactDetailsById($value->field_contact_value);
+        $firstname = ucwords($contact['field_firstname_value']);
+        $lastname = substr($contact['field_lastname_value'], 0, 1);
+        $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
 
-	    if ($value->field_if_system_generated_value == 'yes') {
-	      $firstname = $be->getAccountFirstName($value->field_contact_value);
-	      $firstname = ucwords($firstname);
-	      $lastname = $be->getAccountLastName($value->field_contact_value);
-	      $lastname = substr($lastname, 0, 1);
-	      $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
-	      $value->description = $value->title . ' by ';
-	    }
+        // For the icon and description.
+        if ($value->field_task_type_value == 'phone_call') {
+          $value->icon_img = $call_icon;
+          $value->description = 'Call with';
+        }
+        elseif ($value->field_task_type_value == 'email') {
+          $value->icon_img = $send_icon;
+          $value->description = 'Email to';
+        }
+        elseif ($value->field_task_type_value == 'meeting') {
+          $value->icon_img = $meeting_icon;
+          $value->description = 'Meeting with';
+        }
+
+        if ($value->field_if_system_generated_value == 'yes') {
+          $firstname = $be->getAccountFirstName($value->field_contact_value);
+          $firstname = ucwords($firstname);
+          $lastname = $be->getAccountLastName($value->field_contact_value);
+          $lastname = substr($lastname, 0, 1);
+          $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+          $value->description = $value->title . ' by ';
+        }
+      }
 
       if ($value->field_event_type_value == 'task') {
         $value->usercolor = 'green-font';
+        $firstname = $be->getAccountFirstName($value->field_assigned_to_value);
+        $firstname = ucwords($firstname);
+        $lastname = $be->getAccountLastName($value->field_assigned_to_value);
+        $lastname = substr($lastname, 0, 1);
+        $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
+
+        // For the icon and description.
+        if ($value->field_task_type_value == 'phone_call') {
+          $value->icon_img = $call_icon;
+          $value->description = 'Call with';
+        }
+        elseif ($value->field_task_type_value == 'email') {
+          $value->icon_img = $send_icon;
+          $value->description = 'Email by';
+        }
+        elseif ($value->field_task_type_value == 'meeting') {
+          $value->icon_img = $meeting_icon;
+          $value->description = 'Meeting with';
+        }
       }
 
 	    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));

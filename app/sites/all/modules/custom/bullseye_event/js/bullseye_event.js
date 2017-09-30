@@ -86,14 +86,14 @@
         $('#btn-save-task').click(function(e) {
           var task_name = $('#task-name').val();
           var type = $('#task-type').val();
-          var contact = $('#task-contact').val();
+          var assigned_to = $('#task-assigned-to').val();
           var date = $('#task-date').val();
           var priority = $('#task-priority').val();
 
           var proceed = false;
           var error = '';
 
-          if (type == '' || contact == '' || date == '' || priority == '') {
+          if (type == '' || assigned_to == '' || date == '' || priority == '') {
             error = error + 'Type, Contact, Priority and Date fields are required.';
             proceed = false;
           }
@@ -112,13 +112,13 @@
 
           if (proceed) {
             $.ajax({
-              url: '/be-event/save-activity',
+              url: '/be-event/save-task',
               method: 'POST',
               data: {
                 nid: nid,
-                activity_name: task_name,
+                task_name: task_name,
                 type: type,
-                contact: contact,
+                assigned_to: assigned_to,
                 date: date,
                 priority: priority,
                 event_type: 'task',
