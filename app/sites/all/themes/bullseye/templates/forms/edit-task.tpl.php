@@ -6,7 +6,7 @@
 	<div class="row">
 	  <div class="col-xs-4"><?php print render($form['task_type']); ?></div>
 	  <div class="col-xs-4"><?php print render($form['priority']); ?></div>
-	  <div class="col-xs-4"><?php print render($form['contact']); ?></div>
+	  <div class="col-xs-4"><?php print render($form['assigned_to']); ?></div>
 	</div>
 </div>
 

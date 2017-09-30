@@ -193,15 +193,9 @@ function bullseye_event_edit_task($form, &$form_state) {
   $task_id = $_GET['nid'];
   $company_id = $_GET['company'];
 
-  $contacts = Bullseye::getAccountPeople($company_id);
-  $contacts_options = array();
-
-  foreach ($contacts as $key => $value) {
-    $contact_name = $value->field_firstname_value . ' ' . $value->field_lastname_value;
-    $contacts_options[$value->field_contacts_value] = $contact_name;
-  }
-  
+  $users = Bullseye::getAssignedToField();
   $event = Bullseye::getEventDetailsByNid($task_id);
+  $assigned_to = $event['field_assigned_to_value'];
 
   $date_formatted = date('m/d/Y g:i A', strtotime($event['field_due_date_value']));
 
@@ -242,11 +236,11 @@ function bullseye_event_edit_task($form, &$form_state) {
     '#default_value' => $event['field_priority_value'],
   );
 
-  $form['contact'] = array(
-    '#title' => t('Contact'),
+  $form['assigned_to'] = array(
+    '#title' => t('Assigned to'),
     '#type' => 'select',
-    '#options' => $contacts_options,
-    '#default_value' => '',
+    '#options' => $users,
+    '#default_value' => $assigned_to,
   );
 
   $form['due_date'] = array(
@@ -288,28 +282,32 @@ function bullseye_event_edit_task($form, &$form_state) {
  * Submit handler for edit task form.
  */
 function bullseye_event_edit_task_submit($form, &$form_state) {
+  global $user;
+
+  $be = new Bullseye($user);
 
   $task_id = $_GET['nid'];
   $company_id = $_GET['company'];
 
   $activity_name = $form_state['values']['task_name'];
   $type = $form_state['values']['task_type'];
-  $contact = $form_state['values']['contact'];
+  $assigned_to = $form_state['values']['assigned_to'];
   $date = strtotime($form_state['values']['due_date']);
   $priority = $form_state['values']['priority'];
-  $contact_details = Bullseye::getContactDetailsById($contact);
-  $firstname = $contact_details['field_firstname_value'];
-  $lastname = $contact_details['field_lastname_value'];
+  $firstname = $be->getAccountFirstName($assigned_to);
+  $firstname = ucwords($firstname);
+  $lastname = $be->getAccountLastName($assigned_to);
+  $lastname = ucwords($lastname);
   $contact_name = $firstname . ' ' . $lastname;
   $event_type = 'task';
   $status = $form_state['values']['status'];
 
   if ($type == 'phone_call') {
-    $title = 'Phone call with ' . $contact_name;
+    $title = 'Call with ' . $contact_name;
     cache_clear_all('recent_events_phonecall_' . $company_id, 'cache');
   }
   elseif ($type == 'email') {
-    $title = 'Email with ' . $contact_name;
+    $title = 'Email by ' . $contact_name;
     cache_clear_all('recent_events_email_' . $company_id, 'cache');
   }
   elseif ($type == 'meeting') {
@@ -317,7 +315,7 @@ function bullseye_event_edit_task_submit($form, &$form_state) {
     cache_clear_all('recent_events_meeting_' . $company_id, 'cache');
   }
   elseif ($type == 'others') {
-    $title = $activity_name;
+    $title = $activity_name . ' with ' . $contact_name;
     cache_clear_all('recent_events_others_' . $company_id, 'cache');
   }
 
@@ -326,12 +324,13 @@ function bullseye_event_edit_task_submit($form, &$form_state) {
   $wrapper->field_event_name->set($activity_name);
   $wrapper->field_task_type->set($type);
   $wrapper->field_due_date->set($date);
-  $wrapper->field_contact->set($contact);
+  $wrapper->field_contact->set('');
   $wrapper->field_priority->set($priority);
   $wrapper->field_account->set($company_id);
   $wrapper->field_if_system_generated->set('no');
   $wrapper->field_task_status->set($status);
-  $wrapper->field_event_type->set($event_type);
+  $wrapper->field_assigned_to->set($assigned_to);
+  $wrapper->field_event_type->set('task');
   
   $wrapper->save();
 
