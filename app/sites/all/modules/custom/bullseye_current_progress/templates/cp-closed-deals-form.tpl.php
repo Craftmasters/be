@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-xs-10">
 			<a href="#" class="cp-link big-step">
-				<span><?php print t('Congratulations! You\'ve successfully migrated ABC Company!'); ?></span>
+				<span><?php print t('Congratulations! You\'ve successfully migrated ' . $company_name . '!'); ?></span>
 			</a>
 		</div>
 	</div>

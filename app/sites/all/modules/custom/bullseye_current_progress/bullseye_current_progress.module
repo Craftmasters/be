@@ -1170,6 +1170,9 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['attach_proposal'] = array(
     '#title' => t('Attach Proposal'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
@@ -1927,6 +1930,7 @@ function bullseye_current_progress_closed_deals_form($form, &$form_state) {
 function bullseye_current_progress_preprocess_bullseye_current_progress_closed_deals_form(&$vars) {
 
   $wrapper = entity_metadata_wrapper('node', $vars['form']['nid']['#value']);
+  $vars['company_name'] = $wrapper->title->value();
   $action_status = $wrapper->field_action_status->value();
   $workflow_status = $wrapper->field_workflow_status->value();
   $vars['account_status'] = $wrapper->field_account_status->value();

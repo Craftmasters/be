@@ -198,6 +198,7 @@ function bullseye_event_edit_task($form, &$form_state) {
   $assigned_to = $event['field_assigned_to_value'];
 
   $date_formatted = date('m/d/Y g:i A', strtotime($event['field_due_date_value']));
+  kpr($date_formatted);
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
@@ -395,7 +396,7 @@ function bullseye_event_load_activities() {
           $value->description = 'Call with';
         }
         elseif ($value->field_task_type_value == 'email') {
-          $value->icon_img = $send_icon;
+          $value->icon_img = $receive_icon;
           $value->description = 'Email to';
         }
         elseif ($value->field_task_type_value == 'meeting') {
@@ -427,7 +428,7 @@ function bullseye_event_load_activities() {
           $value->description = 'Call with';
         }
         elseif ($value->field_task_type_value == 'email') {
-          $value->icon_img = $send_icon;
+          $value->icon_img = $receive_icon;
           $value->description = 'Email by';
         }
         elseif ($value->field_task_type_value == 'meeting') {

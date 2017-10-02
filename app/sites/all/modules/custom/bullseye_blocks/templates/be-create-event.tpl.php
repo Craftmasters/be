@@ -95,7 +95,7 @@
           </div>
           <div class="be-event-field-row row">
 
-          	<div class="col-xs-4">
+          	<div class="col-xs-6">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Type'); ?>
@@ -111,7 +111,7 @@
 		          </div>
           	</div>
 
-          	<div class="col-xs-4">
+          	<div class="col-xs-6">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Priority'); ?>
@@ -126,7 +126,7 @@
 		          </div>
           	</div>
 
-          	<div class="col-xs-4">
+          	<div class="col-xs-12">
           		<div class="be-event-field">
 		          	<div class="be-event-label">
 		          		<?php print t('Assigned to'); ?>

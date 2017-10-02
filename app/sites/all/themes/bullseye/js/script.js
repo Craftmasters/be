@@ -697,8 +697,9 @@
           });
         }
         if ($('#bullseye-event-edit-task').length) {
+          var due_date = $('#bullseye-event-edit-task #edit-due-date').val();
           $('#bullseye-event-edit-task #edit-due-date').datetimepicker({  
-            minDate: new Date(),
+            defaultDate: due_date,
           });
         }
 
