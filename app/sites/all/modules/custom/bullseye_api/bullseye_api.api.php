@@ -1965,17 +1965,39 @@ class Bullseye {
   public static function averageDealsSizeWon($uid = NULL) {
     global $user;
 
-    $uid = (is_null($uid)) ? $user->uid : $uid;
-    // Total invoice.
-    $total_invoice = Bullseye::totalInvoice($uid);
-    $deals_closed = Bullseye::getDealsClosed($uid);
+    // Initialize the class.
+    $be = new Bullseye($user);
 
-    if ($total_invoice != 0 && $deals_closed != 0) {
-      $ave = $total_invoice / $deals_closed;
-      return $ave;
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    $root = 'administrator';
+    if (Bullseye::hasRole($root, $roles) || Bullseye::hasRole('admin', $roles)) {
+      // Total invoice.
+      $total_invoice = Bullseye::totalInvoice($uid);
+      $deals_closed = Bullseye::getDealsClosed($uid);
+
+      if ($total_invoice != 0 && $deals_closed != 0) {
+        $ave = $total_invoice / $deals_closed;
+        return $ave;
+      }
+      else {
+        return FALSE;
+      }
     }
     else {
-      return FALSE;
+      // Total invoice.
+      $total_invoice = Bullseye::totalInvoice($uid);
+      $deals_closed = Bullseye::getDealsClosed($uid);
+
+      if ($total_invoice != 0 && $deals_closed != 0) {
+        $ave = $total_invoice / $deals_closed;
+        return $ave;
+      }
+      else {
+        return FALSE;
+      }
     }
   }
 
