@@ -856,7 +856,7 @@ function bullseye_blocks_render_be_recent_activities() {
         $value->description = 'Call with';
       }
       elseif ($value->field_task_type_value == 'email') {
-        $value->icon_img = $send_icon;
+        $value->icon_img = $receive_icon;
         $value->description = 'Email to';
       }
       elseif ($value->field_task_type_value == 'meeting') {
@@ -889,7 +889,7 @@ function bullseye_blocks_render_be_recent_activities() {
         $value->description = 'Call with';
       }
       elseif ($value->field_task_type_value == 'email') {
-        $value->icon_img = $send_icon;
+        $value->icon_img = $receive_icon;
         $value->description = 'Email by';
       }
       elseif ($value->field_task_type_value == 'meeting') {
