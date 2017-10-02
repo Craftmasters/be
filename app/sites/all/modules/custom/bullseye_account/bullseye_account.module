@@ -168,7 +168,7 @@ function select_existing_company_submit($form, &$form_state) {
       'account_status' => $account_status,
     )
   );
-  
+
   // Go to the add new lead modal.
   drupal_goto('accounts/new/' . $arg, $param);
 }
@@ -222,7 +222,7 @@ function accounts_delete_form($form, &$form_state) {
       '#markup' => $items_div,
       '#suffix' => '</div>',
     );
-    
+
     $form['submit_container'] = array(
       '#type' => 'container',
     );
@@ -255,7 +255,7 @@ function accounts_delete_form($form, &$form_state) {
     );
   }
 
-    
+
 
   return $form;
 }
@@ -328,7 +328,7 @@ function accounts_delete_form_submit($form, &$form_state) {
     cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     cache_clear_all('closed_deals_accounts_listing_producer', 'cache', TRUE);
     cache_clear_all('count_closed_deals_accounts_listing_producer', 'cache', TRUE);
-    
+
   }
   elseif ($from == 'leads') {
     cache_clear_all('leads_listing', 'cache');
@@ -374,7 +374,7 @@ function accounts_delete_form_submit($form, &$form_state) {
  * Form for adding new accounts.
  */
 function bullseye_account_new_form($form, &$form_state) {
-  
+
   global $user;
 
   $form = array();
@@ -779,7 +779,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
       $wrapper->field_workflow_status->set('generate_trust_agreement');
     }
   }
-    
+
   // Saving the tags.
   if (!empty($tags)) {
     foreach ($tags as $key => $value) {
@@ -952,7 +952,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
  * Form for editing account details.
  */
 function edit_account_details_form($form, &$form_state) {
-  
+
   global $user;
 
   $company = Bullseye::getCompanyNameByNid(arg(2));
@@ -1169,7 +1169,7 @@ function edit_account_details_form_submit($form, &$form_state) {
     $cwrapper->save();
   }
 
-  cache_clear_all('leads_accounts_listing', 'cache');
+  cache_clear_all('leads_listing', 'cache');
   cache_clear_all('primary_contact_' . $nid, 'cache');
   cache_clear_all('contacts_' . $nid, 'cache');
 
@@ -1186,7 +1186,7 @@ function edit_account_details_form_submit($form, &$form_state) {
   print '<script>parent.location = "' . $base_url . '/company/' . $alias . '?from=' . $status . '";</script>';
   print '<script>parent.Lightbox.end();</script>';
   die();
-  
+
 }
 
 /**
