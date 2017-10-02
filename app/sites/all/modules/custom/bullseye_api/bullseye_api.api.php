@@ -1968,7 +1968,7 @@ class Bullseye {
     $uid = (is_null($uid)) ? $user->uid : $uid;
     // Total invoice.
     $total_invoice = Bullseye::totalInvoice($uid);
-    $deals_closed = Bullseye::getDealsClosed();
+    $deals_closed = Bullseye::getDealsClosed($uid);
 
     if ($total_invoice != 0 && $deals_closed != 0) {
       $ave = $total_invoice / $deals_closed;
