@@ -10,7 +10,7 @@
   <div class="be-block-main" id="recent-activities-container">
 
     <?php foreach ($activities as $key => $value) : ?>
-      <div class="be-activity-row row">
+      <div class="be-activity-row row <?php print $value->field_event_type_value; ?>-event status-<?php print $value->field_task_status_value; ?>">
         <div class="col-xs-2 be-activity-icon">
           <div class="img-wrap"><img src="<?php print $value->icon_img; ?>"></div>
         </div>

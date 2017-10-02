@@ -198,6 +198,7 @@ function bullseye_event_edit_task($form, &$form_state) {
   $assigned_to = $event['field_assigned_to_value'];
 
   $date_formatted = date('m/d/Y g:i A', strtotime($event['field_due_date_value']));
+  kpr($date_formatted);
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
