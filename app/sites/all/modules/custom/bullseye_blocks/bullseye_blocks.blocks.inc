@@ -824,10 +824,18 @@ function bullseye_blocks_render_be_recent_activities() {
 
   $vars = array();
 
+  // Activity Icons.
   $call_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_call.svg';
   $send_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_send.svg';
   $receive_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_receive.svg';
   $meeting_icon = $base_url . '/' . $theme_directory . '/images/icons/be_activity_meeting.svg';
+  $converted_icon = $base_url . '/' . $theme_directory . '/images/icons/converted.svg';
+
+  // Task Icons.
+  $call_icon_t = $base_url . '/' . $theme_directory . '/images/icons/be_activity_call_orange.svg';
+  $send_icon_t = $base_url . '/' . $theme_directory . '/images/icons/be_activity_send_orange.svg';
+  $receive_icon_t = $base_url . '/' . $theme_directory . '/images/icons/be_activity_receive_orange.svg';
+  $meeting_icon_t = $base_url . '/' . $theme_directory . '/images/icons/be_activity_meeting_orange.svg';
 
   $nid = Bullseye::getNidFromPath(arg(1));
   $vars['nid'] = $nid;
@@ -871,11 +879,13 @@ function bullseye_blocks_render_be_recent_activities() {
         $lastname = substr($lastname, 0, 1);
         $value->contact_name = $firstname . ' ' . strtoupper($lastname) . '.';
         $value->description = $value->title . ' by ';
+        $value->icon_img = $converted_icon;
       }
 
     }
 
     if ($value->field_event_type_value == 'task') {
+      $value->icon_img = $send_icon_t;
       $value->usercolor = 'green-font';
       $firstname = $be->getAccountFirstName($value->field_assigned_to_value);
       $firstname = ucwords($firstname);
@@ -885,15 +895,15 @@ function bullseye_blocks_render_be_recent_activities() {
 
       // For the icon and description.
       if ($value->field_task_type_value == 'phone_call') {
-        $value->icon_img = $call_icon;
+        $value->icon_img = $call_icon_t;
         $value->description = 'Call with';
       }
       elseif ($value->field_task_type_value == 'email') {
-        $value->icon_img = $receive_icon;
+        $value->icon_img = $receive_icon_t;
         $value->description = 'Email by';
       }
       elseif ($value->field_task_type_value == 'meeting') {
-        $value->icon_img = $meeting_icon;
+        $value->icon_img = $meeting_icon_t;
         $value->description = 'Meeting with';
       }
     }
