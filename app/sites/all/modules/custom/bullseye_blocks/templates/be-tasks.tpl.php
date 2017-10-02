@@ -7,11 +7,19 @@
     <option value="email"><?php print t('Emails'); ?></option>
     <option value="others"><?php print t('Others'); ?></option>
   </select>
+  <div class="additional-icons">
+  	<a href="/be-event/close-tasks" id="main-close-task" rel="lightframe" style="display: none;">
+  		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  	</a>
+  	<button type="button" id="dummy-close-task">
+  		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  	</button>
+  </div>
   <div class="be-block-main" id="calendar-tab-tasks">
   	<?php foreach($tasks as $key => $value) : ?>
   		<div class="be-task-row row <?php print $value->field_task_status_value; ?>-task">
 				<div class="col-xs-1">
-					<input type="checkbox" value="<?php print $value->nid; ?>">
+					<input type="checkbox" value="<?php print $value->nid; ?>" class="task-checkbox">
 				</div>
 				<div class="col-xs-5">
 					<span class="green-font task-desc <?php print $value->dot; ?>"><?php print $value->description; ?></span>

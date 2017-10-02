@@ -199,6 +199,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
     'producers_delete_form',
     'carriers_delete_form',
     'bullseye_event_edit_task',
+    'bullseye_event_close_tasks',
   );
 
   // Default drupal forms.

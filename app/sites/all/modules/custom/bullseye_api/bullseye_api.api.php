@@ -2785,7 +2785,7 @@ class Bullseye {
       $query->leftJoin('field_data_field_event_name', 'envn', 'n.nid = envn.entity_id');
       $query->leftJoin('field_data_field_assigned_to', 'ast', 'n.nid = ast.entity_id');
       $event = $query
-        ->fields('n', array('nid', 'title'))
+        ->fields('n', array('nid', 'title', 'uid'))
         ->fields('a', array('field_account_nid'))
         ->fields('t', array('field_task_type_value'))
         ->fields('d', array('field_due_date_value'))

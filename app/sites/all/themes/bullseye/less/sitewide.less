@@ -1010,11 +1010,24 @@
     border-radius: 0px;
     background-color: transparent;
     font-family: 'Lato-Bold';
-      font-size: 13px;
-      text-transform: uppercase;
-      color: @field_label_color;
-    option {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: @field_label_color;
+    width: 120px;
+  }
 
+  .additional-icons {
+    position: absolute;
+    top: 20px;
+    right: 155px;
+    display: inline-block;
+    a, button {
+      color: @field_label_color;
+      cursor: pointer;
+    }
+    button {
+      background-color: transparent;
+      border: none;
     }
   }
 

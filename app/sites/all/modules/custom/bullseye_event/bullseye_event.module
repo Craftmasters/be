@@ -33,10 +33,30 @@ function bullseye_event_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-event/selected-tasks'] = array(
+    'page callback' => 'bullseye_event_selected_tasks',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  
+  $items['be-event/get-selected-tasks'] = array(
+    'page callback' => 'bullseye_event_get_selected_tasks',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['be-event/edit-task'] = array(
     'title' => 'Send Proposal',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('bullseye_event_edit_task'),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['be-event/close-tasks'] = array(
+    'title' => 'Close Tasks',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bullseye_event_close_tasks'),
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -354,6 +374,100 @@ function bullseye_event_edit_task_submit($form, &$form_state) {
 }
 
 /**
+ * Close selected tasks.
+ */
+function bullseye_event_close_tasks() {
+  global $user;
+  $form = array();
+
+  $be = new Bullseye($user);
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  if (isset($_SESSION['calendar_tab_tasks_ids']) && !empty($_SESSION['calendar_tab_tasks_ids'])) {
+
+    $task_ids = $_SESSION['calendar_tab_tasks_ids'];
+
+    $items_div = '';
+
+    foreach ($task_ids as $key => $value) {
+      $event = Bullseye::getEventDetailsByNid($value);
+      $title = $event['title'];
+      $firstname = $be->getAccountFirstName($event['uid']);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($event['uid']);
+      $lastname = ucwords($lastname);
+      $name = $firstname . ' ' . $lastname;
+      $date = date('M j', strtotime($event['field_due_date_value']));
+      $markup = $title . ' by ' . $name . ' (Due on ' . $date . ')';
+      $items_div .= '<div class="be-item">' . $markup . '</div>';
+    }
+
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('Are you sure you want to close the following tasks?') . '</h2>',
+    );
+
+    $form['items'] = array(
+      '#prefix' => '<div class="be-items-multiple">',
+      '#markup' => $items_div,
+      '#suffix' => '</div>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+    );
+
+    $form['submit_container']['submit'] = array(
+      '#type' => 'submit',
+      '#attributes' => array(
+        'class' => array('green-btn'),
+      ),
+      '#value' => t('Close Tasks'),
+    );
+  }
+  else {
+    $form['form_title'] = array(
+      '#prefix' => '<div class="form-title">',
+      '#suffix' => '</div>',
+      '#markup' => '<h2>' . t('You did not select any items. Please select items first.') . '</h2>',
+    );
+
+    $form['submit_container'] = array(
+      '#type' => 'container',
+    );
+
+    $form['submit_container']['cancel'] = array(
+      '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Close</a>',
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * Form submit for closing selected tasks.
+ */
+function bullseye_event_close_tasks_submit() {
+  $task_ids = $_SESSION['calendar_tab_tasks_ids'];
+
+  foreach ($task_ids as $key => $value) {
+    $wrapper = entity_metadata_wrapper('node', $value);
+    $wrapper->field_task_status->set('closed');
+    $wrapper->save();
+    cache_clear_all('event_details_' . $value, 'cache');
+  }
+
+  unset($_SESSION['calendar_tab_tasks_ids']);
+  drupal_set_message('Successfully closed tasks.');
+}
+
+/**
  * Load the recent activities.
  */
 function bullseye_event_load_activities() {
@@ -536,6 +650,46 @@ function bullseye_event_calendar_load_tasks() {
   $output = theme('be_calendar_tab_tasks_rows', $vars);
 
   echo $output;
+}
+
+/**
+ * Adding the selected tasks to session.
+ */
+function bullseye_event_selected_tasks() {
+  $task_ids = $_POST['task_ids'];
+  $remove_ids = $_POST['remove_ids'];
+
+  if (!empty($_SESSION['calendar_tab_tasks_ids'])) {
+    foreach ($task_ids as $key => $value) {
+      if (!in_array($value, $_SESSION['calendar_tab_tasks_ids'])) {
+        $_SESSION['calendar_tab_tasks_ids'][] = $value;
+      }
+    }
+  }
+  else {
+    $_SESSION['calendar_tab_tasks_ids'] = $task_ids;
+  }
+
+  if (!empty($remove_ids)) {
+    foreach ($remove_ids as $key1 => $value1) {
+      if (in_array($value1, $_SESSION['calendar_tab_tasks_ids'])) {
+        foreach ($_SESSION['calendar_tab_tasks_ids'] as $key2 => $value2) {
+          if ($value2 == $value1) {
+            unset($_SESSION['calendar_tab_tasks_ids'][$key2]);
+          }
+        }
+      }
+    }
+  }
+
+  drupal_json_output($_SESSION['calendar_tab_tasks_ids']);
+}
+
+/**
+ * Getting the selected tasks.
+ */
+function bullseye_event_get_selected_tasks() {
+  drupal_json_output($_SESSION['calendar_tab_tasks_ids']);
 }
 
 /**
