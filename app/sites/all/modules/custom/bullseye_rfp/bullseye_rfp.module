@@ -497,41 +497,65 @@ function bullseye_rfp_form($form, &$form_state) {
   $form['attachments_container']['attachment']['employee_census'] = array(
     '#title' => t('Employee Census'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['current_summary_of_benefit'] = array(
     '#title' => t('Current Summary of Benefit'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['current_bill'] = array(
     '#title' => t('Current Bill'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['last_renewal_letter'] = array(
     '#title' => t('Last Renewal Letter & Rates'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['summary_of_monthly_claims_experience'] = array(
     '#title' => t('Summary of Monthly Claims Experience'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['broker_of_record'] = array(
     '#title' => t('Broker of Record'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['letter_of_authorization'] = array(
     '#title' => t('Letter of Authorization'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['large_claims_report'] = array(
     '#title' => t('Large Claims Report'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   // Census checkboxes.
