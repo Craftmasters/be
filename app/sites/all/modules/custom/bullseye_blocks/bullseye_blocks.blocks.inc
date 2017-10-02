@@ -799,11 +799,16 @@ function bullseye_blocks_render_be_create_event() {
 
   $vars['nid'] = '';
 
+  $vars['users'] = Bullseye::getAssignedToField();
+
   if (arg(0) == 'company') {
     $nid = Bullseye::getNidFromPath(arg(1));
     $vars['nid'] = $nid;
     $vars['people'] = Bullseye::getAccountPeople($nid);
-    $vars['users'] = Bullseye::getAssignedToField();
+  }
+
+  if (arg(0) == 'calendar') {
+    
   }
 
   $output = theme('be_create_event', $vars);
@@ -1127,8 +1132,57 @@ function bullseye_blocks_render_be_activities() {
  * Tasks Block.
  */
 function bullseye_blocks_render_be_tasks() {
+  global $user;
 
   $vars = array();
+
+  $tasks = Bullseye::getArcherTasks('all', 0);
+
+  $sorted = array();
+
+  $be = new Bullseye($user);
+
+  foreach ($tasks as $key => $value) {
+    $value->dot = '';
+
+    if ($value->field_task_status_value == 'open') {
+      $value->dot = 'red-dot';
+    }
+
+    // For the task description.
+    if ($value->field_task_type_value == 'phone_call') {
+      $value->description = 'Call with ';
+    }
+    elseif ($value->field_task_type_value == 'email') {
+      $value->description = 'Email to ';
+    }
+    elseif ($value->field_task_type_value == 'meeting') {
+      $value->description = 'Meeting with ';
+    }
+    else {
+      $value->description = $value->field_event_name_value . ' with ';
+    }
+
+    // Assigned to.
+    $firstname = $be->getAccountFirstName($value->field_assigned_to_value);
+    $firstname = ucwords($firstname);
+    $lastname = $be->getAccountLastName($value->field_assigned_to_value);
+    $lastname = ucwords($lastname);
+    $value->description = $value->description . $firstname . ' ' . $lastname;
+
+    // Task creator.
+    $firstname = $be->getAccountFirstName($value->uid);
+    $firstname = ucwords($firstname);
+    $lastname = $be->getAccountLastName($value->uid);
+    $lastname = ucwords($lastname);
+    $value->contact_name = $firstname . ' ' . $lastname;
+
+    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
+    $date = strtotime($value->field_due_date_value);
+    $sorted[$date . '-' . $value->nid] = $value;
+  }
+
+  $vars['tasks'] = $sorted;
 
   $output = theme('be_tasks', $vars);
 

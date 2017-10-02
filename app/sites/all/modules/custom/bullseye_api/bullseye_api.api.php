@@ -2515,6 +2515,47 @@ class Bullseye {
   }
 
   /**
+   * Get the tasks of archerjodan showing in calendar tab.
+   */
+  static function getArcherTasks($filter, $offset) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
+    $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
+    $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
+    $query->leftJoin('field_data_field_contact', 'c', 'n.nid = c.entity_id');
+    $query->leftJoin('field_data_field_event_type', 'et', 'n.nid = et.entity_id');
+    $query->leftJoin('field_data_field_if_system_generated', 'sg', 'n.nid = sg.entity_id');
+    $query->leftJoin('field_data_field_task_status', 'ts', 'n.nid = ts.entity_id');
+    $query->leftJoin('field_data_field_event_name', 'evn', 'n.nid = evn.entity_id');
+    $query->leftJoin('field_data_field_assigned_to', 'ast', 'n.nid = ast.entity_id');
+    $query->fields('n', array('nid', 'title', 'uid'))
+      ->fields('a', array('field_account_nid'))
+      ->fields('t', array('field_task_type_value'))
+      ->fields('d', array('field_due_date_value'))
+      ->fields('c', array('field_contact_value'))
+      ->fields('sg', array('field_if_system_generated_value'))
+      ->fields('et', array('field_event_type_value'))
+      ->fields('ts', array('field_task_status_value'))
+      ->fields('evn', array('field_event_name_value'))
+      ->fields('ast', array('field_assigned_to_value'));
+
+    if ($filter != 'all') {
+      $query->condition('t.field_task_type_value', $filter, '=');
+    }
+
+    $tasks = $query
+      ->condition('n.type', 'task', '=')
+      ->condition('et.field_event_type_value', 'task', '=')
+      ->condition('a.field_account_nid', NULL)
+      ->orderBy('d.field_due_date_value', 'DESC')
+      ->range($offset, 10)
+      ->execute()
+      ->fetchAll();
+
+    return $tasks;
+  }
+
+  /**
    * Get the recent activities of an account.
    */
   static function getRecentEventsByNid($nid) {
@@ -2523,7 +2564,6 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
       $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
       $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
       $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
@@ -2565,7 +2605,6 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
       $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
       $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
       $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
@@ -2608,7 +2647,6 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
       $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
       $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
       $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
@@ -2651,7 +2689,6 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
       $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
       $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
       $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');
@@ -2694,7 +2731,6 @@ class Bullseye {
     }
     else {
       $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_fringe_rate', 'fr', 'n.nid = fr.entity_id');
       $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
       $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
       $query->leftJoin('field_data_field_due_date', 'd', 'n.nid = d.entity_id');

@@ -26,6 +26,12 @@ function bullseye_event_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  
+  $items['be-event/calendar-load-tasks'] = array(
+    'page callback' => 'bullseye_event_calendar_load_tasks',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
 
   $items['be-event/edit-task'] = array(
     'title' => 'Send Proposal',
@@ -48,10 +54,15 @@ function bullseye_event_theme() {
   // Return theme definitions.
   return array(
 
-    // Top Header Block.
     'be_recent_activities_rows' => array(
       'variables' => array(),
       'template' => 'be-recent-activities-rows',
+      'path' => $template_path,
+    ),
+
+    'be_calendar_tab_tasks_rows' => array(
+      'variables' => array(),
+      'template' => 'be-calendar-tab-tasks-rows',
       'path' => $template_path,
     ),
 
@@ -171,7 +182,9 @@ function bullseye_event_save_task() {
   $wrapper->field_due_date->set($date);
   $wrapper->field_contact->set('');
   $wrapper->field_priority->set($priority);
-  $wrapper->field_account->set($nid);
+  if ($nid != '') {
+    $wrapper->field_account->set($nid);
+  }
   $wrapper->field_if_system_generated->set('no');
   $wrapper->field_task_status->set('open');
   $wrapper->field_assigned_to->set($assigned_to);
@@ -462,18 +475,86 @@ function bullseye_event_load_activities() {
 }
 
 /**
+ * Load the recent tasks in calendar tab.
+ */
+function bullseye_event_calendar_load_tasks() {
+  $filter = $_POST['filter'];
+  $offset = $_POST['offset'];
+
+  $tasks = Bullseye::getArcherTasks($filter, $offset);
+
+  $sorted = array();
+
+  $be = new Bullseye($user);
+
+  if (!empty($tasks)) {
+
+    foreach ($tasks as $key => $value) {
+      $value->dot = '';
+
+      if ($value->field_task_status_value == 'open') {
+        $value->dot = 'red-dot';
+      }
+
+      // For the task description.
+      if ($value->field_task_type_value == 'phone_call') {
+        $value->description = 'Call with ';
+      }
+      elseif ($value->field_task_type_value == 'email') {
+        $value->description = 'Email to ';
+      }
+      elseif ($value->field_task_type_value == 'meeting') {
+        $value->description = 'Meeting with ';
+      }
+      else {
+        $value->description = $value->field_event_name_value . ' with ';
+      }
+
+      // Assigned to.
+      $firstname = $be->getAccountFirstName($value->field_assigned_to_value);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($value->field_assigned_to_value);
+      $lastname = ucwords($lastname);
+      $value->description = $value->description . $firstname . ' ' . $lastname;
+
+      // Task creator.
+      $firstname = $be->getAccountFirstName($value->uid);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($value->uid);
+      $lastname = ucwords($lastname);
+      $value->contact_name = $firstname . ' ' . $lastname;
+
+      $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
+      $date = strtotime($value->field_due_date_value);
+      $sorted[$date . '-' . $value->nid] = $value;
+    }
+
+  }
+
+  $vars['tasks'] = $sorted;
+
+  $output = theme('be_calendar_tab_tasks_rows', $vars);
+
+  echo $output;
+}
+
+/**
  * Override or insert variables into the page templates.
  */
 function bullseye_event_preprocess_page(&$vars, $hook) {
   global $base_url;
+  $dir = drupal_get_path('module', 'bullseye_event');
 
+  // For company page.
   if (arg(0) == 'company') {
-  	$dir = drupal_get_path('module', 'bullseye_event');
-
 	  $js_path = $base_url . '/' . $dir . '/js/bullseye_event.js';
+    drupal_add_js($js_path);
+  }
 
-	  // Add the js for events.
-	  drupal_add_js($js_path);
+  // For calendar tab.
+  if (arg(0) == 'calendar') {
+    $js_path = $base_url . '/' . $dir . '/js/bullseye_event_calendar_tab.js';
+    drupal_add_js($js_path);
   }
 
 }

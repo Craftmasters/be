@@ -132,19 +132,13 @@
 		          		<?php print t('Assigned to'); ?>
 		          	</div>
 		          	<div class="be-event-input">
-                  <?php if (arg(0) == 'company') : ?>
-                    <select id="task-assigned-to">
-                      <?php foreach ($users as $key => $value) : ?>
-                        <option value="<?php print $key;?>">
-                          <?php print $value; ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  <?php else: ?>
-                    <select>
-                      <option value="1">James J.</option>
-                    </select>
-                  <?php endif; ?>
+                  <select id="task-assigned-to">
+                    <?php foreach ($users as $key => $value) : ?>
+                      <option value="<?php print $key;?>">
+                        <?php print $value; ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
 		          </div>
           	</div>
