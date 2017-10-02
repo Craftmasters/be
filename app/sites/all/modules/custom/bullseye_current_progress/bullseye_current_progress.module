@@ -1170,6 +1170,9 @@ function bullseye_current_progress_opportunities_form($form, &$form_state) {
   $form['attach_proposal'] = array(
     '#title' => t('Attach Proposal'),
     '#type' => 'managed_file',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
