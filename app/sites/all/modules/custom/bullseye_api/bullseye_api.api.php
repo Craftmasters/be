@@ -1420,23 +1420,55 @@ class Bullseye {
   /**
    * Count all opportunity account.
    */
-  static function countOpportunityAccnt() {
-    if ($cache = cache_get('count_opportunity_accounts_listing')) {
-      $accounts = $cache->data;
+  static function countOpportunityAccnt($uid = NULL) {
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('count_opportunity_accounts_listing')) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'opportunity', '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('count_opportunity_accounts_listing', $accounts, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
-      $accounts = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'accounts', '=')
-        ->condition('n.status', 1, '=')
-        ->condition('type.field_account_status_value', 'opportunity', '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('total_opportunities_' . $uid)) {
+        $accounts = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
+        $query->leftJoin('field_data_field_account_status', 'type', 'n.nid = type.entity_id');
+        $accounts = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'accounts', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('type.field_account_status_value', 'opportunity', '=')
+          ->condition('uid.field_visibility_value', $uid, '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('count_opportunity_accounts_listing', $accounts, 'cache');
+        cache_set('total_opportunities_' . $uid, $accounts, 'cache');
+      }
     }
 
     return $accounts;
