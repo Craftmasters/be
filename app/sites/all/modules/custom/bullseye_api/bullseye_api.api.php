@@ -1975,29 +1975,21 @@ class Bullseye {
     $root = 'administrator';
     if (Bullseye::hasRole($root, $roles) || Bullseye::hasRole('admin', $roles)) {
       // Total invoice.
-      $total_invoice = Bullseye::totalInvoice($uid);
-      $deals_closed = Bullseye::getDealsClosed($uid);
-
-      if ($total_invoice != 0 && $deals_closed != 0) {
-        $ave = $total_invoice / $deals_closed;
-        return $ave;
-      }
-      else {
-        return FALSE;
-      }
+      $total_invoice = Bullseye::totalInvoice();
+      $deals_closed = Bullseye::getDealsClosed();
     }
     else {
       // Total invoice.
       $total_invoice = Bullseye::totalInvoice($uid);
       $deals_closed = Bullseye::getDealsClosed($uid);
+    }
 
-      if ($total_invoice != 0 && $deals_closed != 0) {
-        $ave = $total_invoice / $deals_closed;
-        return $ave;
-      }
-      else {
-        return FALSE;
-      }
+    if ($total_invoice != 0 && $deals_closed != 0) {
+      $ave = $total_invoice / $deals_closed;
+      return $ave;
+    }
+    else {
+      return FALSE;
     }
   }
 
@@ -2073,24 +2065,38 @@ class Bullseye {
    *   The account id.
    */
   public static function totalInvoice($uid = NULL) {
-    global $user;
+    // Amount.
+    $a_field = 'field_item_amount';
+    $a = 'field_data_' . $a_field;
 
-    $uid = (is_null($uid)) ? $user->uid : $uid;
+    // Setup fee.
+    $fee = 'field_setup_fee_items_value';
+    $f_field = 'field_setup_fee_items';
+    $f = 'field_data_' . $f_field;
 
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_visibility', 'uid', 'uid.entity_id = n.nid');
-    $query->leftJoin('field_data_field_setup_fee_items', 'fee', 'fee.entity_id = n.nid');
-    $query->leftJoin('field_data_field_item_amount', 'amount', 'amount.entity_id = fee.field_setup_fee_items_value');
-    $results = $query
-      ->fields('amount', array('field_item_amount_value'))
-      ->condition('n.type', 'accounts', '=')
-      ->condition('uid.field_visibility_value', $uid, '=')
+    // Visibility.
+    $v_field = 'field_visibility';
+    $v = 'field_data_' . $v_field;
+
+    // Query.
+    $q = db_select('node', 'n');
+    if (!is_null($uid)) {
+      $q->leftJoin($v, 'v', 'v.entity_id = n.nid');
+    }
+    $q->leftJoin($f, 'f', 'f.entity_id = n.nid');
+    $q->leftJoin($a, 'a', 'a.entity_id = f.' . $fee);
+    $q->fields('a', array($a_field . '_value'));
+    $q->condition('n.type', 'accounts', '=');
+    if (!is_null($uid)) {
+      $q->condition('v.' . $v_field . '_value', $uid, '=');
+    }
+    $r = $q
       ->execute()
       ->fetchAll();
 
     // Sum of invoices.
     $amount = 0;
-    foreach ($results as $fee) {
+    foreach ($r as $fee) {
       if (!is_null($fee->field_item_amount_value)) {
         $amount += $fee->field_item_amount_value;
       }
