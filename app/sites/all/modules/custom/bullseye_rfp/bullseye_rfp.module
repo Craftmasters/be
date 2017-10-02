@@ -2442,10 +2442,6 @@ function generate_rfp_major_medical($form, &$form_state) {
 
   if (isset($_SESSION['add_rfp'])) {
     $data = $_SESSION['add_rfp'];
-    /*$account = node_load($data['account_id']);
-    $fcid = $account->field_contacts[LANGUAGE_NONE][0]['value'];
-    $contact = field_collection_item_load($fcid);
-    $to = $contact->field_email[LANGUAGE_NONE][0]['value'];*/
 
     // Recipients.
     $recipients = array();
