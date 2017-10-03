@@ -2518,6 +2518,9 @@ class Bullseye {
    * Get the tasks of archerjodan showing in calendar tab.
    */
   static function getArcherTasks($filter, $offset) {
+    global $user;
+    $be = new Bullseye($user);
+
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_account', 'a', 'n.nid = a.entity_id');
     $query->leftJoin('field_data_field_task_type', 't', 'n.nid = t.entity_id');
@@ -2543,6 +2546,13 @@ class Bullseye {
       $query->condition('t.field_task_type_value', $filter, '=');
     }
 
+    if ($be->hasRole('producer', $user->roles)) {
+      $or = db_or();
+      $or->condition('n.uid', $user->uid, '=');
+      $or->condition('ast.field_assigned_to_value', $user->uid, '=');
+      $query->condition($or);
+    }
+
     $tasks = $query
       ->condition('n.type', 'task', '=')
       ->condition('et.field_event_type_value', 'task', '=')
@@ -2551,6 +2561,8 @@ class Bullseye {
       ->range($offset, 10)
       ->execute()
       ->fetchAll();
+
+
 
     return $tasks;
   }

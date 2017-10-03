@@ -1177,6 +1177,17 @@ function bullseye_blocks_render_be_tasks() {
     $lastname = ucwords($lastname);
     $value->contact_name = $firstname . ' ' . $lastname;
 
+    $value->checkbox_disabled = '';
+
+    if ($be->hasRole('producer', $user->roles)) {
+      if ($value->uid != $user->uid) {
+        $value->checkbox_disabled = 'disabled';
+      }
+    }
+    if ($value->field_task_status_value == 'closed') {
+      $value->checkbox_disabled = 'disabled';
+    }
+
     $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
     $date = strtotime($value->field_due_date_value);
     $sorted[$date . '-' . $value->nid] = $value;

@@ -384,9 +384,9 @@ function bullseye_event_close_tasks() {
 
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
-  if (isset($_SESSION['calendar_tab_tasks_ids']) && !empty($_SESSION['calendar_tab_tasks_ids'])) {
+  if (isset($_SESSION['calendar_tab_tasks_ids_' . $user->uid]) && !empty($_SESSION['calendar_tab_tasks_ids_' . $user->uid])) {
 
-    $task_ids = $_SESSION['calendar_tab_tasks_ids'];
+    $task_ids = $_SESSION['calendar_tab_tasks_ids_' . $user->uid];
 
     $items_div = '';
 
@@ -454,7 +454,8 @@ function bullseye_event_close_tasks() {
  * Form submit for closing selected tasks.
  */
 function bullseye_event_close_tasks_submit() {
-  $task_ids = $_SESSION['calendar_tab_tasks_ids'];
+  global $user;
+  $task_ids = $_SESSION['calendar_tab_tasks_ids_' . $user->uid];
 
   foreach ($task_ids as $key => $value) {
     $wrapper = entity_metadata_wrapper('node', $value);
@@ -463,7 +464,7 @@ function bullseye_event_close_tasks_submit() {
     cache_clear_all('event_details_' . $value, 'cache');
   }
 
-  unset($_SESSION['calendar_tab_tasks_ids']);
+  unset($_SESSION['calendar_tab_tasks_ids_' . $user->uid]);
   drupal_set_message('Successfully closed tasks.');
 }
 
@@ -592,6 +593,7 @@ function bullseye_event_load_activities() {
  * Load the recent tasks in calendar tab.
  */
 function bullseye_event_calendar_load_tasks() {
+  global $user;
   $filter = $_POST['filter'];
   $offset = $_POST['offset'];
 
@@ -638,6 +640,17 @@ function bullseye_event_calendar_load_tasks() {
       $lastname = ucwords($lastname);
       $value->contact_name = $firstname . ' ' . $lastname;
 
+      $value->checkbox_disabled = '';
+
+      if ($be->hasRole('producer', $user->roles)) {
+        if ($value->uid != $user->uid) {
+          $value->checkbox_disabled = 'disabled';
+        }
+      }
+      if ($value->field_task_status_value == 'closed') {
+        $value->checkbox_disabled = 'disabled';
+      }
+
       $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
       $date = strtotime($value->field_due_date_value);
       $sorted[$date . '-' . $value->nid] = $value;
@@ -656,40 +669,42 @@ function bullseye_event_calendar_load_tasks() {
  * Adding the selected tasks to session.
  */
 function bullseye_event_selected_tasks() {
+  global $user;
   $task_ids = $_POST['task_ids'];
   $remove_ids = $_POST['remove_ids'];
 
-  if (!empty($_SESSION['calendar_tab_tasks_ids'])) {
+  if (!empty($_SESSION['calendar_tab_tasks_ids_' . $user->uid])) {
     foreach ($task_ids as $key => $value) {
-      if (!in_array($value, $_SESSION['calendar_tab_tasks_ids'])) {
-        $_SESSION['calendar_tab_tasks_ids'][] = $value;
+      if (!in_array($value, $_SESSION['calendar_tab_tasks_ids_' . $user->uid])) {
+        $_SESSION['calendar_tab_tasks_ids_' . $user->uid][] = $value;
       }
     }
   }
   else {
-    $_SESSION['calendar_tab_tasks_ids'] = $task_ids;
+    $_SESSION['calendar_tab_tasks_ids_' . $user->uid] = $task_ids;
   }
 
   if (!empty($remove_ids)) {
     foreach ($remove_ids as $key1 => $value1) {
-      if (in_array($value1, $_SESSION['calendar_tab_tasks_ids'])) {
-        foreach ($_SESSION['calendar_tab_tasks_ids'] as $key2 => $value2) {
+      if (in_array($value1, $_SESSION['calendar_tab_tasks_ids_' . $user->uid])) {
+        foreach ($_SESSION['calendar_tab_tasks_ids_' . $user->uid] as $key2 => $value2) {
           if ($value2 == $value1) {
-            unset($_SESSION['calendar_tab_tasks_ids'][$key2]);
+            unset($_SESSION['calendar_tab_tasks_ids_' . $user->uid][$key2]);
           }
         }
       }
     }
   }
 
-  drupal_json_output($_SESSION['calendar_tab_tasks_ids']);
+  drupal_json_output($_SESSION['calendar_tab_tasks_ids_' . $user->uid]);
 }
 
 /**
  * Getting the selected tasks.
  */
 function bullseye_event_get_selected_tasks() {
-  drupal_json_output($_SESSION['calendar_tab_tasks_ids']);
+  global $user;
+  drupal_json_output($_SESSION['calendar_tab_tasks_ids_' . $user->uid]);
 }
 
 /**
