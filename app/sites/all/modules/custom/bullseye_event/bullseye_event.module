@@ -45,6 +45,12 @@ function bullseye_event_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-event/calendar-load-activities'] = array(
+    'page callback' => 'bullseye_event_calendar_load_activities',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['be-event/edit-task'] = array(
     'title' => 'Send Proposal',
     'page callback' => 'drupal_get_form',
@@ -83,6 +89,12 @@ function bullseye_event_theme() {
     'be_calendar_tab_tasks_rows' => array(
       'variables' => array(),
       'template' => 'be-calendar-tab-tasks-rows',
+      'path' => $template_path,
+    ),
+
+    'be_calendar_tab_activities_rows' => array(
+      'variables' => array(),
+      'template' => 'be-calendar-tab-activities-rows',
       'path' => $template_path,
     ),
 
@@ -661,6 +673,43 @@ function bullseye_event_calendar_load_tasks() {
   $vars['tasks'] = $sorted;
 
   $output = theme('be_calendar_tab_tasks_rows', $vars);
+
+  echo $output;
+}
+
+/**
+ * Load the recent tasks in calendar tab.
+ */
+function bullseye_event_calendar_load_activities() {
+  global $user;
+  $filter = $_POST['filter'];
+  $offset = $_POST['offset'];
+
+  $activities = Bullseye::getArcherActivities($filter, $offset);
+
+  $sorted = array();
+
+  $be = new Bullseye($user);
+
+  if (!empty($activities)) {
+    foreach ($activities as $key => $value) {
+
+      // Activity creator.
+      $firstname = $be->getAccountFirstName($value->uid);
+      $firstname = ucwords($firstname);
+      $lastname = $be->getAccountLastName($value->uid);
+      $lastname = ucwords($lastname);
+      $value->contact_name = $firstname . ' ' . $lastname;
+
+      $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
+      $date = strtotime($value->field_due_date_value);
+      $sorted[$date . '-' . $value->nid] = $value;
+    }
+  }
+
+  $vars['activities'] = $sorted;
+
+  $output = theme('be_calendar_tab_activities_rows', $vars);
 
   echo $output;
 }

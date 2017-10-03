@@ -41,7 +41,7 @@
 	  	
   </div>
   <div class="be-block-pagination">
-  	<input type="hidden" id="data-offset" value="0">
+  	<input type="hidden" id="task-data-offset" value="0">
   	<button type="button" id="task-prev" title="previous">
   		<i class="fa fa-angle-double-left" aria-hidden="true"></i>prev
   	</button>

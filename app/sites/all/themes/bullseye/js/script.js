@@ -59,6 +59,7 @@
         var tab = $(this).attr("href");
         $(".tab-content").not(tab).css("display", "none");
         $(tab).fadeIn();
+        $('.left-sidebar').css('min-height', $(document).height() + 'px');
       });
 
       // For lightbox iframes.

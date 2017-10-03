@@ -1117,8 +1117,31 @@ function bullseye_blocks_render_be_calendar_activities() {
  * Activities Block.
  */
 function bullseye_blocks_render_be_activities() {
+  global $user;
 
   $vars = array();
+
+  $activities = Bullseye::getArcherActivities('all', 0);
+
+  $sorted = array();
+
+  $be = new Bullseye($user);
+
+  foreach ($activities as $key => $value) {
+
+    // Activity creator.
+    $firstname = $be->getAccountFirstName($value->uid);
+    $firstname = ucwords($firstname);
+    $lastname = $be->getAccountLastName($value->uid);
+    $lastname = ucwords($lastname);
+    $value->contact_name = $firstname . ' ' . $lastname;
+
+    $value->formatted_date = date('M j', strtotime($value->field_due_date_value));
+    $date = strtotime($value->field_due_date_value);
+    $sorted[$date . '-' . $value->nid] = $value;
+  }
+
+  $vars['activities'] = $sorted;
 
   $output = theme('be_activities', $vars);
 
