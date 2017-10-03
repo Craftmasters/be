@@ -1177,7 +1177,7 @@ function bullseye_blocks_render_be_tasks() {
       $value->description = 'Call with ';
     }
     elseif ($value->field_task_type_value == 'email') {
-      $value->description = 'Email to ';
+      $value->description = 'Email with ';
     }
     elseif ($value->field_task_type_value == 'meeting') {
       $value->description = 'Meeting with ';
@@ -1201,12 +1201,6 @@ function bullseye_blocks_render_be_tasks() {
     $value->contact_name = $firstname . ' ' . $lastname;
 
     $value->checkbox_disabled = '';
-
-    if ($be->hasRole('producer', $user->roles)) {
-      if ($value->uid != $user->uid) {
-        $value->checkbox_disabled = 'disabled';
-      }
-    }
     if ($value->field_task_status_value == 'closed') {
       $value->checkbox_disabled = 'disabled';
     }

@@ -51,6 +51,24 @@ function bullseye_event_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-event-get-companies'] = array(
+    'page callback' => 'be_event_get_companies',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['be-event/populate-contacts'] = array(
+    'page callback' => 'be_event_populate_contacts',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['be-event/get-company-nid'] = array(
+    'page callback' => 'be_event_get_company_id',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['be-event/edit-task'] = array(
     'title' => 'Send Proposal',
     'page callback' => 'drupal_get_form',
@@ -68,6 +86,69 @@ function bullseye_event_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Form for calendar tab activity autocomplete.
+ */
+function bullseye_event_calendar_tab_activity_form($form, &$form_state) {
+  global $user;
+  $form = array();
+
+  $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+
+  $form['company'] = array(
+    '#title' => t('Company'),
+    '#type' => 'textfield',
+    '#autocomplete_path' => 'be-event-get-companies',
+    '#attributes' => array(
+      'placeholder' => t('Enter company name ..'),
+    ),
+  );
+
+  return $form;
+}
+
+/**
+ * Callback for the autocomplete company field.
+ */
+function be_event_get_companies($text) {
+  global $user;
+
+  $results = array();
+
+  $be = new Bullseye($user);
+
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_visibility', 'vis', 'n.nid = vis.entity_id');
+  $query->fields('n', array('nid', 'title'))
+    ->condition('n.type', 'accounts', '=')
+    ->condition('n.status', 1, '=')
+    ->condition('n.title', '%' . db_like($text) . '%', 'LIKE');
+
+  if ($be->hasRole('producer', $user->roles)) {
+    $ids = Bullseye::getProducerAccounts($user->uid);
+    if (!empty($ids)) {
+      $query->condition('n.nid', $ids, 'IN');
+    }
+  }
+
+  $accounts = $query->range(0, 10)->execute();
+ 
+  foreach ($accounts as $key => $value) {
+    $results[$value->title] = check_plain($value->title);
+  }
+ 
+  drupal_json_output($results);
+}
+
+/**
+ * Get the company id of company.
+ */
+function be_event_get_company_id() {
+  $company_name = $_POST['company_name'];
+  $company_nid = Bullseye::getAccountNidByName($company_name);
+  drupal_json_output($company_nid);
 }
 
 /**
@@ -629,7 +710,7 @@ function bullseye_event_calendar_load_tasks() {
         $value->description = 'Call with ';
       }
       elseif ($value->field_task_type_value == 'email') {
-        $value->description = 'Email to ';
+        $value->description = 'Email with ';
       }
       elseif ($value->field_task_type_value == 'meeting') {
         $value->description = 'Meeting with ';
@@ -653,12 +734,6 @@ function bullseye_event_calendar_load_tasks() {
       $value->contact_name = $firstname . ' ' . $lastname;
 
       $value->checkbox_disabled = '';
-
-      if ($be->hasRole('producer', $user->roles)) {
-        if ($value->uid != $user->uid) {
-          $value->checkbox_disabled = 'disabled';
-        }
-      }
       if ($value->field_task_status_value == 'closed') {
         $value->checkbox_disabled = 'disabled';
       }
@@ -754,6 +829,28 @@ function bullseye_event_selected_tasks() {
 function bullseye_event_get_selected_tasks() {
   global $user;
   drupal_json_output($_SESSION['calendar_tab_tasks_ids_' . $user->uid]);
+}
+
+/**
+ * Return the contacts of an account in the calendar tab.
+ */
+function be_event_populate_contacts() {
+  global $user;
+  $company_name = $_POST['company_name'];
+
+  $company_nid = Bullseye::getAccountNidByName($company_name);
+  $contacts = Bullseye::getAccountPeople($company_nid);
+
+  $options = '';
+
+  foreach ($contacts as $key => $value) {
+    $name = $value->field_firstname_value . ' ' . $value->field_lastname_value;
+    $option = '<option value="' . $value->field_contacts_value . '">' . $name . '</option>';
+    $options .= $option;
+  }
+
+  echo $options;
+
 }
 
 /**

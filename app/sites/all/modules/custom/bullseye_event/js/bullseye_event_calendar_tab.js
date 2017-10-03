@@ -199,17 +199,36 @@
           e.preventDefault();
         });
 
-        /*$('#btn-save-activity').click(function(e) {
+        // For the company autocomplete.
+        $('#edit-company', context).bind('autocompleteSelect', function() {
+          var company_name = $('#edit-company').val();
+          $('#activity-select-contact').load('/be-event/populate-contacts', {company_name: company_name}, function() {
+            $.ajax({
+              url: '/be-event/get-company-nid',
+              method: 'POST',
+              data: {
+                company_name: company_name,
+              },
+              success: function(result){
+                $('#calendar-activity-company-nid').val(result).change();
+              },
+            });
+          });
+        });
+
+        $('#btn-save-activity').click(function(e) {
+          var company_name = $('#edit-company').val();
+          var company_nid = $('#calendar-activity-company-nid').val();
           var activity_name = $('#activity-name').val();
           var type = $('#activity-type').val();
-          var contact = $('#select-contact').val();
+          var contact = $('#activity-select-contact').val();
           var date = $('#activity-date').val();
 
           var proceed = false;
           var error = '';
 
-          if (type == '' || contact == '' || date == '') {
-            error = error + 'Type, Contact and Date fields are required.';
+          if (company_name = '' || type == '' || contact == '' || date == '') {
+            error = error + 'Company, Type, Contact and Date fields are required.';
             proceed = false;
           }
           else {
@@ -230,7 +249,7 @@
               url: '/be-event/save-activity',
               method: 'POST',
               data: {
-                nid: nid,
+                nid: company_nid,
                 activity_name: activity_name,
                 type: type,
                 contact: contact,
@@ -242,8 +261,8 @@
                 var success = 'Successfully added new activity.';
                 var div_success = '<div class="alert alert-success">' + close + success + '</div>';
                 $('.event-error-container').html(div_success);
-                $('#event-select-filter').val('all').change();
-                refreshRecentActivities('all');
+                $('#activity-select-filter').val('all').change();
+                refreshCalendarTabActivities('all', 0);
               },
             });
           }
@@ -252,7 +271,7 @@
           }
 
           e.preventDefault();
-        });*/
+        });
 
       });
    
