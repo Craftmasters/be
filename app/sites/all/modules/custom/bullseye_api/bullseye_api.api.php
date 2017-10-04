@@ -3620,7 +3620,7 @@ class Bullseye {
         ->distinct()
         ->fields('value', array('field_account_estimate_value_value'))
         ->condition('n.type', 'accounts', '=')
-        ->condition('uid.field_visibility_value', $be->uid, '=')
+        ->condition('uid.field_visibility_value', $uid, '=')
         ->condition($or)
         ->execute()
         ->fetchAll();
