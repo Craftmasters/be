@@ -3761,6 +3761,10 @@ class Bullseye {
 
   /**
    * Return the mapped months.
+   *
+   * @return array
+   *   An array of months formatted in abbrevated
+   *   months name as key and a numeric value.
    */
   private function months() {
     return array(
