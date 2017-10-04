@@ -9,7 +9,7 @@
  * Gmail connector email inbox page.
  */
 function gmail_connector_inbox() {
-  drupal_add_js('//code.jquery.com/jquery-1.11.3.min.js', 'external');
+  //drupal_add_js('//code.jquery.com/jquery-1.11.3.min.js', 'external');
   drupal_add_js('//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js', 'external');
   drupal_add_js(drupal_get_path('module', 'gmail_connector') . '/js/utilities.js');
   drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js', 'external');
