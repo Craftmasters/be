@@ -7,16 +7,18 @@
  * Implements hook_init().
  */
 function bullseye_dashboard_init() {
-  $wr = 0;
-  if (Bullseye::winRatioDashboard()) {
-    $wr = Bullseye::winRatioDashboard();
-  }
-  drupal_add_js(
-    array(
-      'dashboard' => array(
-        'win_ratio' => $wr,
+  if (drupal_is_front_page()) {
+    $wr = 0;
+    if (Bullseye::winRatioDashboard()) {
+      $wr = Bullseye::winRatioDashboard();
+    }
+    drupal_add_js(
+      array(
+        'dashboard' => array(
+          'win_ratio' => $wr,
+        ),
       ),
-    ),
-    array('type' =>'setting')
-  );
+      array('type' =>'setting')
+    );
+  }
 }
