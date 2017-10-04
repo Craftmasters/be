@@ -13,6 +13,8 @@ function bullseye_blocks_render_be_top_header() {
   global $user;
   global $base_url;
 
+  $be = new Bullseye($user);
+
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   // Condition for roles.
@@ -25,6 +27,8 @@ function bullseye_blocks_render_be_top_header() {
   if (isset($user->name)) {
     $vars['username'] = $user->name;
   }
+
+  $vars['roles'] = $be->getAccountRole();
 
   $vars['plus_icon'] = $base_url . '/' . $theme_directory . '/images/icons/plus.svg';
   $vars['envelope_icon'] = $base_url . '/' . $theme_directory . '/images/icons/mail.svg';
@@ -560,7 +564,7 @@ function bullseye_blocks_render_be_closed_deals() {
       'alias' => $alias,
       'status' => $account_status,
     );
-    
+
     // build the edit contact person link.
     $edit_link = '/edit/contact-person?';
     $edit_link .= 'existing_company=' . $value->nid;
@@ -808,7 +812,7 @@ function bullseye_blocks_render_be_create_event() {
   }
 
   if (arg(0) == 'calendar') {
-    
+
   }
 
   $output = theme('be_create_event', $vars);
