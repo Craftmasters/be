@@ -14,6 +14,12 @@
 
             <div class="event-error-container"> </div>
 
+            <?php if (arg(0) == 'calendar') : ?>
+              <?php $ct_activity = drupal_get_form('bullseye_event_calendar_tab_activity_form'); ?>
+              <?php print drupal_render($ct_activity); ?>
+              <input type="hidden" id="calendar-activity-company-nid" value="">
+            <?php endif; ?>
+
           	<div class="be-event-label">
           		<?php print t('Activity Name'); ?>
           	</div>
@@ -54,9 +60,7 @@
                       <?php endforeach; ?>
                     </select>
                   <?php else: ?>
-                    <select>
-                      <option value="1">James J.</option>
-                    </select>
+                    <select id="activity-select-contact"></select>
                   <?php endif; ?>
 		          	</div>
 		          </div>

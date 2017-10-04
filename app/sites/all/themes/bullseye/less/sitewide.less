@@ -1038,8 +1038,42 @@
     text-transform: uppercase;
   }
 
+  .be-block-no-content {
+    text-align: center;
+    margin: 40px 0px;
+    span {
+      font-size: 13px;
+      color: @dark_gray;
+      font-style: italic;
+      font-family: 'Proximanova-Light';
+    }
+  }
+
   .be-block-main {
     margin-top: 15px;
+  }
+
+  .be-block-pagination {
+    margin-top: 10px;
+    text-align: center;
+    button {
+      border: none;
+      background-color: transparent;
+      font-family: 'Proximanova-Regular';
+      color: @blue_gray;
+      font-weight: 900;
+      outline:none;
+      i {
+        font-size: 17px;
+        vertical-align: middle;
+        margin: 0 5px;
+      }
+      &:active,
+      &:visited,
+      &:link {
+        outline: none;
+      }
+    }
   }
 
 /*
