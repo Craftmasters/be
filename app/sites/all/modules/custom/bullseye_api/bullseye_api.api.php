@@ -3766,7 +3766,7 @@ class Bullseye {
    *   An array of months formatted in abbrevated
    *   months name as key and a numeric value.
    */
-  private function months() {
+  private static function months() {
     return array(
       'jan' => "01",
       'feb' => "02",
