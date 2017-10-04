@@ -3751,6 +3751,9 @@ class Bullseye {
 
   /**
    * Get the current month.
+   *
+   * @return
+   *   Unix timestamp.
    */
   public static function currentMonth($day) {
     return strtotime(date('Y-M-' . $day));
