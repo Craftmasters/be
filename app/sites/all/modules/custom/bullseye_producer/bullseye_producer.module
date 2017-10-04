@@ -343,18 +343,27 @@ function bullseye_producer_form($form, &$form_state) {
     '#title' => t('Producer Agreement'),
     '#type' => 'managed_file',
     '#default_value' => $pa,
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['current_health_life'] = array(
     '#title' => t('Current Health and Life'),
     '#type' => 'managed_file',
     '#default_value' => $hl,
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['attachments_container']['attachment']['errors_omission_insurance'] = array(
     '#title' => t('Errors and Omission Insurance'),
     '#type' => 'managed_file',
     '#default_value' => $eoi,
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('jpg jpeg png pdf doc docx ppt pptx xls xlsx'),
+    ),
   );
 
   $form['submit_container'] = array(
