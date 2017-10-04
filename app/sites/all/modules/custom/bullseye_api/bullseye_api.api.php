@@ -61,9 +61,8 @@ class Bullseye {
       return $profile->field_first_name[LANGUAGE_NONE][0]['value'];
     }
     else {
-      return '';
+      return t('Unknown');
     }
-
   }
 
   /**
@@ -580,7 +579,7 @@ class Bullseye {
    * Get company ids of leads assigned to a producer.
    */
   static function getProducerAccounts($uid) {
-    
+
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_visibility', 'vis', 'n.nid = vis.entity_id');
     $ids = $query
