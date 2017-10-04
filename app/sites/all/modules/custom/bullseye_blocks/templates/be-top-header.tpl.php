@@ -21,7 +21,7 @@
         <li><a href="/producer/add" rel="lightframe"><?php print t('Add New Producer'); ?></a></li>
         <li><a href="/carriers/add" rel="lightframe"><?php print t('Add New Carrier'); ?></a></li>
         <li><a href="/rfps/initial-add" rel="lightframe"><?php print t('Add New RFP'); ?></a></li>
-        <li><a href="/admin/config/services/mailchimp/campaigns"><?php print t('Add Campaign'); ?></a></li>
+        <li><a href="/admin/config/services/mailchimp/campaigns/add"><?php print t('Add Campaign'); ?></a></li>
       </ul>
     </li>
   </ul>
