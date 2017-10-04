@@ -3692,27 +3692,12 @@ class Bullseye {
 
     $uid = (is_null($uid)) ? $be->uid : $uid;
 
-    $months = array(
-      'jan' => "01",
-      'feb' => "02",
-      'mar' => "03",
-      'apr' => "04",
-      'may' => "05",
-      'jun' => "06",
-      'jul' => "07",
-      'aug' => "08",
-      'sep' => "09",
-      'oct' => "10",
-      'nov' => "11",
-      'dec' => "12",
-    );
-
     $revenue = array();
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
     if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
-      foreach ($months as $key => $month) {
+      foreach ($be->months() as $key => $month) {
         $mr = 0;
         $query = db_select('node', 'n');
         $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
@@ -3736,7 +3721,7 @@ class Bullseye {
       }
     }
     else {
-      foreach ($months as $key => $month) {
+      foreach ($be->months() as $key => $month) {
         $mr = 0;
         $query = db_select('node', 'n');
         $query->leftJoin('field_data_field_account_status', 'status', 'status.entity_id = n.nid');
@@ -3769,5 +3754,25 @@ class Bullseye {
    */
   public static function currentMonth($day) {
     return strtotime(date('Y-M-' . $day));
+  }
+
+  /**
+   * Return the mapped months.
+   */
+  private function months() {
+    return array(
+      'jan' => "01",
+      'feb' => "02",
+      'mar' => "03",
+      'apr' => "04",
+      'may' => "05",
+      'jun' => "06",
+      'jul' => "07",
+      'aug' => "08",
+      'sep' => "09",
+      'oct' => "10",
+      'nov' => "11",
+      'dec' => "12",
+    );
   }
 }
