@@ -15,7 +15,7 @@ function gmail_connector_inbox() {
   drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js', 'external');
   //drupal_add_js('//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js', 'external');
   drupal_add_css('//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css', 'external');
-  //drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/utilities.css');
+  drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/utilities.css');
   //drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/pace-theme-center-radar.css');
   //drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/bootstrap.css');
   $page = array();
