@@ -117,6 +117,13 @@ function bullseye_blocks_menu() {
     'type' => MENU_CALLBACK
   );
 
+  $items['mailchimp'] = array(
+    'title' => 'Mailchimp',
+    'page callback' => '_empty_page',
+    'access arguments' => array('access mailchimp page'),
+    'type' => MENU_CALLBACK
+  );
+
   return $items;
 }
 
@@ -176,6 +183,10 @@ function bullseye_blocks_permission() {
     'access files page' => array(
       'title' => t('Files Page'),
       'description' => t('Access the files page.'),
+    ),
+    'access mailchimp page' => array(
+      'title' => t('Mailchimp Page'),
+      'description' => t('Access the Mailchimp page.'),
     ),
   );
 }
@@ -417,6 +428,13 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Mailchimp Table Block.
+    'be_mailchimp' => array(
+      'variables' => array(),
+      'template' => 'be-mailchimp',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -608,6 +626,13 @@ function bullseye_blocks_block_info() {
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
+
+  // Mailchimp Table Block.
+  $blocks['be_mailchimp'] = array(
+    'info' => t('Mailchimp Block (Table)'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
   
   // Return block definitions.
   return $blocks;
@@ -649,7 +674,8 @@ function bullseye_blocks_preprocess_block(&$variables) {
         $variables['block']->delta == 'be_proposals' ||
         $variables['block']->delta == 'be_producers' ||
         $variables['block']->delta == 'be_carriers' ||
-        $variables['block']->delta == 'be_dashboard_statistics') {
+        $variables['block']->delta == 'be_dashboard_statistics' ||
+        $variables['block']->delta == 'be_mailchimp') {
       $variables['classes_array'][] = 'col-md-12';
     }
     if ($variables['block']->delta == 'be_dashboard_revenue' || 
