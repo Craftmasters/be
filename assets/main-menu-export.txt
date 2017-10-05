@@ -8,5 +8,6 @@ Accounts {"url":"accounts","options":{"attributes":{"class":["icon","be-building
 RFPs {"url":"rfps","options":{"attributes":{"class":["icon","be-checklist"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-47"}
 Proposals {"url":"proposals","options":{"attributes":{"class":["icon","be-document"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-46"}
 Producers {"url":"producers","options":{"attributes":{"class":["icon","be-users"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-45"}
-Carriers {"url":"carriers","options":{"attributes":{"class":["icon","be-bag"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-44"}
+Carriers {"url":"carriers","options":{"attributes":{"class":["icon","be-bag"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-43"}
 Calendar {"url":"calendar","options":{"attributes":{"class":["icon","be-calendar"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-48"}
+Campaigns {"url":"mailchimp","options":{"attributes":{"class":["icon","be-document"]},"item_attributes":{"id":"","class":"","style":""}},"weight":"-44"}
