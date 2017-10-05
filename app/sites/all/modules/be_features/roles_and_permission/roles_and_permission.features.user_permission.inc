@@ -141,6 +141,16 @@ function roles_and_permission_user_default_permissions() {
     'module' => 'bullseye_blocks',
   );
 
+  // Exported permission: 'access mailchimp page'.
+  $permissions['access mailchimp page'] = array(
+    'name' => 'access mailchimp page',
+    'roles' => array(
+      'admin' => 'admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'bullseye_blocks',
+  );
+
   // Exported permission: 'access producers page'.
   $permissions['access producers page'] = array(
     'name' => 'access producers page',

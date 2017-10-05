@@ -804,6 +804,65 @@ function context_layout_context_default_contexts() {
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
+  $context->name = 'mailchimp_blocks';
+  $context->description = '';
+  $context->tag = 'Blocks';
+  $context->conditions = array(
+    'context' => array(
+      'values' => array(
+        'mailchimp_page' => 'mailchimp_page',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'bullseye_blocks-be_mailchimp' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_mailchimp',
+          'region' => 'column_one',
+          'weight' => '-10',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Blocks');
+  $export['mailchimp_blocks'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'mailchimp_page';
+  $context->description = '';
+  $context->tag = 'Location';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        'mailchimp' => 'mailchimp',
+      ),
+    ),
+    'user' => array(
+      'values' => array(
+        'admin' => 'admin',
+        'administrator' => 'administrator',
+      ),
+    ),
+  );
+  $context->reactions = array();
+  $context->condition_mode = 1;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Location');
+  $export['mailchimp_page'] = $context;
+
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
   $context->name = 'pages_with_bullseye_theme';
   $context->description = 'All pages that needs to have the BullsEye theme to be put here.';
   $context->tag = 'Theme';
@@ -811,6 +870,7 @@ function context_layout_context_default_contexts() {
     'path' => array(
       'values' => array(
         'admin/content/leads/import' => 'admin/content/leads/import',
+        'admin/config/services/mailchimp/campaigns/add' => 'admin/config/services/mailchimp/campaigns/add',
       ),
     ),
   );
