@@ -29,7 +29,12 @@ function bullseye_blocks_render_be_top_header() {
   }
 
   $vars['roles'] = $be->getAccountRole();
-  $vars['fname'] = $be->getAccountFirstName();
+  if ($be->getAccountFirstName()) {
+    $vars['fname'] = $be->getAccountFirstName();
+  }
+  else {
+    $vars['fname'] = $be->getAccountFirstName();
+  }
 
   $vars['plus_icon'] = $base_url . '/' . $theme_directory . '/images/icons/plus.svg';
   $vars['envelope_icon'] = $base_url . '/' . $theme_directory . '/images/icons/mail.svg';
