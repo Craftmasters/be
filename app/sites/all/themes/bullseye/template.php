@@ -174,6 +174,20 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
         '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
         '#weight' => 0,
       );
+      case 'mailchimp_campaign_campaign_form':
+        $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+        $form['form_title'] = array(
+          '#prefix' => '<div class="form-title">',
+          '#suffix' => '</div>',
+          '#markup' => '<h2>' . t('Create New Campaign') . '</h2>',
+          '#weight' => -10,
+        );
+        $form['actions']['submit']['#value'] = t('Save');
+        $form['actions']['cancel'] = array(
+          '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+          '#weight' => 0,
+        );
+        break;
       break;
     default:
       break;
