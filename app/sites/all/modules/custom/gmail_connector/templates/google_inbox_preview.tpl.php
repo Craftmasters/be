@@ -8,7 +8,7 @@
   <?php print t('Authorize'); ?>
 </button>
   <button id="send-button" class="btn btn-primary hidden email-send" data-toggle="modal" data-target="#message-modal-compose">
-  <?php //print t('Compose'); ?>
+  <?php print t('Compose'); ?>
 </button>
 <table id="google-inbox" class="display" cellspacing="0" width="100%">
 </table>
