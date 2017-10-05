@@ -182,11 +182,14 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
           '#markup' => '<h2>' . t('Create New Campaign') . '</h2>',
           '#weight' => -10,
         );
-        $form['actions']['submit']['#value'] = t('Save');
+        $form['actions']['#type'] = 'container';
         $form['actions']['cancel'] = array(
           '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
           '#weight' => 0,
         );
+        $form['actions']['preview']['#weight'] = 1;
+        $form['actions']['preview']['#attributes']['class'][] = 'blue-gray-btn';
+        $form['actions']['save']['#weight'] = 2;
         break;
       break;
     default:
