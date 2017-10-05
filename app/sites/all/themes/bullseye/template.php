@@ -160,6 +160,21 @@ function bullseye_form_alter(&$form, &$form_state, $form_id) {
     case 'user_pass':
       $form['name']['#attributes']['placeholder'] = t('Enter your email or username');
       break;
+    case 'mailchimp_admin_settings':
+      $form['#attributes']['class'][] = 'be-forms be-forms-custom';
+      $form['form_title'] = array(
+        '#prefix' => '<div class="form-title">',
+        '#suffix' => '</div>',
+        '#markup' => '<h2>' . t('Create New Campaign') . '</h2>',
+        '#weight' => -10,
+      );
+      $form['mailchimp_api_key']['#attributes']['placeholder'] = t('Enter Mailchimp API Key ..');
+      $form['actions']['submit']['#value'] = t('Save');
+      $form['actions']['cancel'] = array(
+        '#markup' => '<a class="gray-btn" href="/" onClick="parent.Lightbox.end();">Cancel</a>',
+        '#weight' => 0,
+      );
+      break;
     default:
       break;
   }

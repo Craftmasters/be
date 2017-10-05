@@ -211,6 +211,7 @@ function bullseye_blocks_form_alter(&$form, &$form_state, $form_id) {
     'carriers_delete_form',
     'bullseye_event_edit_task',
     'bullseye_event_close_tasks',
+    'mailchimp_admin_settings',
   );
 
   // Default drupal forms.
