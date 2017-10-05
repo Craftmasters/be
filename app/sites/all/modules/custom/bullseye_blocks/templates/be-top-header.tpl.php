@@ -2,7 +2,7 @@
   <ul class="top-header-icons horizontal-list">
     <li class="top-header-li">
       <a href="#">
-        <span class="user-name"><?php print $username; ?><i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+        <span class="user-name"><?php print $fname; ?><i class="fa fa-sort-desc" aria-hidden="true"></i></span>
         <img class="user-pic" src="/sites/all/themes/bullseye/images/default-user.png">
       </a>
       <ul class="top-header-ul-children hide">
