@@ -3860,4 +3860,16 @@ class Bullseye {
       'dec' => "12",
     );
   }
+
+  /**
+   * Validate csv data during import.
+   */
+  public static function validAccountCsv($columns, $data) {
+    if (empty(array_diff($columns, $data))) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
 }
