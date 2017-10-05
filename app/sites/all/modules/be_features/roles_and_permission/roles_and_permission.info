@@ -28,6 +28,7 @@ features[user_permission][] = access accounts prospects page
 features[user_permission][] = access calendar page
 features[user_permission][] = access carriers page
 features[user_permission][] = access files page
+features[user_permission][] = access mailchimp page
 features[user_permission][] = access producers page
 features[user_permission][] = access producers pending page
 features[user_permission][] = access proposals page
