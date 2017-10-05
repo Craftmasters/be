@@ -845,6 +845,12 @@ function context_layout_context_default_contexts() {
         'mailchimp' => 'mailchimp',
       ),
     ),
+    'user' => array(
+      'values' => array(
+        'admin' => 'admin',
+        'administrator' => 'administrator',
+      ),
+    ),
   );
   $context->reactions = array();
   $context->condition_mode = 1;
