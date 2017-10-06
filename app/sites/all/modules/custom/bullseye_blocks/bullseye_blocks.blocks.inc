@@ -92,6 +92,9 @@ function bullseye_blocks_render_be_bottom_header() {
   elseif (arg(0) == 'gmail-connector') {
     $vars['be_page_title'] = t('Mailbox');
   }
+  elseif (arg(0) == 'mailchimp') {
+    $vars['be_page_title'] = t('Mailchimp');
+  }
 
   $output = theme('be_bottom_header', $vars);
 

@@ -22,7 +22,7 @@
         <li><a href="/carriers/add" rel="lightframe"><?php print t('Add New Carrier'); ?></a></li>
         <li><a href="/rfps/initial-add" rel="lightframe"><?php print t('Add New RFP'); ?></a></li>
         <?php if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)): ?>
-          <li><a href="/mailchimp"><?php print t('Add Campaign'); ?></a></li>
+          <li><a href="/admin/config/services/mailchimp/campaigns/add" rel="lightframe"><?php print t('Add Campaign'); ?></a></li>
         <?php endif; ?>
       </ul>
     </li>
