@@ -1188,11 +1188,13 @@ class Bullseye {
   /**
    * Get all prospects account.
    */
-  static function getProspectsAccounts() {
+  static function getProspectsAccounts($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -1234,7 +1236,7 @@ class Bullseye {
       }
     }
     else {
-      if ($cache = cache_get('prospect_accounts_listing_producer')) {
+      if ($cache = cache_get('prospect_accounts_listing_producer_' . $uid)) {
         $accounts = $cache->data;
       }
       else {
@@ -1251,7 +1253,7 @@ class Bullseye {
         $query->leftJoin('field_data_field_position', 'pos', 'contact.field_contacts_value = pos.entity_id');
         $query->leftJoin('field_data_field_profile_picture', 'pp', 'contact.field_contacts_value = pp.entity_id');
         $or = db_or();
-        $or->condition('uid.field_visibility_value', $be->uid, '=');
+        $or->condition('uid.field_visibility_value', $uid, '=');
         $or->condition('uid.field_visibility_value', 'visible_to_all', '=');
         $accounts = $query
           ->fields('n', array('nid', 'title'))
@@ -1272,7 +1274,7 @@ class Bullseye {
           ->execute()
           ->fetchAll();
 
-        cache_set('prospect_accounts_listing_producer', $accounts, 'cache');
+        cache_set('prospect_accounts_listing_producer_' . $uid, $accounts, 'cache');
       }
     }
 
@@ -2003,7 +2005,7 @@ class Bullseye {
 
     if ($total_invoice != 0 && $deals_closed != 0) {
       $ave = $total_invoice / $deals_closed;
-      return $ave;
+      return number_format($ave, 2);
     }
     else {
       return FALSE;
