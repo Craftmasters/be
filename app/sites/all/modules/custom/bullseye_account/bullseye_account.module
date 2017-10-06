@@ -1207,16 +1207,31 @@ function bullseye_account_permission() {
  * Clear the cache after update.
  */
 function bullseye_account_node_update($node) {
-  if ($node->type == 'accounts' && $node->field_account_status[LANGUAGE_NONE][0]['value'] == 'prospect') {
-    // Update the node.
-    node_save($node);
-    // Invalidate the existing cache to make sure that
-    // the newly added one will get indexed too.
+  if ($node->type == 'accounts') {
+    $producer_id = NULL;
     if (isset($node->field_visibility[LANGUAGE_NONE]) && is_numeric($node->field_visibility[LANGUAGE_NONE][0]['value'])) {
       $producer_id = $node->field_visibility[LANGUAGE_NONE][0]['value'];
     }
-    cache_clear_all('prospect_accounts_listing', 'cache');
-    cache_clear_all('prospect_accounts_listing', 'cache');
+
+    switch ($node->field_account_status[LANGUAGE_NONE][0]['value']) {
+      case 'prospect':
+        // Invalidate the existing cache to make sure that
+        // the newly added one will get indexed too.
+        cache_clear_all('prospect_accounts_listing', 'cache');
+        if (!is_null($producer_id)) {
+          cache_clear_all('prospect_accounts_listing_producer_' . $producer_id, 'cache');
+        }
+        break;
+
+      case 'opportunity':
+        // Invalidate the existing cache to make sure that
+        // the newly added one will get indexed too.
+        cache_clear_all('prospect_accounts_listing', 'cache');
+        if (!is_null($producer_id)) {
+          cache_clear_all('prospect_accounts_listing_producer_' . $producer_id, 'cache');
+        }
+        break;
+    }
   }
 }
 
