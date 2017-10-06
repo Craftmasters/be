@@ -803,7 +803,8 @@
               if ($(this).is('.yellow')) {
                 star = 'no';
               }
-              $.ajax({
+              current_i.toggleClass('yellow');
+              /*$.ajax({
                 url: '/star-contacts',
                 method: 'POST',
                 data: {
@@ -816,40 +817,9 @@
                 },
               }).fail(function(jqXHR, textStatus) {
                 console.log('fail');
-              });
+              });*/
             });
           });
-
-          /*$(window).unload(function(){
-            var starred = [];
-            $('i.starred').each(function() {
-              var contact_id = $(this).attr('data-contact-id');
-              var star = 'yes';
-              if ($(this).is('.yellow')) {
-                star = 'no';
-              }
-              var obj = {
-                'contact_id': contact_id,
-                'star': star,
-              };
-              starred.push(obj);
-            });
-
-            $.ajax({
-              url: '/star-contacts',
-              method: 'POST',
-              data: {
-                starred: starred,
-              },
-              success: function(result){
-                console.log(result);
-              },
-            }).fail(function(jqXHR, textStatus) {
-              console.log('fail');
-            });
-
-            console.log('hi');
-          });*/
     
         }
 
