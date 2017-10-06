@@ -121,6 +121,29 @@
         });
       }
 
+       /**
+       * Display the inbox.
+       */
+      function displaySentItems() {
+        var request = gapi.client.gmail.users.messages.list({
+          userId: 'me',
+          labelIds: 'SENT',
+          maxResults: Drupal.settings.gmail_connector.config.google_email_display
+        });
+
+        request.execute(function(response) {
+          data_length = response.messages.length;
+          $.each(response.messages, function() {
+            var messageRequest = gapi.client.gmail.users.messages.get({
+              userId: 'me',
+              id: this.id
+            });
+
+            messageRequest.execute(appendMessageRow);
+          });
+        });
+      }
+
       /**
        * Append message in a row.
        */
