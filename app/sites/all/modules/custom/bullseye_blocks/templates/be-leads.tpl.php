@@ -56,7 +56,7 @@
           <th><?php print t('Title'); ?></th>
           <th><?php print t('Company'); ?></th>
           <th><?php print t('Email'); ?></th>
-          <th><?php print t('Source'); ?></th>
+          <!--<th><?php //print //t('Source'); ?></th>-->
           <th><?php print t('Business Type'); ?></th>
           <!--<th><?php //print t('Contract'); ?></th>
           <th><?php //print t('Priority'); ?></th>-->
@@ -69,6 +69,7 @@
               <input class="be-table-checkbox" type="checkbox" value="<?php print $l->nid; ?>" data-contact-id="<?php print $l->field_contacts_value; ?>">
             </td>
             <td>
+              <i class="fa fa-star starred <?php print $l->starred; ?>" aria-hidden="true" data-contact-id="<?php print $l->field_contacts_value; ?>"></i>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $l->edit_link; ?>" rel="lightframe">
                 <span class="gray-font">
@@ -99,11 +100,11 @@
                 <?php print $l->field_email_value; ?>
               </span>
             </td>
-            <td>
+            <!--<td>
               <span class="light-gray-font">
-                <?php print $l->field_source_value; ?>
+                <?php //print $l->field_source_value; ?>
               </span>
-            </td>
+            </td>-->
             <td>
               <span class="light-gray-font">
                 <?php print $l->field_type_of_business_value; ?>

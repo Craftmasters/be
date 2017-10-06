@@ -874,6 +874,27 @@ class Bullseye {
   }
 
   /**
+   * Get all users that stared a particular contact.
+   */
+  static function getUsersThatStarredContact($cid) {
+    if ($cache = cache_get('starred_users_' . $cid)) {
+      $starred = $cache->data;
+    }
+    else {
+      $query_1 = db_select('field_data_field_starred', 'star');
+      $starred = $query_1
+        ->fields('star', array('field_starred_uid'))
+        ->condition('star.entity_id', $cid, '=')
+        ->execute()
+        ->fetchCol();
+        
+      cache_set('starred_users_' . $cid, $starred, 'cache');
+    }
+    
+    return $starred;
+  }
+
+  /**
    * Get all the accounts.
    */
   public static function getAllAccounts() {

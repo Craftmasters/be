@@ -1,4 +1,5 @@
 <div class="be-table-block">
+  <div class="be-table-loading"></div>
   <div class="be-table-top-header">
     <div class="row">
       <div class="col-md-6">
@@ -57,7 +58,7 @@
           <th><?php print t('Title'); ?></th>
           <th><?php print t('Company'); ?></th>
           <th><?php print t('Email'); ?></th>
-          <th><?php print t('Source'); ?></th>
+          <!--<th><?php //print t('Source'); ?></th>-->
           <th><?php print t('Business Type'); ?></th>
           <!--<th><?php //print t('Contract'); ?></th>
           <th><?php //print t('Priority'); ?></th>-->
@@ -70,6 +71,7 @@
               <input class="be-table-checkbox" type="checkbox" value="<?php print $a->nid; ?>" data-contact-id="<?php print $a->field_contacts_value; ?>">
             </td>
             <td>
+              <i class="fa fa-star starred <?php print $a->starred; ?>" aria-hidden="true" data-contact-id="<?php print $a->field_contacts_value; ?>"></i>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $a->edit_link; ?>" rel="lightframe">
                 <span class="gray-font">
@@ -100,11 +102,11 @@
                 <?php print $a->field_email_value; ?>
               </span>
             </td>
-            <td>
+            <!--<td>
               <span class="light-gray-font">
-                <?php print $a->field_source_value; ?>
+                <?php //print $a->field_source_value; ?>
               </span>
-            </td>
+            </td>-->
             <td>
               <span class="light-gray-font">
                 <?php print $a->field_type_of_business_value; ?>
