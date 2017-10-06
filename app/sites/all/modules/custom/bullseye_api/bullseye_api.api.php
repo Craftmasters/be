@@ -1340,11 +1340,13 @@ class Bullseye {
   /**
    * Get all opportunity account.
    */
-  static function getOpportunityAccounts() {
+  static function getOpportunityAccounts($uid = NULL) {
     global $user;
 
     // Initialize the class.
     $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
 
     // Check if the account is administrator.
     $roles = $be->getAccountRole();
@@ -1388,7 +1390,7 @@ class Bullseye {
       }
     }
     else {
-      if ($cache = cache_get('opportunity_accounts_listing_producer')) {
+      if ($cache = cache_get('opportunity_accounts_listing_producer_' . $uid)) {
         $accounts = $cache->data;
       }
       else {
@@ -1425,7 +1427,7 @@ class Bullseye {
           ->execute()
           ->fetchAll();
 
-        cache_set('opportunity_accounts_listing_producer', $accounts, 'cache');
+        cache_set('opportunity_accounts_listing_producer_' . $uid, $accounts, 'cache');
       }
     }
 
