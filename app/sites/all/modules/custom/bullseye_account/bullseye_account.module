@@ -1216,6 +1216,7 @@ function bullseye_account_node_update($node) {
       $producer_id = $node->field_visibility[LANGUAGE_NONE][0]['value'];
     }
     cache_clear_all('prospect_accounts_listing', 'cache');
+    cache_clear_all('prospect_accounts_listing', 'cache');
   }
 }
 
@@ -1230,7 +1231,7 @@ function bullseye_account_node_insert($node) {
     node_save($node);
     // Invalidate the existing cache to make sure that
     // the newly added one will get indexed too.
-    cache_clear_all('prospect_accounts_listing', 'cache');
+    //cache_clear_all('prospect_accounts_listing', 'cache');
     cache_clear_all('prospect_accounts_listing', 'cache');
   }
 }
