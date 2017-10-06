@@ -71,6 +71,7 @@
               <input class="be-table-checkbox" type="checkbox" value="<?php print $a->nid; ?>" data-contact-id="<?php print $a->field_contacts_value; ?>">
             </td>
             <td>
+              <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
               <i class="fa fa-star starred <?php print $a->starred; ?>" aria-hidden="true" data-contact-id="<?php print $a->field_contacts_value; ?>"></i>
               <img class="be-tables-user-pic" src="<?php print $profile_pictures[$key]; ?>">
               <a href="<?php print $a->edit_link; ?>" rel="lightframe">

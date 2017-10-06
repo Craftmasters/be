@@ -3680,6 +3680,65 @@ class Bullseye {
   }
 
   /**
+   * Save the Starred contacts from session.
+   */
+  static function saveStarredContacts() {
+    global $user;
+    if (isset($_SESSION['starred_contacts_' . $user->uid]) && !empty($_SESSION['starred_contacts_' . $user->uid])) {
+      $starred_contacts = $_SESSION['starred_contacts_' . $user->uid];
+
+      foreach ($starred_contacts as $key => $value) {
+        // Get the users that starred this contact.
+        $starred_users = Bullseye::getUsersThatStarredContact($value);
+        $exists = FALSE;
+
+        // Check if the current user is already saved as one of
+        // the users who starred this contact.
+        if (in_array($user->uid, $starred_users)) {
+          $exists = TRUE;
+        }
+
+        if ($value == 'yes') {
+          if (!$exists) {
+            $starred_users[] = $user->uid;
+          }
+        }
+        else {
+          if ($exists) {
+            foreach ($starred_users as $key1 => $value1) {
+              if ($value1 == $user->uid) {
+                unset($starred_users[$key1]);
+              }
+            }
+          }
+        }
+
+        $wrapper = entity_metadata_wrapper('field_collection_item', $key);
+        $wrapper->field_starred->set($starred_users);
+        $wrapper->save();
+        cache_clear_all('starred_users_' . $key, 'cache');
+      }
+      unset($_SESSION['starred_contacts_' . $user->uid]);
+    }
+  }
+
+  /**
+   * Get the starred contacts of a user.
+   */
+  static function getStarredContacts($uid) {
+    global $user;
+
+    $query = db_select('field_data_field_starred', 'star');
+    $cids = $query
+      ->fields('star', array('entity_id'))
+      ->condition('star.field_starred_uid', $uid, '=')
+      ->execute()
+      ->fetchCol();
+
+    return $cids;
+  }
+
+  /**
    * Get the revenue.
    *
    * @param int $uid

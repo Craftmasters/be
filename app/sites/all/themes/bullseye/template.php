@@ -13,6 +13,7 @@
  *   The name of the template being rendered ("html" in this case.)
  */
 function bullseye_preprocess_html(&$variables, $hook) {
+  Bullseye::saveStarredContacts();
   global $base_url;
   global $user;
 

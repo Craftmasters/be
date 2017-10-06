@@ -79,6 +79,12 @@ function bullseye_account_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['get-starred-contacts'] = array(
+    'page callback' => 'bullseye_account_get_starred_contacts',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -1266,7 +1272,6 @@ function bullseye_account_node_insert($node) {
   }
 }
 
-
 /**
  * Star the contact.
  */
@@ -1275,27 +1280,20 @@ function bullseye_account_star_contacts() {
 
   $contact_id = $_POST['contact_id'];
   $star = $_POST['star'];
+  $session_cn = 'starred_contacts_' . $user->uid;
 
-  $starred_users = Bullseye::getUsersThatStarredContact($contact_id);
-
-  if ($star == 'yes') {
-    $starred_users[] = $user->uid;
-  }
-  else {
-    foreach ($starred_users as $key => $value) {
-      if ($value == $user->uid) {
-        unset($starred_users[$key]);
-      }
-    }
-  }
-
-  $result = array_unique($starred_users);
-
-  cache_clear_all('starred_users_' . $contact_id, 'cache');
-
-  $cwrapper = entity_metadata_wrapper('field_collection_item', $contact_id);
-  $cwrapper->field_starred->set($result);
-  $cwrapper->save();
+  $_SESSION[$session_cn][$contact_id] = $star;
   
-  drupal_json_output($cwrapper);
+  drupal_json_output($_SESSION[$session_cn]);
+}
+
+/**
+ * Get the starred contacts of a user.
+ */
+function bullseye_account_get_starred_contacts() {
+  global $user;
+
+  $starred_contacts = Bullseye::getStarredContacts($user->uid);
+
+  drupal_json_output($starred_contacts);
 }

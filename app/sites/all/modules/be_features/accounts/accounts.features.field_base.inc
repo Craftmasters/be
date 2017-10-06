@@ -833,7 +833,7 @@ function accounts_field_default_field_bases() {
       'profile2_private' => FALSE,
       'referenceable_roles' => array(
         2 => 0,
-        3 => 0,
+        3 => 3,
         4 => 4,
         5 => 5,
       ),
