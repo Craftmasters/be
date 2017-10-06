@@ -342,12 +342,25 @@ function bullseye_current_progress_leads_form($form, &$form_state) {
 function convert_to_prospect($form, &$form_state) {
 
   // Setting the new statuses of the account.
-  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  /*$wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
   $wrapper->field_action_status->set('build_rapport');
-  $wrapper->field_workflow_status->set('engagement');
-  $wrapper->field_account_status->set('prospect');
-  //$wrapper->field_tags->set($tag_tids);
   $wrapper->save();
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_workflow_status->set('engagement');
+  $wrapper->save();
+
+  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  $wrapper->field_account_status->set('prospect');
+  $wrapper->save();*/
+
+  $node = node_load($form_state['values']['nid']);
+  $node->field_action_status[LANGUAGE_NONE][0]['value'] = 'build_rapport';
+  $node->field_workflow_status[LANGUAGE_NONE][0]['value'] = 'engagement';
+  $node->field_account_status[LANGUAGE_NONE][0]['value'] = 'prospect';
+  field_attach_presave('node', $node);
+  field_attach_update('node', $node);
+  entity_get_controller('node')->resetCache(array($node->nid));
 
   // Create an activity.
   Bullseye::createSystemGeneratedActivity('convert_to_prospect', $form_state['values']['nid']);
@@ -550,11 +563,19 @@ function bullseye_current_progress_prospects_form($form, &$form_state) {
  */
 function bullseye_current_progress_prospects_form_submit($form, &$form_state) {
   // Setting the new statuses of the account.
-  $wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  /*$wrapper = entity_metadata_wrapper('node', $form_state['values']['nid']);
   $wrapper->field_action_status->set('request_specifications');
   $wrapper->field_workflow_status->set('plan_specification');
   $wrapper->field_account_status->set('opportunity');
-  $wrapper->save();
+  $wrapper->save();*/
+
+  $node = node_load($form_state['values']['nid']);
+  $node->field_action_status[LANGUAGE_NONE][0]['value'] = 'request_specifications';
+  $node->field_workflow_status[LANGUAGE_NONE][0]['value'] = 'plan_specification';
+  $node->field_account_status[LANGUAGE_NONE][0]['value'] = 'opportunity';
+  field_attach_presave('node', $node);
+  field_attach_update('node', $node);
+  entity_get_controller('node')->resetCache(array($node->nid));
 
   // Create an activity.
   Bullseye::createSystemGeneratedActivity('convert_to_opportunity', $form_state['values']['nid']);

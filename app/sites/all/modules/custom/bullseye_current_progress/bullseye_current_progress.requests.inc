@@ -378,10 +378,12 @@ function be_cp_receive_feedback() {
   $action_status_condition = ($action_status == 'build_rapport' || $action_status == 'send_email');
 
   if ($account_status == 'prospect' && $workflow_status == 'engagement' && $action_status_condition) {
-    $wrapper->field_action_status->set('receive_feedback');
+    $node = node_load($nid);
+    $node->field_action_status[LANGUAGE_NONE][0]['value'] = 'receive_feedback';
+    field_attach_presave('node', $node);
+    field_attach_update('node', $node);
+    entity_get_controller('node')->resetCache(array($node->nid));
   }
-
-  $wrapper->save();
 
   drupal_json_output($wrapper);
 }
@@ -393,10 +395,12 @@ function be_cp_convert_to_opportunity() {
 
   $nid = $_POST['nid'];
 
-  $wrapper = entity_metadata_wrapper('node', $nid);
-  $wrapper->field_workflow_status->set('convert_to_opportunity');
-  $wrapper->field_client_interested->set('yes');
-  $wrapper->save();
+  $node = node_load($nid);
+  $node->field_workflow_status[LANGUAGE_NONE][0]['value'] = 'convert_to_opportunity';
+  $node->field_client_interested[LANGUAGE_NONE][0]['value'] = 'yes';
+  field_attach_presave('node', $node);
+  field_attach_update('node', $node);
+  entity_get_controller('node')->resetCache(array($node->nid));
 
   drupal_json_output($wrapper);
 }
