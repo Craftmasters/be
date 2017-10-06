@@ -762,6 +762,26 @@
                 producer_delete_link = producer_delete_link + id + ',';
                 carrier_delete_link = carrier_delete_link + id + ',';
               }
+              else {
+                if (assign_link != null) {
+                  assign_link = assign_link.replace(id + ',', '');
+                }
+                if (delete_link != null) {
+                  delete_link = delete_link.replace(contact_id + ',', '');
+                }
+                if (rfp_delete_link != null) {
+                  rfp_delete_link = rfp_delete_link.replace(id + ',', '');
+                }
+                if (proposal_delete_link != null) {
+                  proposal_delete_link = proposal_delete_link.replace(id + ',', '');
+                }
+                if (producer_delete_link != null) {
+                  producer_delete_link = producer_delete_link.replace(id + ',', '');
+                }
+                if (carrier_delete_link != null) {
+                  carrier_delete_link = carrier_delete_link.replace(id + ',', '');
+                }
+              }
               $('#producer-assign-link').attr('href', assign_link);
               $('#delete-accounts-link').attr('href', delete_link);
               $('#delete-rfps-link').attr('href', rfp_delete_link);
