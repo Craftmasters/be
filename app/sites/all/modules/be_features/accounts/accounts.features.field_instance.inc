@@ -472,6 +472,42 @@ function accounts_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'field_collection_item-field_contacts-field_starred'.
+  $field_instances['field_collection_item-field_contacts-field_starred'] = array(
+    'bundle' => 'field_contacts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'user_reference',
+        'settings' => array(),
+        'type' => 'user_reference_default',
+        'weight' => 16,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_starred',
+    'label' => 'Starred',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'user_reference',
+      'settings' => array(
+        'autocomplete_match' => 'contains',
+        'autocomplete_path' => 'user_reference/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'user_reference_autocomplete',
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance:
   // 'field_collection_item-field_contacts-field_suffix'.
   $field_instances['field_collection_item-field_contacts-field_suffix'] = array(
     'bundle' => 'field_contacts',
@@ -1960,6 +1996,7 @@ function accounts_field_default_field_instances() {
   t('Setup Fee Items');
   t('Setup Fee Notes');
   t('Source');
+  t('Starred');
   t('State Code');
   t('States');
   t('Street');

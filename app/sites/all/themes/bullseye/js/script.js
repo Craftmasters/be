@@ -792,6 +792,67 @@
           });
         }
 
+        // For starring a contact in accounts, leads and prospects.
+        if ($('i.starred').length) {
+
+          $('i.starred').each(function() {
+            $(this).click(function() {
+              var current_i = $(this);
+              var contact_id = $(this).attr('data-contact-id');
+              var star = 'yes';
+              if ($(this).is('.yellow')) {
+                star = 'no';
+              }
+              $.ajax({
+                url: '/star-contacts',
+                method: 'POST',
+                data: {
+                  contact_id: contact_id,
+                  star: star,
+                },
+                success: function(result){
+                  console.log(result);
+                  current_i.toggleClass('yellow');
+                },
+              }).fail(function(jqXHR, textStatus) {
+                console.log('fail');
+              });
+            });
+          });
+
+          /*$(window).unload(function(){
+            var starred = [];
+            $('i.starred').each(function() {
+              var contact_id = $(this).attr('data-contact-id');
+              var star = 'yes';
+              if ($(this).is('.yellow')) {
+                star = 'no';
+              }
+              var obj = {
+                'contact_id': contact_id,
+                'star': star,
+              };
+              starred.push(obj);
+            });
+
+            $.ajax({
+              url: '/star-contacts',
+              method: 'POST',
+              data: {
+                starred: starred,
+              },
+              success: function(result){
+                console.log(result);
+              },
+            }).fail(function(jqXHR, textStatus) {
+              console.log('fail');
+            });
+
+            console.log('hi');
+          });*/
+    
+        }
+
         // Load the producer pending count if admin.
         if ($('body.administrator').length || $('body.admin').length) {
           $.ajax({

@@ -368,6 +368,7 @@ function _import_account($data, $type) {
       $cwrapper->field_personal_website->set(trim($row[23]));
       $cwrapper->field_facebook_personal->set(trim($row[25]));
       $cwrapper->field_linkedin_personal->set(trim($row[24]));
+      $cwrapper->field_starred->set(array());
 
       // Save field collection.
       $cwrapper->save();

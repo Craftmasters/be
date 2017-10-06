@@ -73,6 +73,12 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['star-contacts'] = array(
+    'page callback' => 'bullseye_account_star_contacts',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -836,6 +842,15 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   $cwrapper->field_facebook_personal->set($facebook);
   $cwrapper->field_details->set($description);
 
+  // Saving the starred field.
+  if (isset($_GET['contact_id']) && !empty($_GET['contact_id'])) {
+    $starred = $cwrapper->field_starred->value();
+    $cwrapper->field_starred->set($starred);
+  }
+  else {
+    $cwrapper->field_starred->set(array());
+  }
+
   // Producer Agreement file.
   if ($form_state['values']['profile_picture'] != 0) {
     $pp_file = file_load($form_state['values']['profile_picture']);
@@ -1234,4 +1249,38 @@ function bullseye_account_node_insert($node) {
     //cache_clear_all('prospect_accounts_listing', 'cache');
     cache_clear_all('prospect_accounts_listing', 'cache');
   }
+}
+
+
+/**
+ * Star the contact.
+ */
+function bullseye_account_star_contacts() {
+  global $user;
+
+  $contact_id = $_POST['contact_id'];
+  $star = $_POST['star'];
+
+  $starred_users = Bullseye::getUsersThatStarredContact($contact_id);
+
+  if ($star == 'yes') {
+    $starred_users[] = $user->uid;
+  }
+  else {
+    foreach ($starred_users as $key => $value) {
+      if ($value == $user->uid) {
+        unset($starred_users[$key]);
+      }
+    }
+  }
+
+  $result = array_unique($starred_users);
+
+  cache_clear_all('starred_users_' . $contact_id, 'cache');
+
+  $cwrapper = entity_metadata_wrapper('field_collection_item', $contact_id);
+  $cwrapper->field_starred->set($result);
+  $cwrapper->save();
+  
+  drupal_json_output($cwrapper);
 }

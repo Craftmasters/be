@@ -10,6 +10,7 @@
  * Top Header Block.
  */
 function bullseye_blocks_render_be_top_header() {
+
   global $user;
   global $base_url;
 
@@ -160,6 +161,15 @@ function bullseye_blocks_render_be_accounts() {
     $edit_link .= '&contact_id=' . $value->field_contacts_value;
 
     $vars['accounts'][$key]->edit_link = $edit_link;
+
+    // For the stars.
+    $starred_users = Bullseye::getUsersThatStarredContact($value->field_contacts_value);
+    $vars['accounts'][$key]->starred = '';
+    foreach ($starred_users as $key2 => $value2) {
+      if ($value2 == $user->uid) {
+        $vars['accounts'][$key]->starred = 'yellow';
+      }
+    }
   }
 
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
@@ -235,6 +245,15 @@ function bullseye_blocks_render_be_leads() {
     $edit_link .= '&contact_id=' . $value->field_contacts_value;
 
     $vars['leads'][$key]->edit_link = $edit_link;
+
+    // For the stars.
+    $starred_users = Bullseye::getUsersThatStarredContact($value->field_contacts_value);
+    $vars['leads'][$key]->starred = '';
+    foreach ($starred_users as $key2 => $value2) {
+      if ($value2 == $user->uid) {
+        $vars['leads'][$key]->starred = 'yellow';
+      }
+    }
   }
 
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));
@@ -310,6 +329,15 @@ function bullseye_blocks_render_be_prospects() {
     $edit_link .= '&contact_id=' . $value->field_contacts_value;
 
     $vars['prospects'][$key]->edit_link = $edit_link;
+
+    // For the stars.
+    $starred_users = Bullseye::getUsersThatStarredContact($value->field_contacts_value);
+    $vars['prospects'][$key]->starred = '';
+    foreach ($starred_users as $key2 => $value2) {
+      if ($value2 == $user->uid) {
+        $vars['prospects'][$key]->starred = 'yellow';
+      }
+    }
   }
 
   $producer = (is_array($user->roles) && in_array('producer', array_values($user->roles)));

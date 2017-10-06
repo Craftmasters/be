@@ -815,6 +815,42 @@ function accounts_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_starred'.
+  $field_bases['field_starred'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_starred',
+    'indexes' => array(
+      'uid' => array(
+        0 => 'uid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'user_reference',
+    'settings' => array(
+      'profile2_private' => FALSE,
+      'referenceable_roles' => array(
+        2 => 0,
+        3 => 0,
+        4 => 4,
+        5 => 5,
+      ),
+      'referenceable_status' => array(
+        0 => 0,
+        1 => 1,
+      ),
+      'view' => array(
+        'args' => array(),
+        'display_name' => '',
+        'view_name' => '',
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'user_reference',
+  );
+
   // Exported field_base: 'field_state_code'.
   $field_bases['field_state_code'] = array(
     'active' => 1,
