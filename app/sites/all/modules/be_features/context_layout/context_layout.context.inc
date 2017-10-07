@@ -622,6 +622,18 @@ function context_layout_context_default_contexts() {
           'region' => 'column_one',
           'weight' => '-8',
         ),
+        'bullseye_blocks-be_mailbox' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_mailbox',
+          'region' => 'column_one',
+          'weight' => '-7',
+        ),
+        'bullseye_blocks-be_starred_contacts' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_starred_contacts',
+          'region' => 'column_one',
+          'weight' => '-6',
+        ),
       ),
     ),
   );
@@ -694,6 +706,18 @@ function context_layout_context_default_contexts() {
           'delta' => 'be_dashboard_performance',
           'region' => 'column_one',
           'weight' => '-8',
+        ),
+        'bullseye_blocks-be_mailbox' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_mailbox',
+          'region' => 'column_one',
+          'weight' => '-7',
+        ),
+        'bullseye_blocks-be_starred_contacts' => array(
+          'module' => 'bullseye_blocks',
+          'delta' => 'be_starred_contacts',
+          'region' => 'column_one',
+          'weight' => '-6',
         ),
       ),
     ),
