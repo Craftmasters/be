@@ -74,8 +74,11 @@
         // For refreshing the contents of starred contacts block.
         function refreshStarredContacts(offset) {
           $('#dashboard-starred-contacts').load('/be-star/starred-contacts', {offset: offset}, function() {
-            
           });
+        }
+
+        if ($('#dashboard-starred-contacts').length) {
+          refreshStarredContacts(0);
         }
 
         // Starred Contacts pagination - previous button.
