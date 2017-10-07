@@ -1,0 +1,70 @@
+<?php
+/**
+ * Bullseye star module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bullseye_star_menu() {
+  $items = array();
+
+  $items['star-contacts'] = array(
+    'page callback' => 'bullseye_star_star_contacts',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['get-starred-contacts'] = array(
+    'page callback' => 'bullseye_star_get_starred_contacts',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Override or insert variables into the page templates.
+ */
+function bullseye_star_preprocess_page(&$vars, $hook) {
+  global $base_url;
+  $dir = drupal_get_path('module', 'bullseye_star');
+
+  $accounts = (arg(0) == 'accounts' && empty(arg(1)));
+  $leads = (arg(0) == 'accounts' && arg(1) == 'leads');
+  $prospects = (arg(0) == 'accounts' && arg(1) == 'prospects');
+
+  // For company page.
+  if ($accounts || $leads || $prospects) {
+    $js_path = $base_url . '/' . $dir . '/js/bullseye_star.js';
+    drupal_add_js($js_path);
+  }
+
+}
+
+/**
+ * Star the contact.
+ */
+function bullseye_star_star_contacts() {
+  global $user;
+
+  $contact_id = $_POST['contact_id'];
+  $star = $_POST['star'];
+  $session_cn = 'starred_contacts_' . $user->uid;
+
+  $_SESSION[$session_cn][$contact_id] = $star;
+  
+  drupal_json_output($_SESSION[$session_cn]);
+}
+
+/**
+ * Get the starred contacts of a user.
+ */
+function bullseye_star_get_starred_contacts() {
+  global $user;
+
+  $starred_contacts = Bullseye::getStarredContacts($user->uid);
+
+  drupal_json_output($starred_contacts);
+}

@@ -542,3 +542,10 @@ function bullseye_deploy_update_7047() {
 function bullseye_deploy_update_7048() {
   variable_set('producer_agreement_link', 'https://app.hellosign.com/s/dfc95075');
 }
+
+/**
+ * Install bullseye_star module.
+ */
+function bullseye_deploy_update_7049() {
+  module_enable(array('bullseye_star'), TRUE);
+}

@@ -73,18 +73,6 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['star-contacts'] = array(
-    'page callback' => 'bullseye_account_star_contacts',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-
-  $items['get-starred-contacts'] = array(
-    'page callback' => 'bullseye_account_get_starred_contacts',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-
   return $items;
 }
 
@@ -1270,30 +1258,4 @@ function bullseye_account_node_insert($node) {
     //cache_clear_all('prospect_accounts_listing', 'cache');
     cache_clear_all('prospect_accounts_listing', 'cache');
   }
-}
-
-/**
- * Star the contact.
- */
-function bullseye_account_star_contacts() {
-  global $user;
-
-  $contact_id = $_POST['contact_id'];
-  $star = $_POST['star'];
-  $session_cn = 'starred_contacts_' . $user->uid;
-
-  $_SESSION[$session_cn][$contact_id] = $star;
-  
-  drupal_json_output($_SESSION[$session_cn]);
-}
-
-/**
- * Get the starred contacts of a user.
- */
-function bullseye_account_get_starred_contacts() {
-  global $user;
-
-  $starred_contacts = Bullseye::getStarredContacts($user->uid);
-
-  drupal_json_output($starred_contacts);
 }

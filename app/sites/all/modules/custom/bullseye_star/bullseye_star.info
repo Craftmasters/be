@@ -1,0 +1,5 @@
+name = BullsEye Star
+description = BullsEye module to handle starring of contacts in accounts, leads and prospects listings.
+package = BullsEye
+core = 7.x
+version = 7.x-1.0
