@@ -43,10 +43,10 @@
   <div class="be-block-pagination">
   	<input type="hidden" id="task-data-offset" value="0">
   	<button type="button" id="task-prev" title="previous">
-  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>prev
+  		<i class="fa fa-caret-left" aria-hidden="true"></i>prev
   	</button>
   	<button type="button" id="task-next" title="next">
-  		next<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+  		next<i class="fa fa-caret-right" aria-hidden="true"></i>
   	</button>
   </div>
 </div>

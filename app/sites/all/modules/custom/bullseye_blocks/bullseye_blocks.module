@@ -436,6 +436,20 @@ function bullseye_blocks_theme() {
       'path' => $template_path,
     ),
 
+    // Mailchimp Table Block.
+    'be_mailbox' => array(
+      'variables' => array(),
+      'template' => 'be-mailbox',
+      'path' => $template_path,
+    ),
+
+    // Mailchimp Table Block.
+    'be_starred_contacts' => array(
+      'variables' => array(),
+      'template' => 'be-starred-contacts',
+      'path' => $template_path,
+    ),
+
   );
 }
 
@@ -634,6 +648,20 @@ function bullseye_blocks_block_info() {
     'cache' => DRUPAL_NO_CACHE,
     'status' => 0,
   );
+
+  // Mailbox Block.
+  $blocks['be_mailbox'] = array(
+    'info' => t('Dashboard - Mailbox Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
+
+  // Starred Contacts Block.
+  $blocks['be_starred_contacts'] = array(
+    'info' => t('Dashboard - Starred Contacts Block'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 0,
+  );
   
   // Return block definitions.
   return $blocks;
@@ -680,7 +708,9 @@ function bullseye_blocks_preprocess_block(&$variables) {
       $variables['classes_array'][] = 'col-md-12';
     }
     if ($variables['block']->delta == 'be_dashboard_revenue' || 
-        $variables['block']->delta == 'be_dashboard_performance') {
+        $variables['block']->delta == 'be_dashboard_performance' ||
+        $variables['block']->delta == 'be_mailbox' ||
+        $variables['block']->delta == 'be_starred_contacts') {
       $variables['classes_array'][] = 'col-md-6';
     }
   }

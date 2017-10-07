@@ -71,6 +71,35 @@
     
         }
 
+        // For refreshing the contents of starred contacts block.
+        function refreshStarredContacts(offset) {
+          $('#dashboard-starred-contacts').load('/be-star/starred-contacts', {offset: offset}, function() {
+            
+          });
+        }
+
+        // Starred Contacts pagination - previous button.
+        $('#starred-prev').click(function(e) {
+          var offset = $('#starred-contacts-data-offset').val();
+          if (parseInt(offset) > 0) {
+            var new_offset = parseInt(offset) - 10;
+            $('#starred-contacts-data-offset').val(new_offset);
+            refreshStarredContacts(new_offset);
+          }
+          e.preventDefault();
+        });
+
+        // Starred Contacts pagination - previous button.
+        $('#starred-next').click(function(e) {
+          var offset = $('#starred-contacts-data-offset').val();
+          if ($('#dashboard-starred-contacts tr').length == 10) {
+            var new_offset = parseInt(offset) + 10;
+            $('#starred-contacts-data-offset').val(new_offset);
+            refreshStarredContacts(new_offset);
+          }
+          e.preventDefault();
+        });
+
       });
    
     }

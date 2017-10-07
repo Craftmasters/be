@@ -2990,6 +2990,38 @@ class Bullseye {
   }
 
   /**
+   * Get all starred contacts of a user (Complete).
+   */
+  static function getStarredContactsComplete($uid, $offset) {
+    $cids = Bullseye::getStarredContacts($uid);
+    $contacts = array();
+    if (!empty($cids)) {
+      $query = db_select('field_data_field_contacts', 'con');
+      $query->leftJoin('field_data_field_firstname', 'fname', 'con.field_contacts_value = fname.entity_id');
+      $query->leftJoin('field_data_field_lastname', 'lname', 'con.field_contacts_value = lname.entity_id');
+      $query->leftJoin('field_data_field_position', 'pos', 'con.field_contacts_value = pos.entity_id');
+      $query->leftJoin('field_data_field_mobile_phone', 'mphone', 'con.field_contacts_value = mphone.entity_id');
+      $query->leftJoin('field_data_field_email', 'email', 'con.field_contacts_value = email.entity_id');
+      $query->leftJoin('field_data_field_if_primary_contact', 'pc', 'con.field_contacts_value = pc.entity_id');
+      $query->leftJoin('field_data_field_profile_picture', 'pp', 'con.field_contacts_value = pp.entity_id');
+      $contacts = $query
+        ->fields('con', array('field_contacts_value', 'entity_id'))
+        ->fields('fname', array('field_firstname_value'))
+        ->fields('lname', array('field_lastname_value'))
+        ->fields('pos', array('field_position_value'))
+        ->fields('mphone', array('field_mobile_phone_value'))
+        ->fields('email', array('field_email_value'))
+        ->fields('pc', array('field_if_primary_contact_value'))
+        ->fields('pp', array('field_profile_picture_fid'))
+        ->condition('con.field_contacts_value', $cids, 'IN')
+        ->range($offset, 10)
+        ->execute()
+        ->fetchAll();
+    }
+    return $contacts;
+  }
+
+  /**
    * Get the company id of the contact.
    */
   static function getCompanyNidOfContact($cid) {

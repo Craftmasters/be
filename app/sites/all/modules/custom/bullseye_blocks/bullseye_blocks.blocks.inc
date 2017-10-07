@@ -1359,3 +1359,67 @@ function bullseye_blocks_render_be_mailchimp() {
     'content' => $output,
   );
 }
+
+/**
+ * Mailbox Block.
+ */
+function bullseye_blocks_render_be_mailbox() {
+  global $base_url, $user;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $output = theme('be_mailbox', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}
+
+/**
+ * Starred Contacts Block.
+ */
+function bullseye_blocks_render_be_starred_contacts() {
+  global $base_url, $user;
+
+  $theme_directory = path_to_theme('theme', 'bullseye');
+
+  $vars = array();
+
+  $starred_contacts = Bullseye::getStarredContactsComplete($user->uid, 0);
+  $vars['starred_contacts'] = array();
+
+  foreach ($starred_contacts as $key => $value) {
+
+    // Company name.
+    $value->company_name = Bullseye::getCompanyNameByNid($value->entity_id);
+
+    // For the company link.
+    $account_status = Bullseye::getAccountStatusByNid($value->entity_id);
+    if ($account_status == '') {
+      $account_status = 'lead';
+    }
+    $alias = drupal_get_path_alias('node/' . $value->entity_id);
+    $alias = substr($alias, 8);
+    $value->company_link = '/company/' . $alias . '?from=' . $account_status;
+
+    // Build the edit contact person link.
+    $edit_link = '/edit/contact-person?';
+    $edit_link .= 'existing_company=' . $value->entity_id;
+    $edit_link .= '&account_status=' . $account_status;
+    $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+    $value->edit_link = $edit_link;
+
+    $vars['starred_contacts'][$key] = $value;
+  }
+
+  $output = theme('be_starred_contacts', $vars);
+
+  return array(
+    'subject' => '',
+    'content' => $output,
+  );
+}

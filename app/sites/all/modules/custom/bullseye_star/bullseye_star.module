@@ -21,6 +21,12 @@ function bullseye_star_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['be-star/starred-contacts'] = array(
+    'page callback' => 'bullseye_star_get_starred_contacts_complete',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -28,19 +34,39 @@ function bullseye_star_menu() {
  * Override or insert variables into the page templates.
  */
 function bullseye_star_preprocess_page(&$vars, $hook) {
-  global $base_url;
+  global $base_url, $user;
   $dir = drupal_get_path('module', 'bullseye_star');
 
   $accounts = (arg(0) == 'accounts' && empty(arg(1)));
   $leads = (arg(0) == 'accounts' && arg(1) == 'leads');
   $prospects = (arg(0) == 'accounts' && arg(1) == 'prospects');
+  $dashboard = (!empty($user) &&  drupal_is_front_page());
 
   // For company page.
-  if ($accounts || $leads || $prospects) {
+  if ($accounts || $leads || $prospects || $dashboard) {
     $js_path = $base_url . '/' . $dir . '/js/bullseye_star.js';
     drupal_add_js($js_path);
   }
 
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bullseye_star_theme() {
+  // Init vars.
+  $template_path = drupal_get_path('module', 'bullseye_star') . '/templates';
+
+  // Return theme definitions.
+  return array(
+
+    'be_starred_contacts_rows' => array(
+      'variables' => array(),
+      'template' => 'be-starred-contacts-rows',
+      'path' => $template_path,
+    ),
+
+  );
 }
 
 /**
@@ -67,4 +93,49 @@ function bullseye_star_get_starred_contacts() {
   $starred_contacts = Bullseye::getStarredContacts($user->uid);
 
   drupal_json_output($starred_contacts);
+}
+
+/**
+ * Get the starred contacts of a user (Complete).
+ */
+function bullseye_star_get_starred_contacts_complete() {
+  global $user;
+
+  $offset = $_POST['offset'];
+
+  $vars = array();
+
+  $starred_contacts = Bullseye::getStarredContactsComplete($user->uid, $offset);
+  $vars['starred_contacts'] = array();
+
+  if (!empty($starred_contacts)) {
+    foreach ($starred_contacts as $key => $value) {
+
+      // Company name.
+      $value->company_name = Bullseye::getCompanyNameByNid($value->entity_id);
+
+      // For the company link.
+      $account_status = Bullseye::getAccountStatusByNid($value->entity_id);
+      if ($account_status == '') {
+        $account_status = 'lead';
+      }
+      $alias = drupal_get_path_alias('node/' . $value->entity_id);
+      $alias = substr($alias, 8);
+      $value->company_link = '/company/' . $alias . '?from=' . $account_status;
+
+      // Build the edit contact person link.
+      $edit_link = '/edit/contact-person?';
+      $edit_link .= 'existing_company=' . $value->entity_id;
+      $edit_link .= '&account_status=' . $account_status;
+      $edit_link .= '&contact_id=' . $value->field_contacts_value;
+
+      $value->edit_link = $edit_link;
+
+      $vars['starred_contacts'][$key] = $value;
+    }
+  }
+
+  $output = theme('be_starred_contacts_rows', $vars);
+
+  echo $output;
 }
