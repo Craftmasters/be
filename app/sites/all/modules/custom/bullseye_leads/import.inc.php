@@ -12,6 +12,12 @@ function bullseye_leads_import_leads($form, &$form_state) {
 
   $form = array();
 
+  $import_type = 'leads';
+
+  if (isset($_GET['default']) && $_GET['default'] == 'prospect') {
+    $import_type = 'prospects';
+  }
+
   $form['#attributes']['class'][] = 'be-forms be-forms-custom';
 
   $form['form_title'] = array(
@@ -31,6 +37,7 @@ function bullseye_leads_import_leads($form, &$form_state) {
     '#title' => t('Account Type'),
     '#type' => 'select',
     '#options' => $form['type_options']['#value'],
+    '#default_value' => $import_type,
   );
 
   $form['csv_file'] = array(

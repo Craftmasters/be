@@ -4,6 +4,7 @@
       <div class="col-md-6">
         <span class="account-count"><?php print t('All Prospects (' . $total . ')'); ?></span>
         <a class="be-table-button"  data-toggle="modal" data-target="#add-new-account"><?php print t('Add New Prospect'); ?></a>
+        <a class="be-table-button" href="/admin/content/leads/import?default=prospect" rel="lightframe"><?php print t('Import'); ?></a>
 
         <div id="add-new-account" class="modal be-bs-modal" role="dialog">
           <div class="modal-dialog">
