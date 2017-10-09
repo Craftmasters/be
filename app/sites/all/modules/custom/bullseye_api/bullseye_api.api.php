@@ -2597,6 +2597,7 @@ class Bullseye {
       ->condition('n.type', 'task', '=')
       ->condition('et.field_event_type_value', 'task', '=')
       ->condition('a.field_account_nid', NULL)
+      ->orderBy('ts.field_task_status_value', 'DESC')
       ->orderBy('d.field_due_date_value', 'DESC')
       ->range($offset, 10)
       ->execute()
