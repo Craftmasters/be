@@ -73,7 +73,34 @@ function bullseye_account_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['be-accounts-get-companies'] = array(
+    'page callback' => 'be_accounts_get_companies',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
+}
+
+/**
+ * Callback for the autocomplete company field.
+ */
+function be_accounts_get_companies($text) {
+  $results = array();
+
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_visibility', 'vis', 'n.nid = vis.entity_id');
+  $query->fields('n', array('nid', 'title'))
+    ->condition('n.type', 'accounts', '=')
+    ->condition('n.status', 1, '=')
+    ->condition('n.title', '%' . db_like($text) . '%', 'LIKE');
+  $accounts = $query->range(0, 10)->execute();
+
+  foreach ($accounts as $key => $value) {
+    $results[$value->title] = check_plain($value->title);
+  }
+
+  drupal_json_output($results);
 }
 
 /**
@@ -102,24 +129,14 @@ function select_existing_company($form, &$form_state) {
   $form['form_title'] = array(
     '#prefix' => '<div class="form-title">',
     '#suffix' => '</div>',
-    '#markup' => '<h2>' . t('Select the existing company for the new ' . $label) . '</h2>',
+    '#markup' => '<h2>' . t('Please enter company name.') . '</h2>',
   );
 
-  $form['account'] = array(
-    '#required' => TRUE,
-    '#type' => 'entityreference',
-    '#era_entity_type' => 'node',
-    '#era_bundles' => array('accounts'),
-    '#era_cardinality' => 1,
-    '#era_query_settings' => array(
-      'limit' => 15, // Default is 50.
-      'property_conditions' => array(
-        array('status', 1, '='),
-      ),
-      'field_conditions' => array(),
-    ),
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#autocomplete_path' => 'be-accounts-get-companies',
     '#attributes' => array(
-      'placeholder' => t('Enter existing company'),
+      'placeholder' => t('Enter company name ..'),
     ),
   );
 
@@ -147,30 +164,47 @@ function select_existing_company($form, &$form_state) {
  */
 function select_existing_company_submit($form, &$form_state) {
 
-  $nid = $form_state['values']['account']['entity_id'];
-  $account_status = Bullseye::getAccountStatusByNid($nid);
+  $company = $form_state['values']['company'];
+  $nid = Bullseye::getAccountNidByName($company);
+  //$nid = $form_state['values']['account']['entity_id'];
+  
+  if (!empty($nid) && $nid != '') {
+    $account_status = Bullseye::getAccountStatusByNid($nid);
+    $arg = $account_status;
 
-  $arg = $account_status;
+    if ($account_status == 'deal_in_progress') {
+      $arg = 'deal-in-progress';
+    }
+    if ($account_status == 'closed_deal') {
+      $arg = 'closed-deal';
+    }
+    if ($arg == '') {
+      $arg = 'lead';
+    }
 
-  if ($account_status == 'deal_in_progress') {
-    $arg = 'deal-in-progress';
+    $param = array(
+      'query' => array(
+        'existing_company' => $nid,
+        'account_status' => $account_status,
+      )
+    );
+
+    // Go to the add new lead modal.
+    drupal_goto('accounts/new/' . $arg, $param);
   }
-  if ($account_status == 'closed_deal') {
-    $arg = 'closed-deal';
-  }
-  if ($arg == '') {
-    $arg = 'lead';
-  }
+  else {
+    $account_status = $_GET['from'];
 
-  $param = array(
-    'query' => array(
-      'existing_company' => $nid,
-      'account_status' => $account_status,
-    )
-  );
+    $param = array(
+      'query' => array(
+        'new_company_name' => $company,
+      )
+    );
 
-  // Go to the add new lead modal.
-  drupal_goto('accounts/new/' . $arg, $param);
+    // Go to the add new lead modal.
+    drupal_goto('accounts/new/' . $account_status, $param);
+  }
+  
 }
 
 /**
@@ -422,6 +456,11 @@ function bullseye_account_new_form($form, &$form_state) {
   }
   elseif (arg(2) == 'deal-in-progress') {
     $form_title = t('Add New Deal in Progress');
+  }
+
+  // If from add new lead and the company is already existing.
+  if (isset($_GET['new_company_name']) && !empty($_GET['new_company_name'])) {
+    $company = $_GET['new_company_name'];
   }
 
   // If from add new lead and the company is already existing.
@@ -736,11 +775,10 @@ function bullseye_account_new_form_submit($form, &$form_state) {
     $node = node_load($_GET['existing_company']);
   }
   else {
-    $node = new stdClass();
-    $node->type = 'accounts';
+    // Create an Entity.
+    $node = entity_create('node', array('type' => 'accounts'));
+    // Specify the author.
     $node->uid = $user->uid;
-    node_object_prepare($node);
-    $node->language = LANGUAGE_NONE;
   }
 
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -805,6 +843,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
   else {
     $wrapper->field_tags->set(array());
   }
+
   $wrapper->save();
 
   $nid = $wrapper->getIdentifier();
@@ -955,6 +994,7 @@ function bullseye_account_new_form_submit($form, &$form_state) {
       cache_clear_all('count_deals_accounts_listing_producer', 'cache', TRUE);
     }
   }
+
 }
 
 /**
