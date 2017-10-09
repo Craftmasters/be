@@ -6,7 +6,7 @@
           <tr>
             <td class="td-35 padding-left-25">
               <i class="fa fa-star yellow" aria-hidden="true"></i>
-              <a href="<?php print $c->edit_link; ?>" rel="lightframe">
+              <a href="<?php print $c->edit_link; ?>" rel="lightframe" class="new-loaded-contact">
                 <span class="gray-font"><?php print $c->field_firstname_value . ' ' . $c->field_lastname_value; ?></span>
               </a>
             </td>
