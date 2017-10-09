@@ -3,32 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <span class="account-count"><?php print t('All Deals in Progress (' . $total . ')'); ?></span>
-        <a class="be-table-button" data-toggle="modal" data-target="#add-new-account"><?php print t('Add New Deal in Progress'); ?></a>
-
-        <div id="add-new-account" class="modal be-bs-modal" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-inner">
-                <div class="modal-header">
-                  <a href="#" class="close" data-dismiss="modal">&times;</a>
-                </div>
-                <div class="modal-body">
-                  <div class="modal-body-wrap">
-                    <div class="modal-body-inner">
-                      <h3><?php print t('Is the company of the deal in progress you are trying to add already exists in the system?'); ?></h3>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <div class="be-custom-actions">
-                    <a href="/accounts/new/deal-in-progress" rel="lightframe" data-dismiss="modal" class="blue-gray-btn" id="company-exists-no"><?php print t('No'); ?></a>
-                    <a href="/accounts/select-existing-company?from=deal-in-progress" rel="lightframe" data-dismiss="modal" class="orange-btn" id="company-exists-yes"><?php print t('Yes'); ?></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a class="be-table-button" href="/accounts/select-existing-company?from=deal-in-progress" rel="lightframe"><?php print t('Add New Deal in Progress'); ?></a>
       </div>
       <div class="col-md-4">
         <div class="be-table-right-icons">

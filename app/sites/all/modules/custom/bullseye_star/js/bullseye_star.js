@@ -74,6 +74,15 @@
         // For refreshing the contents of starred contacts block.
         function refreshStarredContacts(offset) {
           $('#dashboard-starred-contacts').load('/be-star/starred-contacts', {offset: offset}, function() {
+            $("a.new-loaded-contact:not(.lightbox-processed)", context).addClass('lightbox-processed').click(function(e) {
+              if (Lightbox.disableCloseClick) {
+                $('#lightbox').unbind('click');
+                $('#lightbox').click(function() { Lightbox.end('forceClose'); } );
+              }
+              Lightbox.start(this, false, true, false, false);
+              if (e.preventDefault) { e.preventDefault(); }
+              return false;
+            });
           });
         }
 
