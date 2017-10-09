@@ -235,6 +235,12 @@ function bullseye_leads_import($rows) {
 function _import_account($data, $type) {
   global $user;
 
+  // Initialize the class.
+  $be = new Bullseye($user);
+
+  // Check if the account is administrator.
+  $roles = $be->getAccountRole();
+
   $data = array_reverse($data);
 
   foreach ($data as $row) {
@@ -323,8 +329,13 @@ function _import_account($data, $type) {
       // Set the producers.
       $entity->field_producers->set(trim($row[27]));
 
-      // Set the visibility.
-      $entity->field_visibility->set('visible_to_admin');
+      // For admin and administrator.
+      if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+        $entity->field_visibility->set('visible_to_admin');
+      }
+      else {
+        $entity->field_visibility->set($user->uid);
+      }
 
       // Set the referral partners.
       $entity->field_referral_partners->set(trim($row[28]));
