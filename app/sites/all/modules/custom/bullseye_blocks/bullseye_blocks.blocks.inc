@@ -1366,11 +1366,31 @@ function bullseye_blocks_render_be_mailchimp() {
 function bullseye_blocks_render_be_mailbox() {
   global $base_url, $user;
 
+  drupal_add_js('//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js', 'external');
+  drupal_add_js(drupal_get_path('module', 'gmail_connector') . '/js/utilities.js');
+  drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js', 'external');
+  drupal_add_css('//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css', 'external');
+  drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/utilities.css');
+
+  $page = array();
+  $settings = array();
+  $settings['google_api_key'] = variable_get('gmail_connector_api_key');
+  $settings['google_client_id'] = variable_get('gmail_connector_client_id');
+  $settings['google_email_display'] = variable_get('gmail_connector_display_email');
+
+  // Add the configuration in the Javascript scope.
+  drupal_add_js(array(
+    'gmail_connector' => array(
+      'config' => $settings,
+    ),
+  ), array('type' => 'setting'));
+
   $theme_directory = path_to_theme('theme', 'bullseye');
 
   $vars = array();
 
   $output = theme('be_mailbox', $vars);
+  //$output = theme('gmail_connector_gmail_inbox_theme', array('page' => $page));
 
   return array(
     'subject' => '',

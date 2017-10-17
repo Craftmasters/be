@@ -171,7 +171,7 @@
         );
 
         if (dataSet.length === data_length) {
-          $('#google-inbox').DataTable({
+          $('#gmail-inbox').DataTable({
             data: dataSet,
             columns: [
               {title: "From"},
