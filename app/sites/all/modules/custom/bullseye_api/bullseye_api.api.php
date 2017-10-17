@@ -887,10 +887,10 @@ class Bullseye {
         ->condition('star.entity_id', $cid, '=')
         ->execute()
         ->fetchCol();
-        
+
       cache_set('starred_users_' . $cid, $starred, 'cache');
     }
-    
+
     return $starred;
   }
 
@@ -1800,44 +1800,96 @@ class Bullseye {
   /**
    * Get RFPs.
    */
-  static function getRfps() {
-    if ($cache = cache_get('rfp_listing')) {
-      $rfps = $cache->data;
+  static function getRfps($uid = NULL) {
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('rfp_listing')) {
+        $rfps = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_company', 'cmp', 'n.nid = cmp.entity_id');
+        $query->leftJoin('field_data_field_mm_current_carrier', 'mmcc', 'n.nid = mmcc.entity_id');
+        $query->leftJoin('field_data_field_lm_current_carrier', 'lmcc', 'n.nid = lmcc.entity_id');
+        $query->leftJoin('field_data_field_tl_current_carrier', 'tlcc', 'n.nid = tlcc.entity_id');
+        $query->leftJoin('field_data_field_mec_current_carrier', 'mccc', 'n.nid = mccc.entity_id');
+        $query->leftJoin('field_data_field_den_current_carrier', 'dncc', 'n.nid = dncc.entity_id');
+        $query->leftJoin('field_data_field_vs_current_carrier', 'vscc', 'n.nid = vscc.entity_id');
+        $query->leftJoin('field_data_field_lf_current_carrier', 'lfcc', 'n.nid = lfcc.entity_id');
+        $query->leftJoin('field_data_field_std_current_carrier', 'sdcc', 'n.nid = sdcc.entity_id');
+        $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
+        $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
+        $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
+        $rfps = $query
+          ->fields('n', array('nid', 'title', 'uid'))
+          ->fields('cmp', array('field_company_value'))
+          ->fields('mmcc', array('field_mm_current_carrier_value'))
+          ->fields('lmcc', array('field_lm_current_carrier_value'))
+          ->fields('tlcc', array('field_tl_current_carrier_value'))
+          ->fields('mccc', array('field_mec_current_carrier_value'))
+          ->fields('dncc', array('field_den_current_carrier_value'))
+          ->fields('vscc', array('field_vs_current_carrier_value'))
+          ->fields('lfcc', array('field_lf_current_carrier_value'))
+          ->fields('sdcc', array('field_std_current_carrier_value'))
+          ->fields('rtcc', array('field_ret_current_carrier_value'))
+          ->fields('sbcc', array('field_sb_current_carrier_value'))
+          ->fields('due', array('field_due_date_value'))
+          ->condition('n.type', 'rfp', '=')
+          ->condition('n.status', 1, '=')
+          ->execute()
+          ->fetchAll();
+
+        cache_set('rfp_listing', $rfps, 'cache');
+      }
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('field_data_field_company', 'cmp', 'n.nid = cmp.entity_id');
-      $query->leftJoin('field_data_field_mm_current_carrier', 'mmcc', 'n.nid = mmcc.entity_id');
-      $query->leftJoin('field_data_field_lm_current_carrier', 'lmcc', 'n.nid = lmcc.entity_id');
-      $query->leftJoin('field_data_field_tl_current_carrier', 'tlcc', 'n.nid = tlcc.entity_id');
-      $query->leftJoin('field_data_field_mec_current_carrier', 'mccc', 'n.nid = mccc.entity_id');
-      $query->leftJoin('field_data_field_den_current_carrier', 'dncc', 'n.nid = dncc.entity_id');
-      $query->leftJoin('field_data_field_vs_current_carrier', 'vscc', 'n.nid = vscc.entity_id');
-      $query->leftJoin('field_data_field_lf_current_carrier', 'lfcc', 'n.nid = lfcc.entity_id');
-      $query->leftJoin('field_data_field_std_current_carrier', 'sdcc', 'n.nid = sdcc.entity_id');
-      $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
-      $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
-      $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
-      $rfps = $query
-        ->fields('n', array('nid', 'title', 'uid'))
-        ->fields('cmp', array('field_company_value'))
-        ->fields('mmcc', array('field_mm_current_carrier_value'))
-        ->fields('lmcc', array('field_lm_current_carrier_value'))
-        ->fields('tlcc', array('field_tl_current_carrier_value'))
-        ->fields('mccc', array('field_mec_current_carrier_value'))
-        ->fields('dncc', array('field_den_current_carrier_value'))
-        ->fields('vscc', array('field_vs_current_carrier_value'))
-        ->fields('lfcc', array('field_lf_current_carrier_value'))
-        ->fields('sdcc', array('field_std_current_carrier_value'))
-        ->fields('rtcc', array('field_ret_current_carrier_value'))
-        ->fields('sbcc', array('field_sb_current_carrier_value'))
-        ->fields('due', array('field_due_date_value'))
-        ->condition('n.type', 'rfp', '=')
-        ->condition('n.status', 1, '=')
-        ->execute()
-        ->fetchAll();
+      if ($cache = cache_get('rfp_listing_' . $uid)) {
+        $rfps = $cache->data;
+      }
+      else {
+        $query = db_select('node', 'n');
+        $query->leftJoin('field_data_field_company', 'cmp', 'n.nid = cmp.entity_id');
+        $query->leftJoin('field_data_field_mm_current_carrier', 'mmcc', 'n.nid = mmcc.entity_id');
+        $query->leftJoin('field_data_field_lm_current_carrier', 'lmcc', 'n.nid = lmcc.entity_id');
+        $query->leftJoin('field_data_field_tl_current_carrier', 'tlcc', 'n.nid = tlcc.entity_id');
+        $query->leftJoin('field_data_field_mec_current_carrier', 'mccc', 'n.nid = mccc.entity_id');
+        $query->leftJoin('field_data_field_den_current_carrier', 'dncc', 'n.nid = dncc.entity_id');
+        $query->leftJoin('field_data_field_vs_current_carrier', 'vscc', 'n.nid = vscc.entity_id');
+        $query->leftJoin('field_data_field_lf_current_carrier', 'lfcc', 'n.nid = lfcc.entity_id');
+        $query->leftJoin('field_data_field_std_current_carrier', 'sdcc', 'n.nid = sdcc.entity_id');
+        $query->leftJoin('field_data_field_ret_current_carrier', 'rtcc', 'n.nid = rtcc.entity_id');
+        $query->leftJoin('field_data_field_sb_current_carrier', 'sbcc', 'n.nid = sbcc.entity_id');
+        $query->leftJoin('field_data_field_due_date', 'due', 'n.nid = due.entity_id');
+        $rfps = $query
+          ->fields('n', array('nid', 'title', 'uid'))
+          ->fields('cmp', array('field_company_value'))
+          ->fields('mmcc', array('field_mm_current_carrier_value'))
+          ->fields('lmcc', array('field_lm_current_carrier_value'))
+          ->fields('tlcc', array('field_tl_current_carrier_value'))
+          ->fields('mccc', array('field_mec_current_carrier_value'))
+          ->fields('dncc', array('field_den_current_carrier_value'))
+          ->fields('vscc', array('field_vs_current_carrier_value'))
+          ->fields('lfcc', array('field_lf_current_carrier_value'))
+          ->fields('sdcc', array('field_std_current_carrier_value'))
+          ->fields('rtcc', array('field_ret_current_carrier_value'))
+          ->fields('sbcc', array('field_sb_current_carrier_value'))
+          ->fields('due', array('field_due_date_value'))
+          ->condition('n.type', 'rfp', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('n.uid', $uid, '=')
+          ->execute()
+          ->fetchAll();
 
-      cache_set('rfp_listing', $rfps, 'cache');
+        cache_set('rfp_listing_' . $uid, $rfps, 'cache');
+      }
     }
 
     return $rfps;
@@ -2173,21 +2225,50 @@ class Bullseye {
   /**
    * Get the total number of open RFPs.
    */
-  static function totalRfps() {
-    if ($cache = cache_get('total_rfps')) {
-      $total = $cache->data;
+  static function totalRfps($uid = NULL) {
+    global $user;
+
+    // Initialize the class.
+    $be = new Bullseye($user);
+
+    $uid = (is_null($uid)) ? $be->uid : $uid;
+
+    // Check if the account is administrator.
+    $roles = $be->getAccountRole();
+    if (Bullseye::hasRole('administrator', $roles) || Bullseye::hasRole('admin', $roles)) {
+      if ($cache = cache_get('total_rfps')) {
+        $total = $cache->data;
+      }
+      else {
+        $query = db_select('node' , 'n');
+        $total = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'rfp', '=')
+          ->condition('n.status', 1, '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+
+        cache_set('total_rfps', $total, 'cache');
+      }
     }
     else {
-      $query = db_select('node' , 'n');
-      $total = $query
-        ->fields('n', array('nid'))
-        ->condition('n.type', 'rfp', '=')
-        ->condition('n.status', 1, '=')
-        ->countQuery()
-        ->execute()
-        ->fetchField();
+      if ($cache = cache_get('total_rfps_' . $uid)) {
+        $total = $cache->data;
+      }
+      else {
+        $query = db_select('node' , 'n');
+        $total = $query
+          ->fields('n', array('nid'))
+          ->condition('n.type', 'rfp', '=')
+          ->condition('n.status', 1, '=')
+          ->condition('n.uid', $uid, '=')
+          ->countQuery()
+          ->execute()
+          ->fetchField();
 
-      cache_set('total_rfps', $total, 'cache');
+        cache_set('total_rfps_' . $uid, $total, 'cache');
+      }
     }
 
     return $total;
