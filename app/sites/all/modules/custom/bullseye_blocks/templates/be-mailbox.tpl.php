@@ -31,108 +31,6 @@
                     <span class="light-gray-font">Jun 20</span>
                   </td>
                 </tr>
-                <tr class="mailbox-unread">
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">Massive Dynamic - Arrow Demo on Thursday</span>
-                        <span class="mail-trimmed-body">Lorem ipsium dolor sit amet, consectetur adipiscing ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">Umbrella Corporation - Prevailing Wage Rates</span>
-                        <span class="mail-trimmed-body">Lorem ipsium dolor sit amet, consectetur adipiscing ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">ABC Company - Fringe Benefits Summary</span>
-                        <span class="mail-trimmed-body">Lorem ipsium dolor sit amet, consectetur adipiscing ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">Kings Court Inc. - RFP for LMP</span>
-                        <span class="mail-trimmed-body">Lorem ipsium dolor sit amet, consectetur adipiscing ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">Gekko & Co. - RFP for Telemedicine</span>
-                        <span class="mail-trimmed-body">Hello James, We would like to request a ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-50px padding-left-25">
-                    <input type="checkbox">
-                  </td>
-                  <td class="td-18px"><span class="mailbox-dot"></span></td>
-                  <td class="">
-                    <a href="#">
-                      <div class="mail-details">
-                        <span class="mail-subject">Massive Dynamic - Arrow Demo on Thursday</span>
-                        <span class="mail-trimmed-body">Lorem ipsium dolor sit amet, consectetur adipiscing ..</span>
-                      </div>
-                    </a>
-                  </td>
-                  <td class="td-85px padding-right-25">
-                    <span class="light-gray-font">Jun 20</span>
-                  </td>
-                </tr>
                 <tr>
                   <td class="td-50px padding-left-25">
                     <input type="checkbox">
@@ -156,7 +54,7 @@
         </div>
         <div id="tab-1" class="tab-content">
           <div class="dashboard-table-wrapper">
-            <table class="dashboard-tables">
+            <table class="dashboard-tables" id="gmail-sent-items">
               <tbody>
                 <tr>
                   <td class="td-50px padding-left-25">

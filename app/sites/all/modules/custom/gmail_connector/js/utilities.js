@@ -13,8 +13,10 @@
     attach: function(context, settings) {
       Pace.start();
 
-      var dataSet = [];
-      var mailBody = [];
+      var inbox_dataSet = [];
+      var inbox_mailBody = [];
+      var sent_dataSet = [];
+      var sent_mailBody = [];
 
       // Load the client for javascript API.
       $.getScript(
@@ -96,6 +98,7 @@
        */
       function loadGmailApi() {
         gapi.client.load('gmail', 'v1', displayInbox);
+        gapi.client.load('gmail', 'v1', displaySentItems);
       }
 
       /**
@@ -116,7 +119,7 @@
               id: this.id
             });
 
-            messageRequest.execute(appendMessageRow);
+            messageRequest.execute(inboxAppendMessageRow);
           });
         });
       }
@@ -139,7 +142,7 @@
               id: this.id
             });
 
-            messageRequest.execute(appendMessageRow);
+            messageRequest.execute(sentItemsAppendMessageRow);
           });
         });
       }
@@ -147,7 +150,7 @@
       /**
        * Append message in a row.
        */
-      function appendMessageRow(message) {
+      function inboxAppendMessageRow(message) {
         // console.log(message);
         // console.log('length ::: '+dataSet.length);.
         var del_btn = '<button id="' + 'delete-button-' + message.id + '" class="btn btn-primary email-delete" data-id="' + message.id + '">Delete</button>';
@@ -156,9 +159,9 @@
           getHeader(message.payload.headers, 'Subject') + '</a>';
         var dataArray = [getHeader(message.payload.headers, 'From'), mail_link, getHeader(message.payload.headers, 'Date'), del_btn];
 
-        dataSet.push(dataArray);
+        inbox_dataSet.push(dataArray);
         // Mail body Array.
-        mailBody[message.id] = getBody(message.payload);
+        inbox_mailBody[message.id] = getBody(message.payload);
 
         $('body').append(
           '<div class="modal fade" id="message-modal-' + message.id +
@@ -170,9 +173,9 @@
           '</div></div></div></div>'
         );
 
-        if (dataSet.length === data_length) {
+        if (inbox_dataSet.length === data_length) {
           $('#gmail-inbox').DataTable({
-            data: dataSet,
+            data: inbox_dataSet,
             columns: [
               {title: "From"},
               {title: "Subject"},
@@ -189,7 +192,58 @@
 
           $('[id^="message-link-"]').on('click', function() {
             var ifrm = $('#message-iframe-' + $(this).data("lid"))[0].contentWindow.document;
-            $('body', ifrm).html(mailBody[$(this).data("lid")]);
+            $('body', ifrm).html(inbox_mailBody[$(this).data("lid")]);
+            $('#message-iframe-' + $(this).data("lid")).contents().find('body').css('white-space', 'pre');
+          });
+        }
+      }
+
+      /**
+       * Append message in a row.
+       */
+      function sentItemsAppendMessageRow(message) {
+        // console.log(message);
+        // console.log('length ::: '+dataSet.length);.
+        var del_btn = '<button id="' + 'delete-button-' + message.id + '" class="btn btn-primary email-delete" data-id="' + message.id + '">Delete</button>';
+        var mail_link = '<a href="#message-modal-' + message.id +
+          '" data-toggle="modal" id="message-link-' + message.id + '" data-lid="' + message.id + '">' +
+          getHeader(message.payload.headers, 'Subject') + '</a>';
+        var dataArray = [getHeader(message.payload.headers, 'From'), mail_link, getHeader(message.payload.headers, 'Date'), del_btn];
+
+        sent_dataSet.push(dataArray);
+        // Mail body Array.
+        sent_mailBody[message.id] = getBody(message.payload);
+
+        $('body').append(
+          '<div class="modal fade" id="message-modal-' + message.id +
+            '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >\n' +
+            '<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+            '<h4 class="modal-title" id="myModalLabel">' +
+            getHeader(message.payload.headers, 'Subject') +
+            '</h4></div><div class="modal-body"><iframe id="message-iframe-' + message.id + '"srcdoc="<p>Loading...</p>"></iframe>\n' +
+          '</div></div></div></div>'
+        );
+
+        if (sent_dataSet.length === data_length) {
+          $('#gmail-sent-items').DataTable({
+            data: sent_dataSet,
+            columns: [
+              {title: "From"},
+              {title: "Subject"},
+              {title: "Date/Time"},
+              {title: "Actions"}
+            ]
+          });
+
+          Pace.stop();
+
+          $('[id^="delete-button-"]').on('click', function() {
+            deleteMessage('me', $(this).data("id"));
+          });
+
+          $('[id^="message-link-"]').on('click', function() {
+            var ifrm = $('#message-iframe-' + $(this).data("lid"))[0].contentWindow.document;
+            $('body', ifrm).html(sent_mailBody[$(this).data("lid")]);
             $('#message-iframe-' + $(this).data("lid")).contents().find('body').css('white-space', 'pre');
           });
         }
