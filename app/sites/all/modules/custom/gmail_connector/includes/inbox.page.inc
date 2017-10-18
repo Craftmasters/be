@@ -20,8 +20,8 @@ function gmail_connector_inbox() {
   //drupal_add_css(drupal_get_path('module', 'gmail_connector') . '/css/bootstrap.css');
   $page = array();
   $settings = array();
-  $settings['google_api_key'] = variable_get('gmail_connector_api_key');
-  $settings['google_client_id'] = variable_get('gmail_connector_client_id');
+  $settings['google_api_key'] = _gmail_api_key();
+  $settings['google_client_id'] = _gmail_client_id();
   $settings['google_email_display'] = variable_get('gmail_connector_display_email');
 
   // Add the configuration in the Javascript scope.

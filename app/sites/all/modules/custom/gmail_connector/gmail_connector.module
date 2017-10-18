@@ -86,3 +86,31 @@ function gmail_connector_theme(&$existing, $type, $theme, $path) {
   );
 }
 
+/**
+ * Cache the API key.
+ */
+function _gmail_api_key() {
+  if ($cache = cache_get('gmail_api_key', 'cache')) {
+    $key = $cache->data;
+  }
+  else {
+    $key = variable_get('gmail_connector_api_key');
+    cache_set('gmail_api_key', $key, 'cache');
+  }
+  return $key;
+}
+
+/**
+ * Get the Client ID.
+ */
+function _gmail_client_id() {
+  if ($cache = cache_get('gmail_client_id', 'cache')) {
+    $id = $cache->data;
+  }
+  else {
+    $id = variable_get('gmail_connector_client_id');
+    cache_set('gmail_client_id', $id, 'cache');
+  }
+  return $id;
+}
+
