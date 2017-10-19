@@ -1,5 +1,5 @@
 <div class="be-regular-block">
-  <h2 class="be-regular-h2"><?php print t('Mailbox'); ?><span class="mail-unread-count">2</span></h2>
+  <h2 class="be-regular-h2"><?php print t('Mailbox'); ?><span class="mail-unread-count"></span></h2>
   <div class="be-block-main">
 
     <div class="tabbed-block">
