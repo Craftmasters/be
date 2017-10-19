@@ -111,6 +111,20 @@
           maxResults: Drupal.settings.gmail_connector.config.google_email_display
         });
 
+        var unread = gapi.client.gmail.users.messages.list({
+          userId: 'me',
+          labelIds: 'INBOX',
+          q: "is:unread"
+        });
+
+        // Counter for unread messages.
+        unread.execute(function(response) {
+          unread_data_length = response.messages.length;
+          $('.mail-unread-count').text(unread_data_length);
+        });
+
+        console.log(unread);
+
         request.execute(function(response) {
           data_length = response.messages.length;
           $.each(response.messages, function() {
@@ -151,8 +165,6 @@
        * Append message in a row.
        */
       function inboxAppendMessageRow(message) {
-        // console.log(message);
-        // console.log('length ::: '+dataSet.length);.
         var del_btn = '<button id="' + 'delete-button-' + message.id + '" class="btn btn-primary email-delete" data-id="' + message.id + '">Delete</button>';
         var mail_link = '<a href="#message-modal-' + message.id +
           '" data-toggle="modal" id="message-link-' + message.id + '" data-lid="' + message.id + '">' +
@@ -202,8 +214,6 @@
        * Append message in a row.
        */
       function sentItemsAppendMessageRow(message) {
-        // console.log(message);
-        // console.log('length ::: '+dataSet.length);.
         var del_btn = '<button id="' + 'delete-button-' + message.id + '" class="btn btn-primary email-delete" data-id="' + message.id + '">Delete</button>';
         var mail_link = '<a href="#message-modal-' + message.id +
           '" data-toggle="modal" id="message-link-' + message.id + '" data-lid="' + message.id + '">' +
